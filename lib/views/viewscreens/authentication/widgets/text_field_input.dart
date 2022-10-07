@@ -8,12 +8,14 @@ class TextFieldInput extends StatelessWidget {
   final TextInputType textInputType;
   final String hintText;
   final icon;
-  const TextFieldInput(
+  Function()? onIconTap;
+  TextFieldInput(
       {Key? key,
       required this.textEditingController,
       this.isPass = false,
       required this.textInputType,
       required this.hintText,
+      this.onIconTap,
       this.icon})
       : super(key: key);
 
@@ -46,9 +48,12 @@ class TextFieldInput extends StatelessWidget {
           fillColor: Colors.white,
           focusColor: Colors.black,
           filled: true,
-          suffixIcon: Icon(
-            icon,
-            color: Colors.black.withOpacity(0.67),
+          suffixIcon: InkWell(
+            onTap: onIconTap,
+            child: Icon(
+              icon,
+              color: Colors.black.withOpacity(0.87),
+            ),
           ),
           contentPadding: const EdgeInsets.only(top: 4, bottom: 4, right: 4),
         ),

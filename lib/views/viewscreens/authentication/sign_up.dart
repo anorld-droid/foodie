@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trice/controller/authentication/sign_up_controller.dart';
-import 'package:trice/controller/main_controller.dart';
-
+import 'package:slider_button/slider_button.dart';
 import 'widgets/curved_traingle.dart';
 import 'widgets/text_field_input.dart';
 
@@ -27,7 +26,7 @@ class SignUp extends GetView<SignUpController> {
             children: [
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Container(
-                  height: 68.0,
+                  height: 80.0,
                   width: Get.width,
                   margin: MediaQuery.of(context).padding,
                   color: Colors.transparent,
@@ -57,12 +56,12 @@ class SignUp extends GetView<SignUpController> {
               Column(
                 children: [
                   SizedBox(
-                    height: 158,
+                    height: 180,
                     width: Get.width,
                   ),
                   Container(
-                    height: Get.height - 278,
-                    width: Get.width - 45,
+                    height: Get.height - 367,
+                    width: Get.width - 20,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         color: Colors.white,
@@ -75,95 +74,130 @@ class SignUp extends GetView<SignUpController> {
                                 0, 8), // changes position of shadow
                           ),
                         ]),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(
-                          height: 37,
-                        ),
-                        TextFieldInput(
-                          hintText: "Username",
-                          icon: Icons.person_outline,
-                          textInputType: TextInputType.emailAddress,
-                          textEditingController: controller.usernameController,
-                        ),
-                        const SizedBox(
-                          height: 0,
-                        ),
-                        TextFieldInput(
-                          hintText: "Contacts",
-                          icon: Icons.chevron_right_outlined,
-                          textInputType: TextInputType.emailAddress,
-                          textEditingController: controller.usernameController,
-                        ),
-                        const SizedBox(
-                          height: 0,
-                        ),
-                        TextFieldInput(
-                          hintText: "Bio",
-                          icon: Icons.library_books_outlined,
-                          textInputType: TextInputType.emailAddress,
-                          textEditingController: controller.usernameController,
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        InkWell(
-                          onTap: controller.username,
-                          child: Container(
-                            width: Get.width - 180,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                border: Border(
-                                    top: BorderSide(
-                                      color: Colors.black,
-                                    ),
-                                    bottom: BorderSide(
-                                      color: Colors.black,
-                                    ),
-                                    right: BorderSide(
-                                      color: Colors.black,
-                                    ),
-                                    left: BorderSide(
-                                      color: Colors.black,
-                                    ))),
-                            child: Text(
-                              "Register your Biometrics",
-                              style: GoogleFonts.inter(
-                                  fontStyle: FontStyle.normal,
-                                  color: Colors.black,
-                                  fontSize: 18.0,
-                                  letterSpacing: 1.0,
-                                  fontWeight: FontWeight.w300),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(
+                            height: 37,
+                          ),
+                          TextFieldInput(
+                            hintText: "Username",
+                            icon: Icons.person_outline,
+                            textInputType: TextInputType.name,
+                            textEditingController:
+                                controller.usernameController,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFieldInput(
+                            hintText: "Phone Number",
+                            icon: Icons.phone,
+                            textInputType: TextInputType.phone,
+                            textEditingController: controller.phoneController,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFieldInput(
+                            hintText: "Email",
+                            icon: Icons.alternate_email_outlined,
+                            textInputType: TextInputType.emailAddress,
+                            textEditingController: controller.emailController,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFieldInput(
+                            hintText: "Social Media handle",
+                            icon: Icons.link,
+                            textInputType: TextInputType.url,
+                            textEditingController: controller.websiteController,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          TextFieldInput(
+                            hintText: "Bio",
+                            icon: Icons.library_books_outlined,
+                            textInputType: TextInputType.text,
+                            textEditingController: controller.bioController,
+                          ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          InkWell(
+                            onTap: (() => controller.biometrics(context)),
+                            child: Container(
+                              width: Get.width - 180,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                  border: Border(
+                                      top: BorderSide(
+                                        color: Colors.black,
+                                      ),
+                                      bottom: BorderSide(
+                                        color: Colors.black,
+                                      ),
+                                      right: BorderSide(
+                                        color: Colors.black,
+                                      ),
+                                      left: BorderSide(
+                                        color: Colors.black,
+                                      ))),
+                              child: Text(
+                                "Register your Biometrics",
+                                style: GoogleFonts.inter(
+                                    fontStyle: FontStyle.normal,
+                                    color: Colors.black,
+                                    fontSize: 18.0,
+                                    letterSpacing: 1.0,
+                                    fontWeight: FontWeight.w300),
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 60,
-                        ),
-                        Container(
-                          height: 100.0,
-                          // width: Get.width,
-                          color: Colors.transparent,
-                          child: Container(
-                              decoration: const BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(30),
-                                      bottomRight: Radius.circular(30))),
-                              child: const Center(
-                                child: Text(
-                                  "Sign up btn",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 22),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: Get.width - 160,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "ALready have an account?",
+                                  style: GoogleFonts.inter(
+                                      fontStyle: FontStyle.normal,
+                                      color: Colors.black,
+                                      fontSize: 18.0,
+                                      letterSpacing: 1.0,
+                                      fontWeight: FontWeight.w300),
                                   textAlign: TextAlign.center,
                                 ),
-                              )),
-                        ),
-                      ],
+                                InkWell(
+                                  onTap: (() {}),
+                                  child: Text(
+                                    "Log in",
+                                    style: GoogleFonts.inter(
+                                        fontStyle: FontStyle.normal,
+                                        color: Colors.black,
+                                        fontSize: 18.0,
+                                        letterSpacing: 1.0,
+                                        fontWeight: FontWeight.w600),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -172,7 +206,7 @@ class SignUp extends GetView<SignUpController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 88,
+                    height: 130,
                     width: Get.width,
                   ),
                   const CircleAvatar(
@@ -190,7 +224,7 @@ class SignUp extends GetView<SignUpController> {
               painter: BottomCurvedTriangle(),
             ),
             Container(
-              height: 60.0,
+              height: 68.0,
               width: Get.width,
               color: Colors.transparent,
               child: Container(
@@ -198,12 +232,49 @@ class SignUp extends GetView<SignUpController> {
                       color: Colors.black,
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(30))),
-                  child: const Center(
-                    child: Text(
-                      "Sign up btn",
-                      style: TextStyle(color: Colors.white, fontSize: 22),
-                      textAlign: TextAlign.center,
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 43,
+                        width: 305,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(100)),
+                            gradient: LinearGradient(
+                              colors: [
+                                // Color(0xFF000000),
+                                Color(0xFF000000),
+                                Color(0xFF434343),
+                                Color.fromARGB(255, 97, 95, 95),
+                                Color.fromARGB(255, 97, 95, 95),
+                                Color.fromARGB(255, 155, 150, 150),
+                              ],
+                            )),
+                        child: SliderButton(
+                            height: 40,
+                            width: 302,
+                            buttonSize: 32,
+                            baseColor: Colors.white,
+                            alignLabel: Alignment.center,
+                            backgroundColor: Colors.black,
+                            highlightedColor: Colors.black,
+                            vibrationFlag: true,
+                            action: () {},
+                            label: Text(
+                              "Slide to sign up",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                  fontStyle: FontStyle.normal,
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  letterSpacing: 1.0,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            icon: Icon(Icons.chevron_right_outlined)),
+                      ),
+                    ],
                   )),
             ),
           ]),

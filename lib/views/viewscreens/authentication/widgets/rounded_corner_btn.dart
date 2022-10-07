@@ -38,13 +38,15 @@ class IconBtn extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                name,
+              DefaultTextStyle(
                 style: GoogleFonts.inter(
                     fontStyle: FontStyle.normal,
                     color: Colors.black,
-                    fontSize: 22.0,
+                    fontSize: 24.0,
                     fontWeight: FontWeight.w600),
+                child: Text(
+                  name,
+                ),
               ),
               Icon(
                 icon,
