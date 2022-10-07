@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trice/controller/authentication/sign_up_controller.dart';
-import 'package:trice/controller/authentication/widgets/curved_traingle.dart';
+
+import 'widgets/curved_traingle.dart';
 
 class SignUp extends GetView<SignUpController> {
   const SignUp({Key? key}) : super(key: key);
