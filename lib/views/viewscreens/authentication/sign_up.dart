@@ -26,7 +26,7 @@ class SignUp extends GetView<SignUpController> {
             children: [
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Container(
-                  height: 80.0,
+                  height: Get.height * 1 / 12,
                   width: Get.width,
                   margin: MediaQuery.of(context).padding,
                   color: Colors.transparent,
@@ -60,8 +60,8 @@ class SignUp extends GetView<SignUpController> {
                     width: Get.width,
                   ),
                   Container(
-                    height: Get.height - 367,
-                    width: Get.width - 20,
+                    height: Get.height * 1 / 1.7,
+                    width: Get.width * 1 / 1.05,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30.0),
                         color: Colors.white,
@@ -82,7 +82,7 @@ class SignUp extends GetView<SignUpController> {
                             height: 37,
                           ),
                           TextFieldInput(
-                            hintText: "Username",
+                            hintText: "Username ${Get.width}",
                             icon: Icons.person_outline,
                             textInputType: TextInputType.name,
                             textEditingController:
@@ -130,7 +130,7 @@ class SignUp extends GetView<SignUpController> {
                           InkWell(
                             onTap: (() => controller.biometrics(context)),
                             child: Container(
-                              width: Get.width - 180,
+                              width: Get.width * 1 / 1.779,
                               alignment: Alignment.center,
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               decoration: const BoxDecoration(
@@ -164,7 +164,7 @@ class SignUp extends GetView<SignUpController> {
                             height: 10,
                           ),
                           Container(
-                            width: Get.width - 160,
+                            width: Get.width * 1 / 1.6375,
                             child: Row(
                               children: [
                                 Text(
@@ -235,7 +235,7 @@ class SignUp extends GetView<SignUpController> {
               painter: BottomCurvedTriangle(),
             ),
             Container(
-              height: 68.0,
+              height: Get.height * 1 / 13,
               width: Get.width,
               color: Colors.transparent,
               child: Container(
@@ -274,7 +274,7 @@ class SignUp extends GetView<SignUpController> {
                             vibrationFlag: true,
                             action: () {},
                             label: Text(
-                              "Slide to sign up",
+                              "Slide to sign up ",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.inter(
                                   fontStyle: FontStyle.normal,
