@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trice/controller/authentication/sign_up_controller.dart';
 import 'package:slider_button/slider_button.dart';
+import 'package:trice/domain/strings.dart';
 import 'widgets/curved_traingle.dart';
 import 'widgets/text_field_input.dart';
 
@@ -11,6 +12,7 @@ class SignUp extends GetView<SignUpController> {
   const SignUp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Strings str = Strings();
     Get.put(SignUpController());
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       // Status bar color
@@ -18,6 +20,7 @@ class SignUp extends GetView<SignUpController> {
       // Status bar brightness (optional)
       statusBarIconBrightness: Brightness.light, // For Android (dark icons)
     ));
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,7 +40,7 @@ class SignUp extends GetView<SignUpController> {
                               bottomRight: Radius.circular(30))),
                       child: Center(
                         child: Text(
-                          "Create Account",
+                          str.createAccount,
                           style: GoogleFonts.inter(
                               fontStyle: FontStyle.normal,
                               color: Colors.white,
@@ -82,7 +85,7 @@ class SignUp extends GetView<SignUpController> {
                             height: 37,
                           ),
                           TextFieldInput(
-                            hintText: "Username ${Get.width}",
+                            hintText: str.username,
                             icon: Icons.person_outline,
                             textInputType: TextInputType.name,
                             textEditingController:
@@ -92,7 +95,7 @@ class SignUp extends GetView<SignUpController> {
                             height: 20,
                           ),
                           TextFieldInput(
-                            hintText: "Phone Number",
+                            hintText: str.phoneNumber,
                             icon: Icons.phone,
                             textInputType: TextInputType.phone,
                             textEditingController: controller.phoneController,
@@ -101,7 +104,7 @@ class SignUp extends GetView<SignUpController> {
                             height: 20,
                           ),
                           TextFieldInput(
-                            hintText: "Email",
+                            hintText: str.email,
                             icon: Icons.alternate_email_outlined,
                             textInputType: TextInputType.emailAddress,
                             textEditingController: controller.emailController,
@@ -110,7 +113,7 @@ class SignUp extends GetView<SignUpController> {
                             height: 20,
                           ),
                           TextFieldInput(
-                            hintText: "Social Media handle",
+                            hintText: str.website,
                             icon: Icons.link,
                             textInputType: TextInputType.url,
                             textEditingController: controller.websiteController,
@@ -119,7 +122,7 @@ class SignUp extends GetView<SignUpController> {
                             height: 20,
                           ),
                           TextFieldInput(
-                            hintText: "Bio",
+                            hintText: str.bio,
                             icon: Icons.library_books_outlined,
                             textInputType: TextInputType.text,
                             textEditingController: controller.bioController,
@@ -150,7 +153,7 @@ class SignUp extends GetView<SignUpController> {
                                         color: Colors.black,
                                       ))),
                               child: Text(
-                                "Register your Biometrics",
+                                str.biometrics,
                                 style: GoogleFonts.inter(
                                     fontStyle: FontStyle.normal,
                                     color: Colors.black,
@@ -168,7 +171,7 @@ class SignUp extends GetView<SignUpController> {
                             child: Row(
                               children: [
                                 Text(
-                                  "ALready have an account?",
+                                  str.alreadyHaveAnAccount,
                                   style: GoogleFonts.inter(
                                       fontStyle: FontStyle.normal,
                                       color: Colors.black,
@@ -180,7 +183,7 @@ class SignUp extends GetView<SignUpController> {
                                 InkWell(
                                   onTap: (() {}),
                                   child: Text(
-                                    "Log in",
+                                    str.logIn,
                                     style: GoogleFonts.inter(
                                         fontStyle: FontStyle.normal,
                                         color: Colors.black,
@@ -274,7 +277,7 @@ class SignUp extends GetView<SignUpController> {
                             vibrationFlag: true,
                             action: () {},
                             label: Text(
-                              "Slide to sign up ",
+                              str.slideSignUp,
                               textAlign: TextAlign.center,
                               style: GoogleFonts.inter(
                                   fontStyle: FontStyle.normal,

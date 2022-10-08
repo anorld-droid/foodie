@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trice/controller/authentication/sign_up_controller.dart';
+import 'package:trice/domain/strings.dart';
 
 import 'rounded_corner_btn.dart';
 
@@ -12,6 +13,7 @@ class Biometrics extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     Get.put(SignUpController());
+    Strings str = Strings();
     return Center(
       child: Container(
         width: Get.width * 1 / 1.0249,
@@ -24,7 +26,7 @@ class Biometrics extends GetView<SignUpController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const IconBtn(name: "Register face", icon: Icons.add),
+            IconBtn(name: str.regFace, icon: Icons.add),
             const SizedBox(
               height: 20,
             ),
@@ -42,13 +44,13 @@ class Biometrics extends GetView<SignUpController> {
                     color: Colors.black,
                     fontSize: 28.0,
                     fontWeight: FontWeight.w700),
-                child: const Text(
-                  "Face Recognition",
+                child: Text(
+                  str.faceRecog,
                 )),
             const SizedBox(
               height: 30,
             ),
-            const IconBtn(name: "Add fingerprint", icon: Icons.add),
+            IconBtn(name: str.addFing, icon: Icons.add),
             const SizedBox(
               height: 20,
             ),
@@ -66,8 +68,8 @@ class Biometrics extends GetView<SignUpController> {
                     color: Colors.black,
                     fontSize: 28.0,
                     fontWeight: FontWeight.w700),
-                child: const Text(
-                  "Scan your fingerprint",
+                child: Text(
+                  str.scanFing,
                 )),
           ],
         ),

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:trice/views/viewscreens/authentication/widgets/biometrics.dart';
-
-import '../../views/viewscreens/authentication/widgets/rounded_corner_btn.dart';
 
 class SignUpController extends GetxController {
   final String title = 'Sign up Screen';
