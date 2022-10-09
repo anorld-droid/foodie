@@ -15,4 +15,12 @@ class Strings {
   final String faceRecog = "Face Recognition";
   final String addFing = "Add fingerprint";
   final String scanFing = "Scan your fingerprint";
+
+  //  Sign in screen strings
+  final String enterusername = "Enter your username";
+  final String contin = "Continue";
+  final String welcome = "Welcome back";
+  final String changeUsername = "Slide to change username";
+  final String dontHaveAccount = "Don't have an account?";
+  final String signup = "Sign up";
 }
