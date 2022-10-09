@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TopCurvedTriangle extends CustomPainter {
+  final Color color;
+
+  TopCurvedTriangle(this.color);
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint0 = Paint()
-      ..color = const Color.fromARGB(255, 0, 0, 0)
+      ..color = color
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 
@@ -24,10 +27,13 @@ class TopCurvedTriangle extends CustomPainter {
 }
 
 class BottomCurvedTriangle extends CustomPainter {
+  final Color color;
+
+  BottomCurvedTriangle(this.color);
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint0 = Paint()
-      ..color = const Color.fromARGB(255, 0, 0, 0)
+      ..color = color
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 
