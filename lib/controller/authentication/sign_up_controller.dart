@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trice/views/routing/routes.dart';
 import 'package:trice/views/viewscreens/authentication/widgets/biometrics.dart';
 
 class SignUpController extends GetxController {
@@ -26,5 +27,9 @@ class SignUpController extends GetxController {
             Animation secondaryAnimation) {
           return Biometrics();
         });
+  }
+
+  void navigateToSignIn() {
+    Get.offNamed(root);
   }
 }

@@ -12,16 +12,16 @@ class SignUp extends GetView<SignUpController> {
   const SignUp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Strings str = Strings();
-    Get.put(SignUpController());
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       // Status bar color
       statusBarColor: Colors.black,
       // Status bar brightness (optional)
       statusBarIconBrightness: Brightness.light, // For Android (dark icons)
     ));
-
+    Strings str = Strings();
+    Get.put(SignUpController());
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -53,7 +53,7 @@ class SignUp extends GetView<SignUpController> {
                 ),
                 CustomPaint(
                   size: Size(68.12, (68.12 * 0.5833333333333334).toDouble()),
-                  painter: TopCurvedTriangle(),
+                  painter: TopCurvedTriangle(Colors.black),
                 ),
               ]),
               Column(
@@ -166,8 +166,8 @@ class SignUp extends GetView<SignUpController> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Container(
-                            width: Get.width * 1 / 1.6375,
+                          SizedBox(
+                            width: Get.width / 1.6375,
                             child: Row(
                               children: [
                                 Text(
@@ -181,7 +181,7 @@ class SignUp extends GetView<SignUpController> {
                                   textAlign: TextAlign.center,
                                 ),
                                 InkWell(
-                                  onTap: (() {}),
+                                  onTap: controller.navigateToSignIn,
                                   child: Text(
                                     str.logIn,
                                     style: GoogleFonts.inter(
@@ -235,7 +235,7 @@ class SignUp extends GetView<SignUpController> {
           Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
             CustomPaint(
               size: Size(68, (68 * 0.8623000000000001).toDouble()),
-              painter: BottomCurvedTriangle(),
+              painter: BottomCurvedTriangle(Colors.black),
             ),
             Container(
               height: Get.height * 1 / 13,
@@ -275,7 +275,7 @@ class SignUp extends GetView<SignUpController> {
                             backgroundColor: Colors.black,
                             highlightedColor: Colors.black,
                             vibrationFlag: true,
-                            action: () {},
+                            action: controller.navigateToSignIn,
                             label: Text(
                               str.slideSignUp,
                               textAlign: TextAlign.center,
