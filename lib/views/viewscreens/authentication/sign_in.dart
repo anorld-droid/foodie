@@ -164,12 +164,10 @@ class SignIn extends GetView<SignInController> {
                                     height: 40,
                                     width: 302,
                                     buttonSize: 32,
-                                    dismissible: true,
                                     baseColor: Colors.white,
                                     alignLabel: Alignment.center,
                                     backgroundColor: Colors.black,
                                     highlightedColor: Colors.black,
-                                    vibrationFlag: true,
                                     action: () =>
                                         controller.usernameDialog(context),
                                     label: Text(

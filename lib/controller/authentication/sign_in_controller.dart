@@ -25,9 +25,11 @@ class SignInController extends GetxController {
   }
 
   getUserDetails() {
-    Navigator.of(Get.overlayContext!).pop();
-    username.value = usernameController.text;
-    //TODO: fetch user details
+    if (usernameController.text.isNotEmpty) {
+      Navigator.of(Get.overlayContext!).pop();
+      username.value = usernameController.text;
+      //TODO: fetch user details
+    }
   }
 
   navigateToSignup() {
