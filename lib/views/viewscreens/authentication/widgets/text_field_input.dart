@@ -8,8 +8,8 @@ class TextFieldInput extends StatelessWidget {
   final TextInputType textInputType;
   final String hintText;
   final icon;
-  Function()? onIconTap;
-  TextFieldInput(
+  final Function()? onIconTap;
+  const TextFieldInput(
       {Key? key,
       required this.textEditingController,
       this.isPass = false,

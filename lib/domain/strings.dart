@@ -23,4 +23,7 @@ class Strings {
   final String changeUsername = "Slide to change username";
   final String dontHaveAccount = "Don't have an account?";
   final String signup = "Sign up";
+
+  //Top bar strings
+  final String appName = "Trice";
 }
