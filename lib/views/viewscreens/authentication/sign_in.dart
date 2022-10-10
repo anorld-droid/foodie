@@ -168,8 +168,7 @@ class SignIn extends GetView<SignInController> {
                                     alignLabel: Alignment.center,
                                     backgroundColor: Colors.black,
                                     highlightedColor: Colors.black,
-                                    action: () =>
-                                        controller.usernameDialog(context),
+                                    action: controller.navigateToNewsRoom,
                                     label: Text(
                                       str.changeUsername,
                                       textAlign: TextAlign.center,
