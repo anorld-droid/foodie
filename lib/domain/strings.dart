@@ -26,4 +26,7 @@ class Strings {
 
   //Top bar strings
   final String appName = "Trice";
+
+  //Bottom bar
+  final String news = "News Room";
 }

@@ -32,8 +32,38 @@ class ThemeService {
               Color.fromARGB(181, 0, 0, 0),
               Color.fromARGB(121, 67, 67, 67)
             ]);
+  LinearGradient get floatingABIconGradient => _loadThemeFromBox()
+      ? const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255),
+            ])
+      : const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+              Color.fromARGB(255, 0, 0, 0),
+              Color.fromARGB(255, 0, 0, 0),
+            ]);
+  LinearGradient get floatingABGradient => _loadThemeFromBox()
+      ? const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+              Color.fromARGB(0, 217, 217, 217),
+              Color.fromARGB(0, 217, 217, 217)
+            ])
+      : const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255),
+            ]);
 
-  /// Switch theme and save to local storage
+  // /// Switch theme and save to local storage
   void switchTheme() {
     Get.changeThemeMode(_loadThemeFromBox() ? ThemeMode.light : ThemeMode.dark);
     _saveThemeToBox(!_loadThemeFromBox());
@@ -53,6 +83,8 @@ class Themes {
 
   static final light = ThemeData.light().copyWith(
       backgroundColor: Colors.white,
+      brightness: Brightness.dark,
+      primaryColorDark: Colors.black,
       textTheme: TextTheme(
           displaySmall: GoogleFonts.notoSerif(
               fontSize: 24,
@@ -86,6 +118,8 @@ class Themes {
               fontWeight: FontWeight.w400)));
   static final dark = ThemeData.dark().copyWith(
       backgroundColor: Colors.black,
+      brightness: Brightness.light,
+      primaryColorDark: Colors.white,
       textTheme: TextTheme(
           displaySmall: GoogleFonts.notoSerif(
               fontSize: 24,
