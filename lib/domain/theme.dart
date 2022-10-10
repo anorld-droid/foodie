@@ -16,6 +16,23 @@ class ThemeService {
   /// Save isDarkMode to local storage
   _saveThemeToBox(bool isDarkMode) => _box.write(_key, isDarkMode);
 
+  ///Gradients
+  LinearGradient get stroke => _loadThemeFromBox()
+      ? const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(90, 255, 255, 255)
+            ])
+      : const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+              Color.fromARGB(181, 0, 0, 0),
+              Color.fromARGB(121, 67, 67, 67)
+            ]);
+
   /// Switch theme and save to local storage
   void switchTheme() {
     Get.changeThemeMode(_loadThemeFromBox() ? ThemeMode.light : ThemeMode.dark);
@@ -34,14 +51,11 @@ class Themes {
     ],
   );
 
-  static const stroke = LinearGradient(
-      colors: [Color.fromARGB(121, 67, 67, 67), Color.fromARGB(181, 0, 0, 0)]);
-
   static final light = ThemeData.light().copyWith(
       backgroundColor: Colors.white,
       textTheme: TextTheme(
           displaySmall: GoogleFonts.notoSerif(
-              fontSize: 16,
+              fontSize: 24,
               color: Colors.black,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
@@ -74,7 +88,7 @@ class Themes {
       backgroundColor: Colors.black,
       textTheme: TextTheme(
           displaySmall: GoogleFonts.notoSerif(
-              fontSize: 16,
+              fontSize: 24,
               color: Colors.white,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
