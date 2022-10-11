@@ -29,4 +29,8 @@ class Strings {
 
   //Bottom bar
   final String news = "News Room";
+  final String myApartment = "My Apartment";
+  final String tasks = "Tasks";
+  final String events = "Events";
+  final String trending = "Trending";
 }

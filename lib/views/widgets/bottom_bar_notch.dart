@@ -66,7 +66,7 @@ class FABBottomAppBar extends GetView<BottomAppBarController> {
             SizedBox(height: iconSize),
             Text(
               centerItemText,
-              style: TextStyle(color: color),
+              style: Get.textTheme.labelMedium,
             ),
           ],
         ),
@@ -98,7 +98,7 @@ class FABBottomAppBar extends GetView<BottomAppBarController> {
                       size: iconSize)),
                   Obx(() => Text(
                         item.text,
-                        style: TextStyle(
+                        style: Get.textTheme.labelMedium?.copyWith(
                             color: controller.selectedIndex.value == index
                                 ? selectedColor
                                 : color),

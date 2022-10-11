@@ -87,7 +87,7 @@ class Themes {
       primaryColorDark: Colors.black,
       textTheme: TextTheme(
           displaySmall: GoogleFonts.notoSerif(
-              fontSize: 24,
+              fontSize: 16,
               color: Colors.black,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,

@@ -1,11 +1,39 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:trice/controller/main_controller.dart';
 
 class BottomAppBarController extends GetxController {
   var selectedIndex = 0.obs;
+  var fabClicked = false.obs;
+
+  PageController pageController = PageController();
   updateIndex(int index) {
-    Controller controller = Get.find();
-    controller.fabClicked.value = false;
+    switch (index) {
+      case 0:
+      case 1:
+        fabClicked.value = false;
+        pageController.animateToPage(index,
+            duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+        break;
+      case 5:
+        fabClicked.value = true;
+        pageController.animateToPage(2,
+            duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+        break;
+      default:
+        fabClicked.value = false;
+        pageController.animateToPage(index + 1,
+            duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+    }
+    if (index == 5) {
+      fabClicked.value = true;
+      pageController.animateToPage(2,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+    } else {}
     selectedIndex.value = index;
   }
+
+  // onPageChanged(int index) {
+  //  fabClicked.value = false;
+  //   selectedIndex.value = index;
+  // }
 }

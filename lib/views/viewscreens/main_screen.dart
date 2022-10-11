@@ -6,11 +6,16 @@ import 'package:trice/controller/bottom_app_bar_controller.dart';
 import 'package:trice/controller/main_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/domain/theme.dart';
+import 'package:trice/views/viewscreens/events/events.dart';
+import 'package:trice/views/viewscreens/my_apartment/my_apartment.dart';
+import 'package:trice/views/viewscreens/news_room/news_room.dart';
+import 'package:trice/views/viewscreens/tasks/tasks.dart';
+import 'package:trice/views/viewscreens/trending/trending.dart';
 import 'package:trice/views/widgets/bottom_bar_notch.dart';
 import 'package:trice/views/widgets/gradient_icon.dart';
 import 'package:trice/views/widgets/top_bar.dart';
 
-class MainScreen extends GetView<Controller> {
+class MainScreen extends GetView<BottomAppBarController> {
   const MainScreen({Key? key}) : super(key: key);
 
   @override
@@ -21,11 +26,23 @@ class MainScreen extends GetView<Controller> {
       // Status bar brightness (optional)
       statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
     ));
-    Get.put(Controller());
+
     Strings str = Strings();
-    BottomAppBarController bottomAppBarController = Get.find();
+
+    Get.put(BottomAppBarController());
     return Scaffold(
       appBar: const TriceTopBar(),
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: controller.pageController,
+        children: const [
+          NewsRoom(),
+          MyApartment(),
+          Tasks(),
+          Events(),
+          Trending()
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
           //Floating action button on Scaffold
           onPressed: null,
@@ -50,7 +67,7 @@ class MainScreen extends GetView<Controller> {
                           ]
                         : []),
                 child: GradientIcon(
-                    onPressed: controller.selectedFab,
+                    onPressed: () => controller.updateIndex(5),
                     icon: SvgPicture.asset(
                       "assets/icons/todo.svg",
                       color: Colors.black,
@@ -69,12 +86,12 @@ class MainScreen extends GetView<Controller> {
         backgroundColor: Get.theme.backgroundColor,
         notchedShape: const AutomaticNotchedShape(
             RoundedRectangleBorder(), StadiumBorder()),
-        onTabSelected: bottomAppBarController.updateIndex,
+        onTabSelected: controller.updateIndex,
         items: [
-          FABBottomAppBarItem(iconData: Icons.feed_rounded, text: 'News Room'),
-          FABBottomAppBarItem(iconData: Icons.layers, text: 'My Apartment'),
-          FABBottomAppBarItem(iconData: Icons.dashboard, text: 'Events'),
-          FABBottomAppBarItem(iconData: Icons.tag, text: 'Trending'),
+          FABBottomAppBarItem(iconData: Icons.feed_rounded, text: str.news),
+          FABBottomAppBarItem(iconData: Icons.layers, text: str.myApartment),
+          FABBottomAppBarItem(iconData: Icons.dashboard, text: str.events),
+          FABBottomAppBarItem(iconData: Icons.tag, text: str.trending),
         ],
       ),
     );
