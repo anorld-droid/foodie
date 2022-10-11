@@ -33,4 +33,5 @@ class Strings {
   final String tasks = "Tasks";
   final String events = "Events";
   final String trending = "Trending";
+  final String todoSvg = "assets/icons/todo.svg";
 }
