@@ -28,7 +28,8 @@ class TriceTopBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       backgroundColor: Get.theme.backgroundColor,
       actions: [
-        GradientIcon(() {},
+        GradientIcon(
+            onPressed: () {},
             icon: SvgPicture.asset(
               "assets/icons/duplicate.svg",
             ),

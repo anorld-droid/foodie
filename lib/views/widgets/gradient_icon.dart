@@ -6,8 +6,9 @@ class GradientIcon extends StatelessWidget {
   final double size;
   final Gradient gradient;
   final bool enableFeedback;
-  const GradientIcon(this.onPressed,
+  const GradientIcon(
       {Key? key,
+      this.onPressed,
       this.enableFeedback = true,
       required this.icon,
       required this.size,

@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
+import 'package:trice/controller/bottom_app_bar_controller.dart';
 
 class Controller extends GetxController {
   var count = 0.obs;
+  var fabClicked = false.obs;
   increment() => count++;
-  final _lastSelected = 'TAB: 0'.obs;
 
-  selectedTab(int index) {
-    _lastSelected.value = 'TAB: $index';
+  selectedFab() {
+    BottomAppBarController bottomAppBarController = Get.find();
+    bottomAppBarController.updateIndex(5);
+    fabClicked.toggle();
   }
 }
