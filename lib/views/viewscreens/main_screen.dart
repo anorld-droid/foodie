@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/bottom_app_bar_controller.dart';
-import 'package:trice/controller/main_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/domain/theme.dart';
 import 'package:trice/views/viewscreens/events/events.dart';
@@ -69,7 +68,7 @@ class MainScreen extends GetView<BottomAppBarController> {
                 child: GradientIcon(
                     onPressed: () => controller.updateIndex(5),
                     icon: SvgPicture.asset(
-                      "assets/icons/todo.svg",
+                      str.todoSvg,
                       color: Colors.black,
                     ),
                     size: 32,
@@ -80,7 +79,7 @@ class MainScreen extends GetView<BottomAppBarController> {
       //floating action button position to center
 
       bottomNavigationBar: FABBottomAppBar(
-        centerItemText: 'Tasks',
+        centerItemText: str.tasks,
         color: Get.theme.primaryColorDark,
         selectedColor: const Color.fromARGB(155, 0, 0, 0),
         backgroundColor: Get.theme.backgroundColor,
