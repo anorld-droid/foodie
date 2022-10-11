@@ -34,5 +34,5 @@ class SignInController extends GetxController {
 
   navigateToSignup() => Get.offNamed(signup);
 
-  navigateToNewsRoom() => Get.offNamed(newsRoom);
+  navigateToNewsRoom() => Get.offNamed(mainScreen);
 }
