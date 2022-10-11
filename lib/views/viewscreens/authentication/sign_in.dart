@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:trice/controller/authentication/sign_in_controller.dart';
-import 'package:trice/controller/main_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/views/viewscreens/authentication/widgets/curved_traingle.dart';
 
@@ -119,10 +118,10 @@ class SignIn extends GetView<SignInController> {
                                   )))),
                             ],
                           ),
-                          const Center(
+                          Center(
                             child: Icon(
                               Icons.fingerprint_outlined,
-                              color: Colors.white,
+                              color: Colors.white.withOpacity(0.5),
                               size: 100,
                             ),
                           ),
@@ -132,7 +131,7 @@ class SignIn extends GetView<SignInController> {
                               DefaultTextStyle(
                                   style: GoogleFonts.inter(
                                       fontStyle: FontStyle.normal,
-                                      color: Colors.white,
+                                      color: Colors.white.withOpacity(0.7),
                                       fontSize: 40.0,
                                       fontWeight: FontWeight.w700),
                                   child: Text(
@@ -169,7 +168,7 @@ class SignIn extends GetView<SignInController> {
                                     backgroundColor: Colors.black,
                                     highlightedColor: Colors.black,
                                     action: () =>
-                                        controller.usernameDialog(context),
+                                        controller.navigateToNewsRoom(),
                                     label: Text(
                                       str.changeUsername,
                                       textAlign: TextAlign.center,

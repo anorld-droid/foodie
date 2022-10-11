@@ -15,7 +15,7 @@ void main() => runApp(GetMaterialApp(
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeService().theme,
-      initialRoute: mainScreen,
+      initialRoute: root,
       getPages: [
         GetPage(name: root, page: () => const SignIn()),
         GetPage(name: signup, page: () => const SignUp()),
