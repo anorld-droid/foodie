@@ -130,35 +130,40 @@ class Briefs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 120,
+      width: 344,
       padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           color: Get.theme.backgroundColor,
           boxShadow: [
             BoxShadow(
               color: Get.theme.primaryColorDark.withOpacity(0.37),
-              spreadRadius: 0,
+              spreadRadius: 1,
               blurRadius: 12,
-              offset: const Offset(8, 0), // changes position of shadow
+              blurStyle: BlurStyle.inner,
+              offset: const Offset(2, 2), // changes position of shadow
             ),
           ]),
       child: Column(
         children: [
-          Container(
-            width: Get.width,
-            padding: const EdgeInsets.all(4),
-            child: Text(
-              brief.title,
-              style: Get.textTheme.bodyMedium,
-              maxLines: 5,
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              child: Text(
+                brief.title,
+                style: Get.textTheme.bodyMedium,
+                maxLines: 5,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+              ),
             ),
           ),
           Container(
-            width: Get.width,
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            alignment: AlignmentDirectional.center,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -185,31 +190,35 @@ class Briefs extends StatelessWidget {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    GradientIcon(
-                        onPressed: () {
-                          //Add user to likes list
-                        },
+                    SizedBox(
+                      width: 24,
+                      child: IconButton(
+                        onPressed: () {},
                         icon: const Icon(
                           //TODO: Change icon to filled if the user has liked the post
                           Icons.favorite_border_outlined,
                         ),
-                        size: 16,
-                        gradient: ThemeService().newsPostIcons),
+                        iconSize: 16,
+                        color: Get.theme.primaryColorDark,
+                      ),
+                    ),
                     const SizedBox(
                       width: 8,
                     ),
-                    GradientIcon(
-                        onPressed: () {
-                          //show bottom sheet with users name
-                        },
+                    SizedBox(
+                      width: 24,
+                      child: IconButton(
+                        onPressed: () {},
                         icon: const Icon(
                           //TODO: Change icon to filled if the user has liked the post
                           Icons.alternate_email,
-                          size: 16,
                         ),
-                        size: 16,
-                        gradient: ThemeService().newsPostIcons),
+                        iconSize: 16,
+                        color: Get.theme.primaryColorDark,
+                      ),
+                    ),
                     const SizedBox(
                       width: 14,
                     ),

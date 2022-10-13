@@ -114,7 +114,7 @@ class Themes {
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w500),
           labelSmall: GoogleFonts.montserrat(
-              fontSize: 12,
+              fontSize: 20,
               color: Colors.black,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
@@ -137,7 +137,7 @@ class Themes {
       primaryColorDark: Colors.white,
       textTheme: TextTheme(
           displaySmall: GoogleFonts.notoSerif(
-              fontSize: 24,
+              fontSize: 16,
               color: Colors.white,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
@@ -149,19 +149,19 @@ class Themes {
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w500),
           labelSmall: GoogleFonts.montserrat(
-              fontSize: 12,
+              fontSize: 20,
               color: Colors.white,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w400),
           bodyMedium: GoogleFonts.inter(
-              fontSize: 12,
+              fontSize: 18,
               color: Colors.white,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w400),
           bodySmall: GoogleFonts.rubik(
-              fontSize: 8,
+              fontSize: 14,
               color: Colors.white,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
