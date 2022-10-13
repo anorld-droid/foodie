@@ -47,6 +47,21 @@ class ThemeService {
               Color.fromARGB(255, 0, 0, 0),
               Color.fromARGB(255, 0, 0, 0),
             ]);
+  LinearGradient get newsPostIcons => _loadThemeFromBox()
+      ? const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+              Color.fromARGB(150, 255, 255, 255),
+              Color.fromARGB(150, 255, 255, 255),
+            ])
+      : const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+              Color.fromARGB(150, 0, 0, 0),
+              Color.fromARGB(150, 0, 0, 0),
+            ]);
   LinearGradient get floatingABGradient => _loadThemeFromBox()
       ? const LinearGradient(
           begin: Alignment.topLeft,
@@ -105,13 +120,13 @@ class Themes {
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w400),
           bodyMedium: GoogleFonts.inter(
-              fontSize: 12,
+              fontSize: 18,
               color: Colors.black,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w400),
           bodySmall: GoogleFonts.rubik(
-              fontSize: 8,
+              fontSize: 14,
               color: Colors.black,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,

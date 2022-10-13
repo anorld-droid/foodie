@@ -14,72 +14,111 @@ class NewsPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Column(
+    return InkWell(
+      onTap: () {},
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: Get.width,
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  newsPostData.title,
-                  style: Get.textTheme.bodyMedium,
-                  maxLines: 3,
+                SizedBox(
+                  width: Get.width - 104,
+                  child: Text(
+                    newsPostData.title,
+                    style: Get.textTheme.bodyMedium,
+                    maxLines: 3,
+                    textAlign: TextAlign.start,
+                    softWrap: true,
+                  ),
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    newsPostData.imageUrl,
+                    height: 56.0,
+                    width: 80.0,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: Get.width,
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(2.0),
+                      child: Image.network(
+                        newsPostData.user.profilePhoto,
+                        height: 20.0,
+                        width: 24.0,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      "${newsPostData.user.name}·${newsPostData.datePublished}",
+                      style: Get.textTheme.bodySmall!.copyWith(
+                          color:
+                              Get.textTheme.bodySmall!.color!.withAlpha(170)),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    GradientIcon(
+                        onPressed: () {
+                          //Add user to likes list
+                        },
+                        icon: const Icon(
+                          //TODO: Change icon to filled if the user has liked the post
+                          Icons.favorite_border_outlined,
+                        ),
+                        size: 16,
+                        gradient: ThemeService().newsPostIcons),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    GradientIcon(
+                        onPressed: () {
+                          //show bottom sheet with users name
+                        },
+                        icon: const Icon(
+                          //TODO: Change icon to filled if the user has liked the post
+                          Icons.alternate_email,
+                          size: 16,
+                        ),
+                        size: 16,
+                        gradient: ThemeService().newsPostIcons),
+                    const SizedBox(
+                      width: 14,
+                    ),
+                  ],
                 )
               ],
             ),
-            Container(
-              height: 40,
-              width: 56,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              child: Image.network(newsPostData.imageUrl),
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Row(
-          children: [
-            Container(
-              height: 16,
-              width: 16,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              child: Image.network(newsPostData.user.profilePhoto),
-            ),
-            Text(
-              "${newsPostData.user.name}·${newsPostData.datePublished}",
-              style: Get.textTheme.bodySmall,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GradientIcon(
-                    onPressed: () {
-                      //Add user to likes list
-                    },
-                    icon: const Icon(
-                      //TODO: Change icon to filled if the user has liked the post
-                      Icons.favorite_border_outlined,
-                    ),
-                    size: 16,
-                    gradient: ThemeService().stroke),
-                GradientIcon(
-                    onPressed: () {
-                      //show bottom sheet with users name
-                    },
-                    icon: const Icon(
-                      //TODO: Change icon to filled if the user has liked the post
-                      Icons.alternate_email,
-                    ),
-                    size: 16,
-                    gradient: ThemeService().stroke)
-              ],
-            )
-          ],
-        )
-      ],
+          ),
+          Divider(
+            color: Get.theme.primaryColorDark.withAlpha(50), //color of divider
+            height: 16, //height spacing of divider
+            thickness: 1, //thickness of divier line
+            indent: 2, //spacing at the start of divider
+            endIndent: 2, //spacing at the end of divider
+          )
+        ],
+      ),
     );
   }
 }
@@ -90,39 +129,97 @@ class Briefs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          brief.title,
-          style: Get.textTheme.bodyMedium,
-          maxLines: 5,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            GradientIcon(
-                onPressed: () {
-                  //Add user to likes list
-                },
-                icon: const Icon(
-                  //TODO: Change icon to filled if the user has liked the post
-                  Icons.favorite_border_outlined,
+    return Container(
+      padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: Get.theme.backgroundColor,
+          boxShadow: [
+            BoxShadow(
+              color: Get.theme.primaryColorDark.withOpacity(0.37),
+              spreadRadius: 0,
+              blurRadius: 12,
+              offset: const Offset(8, 0), // changes position of shadow
+            ),
+          ]),
+      child: Column(
+        children: [
+          Container(
+            width: Get.width,
+            padding: const EdgeInsets.all(4),
+            child: Text(
+              brief.title,
+              style: Get.textTheme.bodyMedium,
+              maxLines: 5,
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+            ),
+          ),
+          Container(
+            width: Get.width,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.network(
+                        brief.user.profilePhoto,
+                        height: 19.47,
+                        width: 21.33,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      "${brief.user.name}·${brief.datePublished}",
+                      style: Get.textTheme.bodySmall!.copyWith(
+                          color:
+                              Get.textTheme.bodySmall!.color!.withAlpha(170)),
+                    ),
+                  ],
                 ),
-                size: 16,
-                gradient: ThemeService().stroke),
-            GradientIcon(
-                onPressed: () {
-                  //show bottom sheet with users name
-                },
-                icon: const Icon(
-                  //TODO: Change icon to filled if the user has liked the post
-                  Icons.alternate_email,
-                ),
-                size: 16,
-                gradient: ThemeService().stroke)
-          ],
-        )
-      ],
+                Row(
+                  children: [
+                    GradientIcon(
+                        onPressed: () {
+                          //Add user to likes list
+                        },
+                        icon: const Icon(
+                          //TODO: Change icon to filled if the user has liked the post
+                          Icons.favorite_border_outlined,
+                        ),
+                        size: 16,
+                        gradient: ThemeService().newsPostIcons),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    GradientIcon(
+                        onPressed: () {
+                          //show bottom sheet with users name
+                        },
+                        icon: const Icon(
+                          //TODO: Change icon to filled if the user has liked the post
+                          Icons.alternate_email,
+                          size: 16,
+                        ),
+                        size: 16,
+                        gradient: ThemeService().newsPostIcons),
+                    const SizedBox(
+                      width: 14,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
