@@ -7,3 +7,4 @@ const myApartment = "/my_apartment/my_apartment";
 const tasks = "/tasks/tasks";
 const events = "/events/events";
 const trending = "/trending/trending";
+const newsDetail = "/news_details";

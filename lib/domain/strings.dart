@@ -36,5 +36,5 @@ class Strings {
   final String todoSvg = "assets/icons/todo.svg";
 
   //News Room
-  final String headline = "Headlines";
+  final String headline = "News Brief";
 }

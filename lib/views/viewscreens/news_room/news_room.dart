@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trice/controller/newsRoomController.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/model/news/briefs.dart';
-import 'package:trice/model/news/main_news_layout.dart';
+import 'package:trice/model/data/briefs.dart';
+import 'package:trice/model/data/news_post_data.dart';
 import 'package:trice/views/viewscreens/news_room/widgets.dart';
 
-class NewsRoom extends StatelessWidget {
+class NewsRoom extends GetView<NewsRoomController> {
   const NewsRoom({Key? key}) : super(key: key);
 
   @override
@@ -17,8 +18,8 @@ class NewsRoom extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            NewsPost(newsPostData: news()[0]),
-            NewsPost(newsPostData: news()[2]),
+            NewsPostCard(newsPostModel: posts[0]),
+            NewsPostCard(newsPostModel: posts[1]),
             const SizedBox(
               height: 8,
             ),
@@ -38,9 +39,9 @@ class NewsRoom extends StatelessWidget {
                   physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: briefs().length,
+                  itemCount: briefs.length,
                   itemBuilder: (BuildContext context, int index) =>
-                      Briefs(brief: briefs()[index])),
+                      NewsBriefsCard(newsBriefModel: briefs[index])),
             ),
             Divider(
               color:
@@ -53,9 +54,11 @@ class NewsRoom extends StatelessWidget {
             ListView.builder(
                 physics: const ClampingScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: news().length,
-                itemBuilder: (BuildContext context, int index) =>
-                    NewsPost(newsPostData: news()[index])),
+                itemCount: posts.length - 2,
+                itemBuilder: (BuildContext context, int index) {
+                  var newList = posts.skip(2);
+                  return NewsPostCard(newsPostModel: newList.elementAt(index));
+                }),
           ],
         ),
       ),

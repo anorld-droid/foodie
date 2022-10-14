@@ -102,7 +102,7 @@ class Themes {
       primaryColorDark: Colors.black,
       textTheme: TextTheme(
           displaySmall: GoogleFonts.notoSerif(
-              fontSize: 16,
+              fontSize: 24,
               color: Colors.black,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,
@@ -137,7 +137,7 @@ class Themes {
       primaryColorDark: Colors.white,
       textTheme: TextTheme(
           displaySmall: GoogleFonts.notoSerif(
-              fontSize: 16,
+              fontSize: 24,
               color: Colors.white,
               letterSpacing: 1.0,
               fontStyle: FontStyle.normal,

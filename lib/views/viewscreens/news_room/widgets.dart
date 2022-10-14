@@ -1,21 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import 'package:trice/domain/theme.dart';
-import 'package:trice/model/news/briefs.dart';
-import 'package:trice/model/news/main_news_layout.dart';
-import 'package:trice/views/widgets/gradient_icon.dart';
 
-class NewsPost extends StatelessWidget {
-  final NewsPostData newsPostData;
-  const NewsPost({required this.newsPostData, Key? key}) : super(key: key);
+import 'package:get/get.dart';
+import 'package:trice/controller/newsRoomController.dart';
+import 'package:trice/model/news/news_brief.dart';
+import 'package:trice/model/news/news_post.dart';
+
+class NewsPostCard extends GetView<NewsRoomController> {
+  final NewsPostModel newsPostModel;
+  const NewsPostCard({required this.newsPostModel, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.put(
+      NewsRoomController(),
+    );
     return InkWell(
-      onTap: () {},
+      onTap: () => controller.navigateToNews(newsPostModel),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,7 +29,7 @@ class NewsPost extends StatelessWidget {
                 SizedBox(
                   width: Get.width - 104,
                   child: Text(
-                    newsPostData.title,
+                    newsPostModel.title,
                     style: Get.textTheme.bodyMedium,
                     maxLines: 3,
                     textAlign: TextAlign.start,
@@ -39,7 +39,7 @@ class NewsPost extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
-                    newsPostData.imageUrl,
+                    newsPostModel.imageId,
                     height: 56.0,
                     width: 80.0,
                     fit: BoxFit.fill,
@@ -56,20 +56,32 @@ class NewsPost extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(2.0),
-                      child: Image.network(
-                        newsPostData.user.profilePhoto,
-                        height: 20.0,
-                        width: 24.0,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+                    newsPostModel.metadata.author.profilePhoto == null
+                        ? Container(
+                            height: 20.0,
+                            width: 24.0,
+                            decoration: BoxDecoration(
+                                color:
+                                    Get.theme.primaryColorDark.withOpacity(0.4),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(100))),
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(2.0),
+                            child: Image.network(
+                              newsPostModel.metadata.author.profilePhoto ?? "",
+                              height: 20.0,
+                              width: 24.0,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                     const SizedBox(
                       width: 4,
                     ),
                     Text(
-                      "${newsPostData.user.name}·${newsPostData.datePublished}",
+                      newsPostModel.publication?.name == null
+                          ? newsPostModel.metadata.author.name
+                          : "${newsPostModel.metadata.author.name} · ${newsPostModel.publication?.name}",
                       style: Get.textTheme.bodySmall!.copyWith(
                           color:
                               Get.textTheme.bodySmall!.color!.withAlpha(170)),
@@ -78,30 +90,33 @@ class NewsPost extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    GradientIcon(
-                        onPressed: () {
-                          //Add user to likes list
-                        },
+                    SizedBox(
+                      width: 24,
+                      child: IconButton(
+                        onPressed: () {},
                         icon: const Icon(
                           //TODO: Change icon to filled if the user has liked the post
                           Icons.favorite_border_outlined,
                         ),
-                        size: 16,
-                        gradient: ThemeService().newsPostIcons),
+                        iconSize: 16,
+                        color: Get.theme.primaryColorDark,
+                      ),
+                    ),
                     const SizedBox(
                       width: 8,
                     ),
-                    GradientIcon(
-                        onPressed: () {
-                          //show bottom sheet with users name
-                        },
+                    SizedBox(
+                      width: 24,
+                      child: IconButton(
+                        onPressed: () {},
                         icon: const Icon(
                           //TODO: Change icon to filled if the user has liked the post
                           Icons.alternate_email,
-                          size: 16,
                         ),
-                        size: 16,
-                        gradient: ThemeService().newsPostIcons),
+                        iconSize: 16,
+                        color: Get.theme.primaryColorDark,
+                      ),
+                    ),
                     const SizedBox(
                       width: 14,
                     ),
@@ -123,9 +138,10 @@ class NewsPost extends StatelessWidget {
   }
 }
 
-class Briefs extends StatelessWidget {
-  final Brief brief;
-  const Briefs({Key? key, required this.brief}) : super(key: key);
+class NewsBriefsCard extends StatelessWidget {
+  final NewsBriefModel newsBriefModel;
+  const NewsBriefsCard({Key? key, required this.newsBriefModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +168,7 @@ class Briefs extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(4),
               child: Text(
-                brief.title,
+                newsBriefModel.title,
                 style: Get.textTheme.bodyMedium,
                 maxLines: 5,
                 textAlign: TextAlign.start,
@@ -169,20 +185,30 @@ class Briefs extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        brief.user.profilePhoto,
-                        height: 19.47,
-                        width: 21.33,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+                    newsBriefModel.author.profilePhoto == null
+                        ? Container(
+                            height: 19.47,
+                            width: 21.33,
+                            decoration: BoxDecoration(
+                                color:
+                                    Get.theme.primaryColorDark.withOpacity(0.4),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(100))),
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(2.0),
+                            child: Image.network(
+                              newsBriefModel.author.profilePhoto ?? "",
+                              height: 19.47,
+                              width: 21.33,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                     const SizedBox(
                       width: 4,
                     ),
                     Text(
-                      "${brief.user.name}·${brief.datePublished}",
+                      "${newsBriefModel.author.name}·${newsBriefModel.publication.name}",
                       style: Get.textTheme.bodySmall!.copyWith(
                           color:
                               Get.textTheme.bodySmall!.color!.withAlpha(170)),
@@ -231,4 +257,51 @@ class Briefs extends StatelessWidget {
       ),
     );
   }
+}
+
+class DetailsTopBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final String profilePhoto;
+  const DetailsTopBar(
+      {Key? key, required this.title, required this.profilePhoto})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: Row(
+        children: [
+          SizedBox(
+            height: 32,
+            width: 32,
+            child: IconButton(
+              onPressed: () => Get.back(),
+              padding: const EdgeInsets.only(left: 8),
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                color: Get.theme.primaryColorDark,
+                size: 24,
+              ),
+              iconSize: 24,
+            ),
+          ),
+          Container(
+            alignment: AlignmentDirectional.centerStart,
+            padding: const EdgeInsets.only(left: 8),
+            child: CircleAvatar(
+              backgroundColor: Colors.white38,
+              radius: 24,
+              backgroundImage: NetworkImage(profilePhoto),
+            ),
+          ),
+        ],
+      ),
+      leadingWidth: 88,
+      title: Text(title, style: Get.textTheme.displaySmall),
+      backgroundColor: Get.theme.backgroundColor,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(56);
 }
