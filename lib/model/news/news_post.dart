@@ -74,11 +74,10 @@ class Paragraph {
 
 class Markup {
   final MarkupType type;
-  final int start;
-  final int end;
+  final String text;
   String? href = null;
 
-  Markup(this.type, this.start, this.end, this.href);
+  Markup(this.type, this.text, this.href);
 }
 
 enum MarkupType {
