@@ -118,14 +118,12 @@ class Themes {
             fontSize: 28,
             color: Colors.black,
             letterSpacing: 0,
-            height: 36,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w500),
         headlineSmall: GoogleFonts.inter(
             fontSize: 24,
             color: Colors.black,
             letterSpacing: 0,
-            height: 36,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w500),
         labelMedium: GoogleFonts.inter(
@@ -144,7 +142,6 @@ class Themes {
             fontSize: 16,
             color: Colors.black,
             letterSpacing: 1.0,
-            height: 24,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
         bodyMedium: GoogleFonts.inter(
@@ -159,11 +156,10 @@ class Themes {
             letterSpacing: 1.0,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
-        headline1: GoogleFonts.montserrat(
+        displayMedium: GoogleFonts.montserrat(
             fontSize: 16,
             color: Colors.black,
             letterSpacing: 1.0,
-            height: 24,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
       ));
@@ -172,40 +168,65 @@ class Themes {
       brightness: Brightness.light,
       primaryColorDark: Colors.white,
       textTheme: TextTheme(
-          displaySmall: GoogleFonts.notoSerif(
-              fontSize: 24,
-              color: Colors.white,
-              letterSpacing: 1.0,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w400),
-          headlineLarge: GoogleFonts.inter(
-              fontSize: 32,
-              color: Colors.white,
-              letterSpacing: 1.0,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w500),
-          labelMedium: GoogleFonts.inter(
-              fontSize: 12,
-              color: Colors.white,
-              letterSpacing: 1.0,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w500),
-          labelSmall: GoogleFonts.montserrat(
-              fontSize: 20,
-              color: Colors.white,
-              letterSpacing: 1.0,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w400),
-          bodyMedium: GoogleFonts.inter(
-              fontSize: 18,
-              color: Colors.white,
-              letterSpacing: 1.0,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w400),
-          bodySmall: GoogleFonts.rubik(
-              fontSize: 14,
-              color: Colors.white,
-              letterSpacing: 1.0,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w400)));
+        displaySmall: GoogleFonts.notoSerif(
+            fontSize: 24,
+            color: Colors.white,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w400),
+        headlineLarge: GoogleFonts.inter(
+            fontSize: 32,
+            color: Colors.white,
+            letterSpacing: 0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w500),
+        headlineMedium: GoogleFonts.inter(
+            fontSize: 28,
+            color: Colors.white,
+            letterSpacing: 0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w500),
+        headlineSmall: GoogleFonts.inter(
+            fontSize: 24,
+            color: Colors.white,
+            letterSpacing: 0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w500),
+        labelMedium: GoogleFonts.inter(
+            fontSize: 12,
+            color: Colors.white,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w500),
+        labelSmall: GoogleFonts.montserrat(
+            fontSize: 20,
+            color: Colors.white,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w400),
+        bodyLarge: GoogleFonts.inter(
+            fontSize: 16,
+            color: Colors.white,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w400),
+        bodyMedium: GoogleFonts.inter(
+            fontSize: 18,
+            color: Colors.white,
+            letterSpacing: .5,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w400),
+        bodySmall: GoogleFonts.rubik(
+            fontSize: 14,
+            color: Colors.white,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w400),
+        displayMedium: GoogleFonts.montserrat(
+            fontSize: 16,
+            color: Colors.white,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w400),
+      ));
 }

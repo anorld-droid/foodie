@@ -44,7 +44,7 @@ extension on ParagraphType {
         break;
 
       case ParagraphType.codeBlock:
-        textStyle = Get.textTheme.headline1!;
+        textStyle = Get.textTheme.displayMedium!;
         break;
       case ParagraphType.quote:
         textStyle = Get.textTheme.bodyLarge!;

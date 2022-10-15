@@ -18,56 +18,75 @@ class NewsDetail extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: Get.width,
-                height: 100,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                  Radius.circular(30),
-                )),
-                child: Image.network(newsPostModel.imageId),
+              const SizedBox(
+                height: 16,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image.network(
+                  newsPostModel.imageId,
+                  width: Get.width - 40,
+                  height: 200,
+                  fit: BoxFit.fill,
+                ),
               ),
               const SizedBox(
                 height: 16,
               ),
-              Text(
-                newsPostModel.title,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  newsPostModel.title,
+                  style: Get.textTheme.headlineMedium,
+                ),
               ),
               const SizedBox(
                 height: 8,
               ),
               newsPostModel.subtitle != null
-                  ? SizedBox(
-                      height: 16,
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
                       child: Text(
                         newsPostModel.subtitle ?? "",
+                        softWrap: true,
+                        style: Get.textTheme.headlineSmall,
                       ),
                     )
                   : const SizedBox(
                       height: 2,
                     ),
+              const SizedBox(
+                height: 12,
+              ),
               Row(
                 children: [
-                  Container(
-                    height: 19.47,
-                    width: 21.33,
-                    decoration: BoxDecoration(
-                        color: Get.theme.primaryColorDark.withOpacity(0.4),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(100))),
-                    child: const Icon(Icons.account_circle),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Icon(
+                    Icons.account_circle,
+                    color: Get.theme.primaryColorDark,
+                    size: 32,
                   ),
                   const SizedBox(
                     width: 8,
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(
                         height: 4,
                       ),
-                      Text(newsPostModel.metadata.author.name),
                       Text(
-                          "${newsPostModel.metadata.date} · ${newsPostModel.metadata.readTimeMinutes} mins")
+                        newsPostModel.metadata.author.name.trim(),
+                        style: Get.textTheme.bodyMedium,
+                      ),
+                      Text(
+                        "${newsPostModel.metadata.date} · ${newsPostModel.metadata.readTimeMinutes} mins",
+                        style: Get.textTheme.bodySmall,
+                      )
                     ],
                   )
                 ],
