@@ -4,7 +4,7 @@ import 'package:trice/controller/newsRoomController.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/model/data/briefs.dart';
 import 'package:trice/model/data/news_post_data.dart';
-import 'package:trice/views/viewscreens/news_room/widgets.dart';
+import 'package:trice/views/viewscreens/news_room/widgets/news.dart';
 
 class NewsRoom extends GetView<NewsRoomController> {
   const NewsRoom({Key? key}) : super(key: key);

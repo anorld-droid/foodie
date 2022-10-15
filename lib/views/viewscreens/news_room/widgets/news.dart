@@ -81,7 +81,7 @@ class NewsPostCard extends GetView<NewsRoomController> {
                     Text(
                       newsPostModel.publication?.name == null
                           ? newsPostModel.metadata.author.name
-                          : "${newsPostModel.metadata.author.name} · ${newsPostModel.publication?.name}",
+                          : "${newsPostModel.metadata.author.name} · ${newsPostModel.metadata.readTimeMinutes} mins",
                       style: Get.textTheme.bodySmall!.copyWith(
                           color:
                               Get.textTheme.bodySmall!.color!.withAlpha(170)),
@@ -194,6 +194,7 @@ class NewsBriefsCard extends StatelessWidget {
                                     Get.theme.primaryColorDark.withOpacity(0.4),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(100))),
+                            child: const Icon(Icons.account_circle),
                           )
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(2.0),
@@ -208,7 +209,7 @@ class NewsBriefsCard extends StatelessWidget {
                       width: 4,
                     ),
                     Text(
-                      "${newsBriefModel.author.name}·${newsBriefModel.publication.name}",
+                      "${newsBriefModel.author.name} · ${newsBriefModel.publication.name}",
                       style: Get.textTheme.bodySmall!.copyWith(
                           color:
                               Get.textTheme.bodySmall!.color!.withAlpha(170)),

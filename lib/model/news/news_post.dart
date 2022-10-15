@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class NewsPostModel {
   final String id;
   final String title;
@@ -47,21 +49,31 @@ class Metadata {
   final String date;
   final int readTimeMinutes;
 
-  Metadata(this.author, this.date, this.readTimeMinutes);
+  Metadata(
+    this.author,
+    this.date,
+    this.readTimeMinutes,
+  );
 }
 
 class PostAuthor {
   final String name;
   final String? profilePhoto;
 
-  PostAuthor(this.name, this.profilePhoto);
+  PostAuthor(
+    this.name,
+    this.profilePhoto,
+  );
 }
 
 class Publication {
   final String name;
   final String logoUrl;
 
-  Publication(this.name, this.logoUrl);
+  Publication(
+    this.name,
+    this.logoUrl,
+  );
 }
 
 class Paragraph {
@@ -69,7 +81,11 @@ class Paragraph {
   final String text;
   final List<Markup> markups;
 
-  Paragraph(this.type, this.text, this.markups);
+  Paragraph(
+    this.type,
+    this.text,
+    this.markups,
+  );
 }
 
 class Markup {
@@ -77,7 +93,11 @@ class Markup {
   final String text;
   String? href = null;
 
-  Markup(this.type, this.text, this.href);
+  Markup(
+    this.type,
+    this.text,
+    this.href,
+  );
 }
 
 enum MarkupType {
@@ -96,4 +116,24 @@ enum ParagraphType {
   codeBlock,
   quote,
   bullet,
+}
+
+class ParagraphStyling {
+  final TextStyle textStyle;
+  final ParagraphStyle paragraphStyle;
+  final int trailingPadding;
+
+  ParagraphStyling({
+    required this.textStyle,
+    required this.paragraphStyle,
+    required this.trailingPadding,
+  });
+}
+
+class ParagraphStyle {
+  final int textIndent;
+
+  ParagraphStyle({
+    required this.textIndent,
+  });
 }
