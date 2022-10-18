@@ -36,14 +36,17 @@ var paragraphsPost1 = [
       []),
   Paragraph(
       ParagraphType.header, "If you cannot remove it, just rename it!", []),
-  Paragraph(
-      ParagraphType.text,
-      "At I/O I was lucky enough to attend the “Android Studio: Tips and Tricks” talk where Ivan Gravilovic, from Google, shared some amazing tips. One of these was a possible solution for my problem: setting a custom path for my modules.",
-      [Markup(MarkupType.italic, "Android Studio: Tips and Tricks", null)]),
-  Paragraph(
-      ParagraphType.text,
-      "In this particular case our settings.gradle becomes:",
-      [Markup(MarkupType.code, "settings.gradle", null)]),
+  Paragraph(ParagraphType.text, "At I/O I was lucky enough to attend the ", [
+    Markup(MarkupType.italic, '"Android Studio: Tips and Tricks"', null),
+    Markup(
+        MarkupType.text,
+        " talk where Ivan Gravilovic, from Google, shared some amazing tips. One of these was a possible solution for my problem: setting a custom path for my modules.",
+        null)
+  ]),
+  Paragraph(ParagraphType.text, "In this particular case our", [
+    Markup(MarkupType.code, " settings.gradle", null),
+    Markup(MarkupType.text, " becomes:", null)
+  ]),
   Paragraph(ParagraphType.codeBlock, """
         include ':app'
         include ':module1'
@@ -51,6 +54,7 @@ var paragraphsPost1 = [
         include ':module1'
         include ':module1'
         """, []),
+  Paragraph(ParagraphType.text, "And the layout in Android Studio is now:", []),
   Paragraph(ParagraphType.codeBlock, """
         // Set a custom path for the four features modules.
         // This avoid to have an empty "features" module in  Android Studio.
@@ -59,7 +63,6 @@ var paragraphsPost1 = [
         project(":module3").projectDir=new File(rootDir, "features/module3")
         project(":module4").projectDir=new File(rootDir, "features/module4")
         """, []),
-  Paragraph(ParagraphType.text, "And the layout in Android Studio is now:", []),
   Paragraph(ParagraphType.header, "Conclusion", []),
   Paragraph(
       ParagraphType.text,

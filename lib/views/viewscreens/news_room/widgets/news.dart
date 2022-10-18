@@ -65,6 +65,10 @@ class NewsPostCard extends GetView<NewsRoomController> {
                                     Get.theme.primaryColorDark.withOpacity(0.4),
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(100))),
+                            child: const SizedBox(
+                              width: 24,
+                              height: 20,
+                            ),
                           )
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(2.0),

@@ -100,12 +100,7 @@ class Markup {
   );
 }
 
-enum MarkupType {
-  link,
-  code,
-  italic,
-  bold,
-}
+enum MarkupType { link, code, italic, bold, text }
 
 enum ParagraphType {
   title,
@@ -121,7 +116,7 @@ enum ParagraphType {
 class ParagraphStyling {
   final TextStyle textStyle;
   final ParagraphStyle paragraphStyle;
-  final int trailingPadding;
+  final double trailingPadding;
 
   ParagraphStyling({
     required this.textStyle,
@@ -131,9 +126,16 @@ class ParagraphStyling {
 }
 
 class ParagraphStyle {
-  final int textIndent;
+  final double textIndent;
 
   ParagraphStyle({
     required this.textIndent,
   });
+}
+
+class RichTextString {
+  final String text;
+  final List<TextSpan> textSpans;
+
+  RichTextString({required this.text, required this.textSpans});
 }

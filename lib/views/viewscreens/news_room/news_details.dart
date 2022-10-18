@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:trice/controller/news_details_controller.dart';
+import 'package:trice/model/data/news_post_data.dart';
 import 'package:trice/model/news/news_post.dart';
+import 'package:trice/views/viewscreens/news_room/widgets/details.dart';
 import 'package:trice/views/viewscreens/news_room/widgets/news.dart';
 
-class NewsDetail extends StatelessWidget {
+class NewsDetail extends GetView<NewsDetailController> {
   final NewsPostModel newsPostModel;
   const NewsDetail({Key? key, required this.newsPostModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.put(
+      NewsDetailController(newsPostModel: newsPostModel),
+    );
     return Scaffold(
         appBar: DetailsTopBar(
             title: newsPostModel.publication?.name ?? "",
@@ -94,6 +100,9 @@ class NewsDetail extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
+              Column(
+                children: controller.paragraphWidgets,
+              )
             ],
           ),
         ));
