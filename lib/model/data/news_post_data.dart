@@ -83,9 +83,7 @@ var paragraphsPost1 = [
     Markup(MarkupType.text, " Tips and Tricks (Google I/O’19)", null)
   ]),
   Paragraph(ParagraphType.bullet, "", [
-    Markup(
-        MarkupType.link,
-        "On Demand module codelab, On Demand module codelab, On Demand module codelab, On Demand module codelab",
+    Markup(MarkupType.link, "On Demand module codelab",
         "https://codelabs.developers.google.com/codelabs/on-demand-dynamic-delivery/index.html")
   ]),
   Paragraph(ParagraphType.bullet, "", [
