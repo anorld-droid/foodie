@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trice/controller/news_details_controller.dart';
 import 'package:trice/model/news/news_post.dart';
 
 class ParagraphCard extends StatelessWidget {
@@ -36,6 +38,7 @@ Widget paragraphLayout(Paragraph paragraph) {
           paragraphindent: styling.paragraphStyle.textIndent,
           paragraphStyle: styling.textStyle);
       break;
+
     default:
       child = Container(
         alignment: AlignmentDirectional.centerStart,
@@ -68,7 +71,7 @@ extension on ParagraphType {
   ParagraphStyling getTextAndParagraphStyle() {
     TextStyle textStyle = Get.textTheme.bodyLarge!;
     ParagraphStyle paragraphStyle = ParagraphStyle(textIndent: 10);
-    double trailingPadding = 24;
+    double trailingPadding = 16;
     switch (this) {
       case ParagraphType.caption:
         textStyle = Get.textTheme.labelMedium!;
@@ -78,20 +81,21 @@ extension on ParagraphType {
         break;
       case ParagraphType.subHead:
         textStyle = Get.textTheme.headlineSmall!;
-        trailingPadding = 16;
+        trailingPadding = 12;
         break;
       case ParagraphType.text:
         textStyle = Get.textTheme.bodyLarge!;
         break;
       case ParagraphType.header:
         textStyle = Get.textTheme.headlineMedium!;
-        trailingPadding = 16;
+        trailingPadding = 12;
         break;
       case ParagraphType.codeBlock:
         textStyle = Get.textTheme.displayMedium!;
         break;
       case ParagraphType.quote:
-        textStyle = Get.textTheme.bodyLarge!;
+        textStyle =
+            Get.textTheme.bodyLarge!.copyWith(fontStyle: FontStyle.italic);
         break;
       default:
         paragraphStyle = ParagraphStyle(textIndent: 8);
@@ -107,6 +111,8 @@ extension on ParagraphType {
 
 extension on Markup {
   TextSpan toTextSpan() {
+    NewsDetailController newsDetailController = Get.find();
+
     TextSpan textSpan = TextSpan();
     switch (type) {
       case MarkupType.bold:
@@ -132,7 +138,11 @@ extension on Markup {
         textSpan = TextSpan(
             text: text,
             style: Get.textTheme.bodyLarge!
-                .copyWith(decoration: TextDecoration.underline));
+                .copyWith(decoration: TextDecoration.underline),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                newsDetailController.launchURL(href);
+              });
         break;
       default:
         textSpan = TextSpan(text: text, style: Get.textTheme.bodyLarge!);
@@ -204,22 +214,36 @@ class BulletParagraph extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: paragraphindent),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-              width: 8,
-              height: 8,
-              decoration: BoxDecoration(
-                color: Get.theme.primaryColorDark,
-                borderRadius: BorderRadius.circular(100),
+          Column(
+            children: [
+              const SizedBox(
+                height: 4,
               ),
-              child: const SizedBox(
-                width: 8,
-                height: 8,
-              )),
+              Container(
+                  // alignment: AlignmentDirectional.topStart,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                  ),
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Get.theme.primaryColorDark,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: const SizedBox(
+                    width: 8,
+                    height: 8,
+                  )),
+            ],
+          ),
           richTextString.textSpans.isNotEmpty
               ? Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                    ),
                     child: RichText(
                         text: TextSpan(
                             text: richTextString.text,
@@ -229,7 +253,8 @@ class BulletParagraph extends StatelessWidget {
                 )
               : Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(4),
+                    alignment: AlignmentDirectional.topStart,
+                    padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Text(
                       richTextString.text,
                       style: paragraphStyle,

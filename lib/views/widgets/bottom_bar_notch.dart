@@ -10,16 +10,17 @@ class FABBottomAppBarItem {
 
 class FABBottomAppBar extends GetView<BottomAppBarController> {
   FABBottomAppBar({
+    Key? key,
     required this.items,
     required this.centerItemText,
-    this.height: 60.0,
-    this.iconSize: 24.0,
+    this.height = 60.0,
+    this.iconSize = 24.0,
     required this.backgroundColor,
     required this.color,
     required this.selectedColor,
     required this.notchedShape,
     required this.onTabSelected,
-  }) {
+  }) : super(key: key) {
     assert(items.length == 2 || items.length == 4);
   }
   final List<FABBottomAppBarItem> items;

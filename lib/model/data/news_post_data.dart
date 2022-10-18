@@ -70,22 +70,25 @@ var paragraphsPost1 = [
       []),
   Paragraph(
       ParagraphType.quote,
-      "You can find this update in the latest version of the on-demand modules codelab.",
+      "\"You can find this update in the latest version of the on-demand modules ",
       [
         Markup(MarkupType.link, "codelab",
-            "https://codelabs.developers.google.com/codelabs/on-demand-dynamic-delivery/index.html")
+            "https://codelabs.developers.google.com/codelabs/on-demand-dynamic-delivery/index.html"),
+        Markup(MarkupType.text, ".\"", null)
       ]),
   Paragraph(ParagraphType.header, "Resources", []),
-  Paragraph(
-      ParagraphType.bullet, "Android Studio: Tips and Tricks (Google I/O’19)", [
+  Paragraph(ParagraphType.bullet, "", [
     Markup(MarkupType.link, "Android Studio:",
-        "https://www.youtube.com/watch?v=ihF-PwDfRZ4&list=PLWz5rJ2EKKc9FfSQIRXEWyWpHD6TtwxMM&index=32&t=0s")
+        "https://www.youtube.com/watch?v=ihF-PwDfRZ4&list=PLWz5rJ2EKKc9FfSQIRXEWyWpHD6TtwxMM&index=32&t=0s"),
+    Markup(MarkupType.text, " Tips and Tricks (Google I/O’19)", null)
   ]),
-  Paragraph(ParagraphType.bullet, "On Demand module codelab", [
-    Markup(MarkupType.link, "On Demand module codelab",
+  Paragraph(ParagraphType.bullet, "", [
+    Markup(
+        MarkupType.link,
+        "On Demand module codelab, On Demand module codelab, On Demand module codelab, On Demand module codelab",
         "https://codelabs.developers.google.com/codelabs/on-demand-dynamic-delivery/index.html")
   ]),
-  Paragraph(ParagraphType.bullet, "Patchwork Plaid — A modularization story", [
+  Paragraph(ParagraphType.bullet, "", [
     Markup(MarkupType.link, "Patchwork Plaid — A modularization story",
         "https://medium.com/androiddevelopers/a-patchwork-plaid-monolith-to-modularized-app-60235d9f212e")
   ])
