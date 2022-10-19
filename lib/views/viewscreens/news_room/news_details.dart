@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/news_details_controller.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/model/data/news_post_data.dart';
 import 'package:trice/model/news/news_post.dart';
 import 'package:trice/views/viewscreens/news_room/widgets/details.dart';
-import 'package:trice/views/viewscreens/news_room/widgets/news.dart';
 
 class NewsDetail extends GetView<NewsDetailController> {
   final NewsPostModel newsPostModel;
@@ -21,6 +17,7 @@ class NewsDetail extends GetView<NewsDetailController> {
     );
     Strings str = Strings();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: DetailsTopBar(
           title: newsPostModel.publication?.name ?? "",
           profilePhoto: newsPostModel.publication?.logoUrl),
@@ -117,7 +114,7 @@ class NewsDetail extends GetView<NewsDetailController> {
         Widget returnWidget = const SizedBox();
         controller.extendFAB.value
             ? returnWidget = FloatingActionButton.extended(
-                onPressed: () {},
+                onPressed: controller.commentBottomSheet,
                 label: Text(
                   str.comments,
                   style: Get.textTheme.bodyMedium!
@@ -136,7 +133,7 @@ class NewsDetail extends GetView<NewsDetailController> {
                     FloatingActionButton(
                       enableFeedback: true,
                       tooltip: str.toolTip,
-                      onPressed: () {},
+                      onPressed: controller.toolTip,
                       backgroundColor: Get.theme.primaryColorDark,
                       child: SvgPicture.asset(
                         str.commentSvg,

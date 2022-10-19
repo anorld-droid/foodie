@@ -8,6 +8,12 @@ var florina = PostAuthor("Florina Muntenescu",
     "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
 var jose = PostAuthor("Jose Alcérreca",
     "https://plus.unsplash.com/premium_photo-1663054688278-ebf09d654d33?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
+var curtis = PostAuthor("Curtis Pepeko",
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
+var bram = PostAuthor("Bramuel Bramhud",
+    "https://plus.unsplash.com/premium_photo-1663054688278-ebf09d654d33?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
+var shalom = PostAuthor("Shalom Shikwekwe",
+    "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
 
 var publication = Publication("Android Developers",
     "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
@@ -575,6 +581,41 @@ var paragraphsPost5 = [
       [])
 ];
 
+var comment1 = Comment(
+  metadata: Metadata(pietro, "August 02", 1),
+  text:
+      "Collections eagerly evaruate your data while sequences do so lazily. Depending on the size of your data, pick the one that fits best: collections — for small lists or sequences — for larger ones, and pay attention to the order of the transformations.",
+);
+var comment2 = Comment(
+  metadata: Metadata(manuel, "August 02", 1),
+  text:
+      "Collections eagerly evaruate your data while sequences do so lazily. Depending on the size of your data, pick the one that fits best: collections — for small lists or sequences — for larger ones, and pay attention to the order of the transformations.",
+);
+var comment3 = Comment(
+  metadata: Metadata(florina, "August 02", 1),
+  text:
+      "Collections eagerly evaruate your data while sequences do so lazily. Depending on the size of your data, pick the one that fits best: collections — for small lists or sequences — for larger ones, and pay attention to the order of the transformations.",
+);
+var comment4 = Comment(
+  metadata: Metadata(jose, "August 02", 1),
+  text:
+      "Collections eagerly evaruate your data while sequences do so lazily. Depending on the size of your data, pick the one that fits best: collections — for small lists or sequences — for larger ones, and pay attention to the order of the transformations.",
+);
+var comment5 = Comment(
+  metadata: Metadata(curtis, "August 02", 1),
+  text:
+      "Collections eagerly evaruate your data while sequences do so lazily. Depending on the size of your data, pick the one that fits best: collections — for small lists or sequences — for larger ones, and pay attention to the order of the transformations.",
+);
+var comment6 = Comment(
+  metadata: Metadata(bram, "August 02", 1),
+  text:
+      "Collections eagerly evaruate your data while sequences do so lazily. Depending on the size of your data, pick the one that fits best: collections — for small lists or sequences — for larger ones, and pay attention to the order of the transformations.",
+);
+var comment7 = Comment(
+  metadata: Metadata(shalom, "August 02", 1),
+  text:
+      "Collections eagerly evaruate your data while sequences do so lazily. Depending on the size of your data, pick the one that fits best: collections — for small lists or sequences — for larger ones, and pay attention to the order of the transformations.",
+);
 var post1 = NewsPostModel(
     id: "dc523f0ed25c",
     title: "A Little Thing about Android Module Paths",
@@ -585,6 +626,7 @@ var post1 = NewsPostModel(
     publication: publication,
     metadata: Metadata(pietro, "August 02", 1),
     paragraphs: paragraphsPost1,
+    comments: [comment1, comment2, comment4],
     imageId:
         "https://images.unsplash.com/photo-1624594593821-c6fdf3ea69ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHVpfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
     imageThumbId: "R.drawable.post_1_thumb");
@@ -599,6 +641,7 @@ var post2 = NewsPostModel(
     publication: publication,
     metadata: Metadata(manuel, "July 30", 3),
     paragraphs: paragraphsPost2,
+    comments: [comment3, comment5, comment7, comment1, comment4, comment2],
     imageId:
         "https://images.unsplash.com/photo-1644329968124-4c68f17c21e3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8dWl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
     imageThumbId: "R.drawable.post_2_thumb");
@@ -611,6 +654,7 @@ var post3 = NewsPostModel(
     url:
         "https://medium.com/androiddevelopers/from-java-programming-language-to-kotlin-the-idiomatic-way-ac552dcc1741",
     publication: publication,
+    comments: [comment3, comment1, comment4, comment2],
     metadata: Metadata(florina, "July 09", 1),
     paragraphs: paragraphsPost3,
     imageId:
@@ -626,6 +670,7 @@ var post4 = NewsPostModel(
         "https://medium.com/androiddevelopers/locale-changes-and-the-androidviewmodel-antipattern-84eb677660d9",
     publication: publication,
     metadata: Metadata(jose, "April 02", 1),
+    comments: [comment3, comment2, comment7, comment1, comment2],
     paragraphs: paragraphsPost4,
     imageId:
         "https://images.unsplash.com/photo-1638864615951-360884c3a277?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fHVpfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
@@ -641,6 +686,7 @@ var post5 = NewsPostModel(
     publication: publication,
     metadata: Metadata(florina, "July 24", 4),
     paragraphs: paragraphsPost5,
+    comments: [comment3, comment5, comment7, comment1, comment4, comment2],
     imageId:
         "https://images.unsplash.com/photo-1603969280040-3bbb77278211?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
     imageThumbId: "R.drawable.post_5_thumb");

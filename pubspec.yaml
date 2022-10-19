@@ -39,6 +39,7 @@ dependencies:
   slider_button: ^2.0.0
   flutter_svg: ^0.19.3
   url_launcher: ^6.1.6
+  flutter_chat_bubble: ^2.0.0
 
 dev_dependencies:
   flutter_test:

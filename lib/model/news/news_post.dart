@@ -10,9 +10,11 @@ class NewsPostModel {
   final List<Paragraph> paragraphs;
   final String imageId;
   final String imageThumbId;
+  final List<Comment> comments;
 
   NewsPostModel(
-      {required this.id,
+      {required this.comments,
+      required this.id,
       required this.title,
       required this.subtitle,
       required this.url,
@@ -22,17 +24,17 @@ class NewsPostModel {
       required this.imageId,
       required this.imageThumbId});
 
-  NewsPostModel copyWith({
-    String? id,
-    String? title,
-    String? subtitle,
-    String? url,
-    Publication? publication,
-    Metadata? metadata,
-    List<Paragraph>? paragraphs,
-    String? imageId,
-    String? imageThumbId,
-  }) =>
+  NewsPostModel copyWith(
+          {String? id,
+          String? title,
+          String? subtitle,
+          String? url,
+          Publication? publication,
+          Metadata? metadata,
+          List<Paragraph>? paragraphs,
+          String? imageId,
+          String? imageThumbId,
+          List<Comment>? comments}) =>
       NewsPostModel(
           id: id ?? this.id,
           title: title ?? this.title,
@@ -41,7 +43,8 @@ class NewsPostModel {
           metadata: metadata ?? this.metadata,
           paragraphs: paragraphs ?? this.paragraphs,
           imageId: imageId ?? this.imageId,
-          imageThumbId: imageThumbId ?? this.imageThumbId);
+          imageThumbId: imageThumbId ?? this.imageThumbId,
+          comments: comments ?? this.comments);
 }
 
 class Metadata {
@@ -86,6 +89,14 @@ class Paragraph {
     this.text,
     this.markups,
   );
+}
+
+class Comment {
+  final String text;
+  final String? imageUrl;
+  final Metadata metadata;
+
+  Comment({required this.metadata, required this.text, this.imageUrl});
 }
 
 class Markup {

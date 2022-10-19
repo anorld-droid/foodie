@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:get/get.dart';
+import 'package:trice/domain/strings.dart';
+import 'package:trice/model/data/news_post_data.dart';
 import 'package:trice/model/news/news_post.dart';
+import 'package:trice/views/viewscreens/news_room/widgets/comment.dart';
 import 'package:trice/views/viewscreens/news_room/widgets/details.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailController extends GetxController {
+  PostAuthor me = jose;
   NewsPostModel newsPostModel;
   NewsDetailController({required this.newsPostModel});
+
   late List<Widget> paragraphWidgets = List.empty(growable: true);
+
   int commentLength = 7;
+
   final scrollController = ScrollController().obs;
-  var _maxScrollHeight = Get.height.obs;
+  final _maxScrollHeight = Get.height.obs;
+
+  Strings str = Strings();
 
   var extendFAB = false.obs;
+
+  final TextEditingController commentController = TextEditingController();
+  List<Widget> comments = List.empty(growable: true);
 
   @override
   void onInit() {
@@ -30,6 +43,22 @@ class NewsDetailController extends GetxController {
         extendFAB.value = false;
       }
     });
+
+    for (var comment in newsPostModel.comments) {
+      comments.add(
+        CommentCard(
+          comment: comment,
+          color: comment.metadata.author == me
+              ? Colors.black.withOpacity(.85)
+              : Colors.white.withOpacity(.85),
+          bubbleType: comment.metadata.author == me
+              ? BubbleType.sendBubble
+              : BubbleType.receiverBubble,
+          textColor:
+              comment.metadata.author == me ? Colors.white : Colors.black,
+        ),
+      );
+    }
   }
 
   void launchURL(href) async {
@@ -37,5 +66,23 @@ class NewsDetailController extends GetxController {
     await canLaunchUrl(url)
         ? await launchUrl(url, mode: LaunchMode.inAppWebView)
         : throw 'Could not launch $url';
+  }
+
+  toolTip() {
+    Get.snackbar(
+      str.toolTipTitle,
+      str.toolTip,
+      snackPosition: SnackPosition.BOTTOM,
+      duration: const Duration(seconds: 5),
+      isDismissible: true,
+    );
+  }
+
+  commentBottomSheet() {
+    Get.bottomSheet(const CommentScreen(),
+        backgroundColor: Get.theme.backgroundColor,
+        clipBehavior: Clip.hardEdge,
+        elevation: 4,
+        isScrollControlled: true);
   }
 }

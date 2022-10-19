@@ -5,6 +5,59 @@ import 'package:get/get.dart';
 import 'package:trice/controller/news_details_controller.dart';
 import 'package:trice/model/news/news_post.dart';
 
+class DetailsTopBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final String? profilePhoto;
+  const DetailsTopBar(
+      {Key? key, required this.title, required this.profilePhoto})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: Row(
+        children: [
+          SizedBox(
+            height: 32,
+            width: 32,
+            child: IconButton(
+              onPressed: () => Get.back(),
+              padding: const EdgeInsets.only(left: 8),
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                color: Get.theme.primaryColorDark,
+                size: 24,
+              ),
+              iconSize: 24,
+            ),
+          ),
+          const SizedBox(width: 8),
+          profilePhoto == null
+              ? Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Get.theme.primaryColorDark.withOpacity(.15),
+                      borderRadius: BorderRadius.circular(100)),
+                  alignment: AlignmentDirectional.centerStart,
+                  padding: const EdgeInsets.only(left: 8),
+                )
+              : CircleAvatar(
+                  radius: 24,
+                  backgroundImage: NetworkImage(profilePhoto!),
+                ),
+        ],
+      ),
+      leadingWidth: 88,
+      title: Text(title, style: Get.textTheme.displaySmall),
+      backgroundColor: Get.theme.backgroundColor,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(56);
+}
+
 class ParagraphCard extends StatelessWidget {
   final Paragraph paragraph;
   const ParagraphCard({Key? key, required this.paragraph}) : super(key: key);
