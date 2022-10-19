@@ -19,14 +19,15 @@ class NewsDetailController extends GetxController {
 
   final scrollController = ScrollController().obs;
   final _maxScrollHeight = Get.height.obs;
-
+  late var comments;
   Strings str = Strings();
 
   var extendFAB = false.obs;
 
   final TextEditingController commentController = TextEditingController();
-  List<Widget> comments = List.empty(growable: true);
+  List<Widget> commentsWidgets = List.empty(growable: true);
 
+  final now = DateTime.now();
   @override
   void onInit() {
     super.onInit();
@@ -44,8 +45,8 @@ class NewsDetailController extends GetxController {
       }
     });
 
-    for (var comment in newsPostModel.comments) {
-      comments.add(
+    for (var comment in comments) {
+      commentsWidgets.add(
         CommentCard(
           comment: comment,
           color: comment.metadata.author == me
@@ -84,5 +85,16 @@ class NewsDetailController extends GetxController {
         clipBehavior: Clip.hardEdge,
         elevation: 4,
         isScrollControlled: true);
+  }
+
+  addComment(String text, NewsPostModel newsPostModel) {
+    Comment comment = Comment(
+      metadata: Metadata(me, "$now", 1),
+      text: text,
+    );
+
+    newsPostModel.comments.add(
+      comment,
+    );
   }
 }

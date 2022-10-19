@@ -18,8 +18,10 @@ class CommentScreen extends GetView<NewsDetailController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-        child: Column(
-          children: controller.comments,
+        child: Obx(
+          () => Column(
+            children: controller.commentsWidgets,
+          ),
         ),
       ),
       bottomNavigationBar: SafeArea(
@@ -41,9 +43,8 @@ class CommentScreen extends GetView<NewsDetailController> {
               child: TextField(
                 controller: controller.commentController,
                 style: Get.textTheme.bodySmall,
-                decoration: const InputDecoration(
-                    hintText:
-                        "Comment as myUsername", //TODO: change to username var
+                decoration: InputDecoration(
+                    hintText: "Comment as ${controller.me.name}",
                     border: InputBorder.none),
               ),
             )),
@@ -103,13 +104,12 @@ class CommentCard extends StatelessWidget {
                 children: [
                   Container(
                       padding: const EdgeInsets.all(8.0),
-                      color: color,
                       width: Get.width - 10,
                       child: RichText(
                         text: TextSpan(
                           text: comment.text,
-                          style: Get.textTheme.bodySmall?.copyWith(
-                              color: textColor, backgroundColor: color),
+                          style: Get.textTheme.bodySmall
+                              ?.copyWith(color: textColor),
                         ),
                       )),
                   const SizedBox(
