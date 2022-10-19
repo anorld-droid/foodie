@@ -9,8 +9,9 @@ class NewsDetailController extends GetxController {
   NewsDetailController({required this.newsPostModel});
   late List<Widget> paragraphWidgets = List.empty(growable: true);
   int commentLength = 7;
-  final double _maxScrollHeight = Get.height * 0.90;
   final scrollController = ScrollController().obs;
+  var _maxScrollHeight = Get.height.obs;
+
   var extendFAB = false.obs;
 
   @override
@@ -19,8 +20,11 @@ class NewsDetailController extends GetxController {
     for (var paragraph in newsPostModel.paragraphs) {
       paragraphWidgets.add(ParagraphCard(paragraph: paragraph));
     }
+
     scrollController.value.addListener(() {
-      if (scrollController.value.offset >= _maxScrollHeight) {
+      _maxScrollHeight.value =
+          scrollController.value.position.maxScrollExtent * 0.90;
+      if (scrollController.value.offset >= _maxScrollHeight.value) {
         extendFAB.value = true;
       } else {
         extendFAB.value = false;
