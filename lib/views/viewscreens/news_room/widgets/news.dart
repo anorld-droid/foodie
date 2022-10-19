@@ -266,7 +266,7 @@ class NewsBriefsCard extends StatelessWidget {
 
 class DetailsTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String profilePhoto;
+  final String? profilePhoto;
   const DetailsTopBar(
       {Key? key, required this.title, required this.profilePhoto})
       : super(key: key);
@@ -290,15 +290,21 @@ class DetailsTopBar extends StatelessWidget implements PreferredSizeWidget {
               iconSize: 24,
             ),
           ),
-          Container(
-            alignment: AlignmentDirectional.centerStart,
-            padding: const EdgeInsets.only(left: 8),
-            child: CircleAvatar(
-              backgroundColor: Colors.white38,
-              radius: 24,
-              backgroundImage: NetworkImage(profilePhoto),
-            ),
-          ),
+          const SizedBox(width: 8),
+          profilePhoto == null
+              ? Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Get.theme.primaryColorDark.withOpacity(.15),
+                      borderRadius: BorderRadius.circular(100)),
+                  alignment: AlignmentDirectional.centerStart,
+                  padding: const EdgeInsets.only(left: 8),
+                )
+              : CircleAvatar(
+                  radius: 24,
+                  backgroundImage: NetworkImage(profilePhoto!),
+                ),
         ],
       ),
       leadingWidth: 88,

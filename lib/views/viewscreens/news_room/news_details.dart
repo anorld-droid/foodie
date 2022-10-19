@@ -20,7 +20,7 @@ class NewsDetail extends GetView<NewsDetailController> {
     return Scaffold(
         appBar: DetailsTopBar(
             title: newsPostModel.publication?.name ?? "",
-            profilePhoto: "newsPostModel.metadata.author.profilePhoto"),
+            profilePhoto: newsPostModel.publication?.logoUrl),
         body: SingleChildScrollView(
           child: Column(
             children: [
