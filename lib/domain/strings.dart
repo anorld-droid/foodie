@@ -37,4 +37,9 @@ class Strings {
 
   //News Room
   final String headline = "News Brief";
+
+  //News Details
+  final String comments = "Comments";
+  final String commentSvg = "assets/icons/comments.svg";
+  final String toolTip = "You can only comment after reading the whole post.";
 }
