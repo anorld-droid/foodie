@@ -43,4 +43,8 @@ class Strings {
   final String commentSvg = "assets/icons/comments.svg";
   final String toolTip = "You can only comment after reading the whole post.";
   final String toolTipTitle = "Keep Reading";
+
+  //Comments Screen
+  final String post = "Post";
+  final String hintText = "Comment as";
 }

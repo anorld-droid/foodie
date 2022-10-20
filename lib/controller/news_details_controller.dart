@@ -1,3 +1,4 @@
+import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:get/get.dart';
@@ -17,15 +18,15 @@ class NewsDetailController extends GetxController {
 
   int commentLength = 7;
 
-  final scrollController = ScrollController().obs;
+  ScrollController scrollController = ScrollController();
+  ScrollController commentScrollController = ScrollController();
   final _maxScrollHeight = Get.height.obs;
-  late var comments;
   Strings str = Strings();
 
   var extendFAB = false.obs;
 
   final TextEditingController commentController = TextEditingController();
-  List<Widget> commentsWidgets = List.empty(growable: true);
+  RxList<Widget> commentsWidgets = <Widget>[].obs;
 
   final now = DateTime.now();
   @override
@@ -35,17 +36,16 @@ class NewsDetailController extends GetxController {
       paragraphWidgets.add(ParagraphCard(paragraph: paragraph));
     }
 
-    scrollController.value.addListener(() {
-      _maxScrollHeight.value =
-          scrollController.value.position.maxScrollExtent * 0.90;
-      if (scrollController.value.offset >= _maxScrollHeight.value) {
+    scrollController.addListener(() {
+      _maxScrollHeight.value = scrollController.position.maxScrollExtent * 0.90;
+      if (scrollController.offset >= _maxScrollHeight.value) {
         extendFAB.value = true;
       } else {
         extendFAB.value = false;
       }
     });
 
-    for (var comment in comments) {
+    for (var comment in newsPostModel.comments) {
       commentsWidgets.add(
         CommentCard(
           comment: comment,
@@ -87,14 +87,24 @@ class NewsDetailController extends GetxController {
         isScrollControlled: true);
   }
 
-  addComment(String text, NewsPostModel newsPostModel) {
+  addComment() {
     Comment comment = Comment(
-      metadata: Metadata(me, "$now", 1),
-      text: text,
+      metadata: Metadata(me, now.format('F j `Y'), 1),
+      text: commentController.text,
     );
-
+    commentsWidgets.add(CommentCard(
+      comment: comment,
+      color: Colors.black.withOpacity(.85),
+      bubbleType: BubbleType.sendBubble,
+      textColor: Colors.white,
+    ));
     newsPostModel.comments.add(
       comment,
     );
+    commentController.clear();
+    commentScrollController.animateTo(
+        commentScrollController.position.maxScrollExtent + 100,
+        duration: const Duration(microseconds: 100),
+        curve: Curves.easeInBack);
   }
 }

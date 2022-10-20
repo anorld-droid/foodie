@@ -22,7 +22,7 @@ class NewsDetail extends GetView<NewsDetailController> {
           title: newsPostModel.publication?.name ?? "",
           profilePhoto: newsPostModel.publication?.logoUrl),
       body: SingleChildScrollView(
-        controller: controller.scrollController.value,
+        controller: controller.scrollController,
         child: Column(
           children: [
             const SizedBox(

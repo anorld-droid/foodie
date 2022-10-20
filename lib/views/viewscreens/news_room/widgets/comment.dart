@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_2.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/news_details_controller.dart';
+import 'package:trice/domain/strings.dart';
 import 'package:trice/model/news/news_post.dart';
 
 class CommentScreen extends GetView<NewsDetailController> {
@@ -15,9 +13,11 @@ class CommentScreen extends GetView<NewsDetailController> {
   @override
   Widget build(BuildContext context) {
     NewsDetailController controller = Get.find();
+    Strings str = Strings();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
+        controller: controller.commentScrollController,
         child: Obx(
           () => Column(
             children: controller.commentsWidgets,
@@ -30,11 +30,9 @@ class CommentScreen extends GetView<NewsDetailController> {
         padding: const EdgeInsets.only(left: 16, right: 8),
         child: Row(
           children: [
-            const CircleAvatar(
-              //My username
-              backgroundImage: NetworkImage(
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zmx1dHRlciUyMGxvZ28lMjAlMjB0ZWNofGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-              ),
+            CircleAvatar(
+              //My profile image username
+              backgroundImage: NetworkImage(controller.me.profilePhoto!),
               radius: 18,
             ),
             Expanded(
@@ -44,13 +42,13 @@ class CommentScreen extends GetView<NewsDetailController> {
                 controller: controller.commentController,
                 style: Get.textTheme.bodySmall,
                 decoration: InputDecoration(
-                    hintText: "Comment as ${controller.me.name}",
+                    hintText: "${str.hintText} ${controller.me.name}",
                     border: InputBorder.none),
               ),
             )),
             InkWell(
               onTap: () async {
-                //Add to comments
+                controller.addComment();
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -58,7 +56,7 @@ class CommentScreen extends GetView<NewsDetailController> {
                     borderRadius: BorderRadius.circular(4),
                     color: Get.theme.primaryColorDark),
                 child: Text(
-                  "Post",
+                  str.post,
                   style: TextStyle(color: Get.theme.backgroundColor),
                 ),
               ),
