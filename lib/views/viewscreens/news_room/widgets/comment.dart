@@ -19,8 +19,11 @@ class CommentScreen extends GetView<NewsDetailController> {
       body: SingleChildScrollView(
         controller: controller.commentScrollController,
         child: Obx(
-          () => Column(
-            children: controller.commentsWidgets,
+          () => Container(
+            padding: const EdgeInsets.only(top: 30),
+            child: Column(
+              children: controller.commentsWidgets,
+            ),
           ),
         ),
       ),
