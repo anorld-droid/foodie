@@ -9,3 +9,4 @@ const eventsScreen = "/events/events";
 const trendingScreen = "/trending/trending";
 const newsDetailScreen = "/news_details";
 const briefsScreen = "/briefs";
+const searchApartment = "/search_apartment";

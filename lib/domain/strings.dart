@@ -53,4 +53,6 @@ class Strings {
   final String balance = "Balance (Ksh)";
   final String due = "Due";
   final String notifications = "Notifications";
+  final String search = "Search";
+  final String contact = "Inquire";
 }

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trice/controller/apartment_controller.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/model/apartment.dart';
+import 'package:trice/model/apartment/apartment.dart';
 import 'package:trice/views/viewscreens/my_apartment/widgets.dart';
 
-class MyApartment extends StatelessWidget {
+class MyApartment extends GetView<ApartmentController> {
   final ApartmentModel apartmentModel;
   const MyApartment({Key? key, required this.apartmentModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ApartmentController());
     Strings str = Strings();
     return Scaffold(
         body: SingleChildScrollView(

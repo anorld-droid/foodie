@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:trice/views/routing/routes.dart';
 
 class BottomAppBarController extends GetxController {
   var selectedIndex = 0.obs;
   var fabClicked = false.obs;
 
+  TextEditingController searchController = TextEditingController();
   PageController pageController = PageController();
   updateIndex(int index) {
     switch (index) {
@@ -32,8 +34,7 @@ class BottomAppBarController extends GetxController {
     selectedIndex.value = index;
   }
 
-  // onPageChanged(int index) {
-  //  fabClicked.value = false;
-  //   selectedIndex.value = index;
-  // }
+  navigateToSearch() {
+    Get.toNamed(searchApartment);
+  }
 }

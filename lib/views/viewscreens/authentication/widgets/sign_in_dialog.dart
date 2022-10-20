@@ -35,19 +35,16 @@ class SignInDialog extends GetView<SignInController> {
                   width: Get.width / 3,
                   color: Colors.transparent,
                   child: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    decoration: BoxDecoration(
+                        color: Get.theme.primaryColorDark,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30))),
                     child: Center(
                       child: Text(
                         str.contin,
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                            fontStyle: FontStyle.normal,
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            letterSpacing: 4.0,
-                            fontWeight: FontWeight.w600),
+                        style: Get.textTheme.headlineSmall
+                            ?.copyWith(color: Get.theme.backgroundColor),
                       ),
                     ),
                   )),

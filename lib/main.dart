@@ -7,6 +7,7 @@ import 'package:trice/views/viewscreens/authentication/sign_up.dart';
 import 'package:trice/views/viewscreens/events/events.dart';
 import 'package:trice/views/viewscreens/main_screen.dart';
 import 'package:trice/views/viewscreens/my_apartment/my_apartment.dart';
+import 'package:trice/views/viewscreens/my_apartment/search_apartments.dart';
 import 'package:trice/views/viewscreens/news_room/briefs.dart';
 import 'package:trice/views/viewscreens/news_room/news_details.dart';
 import 'package:trice/views/viewscreens/news_room/news_room.dart';
@@ -32,5 +33,6 @@ void main() => runApp(GetMaterialApp(
             name: newsDetailScreen,
             page: () => NewsDetail(newsPostModel: Get.arguments)),
         GetPage(name: briefsScreen, page: () => const BriefScreen()),
+        GetPage(name: searchApartment, page: (() => const SearchApartments())),
       ],
     ));
