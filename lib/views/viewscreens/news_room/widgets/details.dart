@@ -15,6 +15,7 @@ class DetailsTopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       leading: Row(
         children: [
           SizedBox(

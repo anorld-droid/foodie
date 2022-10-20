@@ -89,7 +89,7 @@ class NewsDetailController extends GetxController {
 
   addComment() {
     Comment comment = Comment(
-      metadata: Metadata(me, now.format('F j `Y'), 1),
+      metadata: Metadata(me, now.format('M j, `y'), 1),
       text: commentController.text,
     );
     commentsWidgets.add(CommentCard(

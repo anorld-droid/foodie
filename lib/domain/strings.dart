@@ -47,4 +47,9 @@ class Strings {
   //Comments Screen
   final String post = "Post";
   final String hintText = "Comment as";
+
+  // My Apartments Screen
+  final String rentAmount = "Rent Amount (Ksh)";
+  final String balance = "Balance (Ksh)";
+  final String due = "Due";
 }
