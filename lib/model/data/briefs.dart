@@ -3,7 +3,8 @@ import 'package:trice/model/news/news_post.dart';
 
 List<NewsBriefModel> briefs = [
   NewsBriefModel(
-      title: " Being two separate inner and outer Scrollables, a",
+      title:
+          "[formatAfter] can be set to a [Duration] of time to return a standard formatted date/time stamp, via the [DateTimeFormat.format] method, if the difference in time is greater than the duration specified.By default, date/time stamps will be formatted to the [AmericanDateTimeStamp.abbrWithComma] constant. A different formatting notation can be provided via the [format] parameter.",
       author: PostAuthor(
         "Microsoft Inc.",
         "https://images.unsplash.com/photo-1640763502425-7668dc1e4023?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8bWljcm9zb2Z0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",

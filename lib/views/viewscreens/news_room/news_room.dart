@@ -11,6 +11,7 @@ class NewsRoom extends GetView<NewsRoomController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(NewsRoomController());
     Strings str = Strings();
     return Scaffold(
       body: SingleChildScrollView(
@@ -23,25 +24,47 @@ class NewsRoom extends GetView<NewsRoomController> {
             const SizedBox(
               height: 8,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                str.headline,
-                style: Get.textTheme.labelSmall,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    str.headline,
+                    style: Get.textTheme.labelSmall,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: IconButton(
+                        padding: const EdgeInsets.only(right: 8),
+                        onPressed: controller.navigateToBriefs,
+                        icon: Icon(
+                          Icons.arrow_forward,
+                          color: Get.theme.primaryColorDark,
+                        )),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 8,
             ),
             SizedBox(
-              height: 172.0,
+              height: 188.0,
               child: ListView.builder(
                   physics: const ClampingScrollPhysics(),
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: briefs.length,
                   itemBuilder: (BuildContext context, int index) =>
-                      NewsBriefsCard(newsBriefModel: briefs[index])),
+                      NewsBriefsCard(
+                        newsBriefModel: briefs[index],
+                        maxLines: 6,
+                      )),
             ),
             Divider(
               color:

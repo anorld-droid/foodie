@@ -144,14 +144,15 @@ class NewsPostCard extends GetView<NewsRoomController> {
 
 class NewsBriefsCard extends StatelessWidget {
   final NewsBriefModel newsBriefModel;
-  const NewsBriefsCard({Key? key, required this.newsBriefModel})
+  final int maxLines;
+  const NewsBriefsCard(
+      {Key? key, required this.newsBriefModel, required this.maxLines})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
-      width: 344,
+      constraints: BoxConstraints(maxWidth: Get.width - 16, minHeight: 170),
       padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -168,17 +169,15 @@ class NewsBriefsCard extends StatelessWidget {
           ]),
       child: Column(
         children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              child: Text(
-                newsBriefModel.title,
-                style: Get.textTheme.bodyMedium,
-                maxLines: 5,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-                softWrap: true,
-              ),
+          Container(
+            padding: const EdgeInsets.all(4),
+            child: Text(
+              newsBriefModel.title,
+              style: Get.textTheme.bodyMedium,
+              maxLines: maxLines,
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
             ),
           ),
           Container(

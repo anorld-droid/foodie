@@ -32,7 +32,7 @@ class SignInController extends GetxController {
     }
   }
 
-  navigateToSignup() => Get.offNamed(signup);
+  navigateToSignup() => Get.offNamed(signupScreen);
 
   navigateToNewsRoom() => Get.offNamed(mainScreen);
 }
