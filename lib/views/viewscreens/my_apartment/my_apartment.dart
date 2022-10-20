@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/model/apartment.dart';
+import 'package:trice/views/viewscreens/my_apartment/widgets.dart';
 
 class MyApartment extends StatelessWidget {
   final ApartmentModel apartmentModel;
@@ -13,6 +14,7 @@ class MyApartment extends StatelessWidget {
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           const SizedBox(
             height: 32,
@@ -30,7 +32,7 @@ class MyApartment extends StatelessWidget {
                       const SizedBox(width: 16),
                       Container(
                         alignment: AlignmentDirectional.center,
-                        height: 175,
+                        height: 150,
                         width: Get.width - 32,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.0),
@@ -151,6 +153,45 @@ class MyApartment extends StatelessWidget {
                           NetworkImage(apartmentModel.careTaker.profilePhoto!),
                     ),
             ],
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Row(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+                child: Text(
+                  str.notifications,
+                  style: Get.textTheme.labelSmall,
+                ),
+              ),
+            ],
+          ),
+          Container(
+            alignment: AlignmentDirectional.topStart,
+            constraints:
+                BoxConstraints(minHeight: 375, maxWidth: Get.width - 32),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+                color: Get.theme.backgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: Get.theme.primaryColorDark.withOpacity(0.25),
+                    spreadRadius: 0,
+                    blurRadius: 10,
+                    offset: const Offset(2, 2), // changes position of shadow
+                  ),
+                ]),
+            child: ListView.builder(
+                physics: const ClampingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: apartmentModel.notifications.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return NotificationCard(
+                      notification: apartmentModel.notifications[index]);
+                }),
           )
         ],
       ),

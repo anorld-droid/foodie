@@ -45,6 +45,13 @@ class MainScreen extends GetView<BottomAppBarController> {
               NewsRoom(),
               MyApartment(
                 apartmentModel: ApartmentModel(
+                    notifications: [
+                      NotificationModel(
+                          text: "Payment due next monday", date: "Oct 25, `22"),
+                      NotificationModel(
+                          text: "Nafungua maji sai, upto 5 jioni leo, ",
+                          date: "Oct 20, `22")
+                    ],
                     rent: "200k",
                     balance: "1k",
                     due: "Dec 25, `22",

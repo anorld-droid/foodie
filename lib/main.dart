@@ -14,6 +14,7 @@ import 'package:trice/views/viewscreens/tasks/tasks.dart';
 import 'package:trice/views/viewscreens/trending/trending.dart';
 
 void main() => runApp(GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeService().theme,

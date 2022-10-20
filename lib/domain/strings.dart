@@ -52,4 +52,5 @@ class Strings {
   final String rentAmount = "Rent Amount (Ksh)";
   final String balance = "Balance (Ksh)";
   final String due = "Due";
+  final String notifications = "Notifications";
 }
