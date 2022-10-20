@@ -36,6 +36,14 @@ class MainScreen extends GetView<BottomAppBarController> {
               ? AppBar(
                   elevation: 0,
                   backgroundColor: Get.theme.backgroundColor.withOpacity(.12),
+                  actions: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.search,
+                          color: Get.theme.primaryColorDark.withAlpha(100),
+                        ))
+                  ],
                 )
               : const TriceTopBar(),
           body: PageView(
