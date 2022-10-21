@@ -8,7 +8,8 @@ import 'package:trice/domain/theme.dart';
 import 'gradient_icon.dart';
 
 class TriceTopBar extends StatelessWidget implements PreferredSizeWidget {
-  const TriceTopBar({Key? key}) : super(key: key);
+  final String accountBal;
+  const TriceTopBar({Key? key, this.accountBal = "200.00k"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +17,20 @@ class TriceTopBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       leading: Container(
-        padding: const EdgeInsets.only(left: 16),
-        child: const CircleAvatar(
-          backgroundColor: Colors.white38,
-          radius: 48,
-          backgroundImage: NetworkImage(
-              "https://images.unsplash.com/photo-1564166174574-a9666f590437?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"),
-        ),
-      ),
-      leadingWidth: 64,
+          padding: const EdgeInsets.only(left: 16),
+          alignment: AlignmentDirectional.center,
+          child: RichText(
+            text: TextSpan(
+              text: "\$$accountBal",
+              style: Get.textTheme.displaySmall
+                  ?.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+          )),
+      leadingWidth: accountBal.length <= 4
+          ? 64
+          : accountBal.length <= 6
+              ? 80
+              : 96,
       title: Text(str.appName, style: Get.textTheme.displaySmall),
       centerTitle: true,
       backgroundColor: Get.theme.backgroundColor,
