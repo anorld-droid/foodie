@@ -6,7 +6,6 @@ class BottomAppBarController extends GetxController {
   var selectedIndex = 0.obs;
   var fabClicked = false.obs;
 
-  TextEditingController searchController = TextEditingController();
   PageController pageController = PageController();
   updateIndex(int index) {
     switch (index) {
