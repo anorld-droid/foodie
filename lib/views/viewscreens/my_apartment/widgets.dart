@@ -64,7 +64,7 @@ class ApartmentAdCard extends GetView<ApartmentController> {
             ),
           ],
           borderRadius: const BorderRadius.all(Radius.circular(12))),
-      child: Column(children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
           height: 270,
           width: Get.width - 32,
@@ -88,23 +88,26 @@ class ApartmentAdCard extends GetView<ApartmentController> {
               }),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+          padding: const EdgeInsets.only(top: 8.0, left: 4.0),
           child: Text(
             apartment.name,
             style: Get.textTheme.headlineSmall
                 ?.copyWith(fontWeight: FontWeight.w400),
           ),
         ),
-        Text(
-          apartment.location,
-          style: Get.textTheme.headlineSmall
-              ?.copyWith(fontWeight: FontWeight.w400),
+        Padding(
+          padding: const EdgeInsets.only(left: 4.0),
+          child: Text(
+            apartment.location,
+            style: Get.textTheme.headlineSmall
+                ?.copyWith(fontWeight: FontWeight.w400),
+          ),
         ),
         const SizedBox(
           height: 4,
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 1.0),
+          padding: const EdgeInsets.only(left: 4.0),
           child: Text(
             "Ksh.${apartment.priceRange}",
             style: Get.textTheme.headlineSmall
@@ -112,7 +115,7 @@ class ApartmentAdCard extends GetView<ApartmentController> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 1.0, top: 4),
+          padding: const EdgeInsets.only(left: 4.0, top: 4),
           child: Text(
             "${apartment.unOccupied} unoccupied",
             style: Get.textTheme.headlineSmall
@@ -129,7 +132,7 @@ class ApartmentAdCard extends GetView<ApartmentController> {
                           borderRadius: BorderRadius.circular(18.0),
                           side:
                               BorderSide(color: Get.theme.primaryColorDark)))),
-              onPressed: () {},
+              onPressed: () => controller.inquire(apartment.contact),
               child: Text(str.contact,
                   style: Get.textTheme.labelSmall?.copyWith(
                     color: Get.theme.primaryColorDark,

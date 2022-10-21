@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:trice/controller/bottom_app_bar_controller.dart';
+import 'package:gradient_progress_indicator/widget/gradient_progress_indicator_widget.dart';
+import 'package:trice/controller/apartment_controller.dart';
 import 'package:trice/domain/strings.dart';
+import 'package:trice/domain/theme.dart';
 import 'package:trice/model/data/apartments.dart';
 import 'package:trice/views/viewscreens/my_apartment/widgets.dart';
 
-class SearchApartments extends GetView<BottomAppBarController> {
+class SearchApartments extends GetView<ApartmentController> {
   const SearchApartments({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.find<ApartmentController>();
     Strings str = Strings();
     return Scaffold(
       appBar: AppBar(
@@ -47,21 +48,51 @@ class SearchApartments extends GetView<BottomAppBarController> {
             )),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: controller.performSearch,
               icon: Icon(
                 Icons.search,
-                color: Get.theme.primaryColorDark.withAlpha(100),
+                color: Get.theme.primaryColorDark.withAlpha(200),
               ))
         ],
       ),
-      body: SizedBox(
-        child: ListView.builder(
-            physics: const ClampingScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: apartments.length,
-            itemBuilder: (BuildContext context, int index) =>
-                ApartmentAdCard(apartment: apartments[index])),
-      ),
+      body: Obx(() {
+        Widget widget;
+        controller.searching.value
+            ? widget = Center(
+                child: GradientProgressIndicator(
+                  radius: 80,
+                  duration: 3,
+                  strokeWidth: 12,
+                  gradientStops: const [
+                    0.4,
+                    0.6,
+                  ],
+                  gradientColors: ThemeService().strokeColors,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        str.searching,
+                        style: Get.textTheme.bodyLarge,
+                      ),
+                      Text(
+                        str.pleaseWait,
+                        style: Get.textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : widget = SizedBox(
+                child: ListView.builder(
+                    physics: const ClampingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: apartments.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        ApartmentAdCard(apartment: apartments[index])),
+              );
+        return widget;
+      }),
     );
   }
 }
