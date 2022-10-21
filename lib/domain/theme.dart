@@ -22,16 +22,28 @@ class ThemeService {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-              Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(90, 255, 255, 255)
-            ])
+            Color.fromARGB(255, 255, 255, 255),
+            Color.fromARGB(90, 255, 255, 255)
+          ],
+        )
       : const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-              Color.fromARGB(181, 0, 0, 0),
-              Color.fromARGB(121, 67, 67, 67)
-            ]);
+            Color.fromARGB(181, 0, 0, 0),
+            Color.fromARGB(121, 67, 67, 67)
+          ],
+        );
+
+  List<Color> get strokeColors => _loadThemeFromBox()
+      ? const [
+          Color.fromARGB(255, 255, 255, 255),
+          Color.fromARGB(90, 255, 255, 255),
+        ]
+      : const [
+          Color.fromARGB(181, 0, 0, 0),
+          Color.fromARGB(121, 67, 67, 67),
+        ];
   LinearGradient get floatingABIconGradient => _loadThemeFromBox()
       ? const LinearGradient(
           begin: Alignment.topLeft,
