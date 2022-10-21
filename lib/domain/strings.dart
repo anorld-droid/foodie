@@ -55,4 +55,6 @@ class Strings {
   final String notifications = "Notifications";
   final String search = "Search";
   final String contact = "Inquire";
+  final String searching = "Searching ...";
+  final String pleaseWait = "Please wait";
 }
