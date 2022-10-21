@@ -17,7 +17,8 @@ import 'package:trice/views/widgets/gradient_icon.dart';
 import 'package:trice/views/widgets/top_bar.dart';
 
 class MainScreen extends GetView<BottomAppBarController> {
-  const MainScreen({Key? key}) : super(key: key);
+  final String accountBal;
+  const MainScreen({this.accountBal = "20.43", Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,21 @@ class MainScreen extends GetView<BottomAppBarController> {
           appBar: controller.selectedIndex.value == 1
               ? AppBar(
                   elevation: 0,
+                  leading: Container(
+                      padding: const EdgeInsets.only(left: 16),
+                      alignment: AlignmentDirectional.center,
+                      child: RichText(
+                        text: TextSpan(
+                          text: "\$$accountBal",
+                          style: Get.textTheme.displaySmall?.copyWith(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        ),
+                      )),
+                  leadingWidth: accountBal.length <= 4
+                      ? 64
+                      : accountBal.length <= 6
+                          ? 80
+                          : 96,
                   backgroundColor: Get.theme.backgroundColor.withOpacity(.12),
                   actions: [
                     IconButton(

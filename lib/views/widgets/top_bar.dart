@@ -9,7 +9,7 @@ import 'gradient_icon.dart';
 
 class TriceTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String accountBal;
-  const TriceTopBar({Key? key, this.accountBal = "200.00k"}) : super(key: key);
+  const TriceTopBar({Key? key, this.accountBal = "20.43"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
