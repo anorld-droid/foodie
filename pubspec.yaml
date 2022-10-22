@@ -41,8 +41,6 @@ dependencies:
   url_launcher: ^6.1.6
   flutter_chat_bubble: ^2.0.0
   date_time_format: ^2.0.1
-  gradient_progress_indicator: ^1.0.0+5
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
