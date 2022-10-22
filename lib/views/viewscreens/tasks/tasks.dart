@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/task_controller.dart';
 import 'package:trice/model/data/tasks.dart';
+import 'package:trice/views/viewscreens/tasks/widgets.dart';
 
 class Tasks extends GetView<TaskController> {
   const Tasks({Key? key}) : super(key: key);
@@ -21,7 +22,24 @@ class Tasks extends GetView<TaskController> {
           child: Row(
             children: controller.filterWidgets,
           ),
-        )
+        ),
+        const SizedBox(
+          height: 64,
+        ),
+        Container(
+          width: 100,
+          height: 100,
+          child: CustomPaint(
+            painter: MyPainter(sweepAngle: 78),
+            child: Center(
+              child: Text(
+                "78%",
+                style: Get.textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
       ],
     ));
   }
