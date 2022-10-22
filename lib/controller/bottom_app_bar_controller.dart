@@ -37,7 +37,11 @@ class BottomAppBarController extends GetxController
         fabClicked.value = true;
         pageController.animateToPage(2,
             duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
-        animationController.forward();
+        if (animationController.isDismissed) {
+          animationController.forward();
+        } else {
+          animationController.reverse();
+        }
         break;
       default:
         fabClicked.value = false;
