@@ -39,10 +39,12 @@ class ThemeService {
       ? const [
           Color.fromARGB(255, 255, 255, 255),
           Color.fromARGB(90, 255, 255, 255),
+          Color.fromARGB(181, 0, 0, 0),
         ]
       : const [
           Color.fromARGB(181, 0, 0, 0),
           Color.fromARGB(121, 67, 67, 67),
+          Color.fromARGB(255, 255, 255, 255),
         ];
   LinearGradient get floatingABIconGradient => _loadThemeFromBox()
       ? const LinearGradient(
