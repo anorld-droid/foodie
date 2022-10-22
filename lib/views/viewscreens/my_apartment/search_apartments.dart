@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gradient_progress_indicator/widget/gradient_progress_indicator_widget.dart';
 import 'package:trice/controller/apartment_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/domain/theme.dart';
@@ -59,27 +58,20 @@ class SearchApartments extends GetView<ApartmentController> {
         Widget widget;
         controller.searching.value
             ? widget = Center(
-                child: GradientProgressIndicator(
-                  radius: 80,
-                  duration: 3,
-                  strokeWidth: 12,
-                  gradientStops: const [
-                    0.4,
-                    0.6,
-                  ],
-                  gradientColors: ThemeService().strokeColors,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        str.searching,
-                        style: Get.textTheme.bodyLarge,
+                child: Card(
+                  margin: const EdgeInsets.all(16.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(4.0),
+                    child: RotationTransition(
+                      turns: Tween(begin: 0.0, end: 1.0)
+                          .animate(controller.animationController),
+                      child: GradientCircularProgressIndicator(
+                        radius: 16,
+                        gradientColors:
+                            ThemeService().strokeColors.reversed.toList(),
+                        strokeWidth: 3.0,
                       ),
-                      Text(
-                        str.pleaseWait,
-                        style: Get.textTheme.bodyLarge,
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               )
