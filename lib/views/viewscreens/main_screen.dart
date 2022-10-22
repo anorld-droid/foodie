@@ -13,6 +13,7 @@ import 'package:trice/views/viewscreens/news_room/news_room.dart';
 import 'package:trice/views/viewscreens/tasks/tasks.dart';
 import 'package:trice/views/viewscreens/trending/trending.dart';
 import 'package:trice/views/widgets/bottom_bar_notch.dart';
+import 'package:trice/views/widgets/fab.dart';
 import 'package:trice/views/widgets/gradient_icon.dart';
 import 'package:trice/views/widgets/top_bar.dart';
 
@@ -88,39 +89,89 @@ class MainScreen extends GetView<BottomAppBarController> {
               Trending()
             ],
           ),
-          floatingActionButton: FloatingActionButton(
-              //Floating action button on Scaffold
-              onPressed: null,
-              backgroundColor: Colors.transparent,
-              child: Obx(() => Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: ThemeService().floatingABGradient,
-                        boxShadow: controller.fabClicked.value
-                            ? [
-                                BoxShadow(
-                                  color: Get.theme.primaryColorDark
-                                      .withOpacity(0.37),
-                                  spreadRadius: 0,
-                                  blurRadius: 8,
-                                  blurStyle: BlurStyle.solid,
-                                  offset: const Offset(
-                                      0, 0), // changes position of shadow
-                                ),
-                              ]
-                            : []),
-                    child: GradientIcon(
-                        onPressed: () => controller.updateIndex(5),
-                        icon: SvgPicture.asset(
-                          str.todoSvg,
-                          color: Colors.black,
-                        ),
-                        size: 32,
-                        enableFeedback: false,
-                        gradient: ThemeService().floatingABGradient),
-                  ))),
+          floatingActionButton: _buildFab(context),
+          //Obx(() {
+          //   Widget widget;
+          //   controller.fabClicked.value
+          //       ? widget = Wrap(
+          //           // mainAxisAlignment: MainAxisAlignment.end,
+          //           direction: Axis.vertical,
+          //           children: [
+          //             FloatingActionButton.small(onPressed: () {}),
+          //             FloatingActionButton(
+          //                 //Floating action button on Scaffold
+          //                 onPressed: null,
+          //                 backgroundColor: Colors.transparent,
+          //                 child: Obx(() => Container(
+          //                       height: 60,
+          //                       width: 60,
+          //                       decoration: BoxDecoration(
+          //                           shape: BoxShape.circle,
+          //                           gradient: ThemeService().floatingABGradient,
+          //                           boxShadow: controller.fabClicked.value
+          //                               ? [
+          //                                   BoxShadow(
+          //                                     color: Get.theme.primaryColorDark
+          //                                         .withOpacity(0.37),
+          //                                     spreadRadius: 0,
+          //                                     blurRadius: 8,
+          //                                     blurStyle: BlurStyle.solid,
+          //                                     offset: const Offset(0,
+          //                                         0), // changes position of shadow
+          //                                   ),
+          //                                 ]
+          //                               : []),
+          //                       child: GradientIcon(
+          //                           onPressed: () => controller.updateIndex(5),
+          //                           icon: SvgPicture.asset(
+          //                             str.todoSvg,
+          //                             color: Colors.black,
+          //                           ),
+          //                           size: 32,
+          //                           enableFeedback: false,
+          //                           gradient:
+          //                               ThemeService().floatingABGradient),
+          //                     ))),
+          //             // const SizedBox(
+          //             //   height: 56,
+          //             // )
+          //           ],
+          //         )
+          //       : widget = FloatingActionButton(
+          //           //Floating action button on Scaffold
+          //           onPressed: null,
+          //           backgroundColor: Colors.transparent,
+          //           child: Obx(() => Container(
+          //                 height: 60,
+          //                 width: 60,
+          //                 decoration: BoxDecoration(
+          //                     shape: BoxShape.circle,
+          //                     gradient: ThemeService().floatingABGradient,
+          //                     boxShadow: controller.fabClicked.value
+          //                         ? [
+          //                             BoxShadow(
+          //                               color: Get.theme.primaryColorDark
+          //                                   .withOpacity(0.37),
+          //                               spreadRadius: 0,
+          //                               blurRadius: 8,
+          //                               blurStyle: BlurStyle.solid,
+          //                               offset: const Offset(
+          //                                   0, 0), // changes position of shadow
+          //                             ),
+          //                           ]
+          //                         : []),
+          //                 child: GradientIcon(
+          //                     onPressed: () => controller.updateIndex(5),
+          //                     icon: SvgPicture.asset(
+          //                       str.todoSvg,
+          //                       color: Colors.black,
+          //                     ),
+          //                     size: 32,
+          //                     enableFeedback: false,
+          //                     gradient: ThemeService().floatingABGradient),
+          //               )));
+          //   return widget;
+          // }),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           //floating action button position to center
@@ -142,5 +193,53 @@ class MainScreen extends GetView<BottomAppBarController> {
             ],
           ),
         ));
+  }
+
+  Widget _buildFab(BuildContext context) {
+    Strings str = Strings();
+    return AnchoredOverlay(
+        showOverlay: true,
+        overlayBuilder: (context, offset) {
+          return CenterAbout(
+            position: Offset(offset.dx, offset.dy - 1 * 35.0),
+            child: FabWithIcons(
+              onIconTapped: controller.updateIndex,
+            ),
+          );
+        },
+        child: FloatingActionButton(
+            //Floating action button on Scaffold
+            onPressed: () {},
+            elevation: 2.0,
+            backgroundColor: Colors.transparent,
+            child: Obx(() => Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: ThemeService().floatingABGradient,
+                      boxShadow: controller.fabClicked.value
+                          ? [
+                              BoxShadow(
+                                color: Get.theme.primaryColorDark
+                                    .withOpacity(0.37),
+                                spreadRadius: 0,
+                                blurRadius: 8,
+                                blurStyle: BlurStyle.solid,
+                                offset: const Offset(
+                                    0, 0), // changes position of shadow
+                              ),
+                            ]
+                          : []),
+                  child: SizedBox(
+                    height: 32,
+                    width: 32,
+                    child: SvgPicture.asset(
+                      str.todoSvg,
+                      color: Colors.black,
+                      fit: BoxFit.none,
+                    ),
+                  ),
+                ))));
   }
 }
