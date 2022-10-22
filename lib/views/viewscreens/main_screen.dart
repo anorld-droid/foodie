@@ -90,88 +90,7 @@ class MainScreen extends GetView<BottomAppBarController> {
             ],
           ),
           floatingActionButton: _buildFab(context),
-          //Obx(() {
-          //   Widget widget;
-          //   controller.fabClicked.value
-          //       ? widget = Wrap(
-          //           // mainAxisAlignment: MainAxisAlignment.end,
-          //           direction: Axis.vertical,
-          //           children: [
-          //             FloatingActionButton.small(onPressed: () {}),
-          //             FloatingActionButton(
-          //                 //Floating action button on Scaffold
-          //                 onPressed: null,
-          //                 backgroundColor: Colors.transparent,
-          //                 child: Obx(() => Container(
-          //                       height: 60,
-          //                       width: 60,
-          //                       decoration: BoxDecoration(
-          //                           shape: BoxShape.circle,
-          //                           gradient: ThemeService().floatingABGradient,
-          //                           boxShadow: controller.fabClicked.value
-          //                               ? [
-          //                                   BoxShadow(
-          //                                     color: Get.theme.primaryColorDark
-          //                                         .withOpacity(0.37),
-          //                                     spreadRadius: 0,
-          //                                     blurRadius: 8,
-          //                                     blurStyle: BlurStyle.solid,
-          //                                     offset: const Offset(0,
-          //                                         0), // changes position of shadow
-          //                                   ),
-          //                                 ]
-          //                               : []),
-          //                       child: GradientIcon(
-          //                           onPressed: () => controller.updateIndex(5),
-          //                           icon: SvgPicture.asset(
-          //                             str.todoSvg,
-          //                             color: Colors.black,
-          //                           ),
-          //                           size: 32,
-          //                           enableFeedback: false,
-          //                           gradient:
-          //                               ThemeService().floatingABGradient),
-          //                     ))),
-          //             // const SizedBox(
-          //             //   height: 56,
-          //             // )
-          //           ],
-          //         )
-          //       : widget = FloatingActionButton(
-          //           //Floating action button on Scaffold
-          //           onPressed: null,
-          //           backgroundColor: Colors.transparent,
-          //           child: Obx(() => Container(
-          //                 height: 60,
-          //                 width: 60,
-          //                 decoration: BoxDecoration(
-          //                     shape: BoxShape.circle,
-          //                     gradient: ThemeService().floatingABGradient,
-          //                     boxShadow: controller.fabClicked.value
-          //                         ? [
-          //                             BoxShadow(
-          //                               color: Get.theme.primaryColorDark
-          //                                   .withOpacity(0.37),
-          //                               spreadRadius: 0,
-          //                               blurRadius: 8,
-          //                               blurStyle: BlurStyle.solid,
-          //                               offset: const Offset(
-          //                                   0, 0), // changes position of shadow
-          //                             ),
-          //                           ]
-          //                         : []),
-          //                 child: GradientIcon(
-          //                     onPressed: () => controller.updateIndex(5),
-          //                     icon: SvgPicture.asset(
-          //                       str.todoSvg,
-          //                       color: Colors.black,
-          //                     ),
-          //                     size: 32,
-          //                     enableFeedback: false,
-          //                     gradient: ThemeService().floatingABGradient),
-          //               )));
-          //   return widget;
-          // }),
+
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           //floating action button position to center
@@ -210,7 +129,6 @@ class MainScreen extends GetView<BottomAppBarController> {
         child: FloatingActionButton(
             //Floating action button on Scaffold
             onPressed: () {},
-            elevation: 2.0,
             backgroundColor: Colors.transparent,
             child: Obx(() => Container(
                   height: 60,
@@ -222,7 +140,7 @@ class MainScreen extends GetView<BottomAppBarController> {
                           ? [
                               BoxShadow(
                                 color: Get.theme.primaryColorDark
-                                    .withOpacity(0.37),
+                                    .withOpacity(0.16),
                                 spreadRadius: 0,
                                 blurRadius: 8,
                                 blurStyle: BlurStyle.solid,

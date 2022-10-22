@@ -48,7 +48,6 @@ class FabWithIcons extends GetView<BottomAppBarController> {
         onPressed: () {
           controller.updateIndex(5);
         },
-        elevation: 2.0,
         backgroundColor: Colors.transparent,
         child: Obx(() => Container(
               height: 60,
@@ -59,7 +58,7 @@ class FabWithIcons extends GetView<BottomAppBarController> {
                   boxShadow: controller.fabClicked.value
                       ? [
                           BoxShadow(
-                            color: Get.theme.primaryColorDark.withOpacity(0.37),
+                            color: Get.theme.primaryColorDark.withOpacity(0.16),
                             spreadRadius: 0,
                             blurRadius: 8,
                             blurStyle: BlurStyle.solid,
