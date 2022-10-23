@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:trice/controller/task_controller.dart';
 import 'package:trice/views/routing/routes.dart';
 
 class BottomAppBarController extends GetxController
     with GetTickerProviderStateMixin {
   var selectedIndex = 0.obs;
   var fabClicked = false.obs;
+  var fabVisible = true.obs;
 
   PageController pageController = PageController();
   late AnimationController animationController;
@@ -20,7 +22,10 @@ class BottomAppBarController extends GetxController
   }
 
   addTask() {
-    // TODO: Save Task
+    animationController.reverse();
+    fabVisible.value = false;
+    final controller = Get.find<TaskController>();
+    controller.addTask();
   }
 
   updateIndex(int index) {
