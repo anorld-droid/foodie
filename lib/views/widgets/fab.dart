@@ -27,7 +27,7 @@ class FabWithIcons extends GetView<BottomAppBarController> {
             child: ScaleTransition(
               scale: CurvedAnimation(
                 parent: controller.animationController,
-                curve: Interval(0.0, 1.0, curve: Curves.easeOut),
+                curve: const Interval(0.0, 1.0, curve: Curves.easeOut),
               ),
               child: FloatingActionButton(
                 backgroundColor: Get.theme.backgroundColor,

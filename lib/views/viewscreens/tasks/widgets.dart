@@ -140,13 +140,10 @@ class TasksLayout extends GetView<TaskController> {
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
             itemCount: tasks.length,
-            itemBuilder: (BuildContext context, int index) {
-              controller.taskItem.value = tasks[index];
-              return _TaskCard(
-                task: controller.taskItem.value,
-                date: date,
-              );
-            }),
+            itemBuilder: (BuildContext context, int index) => _TaskCard(
+                  task: tasks[index],
+                  date: date,
+                )),
       ],
     );
   }
