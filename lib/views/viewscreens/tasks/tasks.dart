@@ -6,8 +6,7 @@ import 'package:trice/model/tasks.dart';
 import 'package:trice/views/viewscreens/tasks/widgets.dart';
 
 class Tasks extends GetView<TaskController> {
-  final TaskModel taskModel;
-  const Tasks({required this.taskModel, Key? key}) : super(key: key);
+  const Tasks({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
