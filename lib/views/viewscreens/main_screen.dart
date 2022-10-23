@@ -6,6 +6,7 @@ import 'package:trice/controller/bottom_app_bar_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/domain/theme.dart';
 import 'package:trice/model/apartment/apartment.dart';
+import 'package:trice/model/data/tasks.dart';
 import 'package:trice/model/news/news_post.dart';
 import 'package:trice/views/viewscreens/events/events.dart';
 import 'package:trice/views/viewscreens/my_apartment/my_apartment.dart';
@@ -34,6 +35,7 @@ class MainScreen extends GetView<BottomAppBarController> {
 
     Get.put(BottomAppBarController());
     return Obx(() => Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: controller.selectedIndex.value == 1
               ? AppBar(
                   elevation: 0,
@@ -89,7 +91,10 @@ class MainScreen extends GetView<BottomAppBarController> {
               Trending()
             ],
           ),
-          floatingActionButton: _buildFab(context),
+          floatingActionButton: Obx(() => Visibility(
+                child: _buildFab(context),
+                visible: controller.fabVisible.value,
+              )),
 
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
