@@ -57,4 +57,12 @@ class Strings {
   final String contact = "Inquire";
   final String searching = "Searching ...";
   final String pleaseWait = "Please wait";
+
+  //Task Screen
+  final String task = "Task";
+  final String hintTaskText = "What is your task?";
+  final String date = "Date";
+  final String time = "Time";
+  final String dateHintTxt = "Date of task.";
+  final String timeHintTxt = "Time of task.";
 }
