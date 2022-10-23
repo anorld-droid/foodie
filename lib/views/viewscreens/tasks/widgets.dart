@@ -1,12 +1,9 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/task_controller.dart';
 import 'package:trice/domain/theme.dart';
+import 'package:trice/model/tasks.dart';
+import 'package:trice/views/widgets/gradient_icon.dart';
 import 'package:vector_math/vector_math.dart' as vmath;
 
 class FilterChips extends GetView<TaskController> {
@@ -115,4 +112,147 @@ class MyPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class TasksLayout extends GetView<TaskController> {
+  final String date;
+  final List<TaskItem> tasks;
+  const TasksLayout({Key? key, required this.date, required this.tasks})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Get.find<TaskController>();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RichText(
+            text: TextSpan(
+              text: date,
+              style: Get.textTheme.bodyMedium?.copyWith(letterSpacing: 2.5),
+            ),
+          ),
+        ),
+        ListView.builder(
+            physics: const ClampingScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: tasks.length,
+            itemBuilder: (BuildContext context, int index) {
+              controller.taskItem.value = tasks[index];
+              return _TaskCard(
+                task: controller.taskItem.value,
+                date: date,
+              );
+            }),
+      ],
+    );
+  }
+}
+
+class _TaskCard extends StatefulWidget {
+  final TaskItem task;
+  final String date;
+  _TaskCard({
+    required this.date,
+    Key? key,
+    required this.task,
+  }) : super(key: key);
+
+  @override
+  State<_TaskCard> createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<_TaskCard> {
+  @override
+  Widget build(BuildContext context) {
+    TaskController controller = Get.find();
+    String text = widget.task.text;
+    String time = widget.task.time;
+    bool done = widget.task.done;
+
+    return Container(
+      padding: const EdgeInsets.only(left: 12.0),
+      width: Get.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GradientIcon(
+                    onPressed: () {
+                      setState(() {
+                        done = !done;
+                      });
+                      controller.markTaskDone(widget.task, widget.date);
+                    },
+                    icon: Icon(
+                      done
+                          ? Icons.check_circle_outline_outlined
+                          : Icons.radio_button_unchecked,
+                    ),
+                    size: 24,
+                    gradient: ThemeService().stroke,
+                  )
+                ],
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8.0, bottom: 2.0, left: 8.0),
+                      child: RichText(
+                        text: TextSpan(
+                          text: text,
+                          style: Get.textTheme.bodyLarge?.copyWith(
+                              decoration: done
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 2.0, bottom: 2.0, left: 8.0),
+                      child: RichText(
+                        text: TextSpan(
+                          text: time,
+                          style: Get.textTheme.labelMedium
+                              ?.copyWith(fontWeight: FontWeight.w300),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: GradientIcon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.more_vert),
+                  size: 24,
+                  gradient: ThemeService().stroke,
+                ),
+              )
+            ],
+          ),
+          Divider(
+            color: Get.theme.primaryColorDark.withAlpha(50), //color of divider
+            height: 32, //height spacing of divider
+            thickness: 1, //thickness of divier line
+            indent: 2, //spacing at the start of divider
+            endIndent: 2, //spacing at the end of divider
+          ),
+        ],
+      ),
+    );
+  }
 }
