@@ -22,7 +22,6 @@ class BottomAppBarController extends GetxController
   }
 
   addTask() {
-    animationController.reverse();
     fabVisible.value = false;
     final controller = Get.find<TaskController>();
     controller.addTask();
