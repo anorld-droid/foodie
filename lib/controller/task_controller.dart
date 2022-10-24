@@ -5,6 +5,7 @@ import 'package:trice/model/data/tasks.dart';
 import 'package:trice/model/tasks.dart';
 import 'package:trice/views/viewscreens/tasks/add_task.dart';
 import 'package:trice/views/viewscreens/tasks/widgets.dart';
+import 'package:date_time_format/date_time_format.dart';
 
 class TaskController extends GetxController {
   final List<String> filters;
@@ -19,9 +20,13 @@ class TaskController extends GetxController {
   final TextEditingController taskController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
+
+  final DateTime now = DateTime.now();
   @override
   void onInit() {
     super.onInit();
+    timeController.text = now.format('g:ia');
+    dateController.text = now.format('M j, l');
     for (var filter in filters) {
       filterWidgets.add(
         FilterChips(
@@ -48,12 +53,11 @@ class TaskController extends GetxController {
   }
 
   addTask() async {
-    bool? closed = await Get.bottomSheet<bool?>(
-      const AddTask(),
-      backgroundColor: Get.theme.backgroundColor,
-      clipBehavior: Clip.hardEdge,
-      elevation: 4,
-    );
+    bool? closed = await Get.bottomSheet<bool?>(const AddTask(),
+        backgroundColor: Get.theme.backgroundColor,
+        clipBehavior: Clip.hardEdge,
+        elevation: 4,
+        isScrollControlled: false);
     final controller = Get.find<BottomAppBarController>();
     if (closed == true) {
       controller.fabVisible.value = true;
@@ -62,21 +66,24 @@ class TaskController extends GetxController {
     }
   }
 
-  datePicker() {
-    DatePickerDialog(
+  datePicker() async {
+    final DateTime? picked = await showDatePicker(
+        context: Get.context!,
         initialDate: DateTime.now(),
         firstDate: DateTime.now(),
-        lastDate: DateTime.now());
+        lastDate: DateTime(2100));
+    if (picked != null) {
+      dateController.text = picked.format('M j, l');
+    }
   }
 
   timePicker() async {
-    // TimePickerDialog(initialTime: );
-    final TimeOfDay? picked = await showTimePicker(
-        initialEntryMode: TimePickerEntryMode.dial,
-        context: Get.context!,
-        initialTime: TimeOfDay.now());
+    final picked = await showTimePicker(
+        context: Get.context!, initialTime: TimeOfDay.now());
     if (picked != null) {
-      timeController.text = "${picked.hour}${picked.hour}hrs";
+      var time =
+          DateTime(now.year, now.month, now.day, picked.hour, picked.minute);
+      timeController.text = time.format('g:ia');
     }
   }
 }
