@@ -8,9 +8,6 @@ import 'package:trice/views/viewscreens/tasks/widgets.dart';
 import 'package:date_time_format/date_time_format.dart';
 
 class TaskController extends GetxController {
-  final List<String> filters;
-  TaskController({required this.filters});
-
   final taskModel = tasks.obs;
   RxList<Widget> taskWidgets = <Widget>[].obs;
 
@@ -20,19 +17,20 @@ class TaskController extends GetxController {
   final TextEditingController taskController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
-
+  final dropdownValue = "".obs;
   final DateTime now = DateTime.now();
   @override
   void onInit() {
     super.onInit();
+    dropdownValue.value = taskModel.value.filters.first;
     timeController.text = now.format('g:ia');
     dateController.text = now.format('M j, l');
-    for (var filter in filters) {
+    for (var filter in taskModel.value.filters) {
       filterWidgets.add(
         FilterChips(
           text: filter,
           onChipSelected: chipSelected,
-          index: filters.indexOf(filter),
+          index: taskModel.value.filters.indexOf(filter),
         ),
       );
     }
@@ -66,6 +64,11 @@ class TaskController extends GetxController {
     }
   }
 
+  saveTask() {
+    Get.back();
+    //TODO: Save task either to storage or to firebase
+  }
+
   datePicker() async {
     final DateTime? picked = await showDatePicker(
         context: Get.context!,
@@ -86,4 +89,6 @@ class TaskController extends GetxController {
       timeController.text = time.format('g:ia');
     }
   }
+
+  addFilter() {}
 }
