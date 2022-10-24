@@ -65,4 +65,7 @@ class Strings {
   final String time = "Time";
   final String dateHintTxt = "Date of task.";
   final String timeHintTxt = "Time of task.";
+  final String filter = "Filter";
+  final String add = "Add";
+  final String save = "Save";
 }
