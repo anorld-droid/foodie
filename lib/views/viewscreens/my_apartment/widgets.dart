@@ -135,10 +135,7 @@ class ApartmentAdCard extends GetView<ApartmentController> {
                           side:
                               BorderSide(color: Get.theme.primaryColorDark)))),
               onPressed: () => controller.inquire(apartment.contact),
-              child: Text(str.contact,
-                  style: Get.textTheme.labelSmall?.copyWith(
-                    color: Get.theme.primaryColorDark,
-                  ))),
+              child: Text(str.contact, style: Get.textTheme.labelSmall)),
         ),
         const SizedBox(
           height: 8,
