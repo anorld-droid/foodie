@@ -6,7 +6,6 @@ import 'package:trice/controller/bottom_app_bar_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/domain/theme.dart';
 import 'package:trice/model/apartment/apartment.dart';
-import 'package:trice/model/data/tasks.dart';
 import 'package:trice/model/news/news_post.dart';
 import 'package:trice/views/viewscreens/events/events.dart';
 import 'package:trice/views/viewscreens/my_apartment/my_apartment.dart';
@@ -15,7 +14,6 @@ import 'package:trice/views/viewscreens/tasks/tasks.dart';
 import 'package:trice/views/viewscreens/trending/trending.dart';
 import 'package:trice/views/widgets/bottom_bar_notch.dart';
 import 'package:trice/views/widgets/fab.dart';
-import 'package:trice/views/widgets/gradient_icon.dart';
 import 'package:trice/views/widgets/top_bar.dart';
 
 class MainScreen extends GetView<BottomAppBarController> {
@@ -69,7 +67,7 @@ class MainScreen extends GetView<BottomAppBarController> {
             physics: const NeverScrollableScrollPhysics(),
             controller: controller.pageController,
             children: [
-              NewsRoom(),
+              const NewsRoom(),
               MyApartment(
                 apartmentModel: ApartmentModel(
                     notifications: [
@@ -86,14 +84,14 @@ class MainScreen extends GetView<BottomAppBarController> {
                     careTaker: PostAuthor("Mjinag One",
                         "https://plus.unsplash.com/premium_photo-1663054688278-ebf09d654d33?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")),
               ),
-              Tasks(),
-              Events(),
-              Trending()
+              const Tasks(),
+              const Events(),
+              const Trending()
             ],
           ),
           floatingActionButton: Obx(() => Visibility(
-                child: _buildFab(context),
                 visible: controller.fabVisible.value,
+                child: _buildFab(context),
               )),
 
           floatingActionButtonLocation:

@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/task_controller.dart';
 import 'package:trice/domain/strings.dart';
@@ -57,6 +54,10 @@ class AddTask extends GetView<TaskController> {
                       controller: controller.dateController,
                       style: Get.textTheme.bodyMedium,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.event,
+                          color: Get.theme.primaryColorDark.withAlpha(155),
+                        ),
                         labelText: str.date,
                         labelStyle: Get.textTheme.bodyLarge,
                         hintText: str.dateHintTxt,
@@ -91,9 +92,13 @@ class AddTask extends GetView<TaskController> {
                     child: TextField(
                       onTap: controller.timePicker,
                       readOnly: true,
-                      controller: controller.dateController,
+                      controller: controller.timeController,
                       style: Get.textTheme.bodyMedium,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.schedule,
+                          color: Get.theme.primaryColorDark.withAlpha(155),
+                        ),
                         labelText: str.time,
                         labelStyle: Get.textTheme.bodyLarge,
                         hintText: str.timeHintTxt,
