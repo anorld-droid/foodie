@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:trice/controller/bottom_app_bar_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/domain/theme.dart';
-import 'package:trice/views/widgets/gradient_icon.dart';
 
 class FabWithIcons extends GetView<BottomAppBarController> {
-  FabWithIcons({Key? key, required this.onIconTapped}) : super(key: key);
+  const FabWithIcons({Key? key, required this.onIconTapped}) : super(key: key);
 
-  ValueChanged<int> onIconTapped;
+  final ValueChanged<int> onIconTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -94,22 +92,20 @@ class AnchoredOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        return OverlayBuilder(
-          showOverlay: showOverlay,
-          overlayBuilder: (BuildContext overlayContext) {
-            RenderBox box = context.findRenderObject() as RenderBox;
-            final center =
-                box.size.center(box.localToGlobal(const Offset(0.0, 0.0)));
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return OverlayBuilder(
+        showOverlay: showOverlay,
+        overlayBuilder: (BuildContext overlayContext) {
+          RenderBox box = context.findRenderObject() as RenderBox;
+          final center =
+              box.size.center(box.localToGlobal(const Offset(0.0, 0.0)));
 
-            return overlayBuilder(overlayContext, center);
-          },
-          child: child,
-        );
-      }),
-    );
+          return overlayBuilder(overlayContext, center);
+        },
+        child: child,
+      );
+    });
   }
 }
 
