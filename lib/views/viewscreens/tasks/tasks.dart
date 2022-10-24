@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/task_controller.dart';
 import 'package:trice/model/data/tasks.dart';
-import 'package:trice/model/tasks.dart';
 import 'package:trice/views/viewscreens/tasks/widgets.dart';
 
 class Tasks extends GetView<TaskController> {
@@ -11,9 +10,7 @@ class Tasks extends GetView<TaskController> {
   @override
   Widget build(BuildContext context) {
     Get.put(
-      TaskController(
-        filters: tasks.filters,
-      ),
+      TaskController(),
     );
     return Scaffold(
         body: SingleChildScrollView(
