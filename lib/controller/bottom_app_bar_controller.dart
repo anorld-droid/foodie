@@ -58,7 +58,13 @@ class BottomAppBarController extends GetxController
     selectedIndex.value = index;
   }
 
-  navigateToSearch() {
-    Get.toNamed(searchApartment);
+  navigateToSearch() async {
+    fabVisible.value = false;
+    final returned = await Get.toNamed(searchApartment);
+    if (returned == true) {
+      fabVisible.value = true;
+    } else {
+      fabVisible.value = true;
+    }
   }
 }

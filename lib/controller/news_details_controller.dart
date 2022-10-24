@@ -2,6 +2,7 @@ import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:get/get.dart';
+import 'package:trice/controller/bottom_app_bar_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/model/data/news_post_data.dart';
 import 'package:trice/model/news/news_post.dart';
@@ -29,9 +30,13 @@ class NewsDetailController extends GetxController {
   RxList<Widget> commentsWidgets = <Widget>[].obs;
 
   final now = DateTime.now();
+
+  final controller = Get.find<BottomAppBarController>();
+
   @override
   void onInit() {
     super.onInit();
+
     for (var paragraph in newsPostModel.paragraphs) {
       paragraphWidgets.add(ParagraphCard(paragraph: paragraph));
     }
@@ -60,6 +65,18 @@ class NewsDetailController extends GetxController {
         ),
       );
     }
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    controller.fabVisible.value = false;
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    controller.fabVisible.value = true;
   }
 
   void launchURL(href) async {
