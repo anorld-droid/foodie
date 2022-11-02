@@ -91,4 +91,6 @@ class TaskController extends GetxController {
   }
 
   addFilter() {}
+
+  editTask() {}
 }
