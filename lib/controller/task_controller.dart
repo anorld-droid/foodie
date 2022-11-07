@@ -14,6 +14,8 @@ class TaskController extends GetxController {
   var selectedChip = 0.obs;
   List<Widget> filterWidgets = <Widget>[].obs;
 
+  final moreOptions = false.obs;
+
   final TextEditingController taskController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
@@ -36,8 +38,7 @@ class TaskController extends GetxController {
     }
     for (String date in tasks.tasks.keys) {
       taskWidgets.add(TasksLayout(
-          date: date,
-          tasks: taskModel.value.tasks[date]?.obs ?? <TaskItem>[].obs));
+          date: date, tasks: taskModel.value.tasks[date] ?? <TaskItem>[]));
     }
   }
 
@@ -55,7 +56,7 @@ class TaskController extends GetxController {
         backgroundColor: Get.theme.backgroundColor,
         clipBehavior: Clip.hardEdge,
         elevation: 4,
-        isScrollControlled: false);
+        isScrollControlled: true);
     final controller = Get.find<BottomAppBarController>();
     if (closed == true) {
       controller.fabVisible.value = true;
@@ -90,7 +91,18 @@ class TaskController extends GetxController {
     }
   }
 
-  addFilter() {}
+  addFilter() {
+    //TODO: Add filter to storage or firebase.
+  }
 
-  editTask() {}
+  editTask(String task) {
+    //TODO: Change task in storage or firebase.
+    taskController.text = task;
+    final controller = Get.find<BottomAppBarController>();
+    controller.addTask();
+  }
+
+  deleteTask() {
+    //TODO: Delete task from storage or firebase.
+  }
 }
