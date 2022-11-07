@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:trice/controller/authentication/sign_in_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/views/viewscreens/authentication/widgets/text_field_input.dart';
@@ -14,7 +13,7 @@ class SignInDialog extends GetView<SignInController> {
     Get.put(SignInController());
     Strings str = Strings();
     return Center(
-      child: Container(
+      child: SizedBox(
         height: Get.height / 5,
         width: Get.width - 24,
         child: Card(

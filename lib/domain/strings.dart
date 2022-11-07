@@ -68,4 +68,6 @@ class Strings {
   final String filter = "Filter";
   final String add = "Add";
   final String save = "Save";
+  final String edit = "Edit";
+  final String delete = "Delete";
 }
