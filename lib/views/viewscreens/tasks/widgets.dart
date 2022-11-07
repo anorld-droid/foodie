@@ -265,11 +265,13 @@ class _TaskCardState extends State<_TaskCard> {
                     children: [
                       InkWell(
                         onTap: () => controller.editTask(text),
-                        child: Text(str.edit, style: Get.textTheme.labelSmall),
+                        child: Text(str.edit,
+                            style: Get.textTheme.labelSmall
+                                ?.copyWith(fontWeight: FontWeight.bold)),
                       ),
                       VerticalDivider(
                         color: Get.theme.primaryColorDark
-                            .withAlpha(50), //color of divider
+                            .withAlpha(150), //color of divider
                         thickness: 1,
                         width: 32, //thickness of divier line
                         indent: 2, //spacing at the start of divider
@@ -277,8 +279,9 @@ class _TaskCardState extends State<_TaskCard> {
                       ),
                       InkWell(
                         onTap: controller.deleteTask,
-                        child:
-                            Text(str.delete, style: Get.textTheme.labelSmall),
+                        child: Text(str.delete,
+                            style: Get.textTheme.labelSmall
+                                ?.copyWith(fontWeight: FontWeight.bold)),
                       )
                     ],
                   ),
@@ -296,160 +299,3 @@ class _TaskCardState extends State<_TaskCard> {
     );
   }
 }
-
-class MoreOptionDialog extends GetView<TaskController> {
-  const MoreOptionDialog({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Get.find<TaskController>();
-    Strings str = Strings();
-    return Center(
-      child: SizedBox(
-          height: Get.height / 5,
-          width: Get.width - 24,
-          child: Card(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextButton(
-                  onPressed: controller.addFilter,
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsets>(
-                          const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 24)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(
-                                  color: Get.theme.backgroundColor)))),
-                  child: Text("Edit", style: Get.textTheme.labelSmall)),
-              TextButton(
-                  onPressed: controller.addFilter,
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsets>(
-                          const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 24)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(
-                                  color: Get.theme.backgroundColor)))),
-                  child: Text("Delete", style: Get.textTheme.labelSmall))
-            ],
-          ))),
-    );
-  }
-}
-
-// DropdownSearch<String>(
-//             popupProps: PopupProps.menu(
-//               // showSearchBox: true,
-//               fit: FlexFit.loose,
-//               menuProps: const MenuProps(
-//                   backgroundColor: Colors.transparent, elevation: 0),
-//               showSelectedItems: true,
-//               constraints: BoxConstraints(maxHeight: 250, maxWidth: Get.width),
-//               itemBuilder: (context, item, isSelected) {
-//                 return Padding(
-//                   padding: const EdgeInsets.all(8.0),
-//                   child: Text(
-//                     item,
-//                     style: isSelected
-//                         ? Get.textTheme.bodyMedium
-//                             ?.copyWith(fontWeight: FontWeight.bold)
-//                         : Get.textTheme.bodyMedium,
-//                   ),
-//                 );
-//               },
-//               containerBuilder: (ctx, popupWidget) {
-//                 return Container(
-//                   margin: const EdgeInsets.only(top: 8.0),
-//                   decoration: BoxDecoration(
-//                       color: Get.theme.backgroundColor,
-//                       borderRadius:
-//                           const BorderRadius.all(Radius.circular(8.0)),
-//                       boxShadow: [
-//                         BoxShadow(
-//                           color: Get.theme.primaryColorDark.withOpacity(0.16),
-//                           spreadRadius: 0,
-//                           blurRadius: 8,
-//                           blurStyle: BlurStyle.solid,
-//                           offset:
-//                               const Offset(0, 0), // changes position of shadow
-//                         ),
-//                       ]),
-//                   child: Column(
-//                     mainAxisSize: MainAxisSize.min,
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Flexible(
-//                         child: Container(
-//                           child: popupWidget,
-//                         ),
-//                       ),
-//                       TextButton(
-//                           onPressed: controller.addFilter,
-//                           style: ButtonStyle(
-//                               padding: MaterialStateProperty.all<EdgeInsets>(
-//                                   const EdgeInsets.symmetric(
-//                                       vertical: 8, horizontal: 24)),
-//                               shape: MaterialStateProperty.all<
-//                                       RoundedRectangleBorder>(
-//                                   RoundedRectangleBorder(
-//                                       borderRadius: BorderRadius.circular(18.0),
-//                                       side: BorderSide(
-//                                           color: Get.theme.backgroundColor)))),
-//                           child: Text("Edit", style: Get.textTheme.labelSmall)),
-//                       TextButton(
-//                           onPressed: controller.addFilter,
-//                           style: ButtonStyle(
-//                               padding: MaterialStateProperty.all<EdgeInsets>(
-//                                   const EdgeInsets.symmetric(
-//                                       vertical: 8, horizontal: 24)),
-//                               shape: MaterialStateProperty.all<
-//                                       RoundedRectangleBorder>(
-//                                   RoundedRectangleBorder(
-//                                       borderRadius: BorderRadius.circular(18.0),
-//                                       side: BorderSide(
-//                                           color: Get.theme.backgroundColor)))),
-//                           child:
-//                               Text("Delete", style: Get.textTheme.labelSmall))
-//                     ],
-//                   ),
-//                 );
-//               },
-//             ),
-//             onChanged: print,
-//             selectedItem: controller.dropdownValue.value,
-//             dropdownBuilder: ((context, selectedItem) {
-//               return Text(
-//                 selectedItem ?? "",
-//                 style: Get.textTheme.bodyMedium,
-//               );
-//             }),
-//             dropdownDecoratorProps: DropDownDecoratorProps(
-//                 dropdownSearchDecoration: InputDecoration(
-//                   labelText: str.filter,
-//                   labelStyle: Get.textTheme.bodyLarge,
-//                   hintText: str.timeHintTxt,
-//                   enabledBorder: OutlineInputBorder(
-//                     borderRadius: const BorderRadius.all(Radius.circular(4)),
-//                     borderSide: BorderSide(
-//                         color: Get.theme.primaryColorDark.withAlpha(100),
-//                         width: 1.0),
-//                   ),
-//                   focusedBorder: OutlineInputBorder(
-//                     borderRadius: const BorderRadius.all(Radius.circular(4)),
-//                     borderSide: BorderSide(
-//                         color: Get.theme.primaryColorDark, width: 1.0),
-//                   ),
-//                   filled: true,
-//                   contentPadding: const EdgeInsets.all(8),
-//                 ),
-//                 baseStyle: Get.textTheme.bodyMedium,
-//                 textAlign: TextAlign.center,
-//                 textAlignVertical: TextAlignVertical.center),
-//             dropdownButtonProps: DropdownButtonProps(
-//                 color: Get.theme.primaryColorDark, enableFeedback: true),
-//           ),
