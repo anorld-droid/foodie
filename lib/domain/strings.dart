@@ -70,4 +70,7 @@ class Strings {
   final String save = "Save";
   final String edit = "Edit";
   final String delete = "Delete";
+
+  //Events Screen
+  final String tag = "Tag";
 }
