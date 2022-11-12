@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trice/controller/news_details_controller.dart';
+import 'package:trice/controller/news/news_details_controller.dart';
 import 'package:trice/model/news/news_post.dart';
 
 class DetailsTopBar extends StatelessWidget implements PreferredSizeWidget {

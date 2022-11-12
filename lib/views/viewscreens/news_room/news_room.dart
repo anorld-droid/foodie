@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trice/controller/newsRoomController.dart';
+import 'package:trice/controller/news/newsRoomController.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/model/data/briefs.dart';
 import 'package:trice/model/data/news_post_data.dart';

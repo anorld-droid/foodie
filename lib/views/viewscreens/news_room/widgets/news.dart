@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:trice/controller/newsRoomController.dart';
+import 'package:trice/controller/news/newsRoomController.dart';
 import 'package:trice/model/news/news_brief.dart';
 import 'package:trice/model/news/news_post.dart';
 
