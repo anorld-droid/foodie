@@ -21,13 +21,13 @@ class BottomAppBarController extends GetxController
     super.onInit();
   }
 
-  addTask() {
+  void addTask() {
     fabVisible.value = false;
     final controller = Get.find<TaskController>();
     controller.addTask();
   }
 
-  updateIndex(int index) {
+  void updateIndex(int index) {
     switch (index) {
       case 0:
       case 1:
@@ -57,9 +57,9 @@ class BottomAppBarController extends GetxController
     selectedIndex.value = index;
   }
 
-  navigateToSearch() async {
+  void navigateToSearch() async {
     fabVisible.value = false;
-    final returned = await Get.toNamed(searchApartment);
+    final returned = await Get.toNamed<bool>(searchApartment);
     if (returned == true) {
       fabVisible.value = true;
     } else {

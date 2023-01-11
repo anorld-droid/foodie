@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trice/domain/theme.dart';
+import 'package:trice/model/news/news_post.dart';
 import 'package:trice/views/routing/routes.dart';
 import 'package:trice/views/viewscreens/authentication/sign_in.dart';
 import 'package:trice/views/viewscreens/authentication/sign_up.dart';
@@ -27,7 +28,10 @@ void main() => runApp(GetMaterialApp(
         GetPage(name: trendingScreen, page: () => const Trending()),
         GetPage(
             name: newsDetailScreen,
-            page: () => NewsDetail(newsPostModel: Get.arguments)),
+            page: () {
+              NewsPostModel model = Get.arguments as NewsPostModel;
+              return NewsDetail(newsPostModel: model);
+            }),
         GetPage(name: briefsScreen, page: () => const BriefScreen()),
         GetPage(name: searchApartment, page: (() => const SearchApartments())),
       ],

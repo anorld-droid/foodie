@@ -79,14 +79,15 @@ class NewsDetailController extends GetxController {
     controller.fabVisible.value = true;
   }
 
-  void launchURL(href) async {
-    Uri url = Uri.parse(href);
+  void launchURL(String href) async {
+    String urlString = href;
+    Uri url = Uri.parse(urlString);
     await canLaunchUrl(url)
         ? await launchUrl(url, mode: LaunchMode.inAppWebView)
         : throw 'Could not launch $url';
   }
 
-  toolTip() {
+  void toolTip() {
     Get.snackbar(
       str.toolTipTitle,
       str.toolTip,
@@ -96,15 +97,15 @@ class NewsDetailController extends GetxController {
     );
   }
 
-  commentBottomSheet() {
-    Get.bottomSheet(const CommentScreen(),
+  void commentBottomSheet() {
+    Get.bottomSheet<Widget>(const CommentScreen(),
         backgroundColor: Get.theme.backgroundColor,
         clipBehavior: Clip.hardEdge,
         elevation: 4,
         isScrollControlled: true);
   }
 
-  addComment() {
+  void  addComment() {
     Comment comment = Comment(
       metadata: Metadata(me, now.format('M j, `y'), 1),
       text: commentController.text,
