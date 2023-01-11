@@ -14,7 +14,7 @@ class TriceTopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     Strings str = Strings();
-    return AppBar(
+    return SliverAppBar(
       elevation: 0,
       leading: Container(
           padding: const EdgeInsets.only(left: 16),

@@ -32,89 +32,92 @@ class MainScreen extends GetView<BottomAppBarController> {
     Strings str = Strings();
 
     Get.put(BottomAppBarController());
-    return Obx(() => Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: controller.selectedIndex.value == 1
-              ? AppBar(
-                  elevation: 0,
-                  leading: Container(
-                      padding: const EdgeInsets.only(left: 16),
-                      alignment: AlignmentDirectional.center,
-                      child: RichText(
-                        text: TextSpan(
-                          text: "\$$accountBal",
-                          style: Get.textTheme.displaySmall?.copyWith(
-                              fontWeight: FontWeight.bold, fontSize: 15),
-                        ),
-                      )),
-                  leadingWidth: accountBal.length <= 4
-                      ? 64
-                      : accountBal.length <= 6
-                          ? 80
-                          : 96,
-                  backgroundColor: Get.theme.backgroundColor.withOpacity(.12),
-                  actions: [
-                    IconButton(
-                        onPressed: controller.navigateToSearch,
-                        icon: Icon(
-                          Icons.search,
-                          color: Get.theme.primaryColorDark.withAlpha(100),
-                        ))
-                  ],
-                )
-              : const TriceTopBar(),
-          body: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: controller.pageController,
-            children: [
-              const NewsRoom(),
-              MyApartment(
-                apartmentModel: ApartmentModel(
-                    notifications: [
-                      NotificationModel(
-                          text: "Payment due next monday", date: "Oct 25, `22"),
-                      NotificationModel(
-                          text: "Nafungua maji sai, upto 5 jioni leo, ",
-                          date: "Oct 20, `22")
+    return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return <Widget>[
+            Obx(() => controller.selectedIndex.value == 1
+                ? SliverAppBar(
+                    elevation: 0,
+                    leading: Container(
+                        padding: const EdgeInsets.only(left: 16),
+                        alignment: AlignmentDirectional.center,
+                        child: RichText(
+                          text: TextSpan(
+                            text: "\$$accountBal",
+                            style: Get.textTheme.displaySmall?.copyWith(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                        )),
+                    leadingWidth: accountBal.length <= 4
+                        ? 64
+                        : accountBal.length <= 6
+                            ? 80
+                            : 96,
+                    backgroundColor: Get.theme.backgroundColor.withOpacity(.12),
+                    actions: [
+                      IconButton(
+                          onPressed: controller.navigateToSearch,
+                          icon: Icon(
+                            Icons.search,
+                            color: Get.theme.primaryColorDark.withAlpha(100),
+                          ))
                     ],
-                    rent: "200k",
-                    balance: "1k",
-                    due: "Dec 25, `22",
-                    name: "Imani Hostels",
-                    careTaker: PostAuthor("Mjinag One",
-                        "https://plus.unsplash.com/premium_photo-1663054688278-ebf09d654d33?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")),
-              ),
-              const Tasks(),
-              const Events(),
-              const Trending()
-            ],
-          ),
-          floatingActionButton: Obx(() => Visibility(
-                visible: controller.fabVisible.value,
-                child: _buildFab(context),
-              )),
+                  )
+                : const TriceTopBar())
+          ];
+        },
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: controller.pageController,
+          children: [
+            const NewsRoom(),
+            MyApartment(
+              apartmentModel: ApartmentModel(
+                  notifications: [
+                    NotificationModel(
+                        text: "Payment due next monday", date: "Oct 25, `22"),
+                    NotificationModel(
+                        text: "Nafungua maji sai, upto 5 jioni leo, ",
+                        date: "Oct 20, `22")
+                  ],
+                  rent: "200k",
+                  balance: "1k",
+                  due: "Dec 25, `22",
+                  name: "Imani Hostels",
+                  careTaker: PostAuthor("Mjinag One",
+                      "https://plus.unsplash.com/premium_photo-1663054688278-ebf09d654d33?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")),
+            ),
+            const Tasks(),
+            const Events(),
+            const Trending()
+          ],
+        ),
+      ),
+      floatingActionButton: Obx(() => Visibility(
+            visible: controller.fabVisible.value,
+            child: _buildFab(context),
+          )),
 
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          //floating action button position to center
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      //floating action button position to center
 
-          bottomNavigationBar: FABBottomAppBar(
-            centerItemText: str.tasks,
-            color: Get.theme.primaryColorDark,
-            selectedColor: const Color.fromARGB(155, 0, 0, 0),
-            backgroundColor: Get.theme.backgroundColor,
-            notchedShape: const AutomaticNotchedShape(
-                RoundedRectangleBorder(), StadiumBorder()),
-            onTabSelected: controller.updateIndex,
-            items: [
-              FABBottomAppBarItem(iconData: Icons.feed_rounded, text: str.news),
-              FABBottomAppBarItem(
-                  iconData: Icons.layers, text: str.myApartment),
-              FABBottomAppBarItem(iconData: Icons.dashboard, text: str.events),
-              FABBottomAppBarItem(iconData: Icons.tag, text: str.trending),
-            ],
-          ),
-        ));
+      bottomNavigationBar: FABBottomAppBar(
+        centerItemText: str.tasks,
+        color: Get.theme.primaryColorDark,
+        selectedColor: const Color.fromARGB(155, 0, 0, 0),
+        backgroundColor: Get.theme.backgroundColor,
+        notchedShape: const AutomaticNotchedShape(
+            RoundedRectangleBorder(), StadiumBorder()),
+        onTabSelected: controller.updateIndex,
+        items: [
+          FABBottomAppBarItem(iconData: Icons.feed_rounded, text: str.news),
+          FABBottomAppBarItem(iconData: Icons.layers, text: str.myApartment),
+          FABBottomAppBarItem(iconData: Icons.dashboard, text: str.events),
+          FABBottomAppBarItem(iconData: Icons.tag, text: str.trending),
+        ],
+      ),
+    );
   }
 
   Widget _buildFab(BuildContext context) {

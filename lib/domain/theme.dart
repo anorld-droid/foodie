@@ -34,7 +34,23 @@ class ThemeService {
             Color.fromARGB(121, 67, 67, 67)
           ],
         );
-
+  LinearGradient get callButton => _loadThemeFromBox()
+      ? const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+              Color.fromARGB(255, 25, 25, 25),
+              Color.fromARGB(127, 25, 25, 25),
+              Color.fromARGB(0, 25, 25, 25),
+            ])
+      : const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+              Color.fromARGB(255, 230, 230, 230),
+              Color.fromARGB(127, 230, 230, 230),
+              Color.fromARGB(0, 230, 230, 230),
+            ]);
   List<Color> get strokeColors => _loadThemeFromBox()
       ? const [
           Color.fromARGB(255, 255, 255, 255),

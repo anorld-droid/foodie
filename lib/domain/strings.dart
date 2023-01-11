@@ -73,4 +73,7 @@ class Strings {
 
   //Events Screen
   final String tag = "Tag";
+  final String book = "Book";
+  final String organizers = "Event Organizers";
+  final String call = "Call";
 }
