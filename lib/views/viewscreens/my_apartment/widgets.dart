@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:trice/controller/apartment_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/model/apartment/apartment.dart';
@@ -10,6 +8,7 @@ import 'package:trice/model/apartment/apartment_ad.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationModel notification;
+
   const NotificationCard({Key? key, required this.notification})
       : super(key: key);
 
@@ -47,6 +46,7 @@ class NotificationCard extends StatelessWidget {
 
 class ApartmentAdCard extends GetView<ApartmentController> {
   final ApartmentAdModel apartment;
+
   const ApartmentAdCard({Key? key, required this.apartment}) : super(key: key);
 
   @override
@@ -111,7 +111,7 @@ class ApartmentAdCard extends GetView<ApartmentController> {
         Padding(
           padding: const EdgeInsets.only(left: 4.0),
           child: Text(
-            "Ksh.${apartment.priceRange}",
+            'Ksh.${apartment.priceRange}',
             style: Get.textTheme.headlineSmall
                 ?.copyWith(fontWeight: FontWeight.w400),
           ),
@@ -119,7 +119,7 @@ class ApartmentAdCard extends GetView<ApartmentController> {
         Padding(
           padding: const EdgeInsets.only(left: 4.0, top: 4),
           child: Text(
-            "${apartment.unOccupied} unoccupied",
+            '${apartment.unOccupied} unoccupied',
             style: Get.textTheme.headlineSmall
                 ?.copyWith(fontWeight: FontWeight.w400),
           ),
@@ -150,7 +150,8 @@ class GradientCircularProgressIndicator extends StatelessWidget {
   final List<Color> gradientColors;
   final double strokeWidth;
 
-  GradientCircularProgressIndicator({
+  const GradientCircularProgressIndicator({
+    super.key,
     required this.radius,
     required this.gradientColors,
     this.strokeWidth = 10.0,
@@ -175,6 +176,7 @@ class GradientCircularProgressPainter extends CustomPainter {
     required this.gradientColors,
     required this.strokeWidth,
   });
+
   final double radius;
   final List<Color> gradientColors;
   final double strokeWidth;

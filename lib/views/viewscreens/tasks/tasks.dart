@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/task_controller.dart';
-import 'package:trice/model/data/tasks.dart';
 import 'package:trice/views/viewscreens/tasks/widgets.dart';
 
 class Tasks extends GetView<TaskController> {
@@ -32,7 +31,7 @@ class Tasks extends GetView<TaskController> {
               painter: MyPainter(sweepAngle: 78),
               child: Center(
                 child: Text(
-                  "78%",
+                  '78%',
                   style: Get.textTheme.bodyMedium
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),

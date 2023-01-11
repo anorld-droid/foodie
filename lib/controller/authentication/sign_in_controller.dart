@@ -5,7 +5,7 @@ import 'package:trice/views/viewscreens/authentication/widgets/sign_in_dialog.da
 
 class SignInController extends GetxController {
   final TextEditingController usernameController = TextEditingController();
-  var username = "Username".obs;
+  var username = 'Username'.obs;
   @override
   void onReady() {
     super.onReady();
@@ -13,7 +13,7 @@ class SignInController extends GetxController {
   }
 
   void usernameDialog(BuildContext context) {
-    showDialog(
+    showDialog<Widget>(
         context: context,
         barrierDismissible: false,
         barrierLabel:
@@ -24,7 +24,7 @@ class SignInController extends GetxController {
         });
   }
 
-  getUserDetails() {
+  void getUserDetails() {
     if (usernameController.text.trim().isNotEmpty) {
       Navigator.of(Get.overlayContext!).pop();
       username.value = usernameController.text;
@@ -32,7 +32,7 @@ class SignInController extends GetxController {
     }
   }
 
-  navigateToSignup() => Get.offNamed(signupScreen);
+  void  navigateToSignup() => Get.offAllNamed<String>(signupScreen);
 
-  navigateToNewsRoom() => Get.offNamed(mainScreen);
+  void navigateToNewsRoom() => Get.offNamed<String>(mainScreen);
 }

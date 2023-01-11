@@ -12,8 +12,8 @@ class SignUpController extends GetxController {
   final TextEditingController bioController = TextEditingController();
 
   var count = 0.obs;
-  increment() => count++;
-  username() => Get.snackbar("Your username is", usernameController.text);
+  void increment() => count++;
+  void username() => Get.snackbar('Your username is', usernameController.text);
 
   Future<void> biometrics(BuildContext context) async {
     showGeneralDialog(
@@ -23,13 +23,13 @@ class SignUpController extends GetxController {
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: Colors.black45,
         transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext, Animation animation,
-            Animation secondaryAnimation) {
-          return Biometrics();
+        pageBuilder: (BuildContext buildContext, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return const Biometrics();
         });
   }
 
   void navigateToSignIn() {
-    Get.offNamed(root);
+    Get.offNamed<void>(root);
   }
 }

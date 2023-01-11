@@ -46,7 +46,7 @@ class CommentScreen extends GetView<NewsDetailController> {
                 controller: controller.commentController,
                 style: Get.textTheme.bodySmall,
                 decoration: InputDecoration(
-                    hintText: "${str.hintText} ${controller.me.name}",
+                    hintText: '${str.hintText} ${controller.me.name}',
                     border: InputBorder.none),
               ),
             )),
@@ -142,7 +142,7 @@ class CommentCard extends StatelessWidget {
                             Get.textTheme.bodySmall?.copyWith(color: textColor),
                       ),
                       Text(
-                        " · ",
+                        ' · ',
                         style: Get.textTheme.labelMedium
                             ?.copyWith(color: textColor),
                       ),

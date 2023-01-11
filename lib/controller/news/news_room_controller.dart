@@ -6,13 +6,13 @@ import 'package:trice/views/routing/routes.dart';
 class NewsRoomController extends GetxController {
   final controller = Get.find<BottomAppBarController>();
 
-  navigateToNews(NewsPostModel newsPostModel) {
-    Get.toNamed(newsDetailScreen, arguments: newsPostModel);
+  void navigateToNews(NewsPostModel newsPostModel) {
+    Get.toNamed<void>(newsDetailScreen, arguments: newsPostModel);
   }
 
-  navigateToBriefs() async {
+  void navigateToBriefs() async {
     controller.fabVisible.value = false;
-    final result = await Get.toNamed(briefsScreen);
+    final result = await Get.toNamed<bool>(briefsScreen);
     if (result == true) {
       controller.fabVisible.value = true;
     } else {

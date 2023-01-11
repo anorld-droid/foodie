@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class GradientIcon extends StatelessWidget {
   final Widget icon;
-  final Function()? onPressed;
+  final void Function()? onPressed;
   final double size;
   final Gradient gradient;
   final bool enableFeedback;

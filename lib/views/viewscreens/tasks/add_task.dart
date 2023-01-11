@@ -1,7 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:trice/controller/task_controller.dart';
 import 'package:trice/domain/strings.dart';
 
@@ -205,7 +204,7 @@ class AddTask extends GetView<TaskController> {
                 selectedItem: controller.dropdownValue.value,
                 dropdownBuilder: ((context, selectedItem) {
                   return Text(
-                    selectedItem ?? "",
+                    selectedItem ?? '',
                     style: Get.textTheme.bodyMedium,
                   );
                 }),

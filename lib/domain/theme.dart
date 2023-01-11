@@ -14,7 +14,7 @@ class ThemeService {
   bool _loadThemeFromBox() => _box.read(_key) ?? false;
 
   /// Save isDarkMode to local storage
-  _saveThemeToBox(bool isDarkMode) => _box.write(_key, isDarkMode);
+  void _saveThemeToBox(bool isDarkMode) => _box.write(_key, isDarkMode);
 
   ///Gradients
   LinearGradient get stroke => _loadThemeFromBox()

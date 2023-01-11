@@ -17,17 +17,17 @@ class ApartmentController extends GetxController
     super.onInit();
   }
 
-  inquire(int phoneNumber) async {
-    String url = "https://wa.me/+254$phoneNumber?text=Apartment Inquiry, ";
+  void inquire(int phoneNumber) async {
+    String url = 'https://wa.me/+254$phoneNumber?text=Apartment Inquiry, ';
     Uri urlEncoded = Uri.parse(url);
     if (await canLaunchUrl(urlEncoded)) {
       await launchUrl(urlEncoded);
     } else {
-      throw "Could not launch $url";
+      throw 'Could not launch $url';
     }
   }
 
-  performSearch() {
+  void performSearch() {
     searching.toggle();
   }
 }

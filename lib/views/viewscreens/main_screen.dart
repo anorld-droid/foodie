@@ -18,7 +18,7 @@ import 'package:trice/views/widgets/top_bar.dart';
 
 class MainScreen extends GetView<BottomAppBarController> {
   final String accountBal;
-  const MainScreen({this.accountBal = "20.43", Key? key}) : super(key: key);
+  const MainScreen({this.accountBal = '20.43', Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class MainScreen extends GetView<BottomAppBarController> {
                         alignment: AlignmentDirectional.center,
                         child: RichText(
                           text: TextSpan(
-                            text: "\$$accountBal",
+                            text: '\$$accountBal',
                             style: Get.textTheme.displaySmall?.copyWith(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
@@ -76,17 +76,17 @@ class MainScreen extends GetView<BottomAppBarController> {
               apartmentModel: ApartmentModel(
                   notifications: [
                     NotificationModel(
-                        text: "Payment due next monday", date: "Oct 25, `22"),
+                        text: 'Payment due next monday', date: 'Oct 25, `22'),
                     NotificationModel(
-                        text: "Nafungua maji sai, upto 5 jioni leo, ",
-                        date: "Oct 20, `22")
+                        text: 'Nafungua maji sai, upto 5 jioni leo, ',
+                        date: 'Oct 20, `22')
                   ],
-                  rent: "200k",
-                  balance: "1k",
-                  due: "Dec 25, `22",
-                  name: "Imani Hostels",
-                  careTaker: PostAuthor("Mjinag One",
-                      "https://plus.unsplash.com/premium_photo-1663054688278-ebf09d654d33?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")),
+                  rent: '200k',
+                  balance: '1k',
+                  due: 'Dec 25, `22',
+                  name: 'Imani Hostels',
+                  careTaker: PostAuthor('Mjinag One',
+                      'https://plus.unsplash.com/premium_photo-1663054688278-ebf09d654d33?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60')),
             ),
             const Tasks(),
             const Events(),
