@@ -7,8 +7,8 @@ class TextFieldInput extends StatelessWidget {
   final bool isPass;
   final TextInputType textInputType;
   final String hintText;
-  final icon;
-  final Function()? onIconTap;
+  final IconData icon;
+  final void Function()? onIconTap;
   const TextFieldInput(
       {Key? key,
       required this.textEditingController,
@@ -16,14 +16,12 @@ class TextFieldInput extends StatelessWidget {
       required this.textInputType,
       required this.hintText,
       this.onIconTap,
-      this.icon})
+      required this.icon})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final inputBorder =
-        OutlineInputBorder(borderSide: Divider.createBorderSide(context));
-    return Container(
+    return SizedBox(
       width: Get.width - 70,
       child: TextField(
         style: GoogleFonts.inter(

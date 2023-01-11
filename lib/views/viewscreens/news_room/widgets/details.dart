@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +21,7 @@ class DetailsTopBar extends StatelessWidget implements PreferredSizeWidget {
             height: 32,
             width: 32,
             child: IconButton(
-              onPressed: () => Get.back(),
+              onPressed: () => Get.back<bool>(),
               padding: const EdgeInsets.only(left: 8),
               icon: Icon(
                 Icons.arrow_back_outlined,
@@ -77,19 +76,19 @@ Widget paragraphLayout(Paragraph paragraph) {
     case ParagraphType.bullet:
       child = BulletParagraph(
           richTextString: richTextString,
-          paragraphindent: styling.paragraphStyle.textIndent,
+          paragraphIndent: styling.paragraphStyle.textIndent,
           paragraphStyle: styling.textStyle);
       break;
     case ParagraphType.codeBlock:
       child = CodeBlockParagraph(
           richTextString: richTextString,
-          paragraphindent: styling.paragraphStyle.textIndent,
+          paragraphIndent: styling.paragraphStyle.textIndent,
           paragraphStyle: styling.textStyle);
       break;
     case ParagraphType.header:
       child = HeaderParagraph(
           richTextString: richTextString,
-          paragraphindent: styling.paragraphStyle.textIndent,
+          paragraphIndent: styling.paragraphStyle.textIndent,
           paragraphStyle: styling.textStyle);
       break;
 
@@ -167,7 +166,7 @@ extension on Markup {
   TextSpan toTextSpan() {
     NewsDetailController newsDetailController = Get.find();
 
-    TextSpan textSpan = TextSpan();
+    TextSpan textSpan = const TextSpan();
     switch (type) {
       case MarkupType.bold:
         textSpan = TextSpan(
@@ -195,7 +194,8 @@ extension on Markup {
                 .copyWith(decoration: TextDecoration.underline),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                newsDetailController.launchURL(href);
+                String? urlString = href;
+                newsDetailController.launchURL(urlString!);
               });
         break;
       default:
@@ -216,12 +216,12 @@ RichTextString paragraphToTextSpan(Paragraph paragraph) {
 
 class CodeBlockParagraph extends StatelessWidget {
   final RichTextString richTextString;
-  final double paragraphindent;
+  final double paragraphIndent;
   final TextStyle paragraphStyle;
   const CodeBlockParagraph(
       {Key? key,
       required this.richTextString,
-      required this.paragraphindent,
+      required this.paragraphIndent,
       required this.paragraphStyle})
       : super(key: key);
 
@@ -229,7 +229,7 @@ class CodeBlockParagraph extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width - 70,
-      padding: EdgeInsets.only(left: paragraphindent),
+      padding: EdgeInsets.only(left: paragraphIndent),
       decoration: BoxDecoration(
           color: Get.theme.primaryColorDark.withOpacity(.15),
           borderRadius: BorderRadius.circular(4)),
@@ -254,19 +254,19 @@ class CodeBlockParagraph extends StatelessWidget {
 
 class BulletParagraph extends StatelessWidget {
   final RichTextString richTextString;
-  final double paragraphindent;
+  final double paragraphIndent;
   final TextStyle paragraphStyle;
   const BulletParagraph(
       {Key? key,
       required this.richTextString,
-      required this.paragraphindent,
+      required this.paragraphIndent,
       required this.paragraphStyle})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: paragraphindent),
+      padding: EdgeInsets.only(left: paragraphIndent),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -323,19 +323,19 @@ class BulletParagraph extends StatelessWidget {
 
 class HeaderParagraph extends StatelessWidget {
   final RichTextString richTextString;
-  final double paragraphindent;
+  final double paragraphIndent;
   final TextStyle paragraphStyle;
   const HeaderParagraph(
       {Key? key,
       required this.richTextString,
-      required this.paragraphindent,
+      required this.paragraphIndent,
       required this.paragraphStyle})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: paragraphindent),
+      padding: EdgeInsets.only(left: paragraphIndent),
       child: Container(
         padding: const EdgeInsets.all(4),
         child: richTextString.textSpans.isNotEmpty

@@ -1,4 +1,3 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/task_controller.dart';
@@ -6,12 +5,13 @@ import 'package:trice/domain/strings.dart';
 import 'package:trice/domain/theme.dart';
 import 'package:trice/model/tasks.dart';
 import 'package:trice/views/widgets/gradient_icon.dart';
-import 'package:vector_math/vector_math.dart' as vmath;
+import 'package:vector_math/vector_math.dart' as v_math;
 
 class FilterChips extends GetView<TaskController> {
   final String text;
   final int index;
   final ValueChanged<int> onChipSelected;
+
   const FilterChips(
       {Key? key,
       required this.text,
@@ -56,6 +56,7 @@ class MyPainter extends CustomPainter {
   final double sweepAngle;
 
   MyPainter({required this.sweepAngle});
+
   @override
   void paint(Canvas canvas, Size size) {
     // Get the center of the canvas
@@ -82,8 +83,8 @@ class MyPainter extends CustomPainter {
     // Draw the light green portion of the progress indicator
     canvas.drawArc(
       Rect.fromCenter(center: center, width: 170, height: 170),
-      vmath.radians(-90),
-      vmath.radians(sweepAngle * 3.6),
+      v_math.radians(-90),
+      v_math.radians(sweepAngle * 3.6),
       false,
       Paint()
         ..style = PaintingStyle.stroke
@@ -98,8 +99,8 @@ class MyPainter extends CustomPainter {
     // only the segment that is overlapping with the lighter portion will be visible.
     canvas.drawArc(
       Rect.fromCenter(center: center, width: 155, height: 155),
-      vmath.radians(0),
-      vmath.radians(360),
+      v_math.radians(0),
+      v_math.radians(360),
       false,
       Paint()
         ..style = PaintingStyle.stroke
@@ -119,6 +120,7 @@ class MyPainter extends CustomPainter {
 class TasksLayout extends GetView<TaskController> {
   final String date;
   final List<TaskItem> tasks;
+
   const TasksLayout({Key? key, required this.date, required this.tasks})
       : super(key: key);
 
@@ -154,6 +156,7 @@ class TasksLayout extends GetView<TaskController> {
 class _TaskCard extends StatefulWidget {
   final TaskItem task;
   final String date;
+
   const _TaskCard({
     required this.date,
     Key? key,
@@ -168,6 +171,7 @@ class _TaskCardState extends State<_TaskCard> {
   TaskController controller = Get.find();
   Strings str = Strings();
   late bool showOptions;
+
   @override
   void initState() {
     super.initState();
@@ -270,11 +274,13 @@ class _TaskCardState extends State<_TaskCard> {
                                 ?.copyWith(fontWeight: FontWeight.bold)),
                       ),
                       VerticalDivider(
-                        color: Get.theme.primaryColorDark
-                            .withAlpha(150), //color of divider
+                        color: Get.theme.primaryColorDark.withAlpha(150),
+                        //color of divider
                         thickness: 1,
-                        width: 32, //thickness of divier line
-                        indent: 2, //spacing at the start of divider
+                        width: 32,
+                        //thickness of divier line
+                        indent: 2,
+                        //spacing at the start of divider
                         endIndent: 2, //spacing at the end of divider
                       ),
                       InkWell(
@@ -288,10 +294,14 @@ class _TaskCardState extends State<_TaskCard> {
                 )
               : const SizedBox(),
           Divider(
-            color: Get.theme.primaryColorDark.withAlpha(50), //color of divider
-            height: 32, //height spacing of divider
-            thickness: 1, //thickness of divier line
-            indent: 2, //spacing at the start of divider
+            color: Get.theme.primaryColorDark.withAlpha(50),
+            //color of divider
+            height: 32,
+            //height spacing of divider
+            thickness: 1,
+            //thickness of divier line
+            indent: 2,
+            //spacing at the start of divider
             endIndent: 2, //spacing at the end of divider
           ),
         ],

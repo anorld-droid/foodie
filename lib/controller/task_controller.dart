@@ -19,7 +19,7 @@ class TaskController extends GetxController {
   final TextEditingController taskController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
-  final dropdownValue = "".obs;
+  final dropdownValue = ''.obs;
   final DateTime now = DateTime.now();
   @override
   void onInit() {
@@ -42,16 +42,16 @@ class TaskController extends GetxController {
     }
   }
 
-  chipSelected(int index) {
+  void chipSelected(int index) {
     selectedChip.value = index;
   }
 
-  markTaskDone(TaskItem task, String key) async {
+  void markTaskDone(TaskItem task, String key) async {
     task.done = !task.done;
     taskWidgets.refresh();
   }
 
-  addTask() async {
+  void addTask() async {
     bool? closed = await Get.bottomSheet<bool?>(const AddTask(),
         backgroundColor: Get.theme.backgroundColor,
         clipBehavior: Clip.hardEdge,
@@ -65,12 +65,12 @@ class TaskController extends GetxController {
     }
   }
 
-  saveTask() {
-    Get.back();
+  void saveTask() {
+    Get.back<void>();
     //TODO: Save task either to storage or to firebase
   }
 
-  datePicker() async {
+  void datePicker() async {
     final DateTime? picked = await showDatePicker(
         context: Get.context!,
         initialDate: DateTime.now(),
@@ -81,7 +81,7 @@ class TaskController extends GetxController {
     }
   }
 
-  timePicker() async {
+  void timePicker() async {
     final picked = await showTimePicker(
         context: Get.context!, initialTime: TimeOfDay.now());
     if (picked != null) {
@@ -91,18 +91,18 @@ class TaskController extends GetxController {
     }
   }
 
-  addFilter() {
+  void addFilter() {
     //TODO: Add filter to storage or firebase.
   }
 
-  editTask(String task) {
+  void editTask(String task) {
     //TODO: Change task in storage or firebase.
     taskController.text = task;
     final controller = Get.find<BottomAppBarController>();
     controller.addTask();
   }
 
-  deleteTask() {
+  void deleteTask() {
     //TODO: Delete task from storage or firebase.
   }
 }

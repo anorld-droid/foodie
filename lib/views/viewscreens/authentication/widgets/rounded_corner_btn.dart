@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class IconBtn extends StatelessWidget {
   final String name;
-  final icon;
+  final IconData icon;
   const IconBtn({Key? key, required this.name, required this.icon})
       : super(key: key);
 

@@ -102,7 +102,7 @@ class Comment {
 class Markup {
   final MarkupType type;
   final String text;
-  String? href = null;
+  String? href;
 
   Markup(
     this.type,

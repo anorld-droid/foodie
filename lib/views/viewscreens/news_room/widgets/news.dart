@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:trice/controller/news/newsRoomController.dart';
+import 'package:trice/controller/news/news_room_controller.dart';
 import 'package:trice/model/news/news_brief.dart';
 import 'package:trice/model/news/news_post.dart';
 
@@ -73,7 +73,7 @@ class NewsPostCard extends GetView<NewsRoomController> {
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(2.0),
                             child: Image.network(
-                              newsPostModel.metadata.author.profilePhoto ?? "",
+                              newsPostModel.metadata.author.profilePhoto ?? '',
                               height: 20.0,
                               width: 24.0,
                               fit: BoxFit.fill,
@@ -85,7 +85,7 @@ class NewsPostCard extends GetView<NewsRoomController> {
                     Text(
                       newsPostModel.publication?.name == null
                           ? newsPostModel.metadata.author.name
-                          : "${newsPostModel.metadata.author.name} · ${newsPostModel.metadata.readTimeMinutes} mins",
+                          : '${newsPostModel.metadata.author.name} · ${newsPostModel.metadata.readTimeMinutes} mins',
                       style: Get.textTheme.bodySmall!.copyWith(
                           color:
                               Get.textTheme.bodySmall!.color!.withAlpha(170)),
@@ -202,7 +202,7 @@ class NewsBriefsCard extends StatelessWidget {
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(2.0),
                             child: Image.network(
-                              newsBriefModel.author.profilePhoto ?? "",
+                              newsBriefModel.author.profilePhoto ?? '',
                               height: 19.47,
                               width: 21.33,
                               fit: BoxFit.fill,
@@ -212,7 +212,7 @@ class NewsBriefsCard extends StatelessWidget {
                       width: 4,
                     ),
                     Text(
-                      "${newsBriefModel.author.name} · ${newsBriefModel.publication.name}",
+                      '${newsBriefModel.author.name} · ${newsBriefModel.publication.name}',
                       style: Get.textTheme.bodySmall!.copyWith(
                           color:
                               Get.textTheme.bodySmall!.color!.withAlpha(170)),

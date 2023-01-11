@@ -1,10 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:trice/controller/news/newsRoomController.dart';
+import 'package:trice/controller/news/news_room_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/model/data/briefs.dart';
 import 'package:trice/views/viewscreens/news_room/widgets/news.dart';

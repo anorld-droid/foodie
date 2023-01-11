@@ -1,15 +1,9 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_2.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:trice/controller/authentication/events_controller.dart';
 import 'package:trice/domain/strings.dart';
 import 'package:trice/domain/theme.dart';
 import 'package:trice/model/events/event.dart';
@@ -17,6 +11,7 @@ import 'package:trice/model/events/organizer.dart';
 
 class EventCard extends StatefulWidget {
   final EventModel eventModel;
+
   const EventCard({required this.eventModel, Key? key}) : super(key: key);
 
   @override
@@ -25,6 +20,7 @@ class EventCard extends StatefulWidget {
 
 class _EventCardState extends State<EventCard> {
   late bool showDescription;
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +65,7 @@ class _EventCardState extends State<EventCard> {
                                 style: Get.textTheme.labelSmall
                                     ?.copyWith(fontWeight: FontWeight.bold)),
                             Text(
-                              " · ",
+                              ' · ',
                               style: Get.textTheme.labelSmall,
                             ),
                             Text(
@@ -201,11 +197,14 @@ class _EventCardState extends State<EventCard> {
               ),
             ),
             Divider(
-              color:
-                  Get.theme.primaryColorDark.withAlpha(50), //color of divider
-              height: 16, //height spacing of divider
-              thickness: 1, //thickness of divier line
-              indent: 2, //spacing at the start of divider
+              color: Get.theme.primaryColorDark.withAlpha(50),
+              //color of divider
+              height: 16,
+              //height spacing of divider
+              thickness: 1,
+              //thickness of divier line
+              indent: 2,
+              //spacing at the start of divider
               endIndent: 2, //spacing at the end of divider
             )
           ],
@@ -240,6 +239,7 @@ class _EventCardState extends State<EventCard> {
 
 class EventOrganizerCard extends StatefulWidget {
   final Organizer organizer;
+
   const EventOrganizerCard({Key? key, required this.organizer})
       : super(key: key);
 
@@ -249,6 +249,7 @@ class EventOrganizerCard extends StatefulWidget {
 
 class _EventOrganizerCardState extends State<EventOrganizerCard> {
   late List<Widget> starIcons;
+
   @override
   void initState() {
     super.initState();

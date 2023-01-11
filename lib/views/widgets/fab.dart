@@ -122,10 +122,10 @@ class OverlayBuilder extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _OverlayBuilderState createState() => _OverlayBuilderState();
+   OverlayBuilderState createState() => OverlayBuilderState();
 }
 
-class _OverlayBuilderState extends State<OverlayBuilder> {
+class OverlayBuilderState extends State<OverlayBuilder> {
   OverlayEntry? overlayEntry;
 
   @override
@@ -196,7 +196,7 @@ class CenterAbout extends StatelessWidget {
   final Offset position;
   final Widget child;
 
-  CenterAbout({
+  const CenterAbout({
     Key? key,
     required this.position,
     required this.child,

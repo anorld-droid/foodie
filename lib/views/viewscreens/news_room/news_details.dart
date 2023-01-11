@@ -19,7 +19,7 @@ class NewsDetail extends GetView<NewsDetailController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: DetailsTopBar(
-          title: newsPostModel.publication?.name ?? "",
+          title: newsPostModel.publication?.name ?? '',
           profilePhoto: newsPostModel.publication?.logoUrl),
       body: SingleChildScrollView(
         controller: controller.scrollController,
@@ -56,7 +56,7 @@ class NewsDetail extends GetView<NewsDetailController> {
                       horizontal: 10,
                     ),
                     child: Text(
-                      newsPostModel.subtitle ?? "",
+                      newsPostModel.subtitle ?? '',
                       softWrap: true,
                       style: Get.textTheme.headlineSmall,
                     ),
@@ -91,7 +91,7 @@ class NewsDetail extends GetView<NewsDetailController> {
                       style: Get.textTheme.bodyMedium,
                     ),
                     Text(
-                      "${newsPostModel.metadata.date} · ${newsPostModel.metadata.readTimeMinutes} mins",
+                      '${newsPostModel.metadata.date} · ${newsPostModel.metadata.readTimeMinutes} mins',
                       style: Get.textTheme.bodySmall,
                     )
                   ],
@@ -156,7 +156,7 @@ class NewsDetail extends GetView<NewsDetailController> {
                           color: Get.theme.backgroundColor),
                       child: Center(
                         child: Text(
-                          "${controller.commentLength}",
+                          '${controller.commentLength}',
                           style: Get.textTheme.bodyMedium!
                               .copyWith(color: Get.theme.primaryColorDark),
                         ),

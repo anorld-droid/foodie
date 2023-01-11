@@ -218,7 +218,7 @@ class SignUp extends GetView<SignUpController> {
                       const CircleAvatar(
                         backgroundColor: Colors.black12,
                         radius: 50,
-                        backgroundImage: NetworkImage(""),
+                        backgroundImage: NetworkImage(''),
                       ),
                       InkWell(
                         onTap: controller.increment,
