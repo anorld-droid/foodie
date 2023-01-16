@@ -1,0 +1,29 @@
+name: Android Release
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v1
+      with:
+        flutter-version: 1.22.4
+    - name: Build release APK
+      run: flutter build apk --release
+    - name: Sign release APK
+      run: jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore trice-release-key.keystore build/app/outputs/apk/release/app-release.apk trice-release
+    - name: Verify release APK
+      run: jarsigner -verify build/app/outputs/apk/release/app-release.apk
+    - name: Upload to App Center
+      uses: microsoft/appcenter-action@v1
+      with:
+        app_name: 'Trice'
+        owner_name: '_TRICE'
+        distribution_group: 'Beta'
+        apk_path: 'build/app/outputs/apk/release/app-release.apk'
+        appcenter_token: ${{ secrets.APPCENTER_TOKEN }}
