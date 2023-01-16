@@ -20,11 +20,9 @@ jobs:
     - name: Verify release APK
       run: jarsigner -verify build/app/outputs/apk/release/app-release.apk
     - name: Distribute to App Center
-      id: distribute
-      uses: appcenter-distribute/github-action@v1.0.1
+      uses: devussy//AppCenter-Distribute-Github-Action@v1.0.5
       with:
-        app_name: 'Trice'
-        owner_name: '_TRICE'
-        distribution_group: 'Beta'
+        app: Patrice-Mulindi/Trice
+        group: _TRICE
         apk_path: 'build/app/outputs/apk/release/app-release.apk'
-        appcenter_token: ${{ secrets.APPCENTER_TOKEN }}
+        token: ${{ secrets.APPCENTER_TOKEN }}
