@@ -25,7 +25,7 @@ jobs:
       uses: wzieba/AppCenter-Github-Action@v1
       with:
         appName: Patrice-Mulindi/Trice
-        token: ${{secrets.APP_CENTER_TOKEN}}
+        token: ${{secrets.APPCENTER_TOKEN}}
         group: Testers
         file: build/app/outputs/flutter-apk/app-release.apk
         notifyTesters: true
