@@ -1,28 +1,96 @@
+1
+
 name: Android Release
+
+2
+
 on:
+
+3
+
   push:
+
+4
+
     branches:
+
+5
+
       - develop
+
+6
+
 jobs:
+
+7
+
   build:
+
+8
+
     runs-on: ubuntu-latest
+
+9
+
     steps:
+
+10
+
     - name: Checkout code
+
+11
+
       uses: actions/checkout@v2
+
+12
+
     - name: Set up Flutter
+
+13
+
       uses: subosito/flutter-action@v1
+
+14
+
       with:
+
+15
+
         flutter-version: 1.22.4
+
+16
+
     - name: Build release APK
+
+17
+
       run: flutter build apk --release
+
+18
+
     - name: Sign release APK
+
+19
+
       run: jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore trice-release-key.keystore build/app/outputs/apk/release/app-release.apk trice-release
+
+20
+
     - name: Verify release APK
+
+21
+
       run: jarsigner -verify build/app/outputs/apk/release/app-release.apk
-    - name: Distribute to App Center
-      uses: devussy//AppCenter-Distribute-Github-Action@v1.0.5
+    - name: Distribute ipa to App Center
+
+22
+
+      uses: akiojin/appcenter-distribute-github-action@v1
       with:
-        app: Patrice-Mulindi/Trice
-        group: _TRICE
-        apk_path: 'build/app/outputs/apk/release/app-release.apk'
-        token: ${{ secrets.APPCENTER_TOKEN }}
+          token: ${{ secrets.APPCENTER_ACCESS_TOKEN }}
+          path: ${{ runner.temp }}/ProductName.ipa
+          app: Patrice-Mulindi/Trice
+
+29
+
+​
