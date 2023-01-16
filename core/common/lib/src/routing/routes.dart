@@ -1,5 +1,7 @@
 const root = '/';
 
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
+
 const signupScreen = '/signup';
 const mainScreen = '/main_screen';
 const newsRoomScreen = '/news_room/news_room';

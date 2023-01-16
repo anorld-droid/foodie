@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
+
 class IconBtn extends StatelessWidget {
   final String name;
   final IconData icon;

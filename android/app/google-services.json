@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "368625392986",
+    "project_id": "trice-project",
+    "storage_bucket": "trice-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368625392986:android:b0bc8fa6136ac7ecd72763",
+        "android_client_info": {
+          "package_name": "com.trice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368625392986-a6sobcd6f34jnbph69mt6nq05fdpu6pi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trice",
+            "certificate_hash": "74b02bd425f21e9827ee5a0309f2407944bc8e68"
+          }
+        },
+        {
+          "client_id": "368625392986-k5v3l1a7dju2l4v8qsuav665glrh38ev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWKRqXemfX_p3TLuWL40a-3fI9h5XEeN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368625392986-k5v3l1a7dju2l4v8qsuav665glrh38ev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
