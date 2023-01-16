@@ -21,14 +21,12 @@ jobs:
     - name: Build release APK
       run: flutter build apk --release
 
-    - name: Sign release APK
-      run: jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ${{ secrets.KEYSTORE_FILE }} build/app/outputs/apk/release/app-release.apk ${{ secrets.ALIAS_NAME }}
-
-    - name: Upload to App Center
-      uses: microsoft/appcenter-action@v1
+    - name: upload artefact to App Center
+      uses: wzieba/AppCenter-Github-Action@v1
       with:
-        appcenter_token: ${{ secrets.APPCENTER_TOKEN }}
-        app_name: 'Trice'
-        owner_name: '_TRICE'
-        distribution_group: 'Beta'
-        apk_path: 'build/app/outputs/apk/release/app-release.apk'
+        appName: Patrice-Mulindi/Trice
+        token: ${{secrets.APP_CENTER_TOKEN}}
+        group: Testers
+        file: app/build/outputs/apk/release/app-release-unsigned.apk
+        notifyTesters: true
+        debug: false
