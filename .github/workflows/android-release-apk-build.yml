@@ -19,11 +19,14 @@ jobs:
       run: jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore trice-release-key.keystore build/app/outputs/apk/release/app-release.apk trice-release
     - name: Verify release APK
       run: jarsigner -verify build/app/outputs/apk/release/app-release.apk
-    - name: Upload to App Center
-      uses: microsoft/appcenter-action@v1
+    - name: Distribute to App Center
+      id: distribute
+      run: |
+        echo "##[set-output name=appcenter_token;]${{ secrets.APPCENTER_TOKEN }}"
+      uses: appcenter-distribute/github-action@v1.0.1
       with:
+        appcenter_token: ${{ steps.distribute.outputs.appcenter_token }}
         app_name: 'Trice'
         owner_name: '_TRICE'
         distribution_group: 'Beta'
         apk_path: 'build/app/outputs/apk/release/app-release.apk'
-        appcenter_token: ${{ secrets.APPCENTER_TOKEN }}
