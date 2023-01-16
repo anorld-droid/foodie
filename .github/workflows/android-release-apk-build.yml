@@ -19,7 +19,7 @@ jobs:
         channel: stable
 
     - name: Build release APK
-      run: flutter build apk --release
+      run: flutter build apk ./lib/launcher/main_prod.dart --release
 
     - name: upload artefact to App Center
       uses: wzieba/AppCenter-Github-Action@v1
