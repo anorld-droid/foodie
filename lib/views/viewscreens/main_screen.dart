@@ -1,10 +1,10 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/bottom_app_bar_controller.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/domain/theme.dart';
 import 'package:trice/model/apartment/apartment.dart';
 import 'package:trice/model/news/news_post.dart';
 import 'package:trice/views/viewscreens/events/events.dart';
@@ -16,6 +16,7 @@ import 'package:trice/views/widgets/bottom_bar_notch.dart';
 import 'package:trice/views/widgets/fab.dart';
 import 'package:trice/views/widgets/top_bar.dart';
 
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 class MainScreen extends GetView<BottomAppBarController> {
   final String accountBal;
   const MainScreen({this.accountBal = '20.43', Key? key}) : super(key: key);
@@ -141,7 +142,7 @@ class MainScreen extends GetView<BottomAppBarController> {
                   width: 60,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: ThemeService().floatingABGradient,
+                      gradient: ThemeService(isDarkMode: Get.isDarkMode).floatingABGradient,
                       boxShadow: controller.fabClicked.value
                           ? [
                               BoxShadow(

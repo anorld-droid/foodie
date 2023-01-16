@@ -1,10 +1,12 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/domain/theme.dart';
 
 import 'gradient_icon.dart';
+
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class TriceTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String accountBal;
@@ -41,7 +43,7 @@ class TriceTopBar extends StatelessWidget implements PreferredSizeWidget {
               'assets/icons/duplicate.svg',
             ),
             size: 40,
-            gradient: ThemeService().stroke)
+            gradient: ThemeService(isDarkMode: Get.isDarkMode).stroke)
       ],
     );
   }

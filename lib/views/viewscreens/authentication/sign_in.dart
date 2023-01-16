@@ -1,3 +1,4 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -5,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:slider_button/slider_button.dart';
 import 'package:trice/controller/authentication/sign_in_controller.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/views/viewscreens/authentication/widgets/curved_traingle.dart';
+
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class SignIn extends GetView<SignInController> {
   const SignIn({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class SignIn extends GetView<SignInController> {
       // Status bar brightness (optional)
       statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
     ));
-    Get.put(SignInController());
+    Get.lazyPut<SignInController>(() => SignInController(), fenix: true);
     Strings str = Strings();
     return Scaffold(
       backgroundColor: Colors.black,
@@ -50,7 +52,7 @@ class SignIn extends GetView<SignInController> {
                                     width: 17,
                                   ),
                                   Text(
-                                    str.logIn,
+                                    'Log in',
                                     style: GoogleFonts.inter(
                                         fontStyle: FontStyle.normal,
                                         color: Colors.black,
