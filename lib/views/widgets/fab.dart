@@ -1,9 +1,11 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/bottom_app_bar_controller.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/domain/theme.dart';
+
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class FabWithIcons extends GetView<BottomAppBarController> {
   const FabWithIcons({Key? key, required this.onIconTapped}) : super(key: key);
@@ -52,7 +54,7 @@ class FabWithIcons extends GetView<BottomAppBarController> {
               width: 60,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: ThemeService().floatingABGradient,
+                  gradient: ThemeService(isDarkMode: Get.isDarkMode).floatingABGradient,
                   boxShadow: controller.fabClicked.value
                       ? [
                           BoxShadow(

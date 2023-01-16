@@ -1,11 +1,13 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/task_controller.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/domain/theme.dart';
 import 'package:trice/model/tasks.dart';
 import 'package:trice/views/widgets/gradient_icon.dart';
 import 'package:vector_math/vector_math.dart' as v_math;
+
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class FilterChips extends GetView<TaskController> {
   final String text;
@@ -209,7 +211,7 @@ class _TaskCardState extends State<_TaskCard> {
                           : Icons.radio_button_unchecked,
                     ),
                     size: 24,
-                    gradient: ThemeService().stroke,
+                    gradient: ThemeService(isDarkMode: Get.isDarkMode).stroke,
                   )
                 ],
               ),
@@ -254,7 +256,7 @@ class _TaskCardState extends State<_TaskCard> {
                   },
                   icon: const Icon(Icons.more_vert),
                   size: 24,
-                  gradient: ThemeService().stroke,
+                  gradient: ThemeService(isDarkMode: Get.isDarkMode).stroke,
                 ),
               )
             ],

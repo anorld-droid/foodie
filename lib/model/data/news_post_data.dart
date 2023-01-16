@@ -1,4 +1,5 @@
 import 'package:trice/model/news/news_post.dart';
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 var pietro = PostAuthor('Pietro Maggi',
     'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60');
@@ -325,7 +326,7 @@ var paragraphsPost4 = [
       []),
   Paragraph(
       ParagraphType.text,
-      'In a ViewModel, if you’re exposing data coming from resources (strings, drawables, colors…), you have to take into account that ViewModel objects ignore configuration changes such as locale changes. When the user changes their locale, activities are recreated but the ViewModel objects are not.',
+      'In a ViewModel, if you’re exposing data coming from resources (strings.dart, drawables, colors…), you have to take into account that ViewModel objects ignore configuration changes such as locale changes. When the user changes their locale, activities are recreated but the ViewModel objects are not.',
       [Markup(MarkupType.bold, 'locale changes', null)]),
   Paragraph(
       ParagraphType.text,

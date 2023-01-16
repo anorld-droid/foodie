@@ -1,3 +1,4 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
@@ -5,9 +6,10 @@ import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_2.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/domain/theme.dart';
 import 'package:trice/model/events/event.dart';
 import 'package:trice/model/events/organizer.dart';
+
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class EventCard extends StatefulWidget {
   final EventModel eventModel;
@@ -299,7 +301,7 @@ class _EventOrganizerCardState extends State<EventOrganizerCard> {
               height: 36,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.0),
-                gradient: ThemeService().callButton,
+                gradient: ThemeService(isDarkMode: Get.isDarkMode).callButton,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

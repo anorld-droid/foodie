@@ -1,10 +1,12 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trice/controller/apartment_controller.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/domain/theme.dart';
 import 'package:trice/model/data/apartments.dart';
 import 'package:trice/views/viewscreens/my_apartment/widgets.dart';
+
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class SearchApartments extends GetView<ApartmentController> {
   const SearchApartments({Key? key}) : super(key: key);
@@ -67,8 +69,10 @@ class SearchApartments extends GetView<ApartmentController> {
                           .animate(controller.animationController),
                       child: GradientCircularProgressIndicator(
                         radius: 16,
-                        gradientColors:
-                            ThemeService().strokeColors.reversed.toList(),
+                        gradientColors: ThemeService(isDarkMode: Get.isDarkMode)
+                            .strokeColors
+                            .reversed
+                            .toList(),
                         strokeWidth: 3.0,
                       ),
                     ),

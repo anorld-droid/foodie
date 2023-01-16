@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trice/views/routing/routes.dart';
 import 'package:trice/views/viewscreens/authentication/widgets/sign_in_dialog.dart';
+import 'package:common/common.dart';
+
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class SignInController extends GetxController {
   final TextEditingController usernameController = TextEditingController();
@@ -32,7 +34,7 @@ class SignInController extends GetxController {
     }
   }
 
-  void  navigateToSignup() => Get.offAllNamed<String>(signupScreen);
+  void  navigateToSignup() => Get.offAllNamed<void>(signupScreen);
 
-  void navigateToNewsRoom() => Get.offNamed<String>(mainScreen);
+  void navigateToNewsRoom() => Get.offNamed<void>(mainScreen);
 }

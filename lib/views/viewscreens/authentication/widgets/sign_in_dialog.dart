@@ -1,9 +1,10 @@
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:trice/controller/authentication/sign_in_controller.dart';
 import 'package:trice/domain/strings.dart';
-import 'package:trice/views/viewscreens/authentication/widgets/text_field_input.dart';
+
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class SignInDialog extends GetView<SignInController> {
   const SignInDialog({Key? key}) : super(key: key);
