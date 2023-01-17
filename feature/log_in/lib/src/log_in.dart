@@ -3,25 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:slider_button/slider_button.dart';
-import 'package:trice/controller/authentication/sign_in_controller.dart';
-import 'package:trice/domain/strings.dart';
+import 'package:log_in/src/strings.dart';
+
+import 'log_in_controller.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
-
-class SignIn extends GetView<SignInController> {
-  const SignIn({Key? key}) : super(key: key);
+class LogIn extends GetView<LogInController> {
+  const LogIn({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: Colors.white,
+      statusBarColor: Get.theme.backgroundColor,
       // Status bar brightness (optional)
-      statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+      statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
     ));
-    Get.lazyPut<SignInController>(() => SignInController(), fenix: true);
-    Strings str = Strings();
+    Get.lazyPut<LogInController>(() => LogInController(), fenix: true);
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -37,7 +35,9 @@ class SignIn extends GetView<SignInController> {
                           height: Get.height / 13,
                           width: Get.width,
                           alignment: AlignmentDirectional.bottomStart,
-                          margin: MediaQuery.of(context).padding,
+                          margin: MediaQuery
+                              .of(context)
+                              .padding,
                           color: Colors.transparent,
                           child: Container(
                               alignment: AlignmentDirectional.bottomStart,
@@ -52,7 +52,7 @@ class SignIn extends GetView<SignInController> {
                                     width: 17,
                                   ),
                                   Text(
-                                    'Log in',
+                                    Strings.logIn,
                                     style: GoogleFonts.inter(
                                         fontStyle: FontStyle.normal,
                                         color: Colors.black,
@@ -98,7 +98,7 @@ class SignIn extends GetView<SignInController> {
                                 height: 24,
                               ),
                               Text(
-                                str.welcome,
+                                Strings.welcome,
                                 style: GoogleFonts.inter(
                                     fontStyle: FontStyle.normal,
                                     color: Colors.white,
@@ -109,81 +109,68 @@ class SignIn extends GetView<SignInController> {
                               const SizedBox(
                                 height: 12,
                               ),
-                              Obx((() => (Text(
-                                    controller.username.value,
-                                    style: GoogleFonts.inter(
-                                        fontStyle: FontStyle.normal,
-                                        color: Colors.white,
-                                        fontSize: 28.0,
-                                        letterSpacing: .2,
-                                        fontWeight: FontWeight.w300),
-                                  )))),
+                              Obx((() =>
+                              (Text(
+                                controller.username.value,
+                                style: GoogleFonts.inter(
+                                    fontStyle: FontStyle.normal,
+                                    color: Colors.white,
+                                    fontSize: 28.0,
+                                    letterSpacing: .2,
+                                    fontWeight: FontWeight.w300),
+                              )))),
                             ],
                           ),
                           Center(
-                            child: Icon(
-                              Icons.fingerprint_outlined,
-                              color: Colors.white.withOpacity(0.5),
-                              size: 100,
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: controller.fingerprintAuth,
+                                  icon: Obx(() =>
+                                      Icon(
+                                        Icons.fingerprint_outlined,
+                                        color: Colors.white.withOpacity(
+                                            controller.authenticated.value
+                                                ? 1
+                                                : 0.8),
+                                        size: 100,
+                                      )),
+                                  iconSize: 100,
+                                ),
+                                Text(Strings.logInPrompt,
+                                    style: GoogleFonts.inter(
+                                        fontStyle: FontStyle.normal,
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w200))
+                              ],
                             ),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              DefaultTextStyle(
-                                  style: GoogleFonts.inter(
-                                      fontStyle: FontStyle.normal,
-                                      color: Colors.white.withOpacity(0.7),
-                                      fontSize: 40.0,
-                                      fontWeight: FontWeight.w700),
-                                  child: Text(
-                                    str.scanFing,
-                                  )),
-                            ],
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                height: 43,
-                                width: 305,
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(100)),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        // Color(0xFF000000),
-                                        Color(0xFF000000),
-                                        Color(0xFF434343),
-                                        Color.fromARGB(255, 97, 95, 95),
-                                        Color.fromARGB(255, 97, 95, 95),
-                                        Color.fromARGB(255, 155, 150, 150),
-                                      ],
-                                    )),
-                                child: SliderButton(
-                                    height: 40,
-                                    width: 302,
-                                    buttonSize: 32,
-                                    baseColor: Colors.white,
-                                    alignLabel: Alignment.center,
-                                    backgroundColor: Colors.black,
-                                    highlightedColor: Colors.black,
-                                    action: () =>
-                                        controller.navigateToNewsRoom(),
-                                    label: Text(
-                                      str.changeUsername,
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.inter(
-                                          fontStyle: FontStyle.normal,
-                                          color: Colors.white,
-                                          fontSize: 18.0,
-                                          letterSpacing: 1.0,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    icon: const Icon(
-                                        Icons.chevron_right_outlined)),
-                              ),
+                                  height: 43,
+                                  width: 305,
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(100)),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          // Color(0xFF000000),
+                                          Color(0xFF000000),
+                                          Color(0xFF434343),
+                                          Color.fromARGB(255, 97, 95, 95),
+                                          Color.fromARGB(255, 97, 95, 95),
+                                          Color.fromARGB(255, 155, 150, 150),
+                                        ],
+                                      )),
+                                  child: CustomSliderButton(
+                                      action: () =>
+                                          controller.logInDialog(context),
+                                      actionName:
+                                      Strings.signToAnotherAccount)),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -192,7 +179,7 @@ class SignIn extends GetView<SignInController> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      str.dontHaveAccount,
+                                      Strings.dontHaveAccount,
                                       style: GoogleFonts.inter(
                                           fontStyle: FontStyle.normal,
                                           color: Colors.white,
@@ -201,17 +188,20 @@ class SignIn extends GetView<SignInController> {
                                           fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.center,
                                     ),
-                                    InkWell(
-                                      onTap: controller.navigateToSignup,
-                                      child: Text(
-                                        str.signup,
-                                        style: GoogleFonts.inter(
-                                            fontStyle: FontStyle.normal,
-                                            color: Colors.white,
-                                            fontSize: 18.0,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.w600),
-                                        textAlign: TextAlign.center,
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 4.0),
+                                      child: InkWell(
+                                        onTap: controller.navigateToSignup,
+                                        child: Text(
+                                          Strings.signup,
+                                          style: GoogleFonts.inter(
+                                              fontStyle: FontStyle.normal,
+                                              color: Colors.white,
+                                              fontSize: 18.0,
+                                              letterSpacing: 1.0,
+                                              fontWeight: FontWeight.w600),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
                                     )
                                   ],
@@ -230,16 +220,24 @@ class SignIn extends GetView<SignInController> {
                         height: 69,
                         width: Get.width,
                       ),
-                      Stack(
-                        alignment: AlignmentDirectional.center,
-                        children: const [
-                          CircleAvatar(
-                            backgroundColor: Colors.white38,
-                            radius: 65,
-                            backgroundImage: NetworkImage(
-                                'https://images.unsplash.com/photo-1564166174574-a9666f590437?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'),
-                          ),
-                        ],
+                      Obx(
+                            () =>
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                controller.profilePic.value.isNotEmpty
+                                    ? CircleAvatar(
+                                  backgroundColor: Colors.white38,
+                                  radius: 65,
+                                  backgroundImage: NetworkImage(
+                                      controller.profilePic.value),
+                                )
+                                    : const CircleAvatar(
+                                  backgroundColor: Colors.white38,
+                                  radius: 65,
+                                )
+                              ],
+                            ),
                       ),
                     ],
                   ),
@@ -258,7 +256,7 @@ class SignIn extends GetView<SignInController> {
                       decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius:
-                              BorderRadius.only(topLeft: Radius.circular(30))),
+                          BorderRadius.only(topLeft: Radius.circular(30))),
                     ))
               ])
             ]),

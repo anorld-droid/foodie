@@ -46,7 +46,7 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   final TextEditingController verificationController = TextEditingController();
 
   void navigateToLogIn() {
-    Get.offNamed<void>(root);
+    Get.offNamed<void>(Routes.root);
   }
 
   Future<void> verifyNumber() async {
@@ -70,7 +70,7 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
             User(uid: uid, photoUrl: photoUrl, username: username);
         _userModelUseCase.uploadUserModel(Constants.users, uid, user);
         message = 'Account created successfully';
-        Get.offNamed<void>('/main_screen');
+        Get.offNamed<void>(Routes.mainScreen);
       }
     }
     Fluttertoast.showToast(

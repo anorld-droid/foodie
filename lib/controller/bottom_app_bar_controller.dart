@@ -60,7 +60,7 @@ class BottomAppBarController extends GetxController
 
   void navigateToSearch() async {
     fabVisible.value = false;
-    final returned = await Get.toNamed<bool>(searchApartment);
+    final returned = await Get.toNamed<bool>(Routes.searchApartment);
     if (returned == true) {
       fabVisible.value = true;
     } else {

@@ -9,12 +9,12 @@ class NewsRoomController extends GetxController {
   final controller = Get.find<BottomAppBarController>();
 
   void navigateToNews(NewsPostModel newsPostModel) {
-    Get.toNamed<void>(newsDetailScreen, arguments: newsPostModel);
+    Get.toNamed<void>(Routes.newsDetailScreen, arguments: newsPostModel);
   }
 
   void navigateToBriefs() async {
     controller.fabVisible.value = false;
-    final result = await Get.toNamed<bool>(briefsScreen);
+    final result = await Get.toNamed<bool>(Routes.briefsScreen);
     if (result == true) {
       controller.fabVisible.value = true;
     } else {
