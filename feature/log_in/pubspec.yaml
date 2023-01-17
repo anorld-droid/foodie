@@ -1,7 +1,7 @@
 name: log_in
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+publish_to: none
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -10,6 +10,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  local_auth: ^2.1.3
+  get: ^4.6.5
+  google_fonts: ^3.0.1
+  intl_phone_number_input: ^0.7.2
+
+
+  # Modules
+  common:
+    path: ../../core/common
+  domain:
+    path: ../../core/domain
+  model:
+    path: ../../core/model
 
 dev_dependencies:
   flutter_test:

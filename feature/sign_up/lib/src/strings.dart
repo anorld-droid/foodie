@@ -13,7 +13,4 @@ class Strings {
   static String alreadyHaveAnAccount = 'Already have an account?';
   static String logIn = 'Log in';
   static String slideSignUp = 'Slide to sign up';
-  static String twitterImageUrl = 'assets/icons/twitter.jpeg';
-  static String googleImageUrl = 'assets/images/google.png';
-
 }
