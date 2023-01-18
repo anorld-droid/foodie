@@ -3,12 +3,11 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:log_in/src/strings.dart';
 import 'package:log_in/src/widgets/log_in_dialog.dart';
 import 'package:model/model.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 class LogInController extends GetxController with GetTickerProviderStateMixin {
@@ -18,8 +17,6 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
   late final TextEditingController phoneNumberController;
   late final TextEditingController verificationController;
   late AnimationController animationController;
-
-
 
   Rx<bool> authenticated = false.obs;
   var username = ''.obs;
@@ -47,9 +44,8 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
     animationController.repeat();
   }
 
-
   @override
-  void onReady()  {
+  void onReady() {
     super.onReady();
     loadData();
   }
@@ -61,7 +57,7 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
       username.value = user.username;
       profilePic.value = user.photoUrl;
       fingerprintAuth();
-    }else {
+    } else {
       logInDialog(Get.context!);
     }
   }
@@ -72,7 +68,7 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
         barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: Colors.black45,
+        barrierColor: Colors.black87,
         builder: (BuildContext buildContext) {
           return const LogInDialog();
         });
@@ -82,7 +78,8 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
     try {
       authenticated.value = await auth.authenticate(
         localizedReason: Strings.localizedReason,
-        options: const AuthenticationOptions(stickyAuth: true, useErrorDialogs: false),
+        options: const AuthenticationOptions(
+            stickyAuth: true, useErrorDialogs: false),
       );
     } on PlatformException catch (e) {
       //ignore: todo
@@ -100,9 +97,9 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
     if (inputValidated.value) {
       await _authenticateUser.withPhoneNUmber(phoneNumber.phoneNumber!,
           verificationCompleted: (bool value) {
-            verificationHasPassed.value = value;
-            navigateToMainScreen();
-          });
+        verificationHasPassed.value = value;
+        navigateToMainScreen();
+      });
     }
     searching.value = false;
   }

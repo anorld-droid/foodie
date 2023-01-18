@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '../firebase_options.dart';
+import 'package:flutter/material.dart';
+import 'package:trice/firebase_options.dart';
 
-import 'trice_app.dart';
 import 'app_config.dart';
+import 'trice_app.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 11.01.2023.
 void main() async {

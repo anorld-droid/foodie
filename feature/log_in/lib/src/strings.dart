@@ -2,7 +2,7 @@
 class Strings {
   static String logIn = 'Log in';
   static String enterPhoneNumber = 'Enter your phone number';
-  static String welcome = 'Welcome back!';
+  static String welcome = 'Welcome to Trice, ';
   static String signToAnotherAccount = 'Slide to change account';
   static String dontHaveAccount = 'Don\'t have an account?';
   static String signup = 'Sign up';

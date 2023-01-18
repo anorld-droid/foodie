@@ -3,5 +3,15 @@
 class CommonStrings {
   static String appName = 'Trice';
   static String appDev = 'Patrice Mulindi';
+  static String duplicateIcon = 'assets/icons/duplicate.svg';
+  static String underDevelopment = 'Under development';
+  
+  //Bottom bar
+  static String hiCars = 'hiCars';
+  static String apartment = 'Apartment';
+  static String tasks = 'Tasks';
+  static String cuisine = 'Cuisine 2.0';
+  static String eSolar = 'eSolar';
+  static String todoSvg = 'assets/icons/todo.svg';
 
 }

@@ -17,7 +17,7 @@ class ThemeService {
           end: Alignment.bottomRight,
           colors: [
             Color.fromARGB(255, 255, 255, 255),
-            Color.fromARGB(90, 255, 255, 255)
+            Color.fromARGB(255, 255, 255, 255),
           ],
         )
       : const LinearGradient(
@@ -176,7 +176,6 @@ class Themes {
             fontSize: 14,
             color: Colors.black,
             letterSpacing: 1.0,
-            // height: 16,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
         displayMedium: GoogleFonts.montserrat(
@@ -196,49 +195,42 @@ class Themes {
             fontSize: 24,
             color: Colors.white,
             letterSpacing: 1.0,
-            height: 44,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
         headlineLarge: GoogleFonts.inter(
             fontSize: 32,
             color: Colors.white,
             letterSpacing: 0,
-            height: 40,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w500),
         headlineMedium: GoogleFonts.inter(
             fontSize: 28,
             color: Colors.white,
             letterSpacing: 0,
-            height: 36,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w500),
         headlineSmall: GoogleFonts.inter(
             fontSize: 24,
             color: Colors.white,
             letterSpacing: 0,
-            height: 32,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w500),
         labelMedium: GoogleFonts.inter(
             fontSize: 12,
             color: Colors.white,
             letterSpacing: 1.0,
-            height: 16,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w500),
         labelSmall: GoogleFonts.montserrat(
             fontSize: 20,
             color: Colors.white,
             letterSpacing: 1.0,
-            height: 16,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
         bodyLarge: GoogleFonts.inter(
             fontSize: 16,
             color: Colors.white,
             letterSpacing: 1.0,
-            height: 24,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
         bodyMedium: GoogleFonts.inter(
@@ -252,7 +244,6 @@ class Themes {
             fontSize: 14,
             color: Colors.white,
             letterSpacing: 1.0,
-            height: 16,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
         displayMedium: GoogleFonts.montserrat(

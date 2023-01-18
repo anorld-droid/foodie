@@ -38,7 +38,16 @@ dependencies:
     path: core/domain
   log_in:
     path: feature/log_in
-
+  hi_cars:
+    path: feature/hi_cars
+  apartment:
+    path: feature/apartment
+  tasks:
+    path: feature/tasks
+  agrich:
+    path: feature/agrich
+  e_solar:
+    path: feature/e_solar
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +59,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/duplicate.svg
     - assets/icons/todo.svg
     - assets/icons/comments.svg
