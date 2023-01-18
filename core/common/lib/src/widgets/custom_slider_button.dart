@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:slider_button/slider_button.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
-
 class CustomSliderButton extends StatelessWidget {
   final void Function() action;
   final String actionName;
@@ -50,10 +49,12 @@ class CustomSliderButton extends StatelessWidget {
                     fontStyle: FontStyle.normal,
                     color: Colors.white,
                     fontSize: 18.0,
+                    height: 0,
                     letterSpacing: 1.0,
                     fontWeight: FontWeight.w600),
               ),
-              icon: const Icon(Icons.chevron_right_outlined)),
+              icon: const Icon(Icons.chevron_right_outlined,
+                  color: Colors.black)),
         ),
       ],
     );

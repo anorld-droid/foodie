@@ -23,7 +23,8 @@ class UserAuth {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    UserCredential? userCredential =  await FirebaseAuth.instance.currentUser?.linkWithCredential(credential);
+    UserCredential? userCredential =
+        await FirebaseAuth.instance.currentUser?.linkWithCredential(credential);
     return userCredential?.user?.uid;
   }
 
@@ -75,11 +76,15 @@ class UserAuth {
     return _auth.currentUser?.uid;
   }
 
-  String? getUserName( ){
+  String? getUserName() {
     return _auth.currentUser?.displayName;
-
   }
+
   String? getUserPhotoUrl() {
     return _auth.currentUser?.photoURL;
+  }
+
+  bool? userExists(String phoneNumber) {
+    return true;
   }
 }

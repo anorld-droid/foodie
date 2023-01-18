@@ -7,7 +7,6 @@ import 'package:sign_up/src/sign_up_controller.dart';
 import 'package:sign_up/src/strings.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
-
 class SignUp extends GetView<SignUpController> {
   const SignUp({Key? key}) : super(key: key);
 
@@ -31,33 +30,37 @@ class SignUp extends GetView<SignUpController> {
               children: [
                 Stack(
                   children: [
-                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Container(
-                        height: Get.height * 1 / 12,
-                        width: Get.width,
-                        margin: MediaQuery.of(context).padding,
-                        color: Colors.transparent,
-                        child: Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(30))),
-                            child: Center(
-                              child: Text(
-                                Strings.createAccount,
-                                style: Get.theme.textTheme.labelSmall?.copyWith(
-                                    color: Colors.white,
-                                    letterSpacing: 4.0,
-                                    fontWeight: FontWeight.w500),
-                                textAlign: TextAlign.center,
-                              ),
-                            )),
-                      ),
-                      CustomPaint(
-                        size: Size(68.12, (68.12 * 0.5833333333333334).toDouble()),
-                        painter: TopCurvedTriangle(Colors.black),
-                      ),
-                    ]),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: Get.height * 1 / 12,
+                            width: Get.width,
+                            margin: MediaQuery.of(context).padding,
+                            color: Colors.transparent,
+                            child: Container(
+                                decoration: const BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(30))),
+                                child: Center(
+                                  child: Text(
+                                    Strings.createAccount,
+                                    style: Get.theme.textTheme.labelSmall
+                                        ?.copyWith(
+                                            color: Colors.white,
+                                            letterSpacing: 4.0,
+                                            fontWeight: FontWeight.w500),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )),
+                          ),
+                          CustomPaint(
+                            size: Size(
+                                68.12, (68.12 * 0.5833333333333334).toDouble()),
+                            painter: TopCurvedTriangle(Colors.black),
+                          ),
+                        ]),
                   ],
                 ),
                 Column(
@@ -73,8 +76,8 @@ class SignUp extends GetView<SignUpController> {
                               color: Colors.black.withOpacity(0.30),
                               spreadRadius: 0,
                               blurRadius: 10,
-                              offset:
-                                  const Offset(0, 8), // changes position of shadow
+                              offset: const Offset(
+                                  0, 8), // changes position of shadow
                             ),
                           ]),
                       child: Column(
@@ -84,26 +87,32 @@ class SignUp extends GetView<SignUpController> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                               Obx(() =>  Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: [
-                                     controller.image.value == null ?  const CircleAvatar(
-                                      backgroundColor: Colors.black12,
-                                      radius: 50,
-                                    ) : CircleAvatar(
-                                      radius: 50,
-                                      backgroundImage: MemoryImage(controller.image.value!),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        await controller.selectImage();
-                                      },
-                                      child: const Icon(
-                                        Icons.camera_alt,
-                                      ),
-                                    )
-                                  ],
-                                ),)
+                                Obx(
+                                  () => Stack(
+                                    alignment: AlignmentDirectional.center,
+                                    children: [
+                                      controller.image.value == null
+                                          ? const CircleAvatar(
+                                              backgroundColor: Colors.black,
+                                              radius: 50,
+                                            )
+                                          : CircleAvatar(
+                                              radius: 50,
+                                              backgroundImage: MemoryImage(
+                                                  controller.image.value!),
+                                            ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await controller.selectImage();
+                                        },
+                                        child: const Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -113,83 +122,78 @@ class SignUp extends GetView<SignUpController> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 TextFieldInput(
+                                  backgroundColor: Colors.white,
                                   hintText: Strings.username,
                                   icon: Icons.person_outline,
                                   textInputType: TextInputType.name,
                                   textEditingController:
-                                  controller.usernameController,
+                                      controller.usernameController,
                                 ),
                                 const SizedBox(
                                   height: 25,
                                 ),
-                                SizedBox(
-                                  width: Get.width - 70,
-                                  child: InternationalPhoneNumberInput(
-                                    countries: const ['KE'],
-                                    maxLength: 13,
-                                    onInputChanged: (PhoneNumber number) {
-                                      controller.phoneNumber = number;
-                                    },
-                                    onInputValidated: (bool value) {
-                                      controller.inputValidated.value = value;
-                                    },
-                                    ignoreBlank: false,
-                                    autoValidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    initialValue: controller.phoneNumber,
-                                    cursorColor: Colors.black,
-                                    inputDecoration: InputDecoration(
-                                        hintText: Strings.phoneNumber,
-                                        focusColor: Colors.black,
-                                        focusedBorder: const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: .3, color: Colors.black)),
-                                        border: const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: .3, color: Colors.black))),
-                                    textFieldController: controller.phoneController,
-                                    textStyle: Get.theme.textTheme.bodyMedium
-                                        ?.copyWith(
-                                            color: Colors.black,
-                                            letterSpacing: 1.0,
-                                            fontWeight: FontWeight.w300),
-                                    formatInput: true,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                            signed: true, decimal: true),
+                                Card(
+                                  color: Colors.white,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(8.0),
+                                    width: Get.width - 70,
+                                    child: InternationalPhoneNumberInput(
+                                      countries: const ['KE'],
+                                      maxLength: 13,
+                                      onInputChanged: (PhoneNumber number) {
+                                        controller.phoneNumber = number;
+                                      },
+                                      onInputValidated: (bool value) {
+                                        controller.inputValidated.value = value;
+                                      },
+                                      ignoreBlank: false,
+                                      autoValidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      initialValue: controller.phoneNumber,
+                                      cursorColor: Colors.black,
+                                      inputDecoration: InputDecoration(
+                                          hintText: Strings.phoneNumber,
+                                          focusColor: Colors.black,
+                                          focusedBorder:
+                                              const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      width: .3,
+                                                      color: Colors.white)),
+                                          border: const UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  width: .3,
+                                                  color: Colors.white))),
+                                      textFieldController:
+                                          controller.phoneController,
+                                      selectorTextStyle: Get
+                                          .theme.textTheme.bodyMedium
+                                          ?.copyWith(
+                                              color: Colors.black,
+                                              letterSpacing: 1.0,
+                                              height: 2,
+                                              fontWeight: FontWeight.w300),
+                                      textStyle: Get.theme.textTheme.bodyMedium
+                                          ?.copyWith(
+                                              color: Colors.black,
+                                              letterSpacing: 1.0,
+                                              height: 2,
+                                              fontWeight: FontWeight.w300),
+                                      formatInput: true,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              signed: true, decimal: true),
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
                                   height: 25,
                                 ),
-                                Obx(() => TextFieldInput(
-                                      hintText: Strings.verificationId,
-                                      onChanged: (value) {
-                                        controller.verificationCode.value = value;
-                                      },
-                                      suffixText:
-                                          controller.verificationHasPassed.value
-                                              ? Strings.verified
-                                              : controller.verificationCode.value.isEmpty
-                                                  ? Strings.getCode
-                                                  : Strings.verify,
-                                      onIconTap: () async {
-                                        if (controller
-                                            .verificationController.text.isEmpty) {
-                                          controller.verifyNumber();
-                                        } else {
-                                          controller.onCodeReceived();
-                                        }
-                                      },
-                                      textInputType: TextInputType.emailAddress,
-                                      textEditingController:
-                                          controller.verificationController,
-                                    )),
                                 const SizedBox(
                                   height: 60,
                                 ),
                                 Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     InkWell(
                                       onTap: () async {
@@ -211,11 +215,15 @@ class SignUp extends GetView<SignUpController> {
                                                     Radius.circular(30.0))),
                                             child: Center(
                                               child: Text(
-                                                Strings.signup,
+                                                controller.verificationHasPassed
+                                                        .value
+                                                    ? Strings.verified
+                                                    : Strings.getCode,
                                                 textAlign: TextAlign.center,
-                                                style: Get.textTheme.bodyMedium
+                                                style: Get.textTheme.bodyLarge
                                                     ?.copyWith(
-                                                        color: Colors.white),
+                                                        color: Colors.white,
+                                                        height: 0),
                                               ),
                                             ),
                                           )),
@@ -228,11 +236,14 @@ class SignUp extends GetView<SignUpController> {
                                           children: [
                                             Text(
                                               Strings.alreadyHaveAnAccount,
-                                              style: Get.theme.textTheme.bodyMedium
+                                              style: Get
+                                                  .theme.textTheme.bodyMedium
                                                   ?.copyWith(
                                                       color: Colors.black,
                                                       letterSpacing: 1.0,
-                                                      fontWeight: FontWeight.w300),
+                                                      height: 0,
+                                                      fontWeight:
+                                                          FontWeight.w300),
                                               textAlign: TextAlign.center,
                                             ),
                                             const SizedBox(
@@ -247,6 +258,7 @@ class SignUp extends GetView<SignUpController> {
                                                     ?.copyWith(
                                                         color: Colors.black,
                                                         letterSpacing: 1.0,
+                                                        height: 0,
                                                         fontWeight:
                                                             FontWeight.w600),
                                                 textAlign: TextAlign.center,
@@ -278,8 +290,8 @@ class SignUp extends GetView<SignUpController> {
                       child: Container(
                         decoration: const BoxDecoration(
                             color: Colors.black,
-                            borderRadius:
-                                BorderRadius.only(topLeft: Radius.circular(30))),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30))),
                         child: const SizedBox(),
                       ))
                 ]),
@@ -289,26 +301,27 @@ class SignUp extends GetView<SignUpController> {
               Widget widget;
               controller.searching.value
                   ? widget = Center(
-                child: Card(
-                  margin: const EdgeInsets.all(16.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(4.0),
-                    child: RotationTransition(
-                      turns: Tween(begin: 0.0, end: 1.0)
-                          .animate(controller.animationController),
-                      child: GradientCircularProgressIndicator(
-                        radius: 16,
-                        gradientColors: ThemeService(isDarkMode: Get.isDarkMode)
-                            .strokeColors
-                            .reversed
-                            .toList(),
-                        strokeWidth: 3.0,
+                      child: Card(
+                        margin: const EdgeInsets.all(16.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(4.0),
+                          child: RotationTransition(
+                            turns: Tween(begin: 0.0, end: 1.0)
+                                .animate(controller.animationController),
+                            child: GradientCircularProgressIndicator(
+                              radius: 16,
+                              gradientColors:
+                                  ThemeService(isDarkMode: Get.isDarkMode)
+                                      .strokeColors
+                                      .reversed
+                                      .toList(),
+                              strokeWidth: 3.0,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              )
-                  : widget = const  SizedBox();
+                    )
+                  : widget = const SizedBox();
               return widget;
             }),
           ],

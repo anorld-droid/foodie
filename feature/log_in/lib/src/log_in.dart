@@ -13,11 +13,11 @@ class LogIn extends GetView<LogInController> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: Get.theme.backgroundColor,
+      statusBarColor: Colors.white,
       // Status bar brightness (optional)
-      statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
+      statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
     ));
     Get.lazyPut<LogInController>(() => LogInController(), fenix: true);
     return Scaffold(
@@ -35,9 +35,7 @@ class LogIn extends GetView<LogInController> {
                           height: Get.height / 13,
                           width: Get.width,
                           alignment: AlignmentDirectional.bottomStart,
-                          margin: MediaQuery
-                              .of(context)
-                              .padding,
+                          margin: MediaQuery.of(context).padding,
                           color: Colors.transparent,
                           child: Container(
                               alignment: AlignmentDirectional.bottomStart,
@@ -57,6 +55,7 @@ class LogIn extends GetView<LogInController> {
                                         fontStyle: FontStyle.normal,
                                         color: Colors.black,
                                         fontSize: 24.0,
+                                        height: 0,
                                         letterSpacing: 2.0,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -93,6 +92,7 @@ class LogIn extends GetView<LogInController> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               const SizedBox(
                                 height: 24,
@@ -103,22 +103,23 @@ class LogIn extends GetView<LogInController> {
                                     fontStyle: FontStyle.normal,
                                     color: Colors.white,
                                     fontSize: 28.0,
+                                    height: 0,
                                     letterSpacing: 6.0,
                                     fontWeight: FontWeight.w200),
                               ),
                               const SizedBox(
                                 height: 12,
                               ),
-                              Obx((() =>
-                              (Text(
-                                controller.username.value,
-                                style: GoogleFonts.inter(
-                                    fontStyle: FontStyle.normal,
-                                    color: Colors.white,
-                                    fontSize: 28.0,
-                                    letterSpacing: .2,
-                                    fontWeight: FontWeight.w300),
-                              )))),
+                              Obx((() => (Text(
+                                    controller.username.value,
+                                    style: GoogleFonts.inter(
+                                        fontStyle: FontStyle.normal,
+                                        color: Colors.white,
+                                        fontSize: 28.0,
+                                        height: 0,
+                                        letterSpacing: .2,
+                                        fontWeight: FontWeight.w300),
+                                  )))),
                             ],
                           ),
                           Center(
@@ -126,8 +127,7 @@ class LogIn extends GetView<LogInController> {
                               children: [
                                 IconButton(
                                   onPressed: controller.fingerprintAuth,
-                                  icon: Obx(() =>
-                                      Icon(
+                                  icon: Obx(() => Icon(
                                         Icons.fingerprint_outlined,
                                         color: Colors.white.withOpacity(
                                             controller.authenticated.value
@@ -142,6 +142,7 @@ class LogIn extends GetView<LogInController> {
                                         fontStyle: FontStyle.normal,
                                         color: Colors.white,
                                         fontSize: 20.0,
+                                        height: 0,
                                         fontWeight: FontWeight.w200))
                               ],
                             ),
@@ -170,7 +171,7 @@ class LogIn extends GetView<LogInController> {
                                       action: () =>
                                           controller.logInDialog(context),
                                       actionName:
-                                      Strings.signToAnotherAccount)),
+                                          Strings.signToAnotherAccount)),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -184,6 +185,7 @@ class LogIn extends GetView<LogInController> {
                                           fontStyle: FontStyle.normal,
                                           color: Colors.white,
                                           fontSize: 18.0,
+                                          height: 0,
                                           letterSpacing: 1.0,
                                           fontWeight: FontWeight.w400),
                                       textAlign: TextAlign.center,
@@ -198,6 +200,7 @@ class LogIn extends GetView<LogInController> {
                                               fontStyle: FontStyle.normal,
                                               color: Colors.white,
                                               fontSize: 18.0,
+                                              height: 0,
                                               letterSpacing: 1.0,
                                               fontWeight: FontWeight.w600),
                                           textAlign: TextAlign.center,
@@ -221,23 +224,22 @@ class LogIn extends GetView<LogInController> {
                         width: Get.width,
                       ),
                       Obx(
-                            () =>
-                            Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: [
-                                controller.profilePic.value.isNotEmpty
-                                    ? CircleAvatar(
-                                  backgroundColor: Colors.white38,
-                                  radius: 65,
-                                  backgroundImage: NetworkImage(
-                                      controller.profilePic.value),
-                                )
-                                    : const CircleAvatar(
-                                  backgroundColor: Colors.white38,
-                                  radius: 65,
-                                )
-                              ],
-                            ),
+                        () => Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: [
+                            controller.profilePic.value.isNotEmpty
+                                ? CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    radius: 65,
+                                    backgroundImage: NetworkImage(
+                                        controller.profilePic.value),
+                                  )
+                                : const CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    radius: 65,
+                                  )
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -256,7 +258,7 @@ class LogIn extends GetView<LogInController> {
                       decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius:
-                          BorderRadius.only(topLeft: Radius.circular(30))),
+                              BorderRadius.only(topLeft: Radius.circular(30))),
                     ))
               ])
             ]),
