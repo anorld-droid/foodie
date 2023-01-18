@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 17.01.2023.
 class GradientIcon extends StatelessWidget {
   final Widget icon;
   final void Function()? onPressed;
   final double size;
   final Gradient gradient;
   final bool enableFeedback;
+
   const GradientIcon(
       {Key? key,
       this.onPressed,
