@@ -13,11 +13,13 @@ class TextFieldInput extends StatelessWidget {
   final String? suffixText;
   final void Function()? onIconTap;
   final void Function(String)? onChanged;
+  final double? width;
 
   const TextFieldInput(
       {Key? key,
       required this.textEditingController,
       this.isPass = false,
+      this.width,
       required this.textInputType,
       required this.hintText,
       this.onIconTap,
@@ -86,6 +88,71 @@ class TextFieldInput extends StatelessWidget {
           ),
           keyboardType: textInputType,
           obscureText: isPass,
+        ),
+      ),
+    );
+  }
+}
+
+class CustomTextField extends StatelessWidget {
+  final TextEditingController textEditingController;
+  final Color backgroundColor;
+  final bool isPass;
+  final TextInputType textInputType;
+  final String hintText;
+  final IconData? icon;
+  final int? maxLength;
+  final String? suffixText;
+  final void Function()? onIconTap;
+  final void Function(String)? onChanged;
+  final double borderRadius;
+  final double? height;
+
+  const CustomTextField(
+      {Key? key,
+      required this.textEditingController,
+      this.isPass = false,
+      required this.textInputType,
+      required this.hintText,
+      this.onIconTap,
+      this.icon,
+      this.suffixText,
+      this.onChanged,
+      required this.backgroundColor,
+      this.borderRadius = 0,
+      this.height,
+      this.maxLength})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: Center(
+        child: TextField(
+          style: Get.textTheme.bodyMedium,
+          cursorColor: Get.theme.primaryColorDark,
+          onChanged: onChanged,
+          controller: textEditingController,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.only(
+              left: 32,
+            ),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+                borderSide: BorderSide.none),
+            fillColor: backgroundColor,
+            focusColor: backgroundColor,
+            filled: true,
+            hintText: hintText,
+            suffixIcon: InkWell(
+              onTap: onIconTap,
+              child: Icon(
+                icon,
+                color: Get.theme.primaryColorDark.withOpacity(0.87),
+              ),
+            ),
+          ),
         ),
       ),
     );

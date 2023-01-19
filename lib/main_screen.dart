@@ -26,35 +26,7 @@ class MainScreen extends GetView<BottomAppBarController> {
 
     Get.put(BottomAppBarController());
     return Obx(() => Scaffold(
-          appBar: controller.selectedIndex.value == 1
-              ? AppBar(
-                  elevation: 0,
-                  leading: Container(
-                      padding: const EdgeInsets.only(left: 16),
-                      alignment: AlignmentDirectional.center,
-                      child: RichText(
-                        text: TextSpan(
-                          text: '\$$accountBal',
-                          style: Get.textTheme.displaySmall?.copyWith(
-                              fontWeight: FontWeight.bold, fontSize: 15),
-                        ),
-                      )),
-                  leadingWidth: accountBal.length <= 4
-                      ? 64
-                      : accountBal.length <= 6
-                          ? 80
-                          : 96,
-                  backgroundColor: Get.theme.backgroundColor.withOpacity(.12),
-                  actions: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.search,
-                          color: Get.theme.primaryColorDark.withAlpha(100),
-                        ))
-                  ],
-                )
-              : const TriceTopBar(),
+          appBar: _buildTopBar('00.00', controller.selectedIndex.value),
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: controller.pageController,
@@ -136,5 +108,26 @@ class MainScreen extends GetView<BottomAppBarController> {
         ),
       ],
     );
+  }
+
+  PreferredSizeWidget _buildTopBar(String accountBalance, int position) {
+    PreferredSizeWidget preferredSizeWidget;
+    switch (position) {
+      case 1:
+        preferredSizeWidget = ApartmentTopBar(
+          accountBalance: accountBalance,
+        );
+        break;
+      case 2:
+        preferredSizeWidget = CuisineTopBar(
+          accountBalance: accountBalance,
+        );
+        break;
+      default:
+        preferredSizeWidget = TriceTopBar(
+          accountBalance: accountBalance,
+        );
+    }
+    return preferredSizeWidget;
   }
 }

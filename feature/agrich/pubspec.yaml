@@ -2,9 +2,10 @@ name: agrich
 description: A new Flutter package project.
 version: 0.0.1
 publish_to: none
+
 environment:
-  sdk: ">=2.17.6 <3.0.0"
-  flutter: ">=1.17.0"
+  sdk: '>=2.17.6 <3.0.0'
+  flutter: '>=1.17.0'
 
 dependencies:
   flutter:
@@ -13,6 +14,8 @@ dependencies:
 
   common:
     path: ../../core/common
+  model:
+    path: ../../core/model
 
 dev_dependencies:
   flutter_test:

@@ -237,7 +237,6 @@ class Themes {
             fontSize: 18,
             color: Colors.white,
             letterSpacing: .5,
-            height: 20,
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w400),
         bodySmall: GoogleFonts.rubik(

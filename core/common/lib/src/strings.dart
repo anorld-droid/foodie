@@ -5,7 +5,8 @@ class CommonStrings {
   static String appDev = 'Patrice Mulindi';
   static String duplicateIcon = 'assets/icons/duplicate.svg';
   static String underDevelopment = 'Under development';
-  
+  static String currency = 'Ksh ';
+
   //Bottom bar
   static String hiCars = 'hiCars';
   static String apartment = 'Apartment';
@@ -13,5 +14,4 @@ class CommonStrings {
   static String cuisine = 'Cuisine 2.0';
   static String eSolar = 'eSolar';
   static String todoSvg = 'assets/icons/todo.svg';
-
 }
