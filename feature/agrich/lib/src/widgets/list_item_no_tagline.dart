@@ -28,7 +28,8 @@ class ListItemNoTagLine extends GetView<CuisineController> {
             children: [
               Text(
                 cuisineModel.header,
-                style: Get.textTheme.headlineSmall,
+                style: Get.textTheme.labelSmall
+                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 8),
@@ -71,17 +72,29 @@ class ListItemNoTagLine extends GetView<CuisineController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CircleAvatar(
+            Container(
+              decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                BoxShadow(
+                  color: Get.theme.primaryColorDark.withOpacity(0.45),
+                  spreadRadius: 0,
+                  blurRadius: 4,
+                  offset: const Offset(0, 4), // changes position of shadow
+                ),
+              ]),
+              child: CircleAvatar(
                 radius: 64,
                 backgroundImage: NetworkImage(
                   item.photoUrl,
-                )),
+                ),
+                backgroundColor: Get.theme.primaryColorDark.withOpacity(.12),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: Text(
                 item.name,
                 style: Get.textTheme.labelSmall
-                    ?.copyWith(fontSize: 24, fontWeight: FontWeight.w500),
+                    ?.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             ),

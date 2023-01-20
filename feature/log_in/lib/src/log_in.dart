@@ -229,13 +229,15 @@ class LogIn extends GetView<LogInController> {
                           children: [
                             controller.profilePic.value.isNotEmpty
                                 ? CircleAvatar(
-                                    backgroundColor: Colors.white,
+                                    backgroundColor:
+                                        Colors.black.withOpacity(.6),
                                     radius: 65,
                                     backgroundImage: NetworkImage(
                                         controller.profilePic.value),
                                   )
-                                : const CircleAvatar(
-                                    backgroundColor: Colors.white,
+                                : CircleAvatar(
+                                    backgroundColor:
+                                        Colors.black.withOpacity(.6),
                                     radius: 65,
                                   )
                           ],

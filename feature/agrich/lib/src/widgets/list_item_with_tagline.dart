@@ -28,7 +28,8 @@ class ListItemWithTagLine extends GetView<CuisineController> {
             children: [
               Text(
                 cuisineModel.header,
-                style: Get.textTheme.headlineSmall,
+                style: Get.textTheme.labelSmall
+                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 8),
@@ -72,26 +73,35 @@ class ListItemWithTagLine extends GetView<CuisineController> {
         margin: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
         width: 210,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.0),
-          gradient: ThemeService(isDarkMode: Get.isDarkMode).stroke,
-        ),
+            borderRadius: BorderRadius.circular(16.0),
+            gradient: ThemeService(isDarkMode: Get.isDarkMode).stroke,
+            boxShadow: [
+              BoxShadow(
+                color: Get.theme.primaryColorDark.withOpacity(0.30),
+                spreadRadius: 0,
+                blurRadius: 4,
+                offset: const Offset(0, 4), // changes position of shadow
+              ),
+            ]),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
               child: CircleAvatar(
-                  radius: 64,
-                  backgroundImage: NetworkImage(
-                    item.photoUrl,
-                  )),
+                radius: 64,
+                backgroundImage: NetworkImage(
+                  item.photoUrl,
+                ),
+                backgroundColor: Get.theme.primaryColorDark.withOpacity(.12),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 24.0),
               child: Text(
                 item.name,
                 style: Get.textTheme.labelSmall
-                    ?.copyWith(fontSize: 24, fontWeight: FontWeight.w700),
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -99,8 +109,8 @@ class ListItemWithTagLine extends GetView<CuisineController> {
               child: Text(
                 item.tag.name,
                 style: Get.textTheme.labelSmall?.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w200,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w100,
                 ),
               ),
             ),
