@@ -28,6 +28,7 @@ class CuisineTopBar extends GetView<CuisineController>
       title: CustomTextField(
           icon: Icons.search,
           height: 40,
+          focusNode: controller.focusNode,
           textEditingController: controller.searchController,
           textInputType: TextInputType.text,
           hintText: Strings.searchHintText,

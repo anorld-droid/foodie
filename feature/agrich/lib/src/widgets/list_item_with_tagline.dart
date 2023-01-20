@@ -75,14 +75,16 @@ class ListItemWithTagLine extends GetView<CuisineController> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.0),
             gradient: ThemeService(isDarkMode: Get.isDarkMode).stroke,
-            boxShadow: [
-              BoxShadow(
-                color: Get.theme.primaryColorDark.withOpacity(0.30),
-                spreadRadius: 0,
-                blurRadius: 4,
-                offset: const Offset(0, 4), // changes position of shadow
-              ),
-            ]),
+            boxShadow: !Get.isDarkMode
+                ? []
+                : [
+                    BoxShadow(
+                      color: Get.theme.primaryColorDark.withOpacity(0.30),
+                      spreadRadius: 0,
+                      blurRadius: 4,
+                      offset: const Offset(0, 4), // changes position of shadow
+                    ),
+                  ]),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,

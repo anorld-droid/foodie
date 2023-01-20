@@ -26,6 +26,7 @@ class MainScreen extends GetView<BottomAppBarController> {
 
     Get.put(BottomAppBarController());
     return Obx(() => Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: _buildTopBar('00.00', controller.selectedIndex.value),
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),

@@ -107,6 +107,7 @@ class CustomTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final double borderRadius;
   final double? height;
+  final FocusNode? focusNode;
 
   const CustomTextField(
       {Key? key,
@@ -118,6 +119,7 @@ class CustomTextField extends StatelessWidget {
       this.icon,
       this.suffixText,
       this.onChanged,
+      this.focusNode,
       required this.backgroundColor,
       this.borderRadius = 0,
       this.height,
@@ -130,6 +132,7 @@ class CustomTextField extends StatelessWidget {
       height: height,
       child: Center(
         child: TextField(
+          focusNode: focusNode,
           style: Get.textTheme.bodyMedium,
           cursorColor: Get.theme.primaryColorDark,
           onChanged: onChanged,

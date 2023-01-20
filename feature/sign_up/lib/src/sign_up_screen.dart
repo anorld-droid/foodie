@@ -98,6 +98,7 @@ class SignUp extends GetView<SignUpController> {
                                             )
                                           : CircleAvatar(
                                               radius: 50,
+                                              backgroundColor: Colors.black,
                                               backgroundImage: MemoryImage(
                                                   controller.image.value!),
                                             ),
