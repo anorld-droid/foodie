@@ -13,19 +13,6 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
-  google_fonts: ^3.0.1
-  get_storage: ^2.0.3
-  dropdown_search: ^5.0.5
-  cupertino_icons: ^1.0.5
-  slider_button: ^2.0.0
-  flutter_svg: ^1.1.6
-  url_launcher: ^6.1.7
-  flutter_chat_bubble: ^2.0.0
-  date_time_format: ^2.0.1
-  vector_math: ^2.1.2
-  flutter_bloc: ^8.1.1
-  firebase_core: ^2.4.1
-  firebase_auth: ^4.2.5
 
   # Modules
   common:
@@ -48,6 +35,10 @@ dependencies:
     path: feature/agrich
   e_solar:
     path: feature/e_solar
+  cuisine_detail:
+    path: feature/cuisine_detail
+  model:
+    path: core/model
 
 dev_dependencies:
   flutter_test:

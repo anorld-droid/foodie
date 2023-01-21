@@ -6,7 +6,7 @@ import 'package:model/model.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
 class ListItemNoTagLine extends GetView<CuisineController> {
   final CuisineModel cuisineModel;
-  final void Function() onItemTap;
+  final void Function(CuisineItem) onItemTap;
 
   const ListItemNoTagLine({
     super.key,
@@ -44,11 +44,11 @@ class ListItemNoTagLine extends GetView<CuisineController> {
     );
   }
 
-  Widget _cardWithTag(CuisineItem item, void Function() onTap) {
+  Widget _cardWithTag(CuisineItem item, void Function(CuisineItem) onTap) {
     return Padding(
       padding: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
       child: InkWell(
-        onTap: onTap,
+        onTap: () => onTap(item),
         borderRadius: const BorderRadius.all(
           Radius.circular(16),
         ),

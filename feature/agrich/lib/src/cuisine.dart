@@ -50,8 +50,8 @@ class Cuisine extends GetView<CuisineController> {
                             itemBuilder: (BuildContext context, int index) =>
                                 ListItemSearchResult(
                                     cuisineItems:
-                                        controller.items[index].cuisineItems,
-                                    onTap: () {})),
+                                        controller.items[0].cuisineItems,
+                                    onTap: controller.navigateToDetails)),
                       ],
                     )
                   : ListView.builder(
@@ -62,11 +62,12 @@ class Cuisine extends GetView<CuisineController> {
                         CuisineModel cuisineModel = controller.items[index];
                         if (index % 2 == 0) {
                           return ListItemWithTagLine(
-                              cuisineModel: cuisineModel, onItemTap: () {});
+                              cuisineModel: cuisineModel,
+                              onItemTap: controller.navigateToDetails);
                         } else {
                           return ListItemNoTagLine(
                             cuisineModel: cuisineModel,
-                            onItemTap: () {},
+                            onItemTap: controller.navigateToDetails,
                           );
                         }
                       }),

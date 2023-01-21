@@ -1,8 +1,10 @@
 import 'package:common/common.dart';
+import 'package:cuisine_detail/cuisine_detail.dart';
 import 'package:di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:log_in/log_in.dart';
+import 'package:model/model.dart';
 import 'package:sign_up/sign_up.dart';
 import 'package:trice/launcher/trice_app_controller.dart';
 import 'package:trice/main_screen.dart';
@@ -25,6 +27,11 @@ class TriceApp extends GetView<TriceAppController> {
             GetPage(name: Routes.root, page: () => const LogIn()),
             GetPage(name: Routes.signupScreen, page: () => const SignUp()),
             GetPage(name: Routes.mainScreen, page: () => const MainScreen()),
+            GetPage(
+                name: Routes.cuisineDetail,
+                page: () => CuisineDetail(
+                      cuisineItem: Get.arguments as CuisineItem,
+                    )),
           ],
         ));
   }

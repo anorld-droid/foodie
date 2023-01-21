@@ -7,7 +7,7 @@ import 'package:model/model.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
 class ListItemWithTagLine extends GetView<CuisineController> {
   final CuisineModel cuisineModel;
-  final void Function() onItemTap;
+  final void Function(CuisineItem) onItemTap;
   const ListItemWithTagLine({
     super.key,
     required this.cuisineModel,
@@ -45,7 +45,7 @@ class ListItemWithTagLine extends GetView<CuisineController> {
     );
   }
 
-  Widget _cardWithTag(CuisineItem item, void Function() onTap) {
+  Widget _cardWithTag(CuisineItem item, void Function(CuisineItem) onTap) {
     return Container(
       alignment: AlignmentDirectional.centerStart,
       margin: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
@@ -64,7 +64,7 @@ class ListItemWithTagLine extends GetView<CuisineController> {
                   ),
                 ]),
       child: InkWell(
-        onTap: onTap,
+        onTap: () => onTap(item),
         borderRadius: const BorderRadius.all(
           Radius.circular(16),
         ),
@@ -93,9 +93,9 @@ class ListItemWithTagLine extends GetView<CuisineController> {
               padding: const EdgeInsets.only(left: 16.0, top: 8.0),
               child: Text(
                 item.tag.name,
-                style: Get.textTheme.labelSmall?.copyWith(
-                  fontSize: 18,
+                style: Get.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w100,
+                  color: Get.theme.primaryColorDark.withOpacity(.8),
                 ),
               ),
             ),

@@ -30,7 +30,7 @@ class CuisineItem {
   final Tags tag;
   final double price;
   final String detail;
-  final List<String> ingridients;
+  final List<String> nutrients;
   final String photoUrl;
 
   CuisineItem(
@@ -38,6 +38,6 @@ class CuisineItem {
       required this.tag,
       required this.price,
       required this.detail,
-      required this.ingridients,
+      required this.nutrients,
       required this.photoUrl});
 }

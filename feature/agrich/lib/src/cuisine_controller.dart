@@ -1,4 +1,5 @@
 import 'package:agrich/src/strings.dart';
+import 'package:common/common.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -69,22 +70,47 @@ class CuisineController extends GetxController {
               name: 'Fresh Milk',
               tag: Tags.basic,
               price: 55.00,
-              detail: 'detail',
-              ingridients: ['ingridients'],
+              detail:
+                  'I built something similar with a CustomScrollView and SliverPersistenHeader, to get the curved effect your header can have a maxExtent and minExtent. When not scrolled the header height will show the curve otherwise when you start scrolling it will also shrink to a set height.',
+              nutrients: [
+                'ingridients',
+                'ingridient',
+                'ingridiens',
+                'ingridiets',
+                'ingridints',
+                'ingridents',
+                'ingriients'
+              ],
               photoUrl: Strings.milkUrl),
           CuisineItem(
               name: 'Fresh Milk',
               tag: Tags.basic,
               price: 55.00,
               detail: 'detail',
-              ingridients: ['ingridients'],
+              nutrients: [
+                'ingridients',
+                'ingridient',
+                'ingridiens',
+                'ingridiets',
+                'ingridints',
+                'ingridents',
+                'ingriients'
+              ],
               photoUrl: Strings.milkUrl),
           CuisineItem(
               name: 'Fresh Milk',
               tag: Tags.basic,
               price: 55.00,
               detail: 'detail',
-              ingridients: ['ingridients'],
+              nutrients: [
+                'ingridients',
+                'ingridient',
+                'ingridiens',
+                'ingridiets',
+                'ingridints',
+                'ingridents',
+                'ingriients'
+              ],
               photoUrl: Strings.milkUrl),
         ],
       ),
@@ -94,7 +120,15 @@ class CuisineController extends GetxController {
             tag: Tags.basic,
             price: 60.00,
             detail: 'detail',
-            ingridients: ['ingridients'],
+            nutrients: [
+              'ingridients',
+              'ingridient',
+              'ingridiens',
+              'ingridiets',
+              'ingridints',
+              'ingridents',
+              'ingriients'
+            ],
             photoUrl: Strings.waterUrl),
       ]),
     ];
@@ -104,5 +138,8 @@ class CuisineController extends GetxController {
   void search(String value) {
     //ignore: todo
     //TODO: Search from firebase
+  }
+  void navigateToDetails(CuisineItem cuisineItem) {
+    Get.toNamed<void>(Routes.cuisineDetail, arguments: cuisineItem);
   }
 }

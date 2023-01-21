@@ -5,7 +5,7 @@ import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 20.01.2023.
 class ListItemSearchResult extends StatelessWidget {
-  final void Function() onTap;
+  final void Function(CuisineItem) onTap;
   final List<CuisineItem> cuisineItems;
   const ListItemSearchResult(
       {super.key, required this.cuisineItems, required this.onTap});
@@ -44,7 +44,7 @@ class ListItemSearchResult extends StatelessWidget {
                   ),
                 ]),
       child: InkWell(
-        onTap: onTap,
+        onTap: () => onTap(cuisineItem),
         borderRadius: const BorderRadius.all(
           Radius.circular(16),
         ),
