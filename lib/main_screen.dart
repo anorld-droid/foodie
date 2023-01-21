@@ -50,7 +50,7 @@ class MainScreen extends GetView<BottomAppBarController> {
           bottomNavigationBar: FABBottomAppBar(
             centerItemText: CommonStrings.tasks,
             color: Get.theme.primaryColorDark,
-            selectedColor: Get.theme.primaryColorDark.withOpacity(.80),
+            selectedColor: Get.theme.primaryColorDark.withOpacity(.50),
             backgroundColor: Get.theme.backgroundColor,
             notchedShape: const AutomaticNotchedShape(
                 RoundedRectangleBorder(), StadiumBorder()),

@@ -17,7 +17,7 @@ class ThemeService {
           end: Alignment.bottomRight,
           colors: [
             Color.fromARGB(255, 255, 255, 255),
-            Color.fromARGB(255, 255, 255, 255),
+            Color.fromARGB(121, 255, 255, 255),
           ],
         )
       : const LinearGradient(

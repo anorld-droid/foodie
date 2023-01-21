@@ -3,65 +3,92 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 20.01.2023.
 class ListItemSearchResult extends StatelessWidget {
   final void Function() onTap;
-  final CuisineModel cuisineModel;
+  final List<CuisineItem> cuisineItems;
   const ListItemSearchResult(
-      {super.key, required this.cuisineModel, required this.onTap});
+      {super.key, required this.cuisineItems, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(
-          cuisineModel.cuisineItems.length,
-          (index) => _cardView(
-            cuisineModel.cuisineItems[index],
-          ),
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Wrap(
+        spacing: 16,
+        runAlignment: WrapAlignment.center,
+        children: _children(),
       ),
     );
   }
 
   Widget _cardView(CuisineItem cuisineItem) {
-    return SizedBox(
-      height: 100,
+    return Container(
+      height: 125,
+      width: 180,
+      margin: const EdgeInsets.only(
+        bottom: 16,
+      ),
+      alignment: AlignmentDirectional.centerStart,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          gradient: ThemeService(isDarkMode: Get.isDarkMode).stroke,
+          boxShadow: !Get.isDarkMode
+              ? []
+              : [
+                  BoxShadow(
+                    color: Get.theme.primaryColorDark.withOpacity(0.30),
+                    spreadRadius: 0,
+                    blurRadius: 4,
+                    offset: const Offset(0, 4), // changes position of shadow
+                  ),
+                ]),
       child: InkWell(
         onTap: onTap,
-        child: Container(
-          alignment: AlignmentDirectional.centerStart,
-          margin: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.0),
-              gradient: ThemeService(isDarkMode: Get.isDarkMode).stroke,
-              boxShadow: [
-                BoxShadow(
-                  color: Get.theme.primaryColorDark.withOpacity(0.30),
-                  spreadRadius: 0,
-                  blurRadius: 4,
-                  offset: const Offset(0, 4), // changes position of shadow
-                ),
-              ]),
-          child: Row(
-            children: [
-              Flexible(
-                flex: 2,
-                child: Text(cuisineItem.name),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 4),
+              child: Text(
+                cuisineItem.name,
+                softWrap: true,
+                style: Get.textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
-              Flexible(
-                child: CircleAvatar(
-                  radius: 64,
-                  backgroundImage: NetworkImage(
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(100),
+                    topRight: Radius.circular(16),
+                    bottomLeft: Radius.circular(100),
+                    bottomRight: Radius.circular(16)),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
                     cuisineItem.photoUrl,
                   ),
-                  backgroundColor: Get.theme.primaryColorDark.withOpacity(.12),
                 ),
-              )
-            ],
-          ),
+                shape: BoxShape.rectangle,
+              ),
+              height: 180,
+              width: 80,
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  List<Widget> _children() {
+    List<Widget> children = [];
+    for (var item in cuisineItems) {
+      children.add(_cardView(item));
+    }
+    return children;
   }
 }

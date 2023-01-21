@@ -1,6 +1,7 @@
 import 'package:agrich/src/cuisine_controller.dart';
 import 'package:agrich/src/widgets/chips.dart';
 import 'package:agrich/src/widgets/list_item_no_tagline.dart';
+import 'package:agrich/src/widgets/list_item_search_results.dart';
 import 'package:agrich/src/widgets/list_item_with_tagline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,21 +24,35 @@ class Cuisine extends GetView<CuisineController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               controller.editing.value
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Wrap(
-                        children: List.generate(
-                          Chips.values.length,
-                          (index) => TriceFilterChips(
-                            text: Chips.values[index].name,
-                            onChipSelected: (value) {
-                              controller.selectedChip.value = value;
-                              controller.search(Chips.values[value].name);
-                            },
-                            index: index,
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Wrap(
+                            children: List.generate(
+                              Chips.values.length,
+                              (index) => TriceFilterChips(
+                                text: Chips.values[index].name,
+                                onChipSelected: (value) {
+                                  controller.selectedChip.value = value;
+                                  controller.search(Chips.values[value].name);
+                                },
+                                index: index,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        ListView.builder(
+                            physics: const ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: controller.itemsLength,
+                            itemBuilder: (BuildContext context, int index) =>
+                                ListItemSearchResult(
+                                    cuisineItems:
+                                        controller.items[index].cuisineItems,
+                                    onTap: () {})),
+                      ],
                     )
                   : ListView.builder(
                       physics: const ClampingScrollPhysics(),
@@ -47,14 +62,12 @@ class Cuisine extends GetView<CuisineController> {
                         CuisineModel cuisineModel = controller.items[index];
                         if (index % 2 == 0) {
                           return ListItemWithTagLine(
-                              cuisineModel: cuisineModel,
-                              onMoreClicked: () {},
-                              onItemTap: () {});
+                              cuisineModel: cuisineModel, onItemTap: () {});
                         } else {
                           return ListItemNoTagLine(
-                              cuisineModel: cuisineModel,
-                              onMoreClicked: () {},
-                              onItemTap: () {});
+                            cuisineModel: cuisineModel,
+                            onItemTap: () {},
+                          );
                         }
                       }),
             ],
