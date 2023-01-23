@@ -92,7 +92,7 @@ class ListItemWithTagLine extends GetView<CuisineController> {
             Padding(
               padding: const EdgeInsets.only(left: 16.0, top: 8.0),
               child: Text(
-                item.tag.name,
+                item.stockTag.name,
                 style: Get.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),

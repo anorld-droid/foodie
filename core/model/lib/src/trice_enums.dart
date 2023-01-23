@@ -1,0 +1,56 @@
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
+
+abstract class NamedEnum extends Enum {
+  String get name;
+}
+
+enum StockTags implements NamedEnum {
+  inStock,
+  outStock;
+
+  @override
+  String get name {
+    switch (this) {
+      case StockTags.inStock:
+        return 'In stock';
+      case StockTags.outStock:
+        return 'Out stock';
+    }
+  }
+}
+
+enum Chips implements NamedEnum {
+  dairy,
+  beverage,
+  fruits,
+  vegetables,
+  meat,
+  grocery,
+  legumes,
+  grains,
+  combo;
+
+  @override
+  String get name {
+    switch (this) {
+      case Chips.dairy:
+        return 'Dairy';
+      case Chips.beverage:
+        return 'Beverage';
+      case Chips.fruits:
+        return 'Fruits';
+      case Chips.vegetables:
+        return 'Vegetables';
+      case Chips.meat:
+        return 'Meat';
+      case Chips.grocery:
+        return 'Grocery';
+      case Chips.legumes:
+        return 'Legumes';
+      case Chips.grains:
+        return 'Grains';
+      case Chips.combo:
+        return 'Combo';
+    }
+  }
+}

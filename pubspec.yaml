@@ -17,28 +17,30 @@ dependencies:
   # Modules
   common:
     path: core/common
-  sign_up:
-    path: feature/sign_up
   di:
     path: core/di
   domain:
     path: core/domain
-  log_in:
-    path: feature/log_in
-  hi_cars:
-    path: feature/hi_cars
-  apartment:
-    path: feature/apartment
-  tasks:
-    path: feature/tasks
-  agrich:
-    path: feature/agrich
-  e_solar:
-    path: feature/e_solar
-  cuisine_detail:
-    path: feature/cuisine_detail
   model:
     path: core/model
+  agrich:
+    path: feature/agrich
+  apartment:
+    path: feature/apartment
+  cart:
+    path: feature/cart
+  cuisine_detail:
+    path: feature/cuisine_detail
+  e_solar:
+    path: feature/e_solar
+  hi_cars:
+    path: feature/hi_cars
+  log_in:
+    path: feature/log_in
+  sign_up:
+    path: feature/sign_up
+  tasks:
+    path: feature/tasks
 
 dev_dependencies:
   flutter_test:

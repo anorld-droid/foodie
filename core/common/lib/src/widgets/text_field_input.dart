@@ -10,7 +10,7 @@ class TextFieldInput extends StatelessWidget {
   final TextInputType textInputType;
   final String hintText;
   final IconData? icon;
-  final String? suffixText;
+  final String suffixText;
   final void Function()? onIconTap;
   final void Function(String)? onChanged;
   final double? width;
@@ -24,7 +24,7 @@ class TextFieldInput extends StatelessWidget {
       required this.hintText,
       this.onIconTap,
       this.icon,
-      this.suffixText,
+      this.suffixText = '',
       this.onChanged,
       required this.backgroundColor})
       : super(key: key);
@@ -62,14 +62,18 @@ class TextFieldInput extends StatelessWidget {
             filled: true,
             suffixIcon: InkWell(
               onTap: onIconTap,
-              child: icon == null
-                  ? Column(
+              child: suffixText.isEmpty
+                  ? Icon(
+                      icon,
+                      color: Colors.black.withOpacity(0.87),
+                    )
+                  : Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 13.0),
                           child: Text(
-                            suffixText!,
+                            suffixText,
                             style: Get.theme.textTheme.bodyMedium?.copyWith(
                                 color: Colors.black,
                                 letterSpacing: 1.0,
@@ -78,10 +82,6 @@ class TextFieldInput extends StatelessWidget {
                           ),
                         ),
                       ],
-                    )
-                  : Icon(
-                      icon,
-                      color: Colors.black.withOpacity(0.87),
                     ),
             ),
             contentPadding: const EdgeInsets.only(top: 4, bottom: 4, right: 4),
@@ -103,6 +103,7 @@ class CustomTextField extends StatelessWidget {
   final IconData? icon;
   final int? maxLength;
   final String? suffixText;
+  final String? labelText;
   final void Function()? onIconTap;
   final void Function(String)? onChanged;
   final double borderRadius;
@@ -118,6 +119,7 @@ class CustomTextField extends StatelessWidget {
       this.onIconTap,
       this.icon,
       this.suffixText,
+      this.labelText,
       this.onChanged,
       this.focusNode,
       required this.backgroundColor,
@@ -138,6 +140,8 @@ class CustomTextField extends StatelessWidget {
           onChanged: onChanged,
           controller: textEditingController,
           decoration: InputDecoration(
+            labelText: labelText,
+            labelStyle: Get.textTheme.displayMedium,
             contentPadding: const EdgeInsets.only(
               left: 32,
             ),

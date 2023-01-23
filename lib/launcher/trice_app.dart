@@ -1,3 +1,4 @@
+import 'package:cart/cart.dart';
 import 'package:common/common.dart';
 import 'package:cuisine_detail/cuisine_detail.dart';
 import 'package:di/di.dart';
@@ -24,14 +25,28 @@ class TriceApp extends GetView<TriceAppController> {
           themeMode: controller.themeMode.value,
           initialRoute: Routes.root,
           getPages: [
-            GetPage(name: Routes.root, page: () => const LogIn()),
-            GetPage(name: Routes.signupScreen, page: () => const SignUp()),
-            GetPage(name: Routes.mainScreen, page: () => const MainScreen()),
             GetPage(
-                name: Routes.cuisineDetail,
-                page: () => CuisineDetail(
-                      cuisineItem: Get.arguments as CuisineItem,
-                    )),
+              name: Routes.root,
+              page: () => const LogIn(),
+            ),
+            GetPage(
+              name: Routes.signupScreen,
+              page: () => const SignUp(),
+            ),
+            GetPage(
+              name: Routes.mainScreen,
+              page: () => const MainScreen(),
+            ),
+            GetPage(
+              name: Routes.cuisineDetail,
+              page: () => CuisineDetail(
+                cuisineItem: Get.arguments as CuisineItem,
+              ),
+            ),
+            GetPage(
+              name: Routes.cart,
+              page: () => const Cart(),
+            ),
           ],
         ));
   }

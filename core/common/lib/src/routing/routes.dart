@@ -4,4 +4,5 @@ class Routes {
   static String signupScreen = '/feature/signup';
   static String mainScreen = '/lib/main_screen';
   static String cuisineDetail = '/feature/cuisine_deatil';
+  static String cart = '/feature/cart';
 }

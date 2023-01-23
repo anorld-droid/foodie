@@ -116,7 +116,7 @@ class CuisineDetail extends GetView<Controller> {
               child: Icon(
                 Icons.do_not_disturb_on_outlined,
                 color: Get.theme.primaryColorDark,
-                size: 32,
+                size: 24,
               ),
             ),
             Padding(
@@ -124,7 +124,7 @@ class CuisineDetail extends GetView<Controller> {
               child: Obx(
                 () => Text(
                   '${controller.qty.value}',
-                  style: Get.textTheme.headlineSmall
+                  style: Get.textTheme.labelSmall
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
@@ -134,7 +134,7 @@ class CuisineDetail extends GetView<Controller> {
               child: Icon(
                 Icons.add_circle_outline_outlined,
                 color: Get.theme.primaryColorDark,
-                size: 32,
+                size: 24,
               ),
             ),
             Padding(
@@ -178,7 +178,7 @@ class CuisineDetail extends GetView<Controller> {
                 height: 4,
               ),
               Text(
-                cuisineItem.tag.name,
+                cuisineItem.stockTag.name,
                 style: Get.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),

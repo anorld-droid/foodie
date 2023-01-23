@@ -3,6 +3,7 @@ import 'package:agrich/src/widgets/chips.dart';
 import 'package:agrich/src/widgets/list_item_no_tagline.dart';
 import 'package:agrich/src/widgets/list_item_search_results.dart';
 import 'package:agrich/src/widgets/list_item_with_tagline.dart';
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -85,7 +86,8 @@ class Cuisine extends GetView<CuisineController> {
         children: [
           FloatingActionButton(
             enableFeedback: true,
-            onPressed: () {},
+            heroTag: 'Cart Button',
+            onPressed: () => Get.toNamed<void>(Routes.cart),
             backgroundColor: Get.theme.backgroundColor,
             child: Icon(
               Icons.shopping_cart,

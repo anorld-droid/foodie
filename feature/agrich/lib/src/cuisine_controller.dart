@@ -5,42 +5,6 @@ import 'package:get/get.dart';
 import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
-enum Chips implements NamedEnum {
-  dairy,
-  beverage,
-  fruits,
-  vegetables,
-  meat,
-  grocery,
-  legumes,
-  grains,
-  combo;
-
-  @override
-  String get name {
-    switch (this) {
-      case Chips.dairy:
-        return 'Dairy';
-      case Chips.beverage:
-        return 'Beverage';
-      case Chips.fruits:
-        return 'Fruits';
-      case Chips.vegetables:
-        return 'Vegetables';
-      case Chips.meat:
-        return 'Meat';
-      case Chips.grocery:
-        return 'Grocery';
-      case Chips.legumes:
-        return 'Legumes';
-      case Chips.grains:
-        return 'Grains';
-      case Chips.combo:
-        return 'Combo';
-    }
-  }
-}
-
 class CuisineController extends GetxController {
   late final TextEditingController searchController;
   late final List<CuisineModel> items;
@@ -68,7 +32,7 @@ class CuisineController extends GetxController {
         cuisineItems: [
           CuisineItem(
               name: 'Fresh Milk',
-              tag: Tags.basic,
+            stockTag: StockTags.inStock,
               price: 55.00,
               detail:
                   'I built something similar with a CustomScrollView and SliverPersistenHeader, to get the curved effect your header can have a maxExtent and minExtent. When not scrolled the header height will show the curve otherwise when you start scrolling it will also shrink to a set height.',
@@ -84,7 +48,7 @@ class CuisineController extends GetxController {
               photoUrl: Strings.milkUrl),
           CuisineItem(
               name: 'Fresh Milk',
-              tag: Tags.basic,
+            stockTag: StockTags.outStock,
               price: 55.00,
               detail: 'detail',
               nutrients: [
@@ -99,7 +63,7 @@ class CuisineController extends GetxController {
               photoUrl: Strings.milkUrl),
           CuisineItem(
               name: 'Fresh Milk',
-              tag: Tags.basic,
+            stockTag: StockTags.inStock,
               price: 55.00,
               detail: 'detail',
               nutrients: [
@@ -117,7 +81,7 @@ class CuisineController extends GetxController {
       CuisineModel(header: 'Beverages', cuisineItems: [
         CuisineItem(
             name: 'Water',
-            tag: Tags.basic,
+            stockTag: StockTags.inStock,
             price: 60.00,
             detail: 'detail',
             nutrients: [
