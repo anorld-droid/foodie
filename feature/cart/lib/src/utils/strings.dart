@@ -1,34 +1,4 @@
-import 'package:model/model.dart';
-
-enum KisumuDestinations implements NamedEnum {
-  milimani,
-  nyalendaA,
-  nyalendaB,
-  cbd,
-  manyattaB,
-  obunga,
-  kondele;
-
-  @override
-  String get name {
-    switch (this) {
-      case KisumuDestinations.milimani:
-        return 'Milimani';
-      case KisumuDestinations.nyalendaA:
-        return 'Nyalenda A';
-      case KisumuDestinations.nyalendaB:
-        return 'Nyalenda B';
-      case KisumuDestinations.cbd:
-        return 'CBD';
-      case KisumuDestinations.manyattaB:
-        return 'ManyattaB';
-      case KisumuDestinations.obunga:
-        return 'Obunga';
-      case KisumuDestinations.kondele:
-        return 'Kondele';
-    }
-  }
-}
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 
 class Strings {
   static String deliveryTo = 'Delivery to';

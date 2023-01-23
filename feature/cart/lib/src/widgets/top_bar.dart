@@ -19,13 +19,15 @@ class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
         ),
       ),
       title: Obx(() => Text(
-            '${Strings.deliveryTo} ${controller.destination.value}',
+            '${Strings.deliveryTo} ${controller.getDestination(controller.destinationTown.value, controller.destinationArea.value)}',
             style: Get.textTheme.displayMedium,
           )),
       backgroundColor: Get.theme.backgroundColor,
       actions: [
         PopupMenuButton(
-          initialValue: KisumuDestinations.milimani,
+          initialValue: controller.getDestination(
+              controller.destinationTown.value,
+              controller.destinationArea.value),
           elevation: 0,
           icon: Icon(
             Icons.expand_more,
@@ -37,65 +39,33 @@ class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
               Radius.circular(8),
             ),
           ),
-          itemBuilder: (context) {
-            return [
-              PopupMenuItem(
-                value: KisumuDestinations.milimani,
-                child: Text(
-                  KisumuDestinations.milimani.name,
-                  style: Get.textTheme.displayMedium,
-                ),
-              ),
-              PopupMenuItem(
-                value: KisumuDestinations.nyalendaA,
-                child: Text(
-                  KisumuDestinations.nyalendaA.name,
-                  style: Get.textTheme.displayMedium,
-                ),
-              ),
-              PopupMenuItem(
-                value: KisumuDestinations.nyalendaB,
-                child: Text(
-                  KisumuDestinations.nyalendaB.name,
-                  style: Get.textTheme.displayMedium,
-                ),
-              ),
-              PopupMenuItem(
-                value: KisumuDestinations.cbd,
-                child: Text(
-                  KisumuDestinations.cbd.name,
-                  style: Get.textTheme.displayMedium,
-                ),
-              ),
-              PopupMenuItem(
-                value: KisumuDestinations.manyattaB,
-                child: Text(
-                  KisumuDestinations.manyattaB.name,
-                  style: Get.textTheme.displayMedium,
-                ),
-              ),
-              PopupMenuItem(
-                value: KisumuDestinations.obunga,
-                child: Text(
-                  KisumuDestinations.obunga.name,
-                  style: Get.textTheme.displayMedium,
-                ),
-              ),
-              PopupMenuItem(
-                value: KisumuDestinations.kondele,
-                child: Text(
-                  KisumuDestinations.kondele.name,
-                  style: Get.textTheme.displayMedium,
-                ),
-              ),
-            ];
-          },
+          itemBuilder: (context) => _destinations(),
           onSelected: (value) {
-            controller.destination.value = value.name;
+            controller.destinationTown.value =
+                controller.getTown(value as String);
+            controller.destinationArea.value = controller.getArea(value);
           },
         ),
       ],
     );
+  }
+
+  List<PopupMenuEntry> _destinations() {
+    List<PopupMenuEntry> popupMenuItems = [];
+    for (var destination in controller.destinations.value.destinations) {
+      var destinationValue =
+          controller.getDestination(destination.town, destination.area);
+      popupMenuItems.add(
+        PopupMenuItem(
+          value: destinationValue,
+          child: Text(
+            destinationValue,
+            style: Get.textTheme.displayMedium,
+          ),
+        ),
+      );
+    }
+    return popupMenuItems;
   }
 
   @override

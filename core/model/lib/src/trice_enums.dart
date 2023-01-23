@@ -1,3 +1,5 @@
+import 'package:model/model.dart';
+
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 
 abstract class NamedEnum extends Enum {
@@ -51,6 +53,29 @@ enum Chips implements NamedEnum {
         return 'Grains';
       case Chips.combo:
         return 'Combo';
+    }
+  }
+}
+
+enum ShippingStatus implements NamedEnum {
+  none,
+  received,
+  packed,
+  transit,
+  delivered;
+
+  String get name {
+    switch (this) {
+      case ShippingStatus.received:
+        return 'Your order have been received.';
+      case ShippingStatus.packed:
+        return 'Your items have been packed, ready for transit.';
+      case ShippingStatus.transit:
+        return 'Your items are in transit, expect delivery soon.';
+      case ShippingStatus.delivered:
+        return 'Your order has been delivered, thank you for choosing Cuisine 2.0 .';
+      case ShippingStatus.none:
+        return 'No order, yet!.';
     }
   }
 }

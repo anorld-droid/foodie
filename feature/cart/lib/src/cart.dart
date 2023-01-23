@@ -69,7 +69,7 @@ class Cart extends GetView<Controller> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
           child: CustomTextField(
-            textEditingController: controller.buildingController,
+            textEditingController: controller.floorController,
             textInputType: TextInputType.name,
             borderRadius: 8,
             height: 48,
@@ -81,7 +81,7 @@ class Cart extends GetView<Controller> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
           child: CustomTextField(
-            textEditingController: controller.buildingController,
+            textEditingController: controller.roomController,
             textInputType: TextInputType.name,
             borderRadius: 8,
             height: 48,
@@ -93,7 +93,7 @@ class Cart extends GetView<Controller> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
           child: CustomTextField(
-            textEditingController: controller.buildingController,
+            textEditingController: controller.landmarkController,
             textInputType: TextInputType.name,
             borderRadius: 8,
             height: 48,
@@ -134,7 +134,8 @@ class Cart extends GetView<Controller> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 8.0, left: 24.0, right: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -156,7 +157,8 @@ class Cart extends GetView<Controller> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 8.0, left: 24.0, right: 8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -198,6 +200,37 @@ class Cart extends GetView<Controller> {
                 style: Get.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Divider(),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Shipping Info',
+                style: Get.textTheme.labelSmall
+                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 24.0, bottom: 16.0, right: 8.0),
+          child: Row(
+            children: [
+              Obx(
+                () => Text(
+                  controller.shippingStatus.value.name,
+                  style: Get.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w100,
+                    color: Get.theme.primaryColorDark.withOpacity(.8),
+                  ),
                 ),
               ),
             ],
