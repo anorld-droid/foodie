@@ -55,25 +55,15 @@ class ListItemNoTagLine extends GetView<CuisineController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: !Get.isDarkMode
-                      ? []
-                      : [
-                          BoxShadow(
-                            color: Get.theme.primaryColorDark.withOpacity(0.45),
-                            spreadRadius: 0,
-                            blurRadius: 4,
-                            offset: const Offset(
-                                0, 4), // changes position of shadow
-                          ),
-                        ]),
+            Card(
+              shape: const CircleBorder(),
+              elevation: !Get.isDarkMode ? 0 : 7,
               child: CircleAvatar(
                 radius: 64,
                 backgroundImage: NetworkImage(
                   item.photoUrl,
                 ),
+                backgroundColor: Get.theme.primaryColorDark.withOpacity(0.12),
               ),
             ),
             Padding(

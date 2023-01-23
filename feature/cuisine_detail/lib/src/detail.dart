@@ -102,55 +102,65 @@ class CuisineDetail extends GetView<Controller> {
               topRight: Radius.circular(30),
             )),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Qty',
-                style: Get.textTheme.bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
-              ),
-            ),
-            InkWell(
-              onTap: controller.decrementQty,
-              child: Icon(
-                Icons.do_not_disturb_on_outlined,
-                color: Get.theme.primaryColorDark,
-                size: 24,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Obx(
-                () => Text(
-                  '${controller.qty.value}',
-                  style: Get.textTheme.labelSmall
-                      ?.copyWith(fontWeight: FontWeight.w700),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Qty',
+                    style: Get.textTheme.bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w700),
+                  ),
                 ),
-              ),
-            ),
-            InkWell(
-              onTap: controller.incrementQty,
-              child: Icon(
-                Icons.add_circle_outline_outlined,
-                color: Get.theme.primaryColorDark,
-                size: 24,
-              ),
+                InkWell(
+                  onTap: controller.decrementQty,
+                  child: Icon(
+                    Icons.do_not_disturb_on_outlined,
+                    color: Get.theme.primaryColorDark,
+                    size: 24,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Obx(
+                    () => Text(
+                      '${controller.qty.value}',
+                      style: Get.textTheme.labelSmall
+                          ?.copyWith(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: controller.incrementQty,
+                  child: Icon(
+                    Icons.add_circle_outline_outlined,
+                    color: Get.theme.primaryColorDark,
+                    size: 24,
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Container(
-                alignment: AlignmentDirectional.center,
-                height: 40,
-                width: Get.width * 0.50,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-                    color: Get.theme.primaryColorDark),
-                child: Text(
-                  'ADD TO CART',
-                  style: Get.textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Get.theme.backgroundColor),
+              child: InkWell(
+                onTap: controller.addToCart,
+                borderRadius: BorderRadius.circular(30),
+                child: Container(
+                  alignment: AlignmentDirectional.center,
+                  height: 40,
+                  width: Get.width * 0.50,
+                  decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(30.0)),
+                      color: Get.theme.primaryColorDark),
+                  child: Text(
+                    'ADD TO CART',
+                    style: Get.textTheme.displayMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Get.theme.backgroundColor),
+                  ),
                 ),
               ),
             )

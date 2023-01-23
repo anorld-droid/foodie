@@ -71,11 +71,15 @@ class Controller extends GetxController {
     shippingStatus.value = ShippingStatus.none;
   }
 
-  String getTown(String destination) => destination.split(',').first;
+  String getTown(String destination) {
+    var dest = destination.split(',').first;
+    return dest;
+  }
+
   String getArea(String destination) => destination.split(',').last;
   String getDestination(String town, String area) {
     var destinationValue = '';
-    if (area.isEmpty) {
+    if (town == area || area.isEmpty) {
       destinationValue = town;
     } else {
       destinationValue = '$town, $area';
@@ -114,7 +118,7 @@ class Controller extends GetxController {
         landmark: buildingController.text,
       ),
     );
-
+    debugPrint(shippingModel.toString());
     //ignore: todo
     //TODO: Get phone number from firebase , verify inputs, then Post to firebase
   }

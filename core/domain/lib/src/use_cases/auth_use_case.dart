@@ -6,10 +6,6 @@ import 'package:get/get.dart';
 class AuthenticateUser {
   final AuthNetworkDataSource _authNetworkDataSource = Get.find();
 
-  Future<String?> withGoogleNative() async {
-    return await _authNetworkDataSource.signInWithGoogleNative();
-  }
-
   Future<void> withPhoneNUmber(String phoneNumber,
       {required Function verificationCompleted}) async {
     _authNetworkDataSource.signInWithPhoneNumber(phoneNumber,
@@ -24,17 +20,18 @@ class AuthenticateUser {
   }
 
   Future<void> signOut() async {
-     await  _authNetworkDataSource.signOut();
+    await _authNetworkDataSource.signOut();
   }
 
   bool isUserSignedIn() {
     return _authNetworkDataSource.isUserSignedIn();
   }
 
-  String? getUserName()  {
-    return  _authNetworkDataSource.getUserName();
+  String? getUserName() {
+    return _authNetworkDataSource.getUserName();
   }
-  String? getUserProfilePic()  {
-    return  _authNetworkDataSource.getUserPhotoUrl();
+
+  String? getUserProfilePic() {
+    return _authNetworkDataSource.getUserPhotoUrl();
   }
 }

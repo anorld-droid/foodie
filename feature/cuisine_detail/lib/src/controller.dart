@@ -7,11 +7,15 @@ class Controller extends GetxController {
 
   void incrementQty() {
     //ignore: todo
-//TODO FUnctionality
+    //TODO FUnctionality
   }
 
   void decrementQty() {
     //ignore: todo
-//TODO FUnctionality
+    //TODO FUnctionality
+  }
+  void addToCart() {
+    //ignore: todo
+    //TODO add to firebase cart collection
   }
 }

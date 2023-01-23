@@ -106,6 +106,7 @@ class CustomTextField extends StatelessWidget {
   final String? labelText;
   final void Function()? onIconTap;
   final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
   final double borderRadius;
   final double? height;
   final FocusNode? focusNode;
@@ -121,6 +122,7 @@ class CustomTextField extends StatelessWidget {
       this.suffixText,
       this.labelText,
       this.onChanged,
+      this.onSubmitted,
       this.focusNode,
       required this.backgroundColor,
       this.borderRadius = 0,
@@ -138,6 +140,7 @@ class CustomTextField extends StatelessWidget {
           style: Get.textTheme.bodyMedium,
           cursorColor: Get.theme.primaryColorDark,
           onChanged: onChanged,
+          onSubmitted: onSubmitted,
           controller: textEditingController,
           decoration: InputDecoration(
             labelText: labelText,

@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
+  flutter_svg: ^1.1.6
 
   # Modules
   common:

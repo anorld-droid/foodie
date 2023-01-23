@@ -26,6 +26,8 @@ class CuisineTopBar extends GetView<CuisineController>
             ),
           )),
       title: CustomTextField(
+          onIconTap: () => controller.search(controller.searchController.text),
+          onSubmitted: controller.search,
           icon: Icons.search,
           height: 40,
           focusNode: controller.focusNode,

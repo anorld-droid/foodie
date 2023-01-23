@@ -32,7 +32,7 @@ class CuisineController extends GetxController {
         cuisineItems: [
           CuisineItem(
               name: 'Fresh Milk',
-            stockTag: StockTags.inStock,
+              stockTag: StockTags.inStock,
               price: 55.00,
               detail:
                   'I built something similar with a CustomScrollView and SliverPersistenHeader, to get the curved effect your header can have a maxExtent and minExtent. When not scrolled the header height will show the curve otherwise when you start scrolling it will also shrink to a set height.',
@@ -48,7 +48,7 @@ class CuisineController extends GetxController {
               photoUrl: Strings.milkUrl),
           CuisineItem(
               name: 'Fresh Milk',
-            stockTag: StockTags.outStock,
+              stockTag: StockTags.outStock,
               price: 55.00,
               detail: 'detail',
               nutrients: [
@@ -63,7 +63,7 @@ class CuisineController extends GetxController {
               photoUrl: Strings.milkUrl),
           CuisineItem(
               name: 'Fresh Milk',
-            stockTag: StockTags.inStock,
+              stockTag: StockTags.inStock,
               price: 55.00,
               detail: 'detail',
               nutrients: [

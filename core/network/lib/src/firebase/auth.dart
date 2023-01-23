@@ -1,32 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 12.01.2023.
 class UserAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  Future<String?> signInWithGoogleNative() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn(
-      scopes: [
-        'email',
-        'profile',
-      ],
-    ).signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    UserCredential? userCredential =
-        await FirebaseAuth.instance.currentUser?.linkWithCredential(credential);
-    return userCredential?.user?.uid;
-  }
 
   Future<void> signInWithPhoneNumber(String phoneNumber,
       {required Function verificationCompleted}) async {

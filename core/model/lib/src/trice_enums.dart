@@ -1,5 +1,3 @@
-import 'package:model/model.dart';
-
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 
 abstract class NamedEnum extends Enum {
@@ -64,6 +62,7 @@ enum ShippingStatus implements NamedEnum {
   transit,
   delivered;
 
+  @override
   String get name {
     switch (this) {
       case ShippingStatus.received:

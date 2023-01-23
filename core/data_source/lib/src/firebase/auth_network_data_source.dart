@@ -4,10 +4,6 @@ import 'package:network/network.dart';
 class AuthNetworkDataSource {
   final UserAuth _userAuth = UserAuth();
 
-  Future<String?> signInWithGoogleNative() async {
-    return await _userAuth.signInWithGoogleNative();
-  }
-
   Future<void> signInWithPhoneNumber(String phoneNumber,
       {required Function verificationCompleted}) async {
     _userAuth.signInWithPhoneNumber(phoneNumber,
