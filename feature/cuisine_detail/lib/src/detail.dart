@@ -12,6 +12,7 @@ class CuisineDetail extends GetView<Controller> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => Controller());
+    controller.sellingPrice.value = cuisineItem.price;
     return Scaffold(
       body: SafeArea(
           child: NestedScrollView(headerSliverBuilder:
@@ -115,7 +116,7 @@ class CuisineDetail extends GetView<Controller> {
                   ),
                 ),
                 InkWell(
-                  onTap: controller.decrementQty,
+                  onTap: () => controller.decrementQty(cuisineItem.price),
                   child: Icon(
                     Icons.do_not_disturb_on_outlined,
                     color: Get.theme.primaryColorDark,
@@ -133,7 +134,7 @@ class CuisineDetail extends GetView<Controller> {
                   ),
                 ),
                 InkWell(
-                  onTap: controller.incrementQty,
+                  onTap: () => controller.incrementQty(cuisineItem.price),
                   child: Icon(
                     Icons.add_circle_outline_outlined,
                     color: Get.theme.primaryColorDark,
@@ -145,7 +146,7 @@ class CuisineDetail extends GetView<Controller> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: InkWell(
-                onTap: controller.addToCart,
+                onTap: () => controller.addToCart(cuisineItem),
                 borderRadius: BorderRadius.circular(30),
                 child: Container(
                   alignment: AlignmentDirectional.center,
@@ -188,7 +189,7 @@ class CuisineDetail extends GetView<Controller> {
                 height: 4,
               ),
               Text(
-                cuisineItem.stockTag.name,
+                cuisineItem.stockTag,
                 style: Get.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),
@@ -197,10 +198,12 @@ class CuisineDetail extends GetView<Controller> {
               const SizedBox(
                 height: 4,
               ),
-              Text(
-                "${CommonStrings.currency} ${cuisineItem.price.toStringAsFixed(2)}",
-                style: Get.textTheme.bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
+              Obx(
+                () => Text(
+                  "${CommonStrings.currency} ${controller.sellingPrice.value.toStringAsFixed(2)}",
+                  style: Get.textTheme.bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                ),
               ),
             ],
           ),

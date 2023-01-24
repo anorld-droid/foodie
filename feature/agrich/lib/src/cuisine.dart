@@ -47,7 +47,7 @@ class Cuisine extends GetView<CuisineController> {
                         ListView.builder(
                             physics: const ClampingScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: controller.itemsLength,
+                            itemCount: controller.items.length,
                             itemBuilder: (BuildContext context, int index) =>
                                 ListItemSearchResult(
                                     cuisineItems:
@@ -58,7 +58,7 @@ class Cuisine extends GetView<CuisineController> {
                   : ListView.builder(
                       physics: const ClampingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: controller.itemsLength,
+                      itemCount: controller.items.length,
                       itemBuilder: (BuildContext context, int index) {
                         CuisineModel cuisineModel = controller.items[index];
                         if (index % 2 == 0) {
@@ -87,7 +87,7 @@ class Cuisine extends GetView<CuisineController> {
           FloatingActionButton(
             enableFeedback: true,
             heroTag: 'Cart Button',
-            onPressed: () => Get.toNamed<void>(Routes.cart),
+            onPressed: controller.navigateToCart,
             backgroundColor: Get.theme.backgroundColor,
             child: Icon(
               Icons.shopping_cart,
@@ -108,10 +108,12 @@ class Cuisine extends GetView<CuisineController> {
                 borderRadius: BorderRadius.circular(16),
                 color: Get.theme.backgroundColor),
             child: Center(
-              child: Text(
-                '${controller.cartItems.length}',
-                style: Get.textTheme.bodyMedium!
-                    .copyWith(color: Get.theme.primaryColorDark),
+              child: Obx(
+                () => Text(
+                  '${controller.cartItemsLength.value}',
+                  style: Get.textTheme.bodyMedium!
+                      .copyWith(color: Get.theme.primaryColorDark),
+                ),
               ),
             ),
           )

@@ -8,3 +8,4 @@ export 'src/strings.dart';
 export 'src/routing/routes.dart';
 export 'src/utils/image_chooser.dart';
 export 'src/widgets/circular_progress_indicator.dart';
+export 'src/widgets/toast.dart';

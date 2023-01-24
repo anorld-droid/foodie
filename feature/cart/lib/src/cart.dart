@@ -7,11 +7,14 @@ import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 class Cart extends GetView<Controller> {
-  const Cart({super.key});
+  final List<CartItem> cartItems;
+  const Cart({super.key, required this.cartItems});
 
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => Controller());
+    controller.calculateSubTotal(cartItems);
+    controller.calculateTotal();
     return Scaffold(
       appBar: const CartAppBar(),
       body: SingleChildScrollView(child: _body()),
@@ -24,7 +27,7 @@ class Cart extends GetView<Controller> {
               topRight: Radius.circular(8),
             )),
         child: InkWell(
-          onTap: controller.checkout,
+          onTap: () => controller.checkout(cartItems),
           borderRadius: BorderRadius.circular(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -59,61 +62,12 @@ class Cart extends GetView<Controller> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: CustomTextField(
-            textEditingController: controller.buildingController,
-            textInputType: TextInputType.name,
-            borderRadius: 8,
-            height: 48,
-            hintText: 'Building or Street name',
-            labelText: 'Building',
-            backgroundColor: Get.theme.backgroundColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: CustomTextField(
-            textEditingController: controller.floorController,
-            textInputType: TextInputType.name,
-            borderRadius: 8,
-            height: 48,
-            hintText: 'Floor No (Optional)',
-            labelText: 'Floor No',
-            backgroundColor: Get.theme.backgroundColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: CustomTextField(
-            textEditingController: controller.roomController,
-            textInputType: TextInputType.name,
-            borderRadius: 8,
-            height: 48,
-            hintText: 'Room No (Optional) ',
-            labelText: 'Room No',
-            backgroundColor: Get.theme.backgroundColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: CustomTextField(
-            textEditingController: controller.landmarkController,
-            textInputType: TextInputType.name,
-            borderRadius: 8,
-            height: 48,
-            hintText: 'Landmark',
-            labelText: 'Landmark',
-            backgroundColor: Get.theme.backgroundColor,
-          ),
-        ),
-        const Divider(),
-        Padding(
           padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Order (${controller.cartItems.value.length} ${controller.cartItems.value.length > 1 ? 'items' : 'item'})',
+                'Order (${cartItems.length} ${cartItems.length > 1 ? 'items' : 'item'})',
                 style: Get.textTheme.labelSmall
                     ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.start,
@@ -150,11 +104,13 @@ class Cart extends GetView<Controller> {
                   color: Get.theme.primaryColorDark.withOpacity(.8),
                 ),
               ),
-              Text(
-                controller.subTotal().toStringAsFixed(2),
-                style: Get.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w100,
-                  color: Get.theme.primaryColorDark.withOpacity(.8),
+              Obx(
+                () => Text(
+                  controller.subTotal.value.toStringAsFixed(2),
+                  style: Get.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w100,
+                    color: Get.theme.primaryColorDark.withOpacity(.8),
+                  ),
                 ),
               ),
             ],
@@ -173,11 +129,13 @@ class Cart extends GetView<Controller> {
                   color: Get.theme.primaryColorDark.withOpacity(.8),
                 ),
               ),
-              Text(
-                controller.shippingFee().toStringAsFixed(2),
-                style: Get.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w100,
-                  color: Get.theme.primaryColorDark.withOpacity(.8),
+              Obx(
+                () => Text(
+                  controller.shippingFee.value.toStringAsFixed(2),
+                  style: Get.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w100,
+                    color: Get.theme.primaryColorDark.withOpacity(.8),
+                  ),
                 ),
               ),
             ],
@@ -199,11 +157,13 @@ class Cart extends GetView<Controller> {
               const SizedBox(
                 width: 8.0,
               ),
-              Text(
-                controller.total().toStringAsFixed(2),
-                style: Get.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w100,
-                  color: Get.theme.primaryColorDark.withOpacity(.8),
+              Obx(
+                () => Text(
+                  controller.total.value.toStringAsFixed(2),
+                  style: Get.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w100,
+                    color: Get.theme.primaryColorDark.withOpacity(.8),
+                  ),
                 ),
               ),
             ],
@@ -247,9 +207,9 @@ class Cart extends GetView<Controller> {
   Widget _orderItems() {
     return Column(
       children: List.generate(
-        controller.cartItems.value.length,
+        cartItems.length,
         (index) => _orderItem(
-          controller.cartItems.value[index],
+          cartItems[index],
         ),
       ),
     );
@@ -279,7 +239,7 @@ class Cart extends GetView<Controller> {
                 height: 4,
               ),
               Text(
-                item.stockTag.name,
+                item.stockTag,
                 style: Get.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),
@@ -288,11 +248,13 @@ class Cart extends GetView<Controller> {
               const SizedBox(
                 height: 4,
               ),
-              Text(
-                "${CommonStrings.currency} ${item.price.toStringAsFixed(2)}",
-                style: Get.textTheme.bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
-              ),
+              Obx(
+                () => Text(
+                  "${CommonStrings.currency} ${item.sellingPrice.value.toStringAsFixed(2)}",
+                  style: Get.textTheme.bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                ),
+              )
             ],
           ),
           Column(
@@ -301,7 +263,7 @@ class Cart extends GetView<Controller> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: InkWell(
-                  onTap: controller.decrementQty,
+                  onTap: controller.deleteItem,
                   borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                   child: Icon(
                     Icons.close,
@@ -320,7 +282,7 @@ class Cart extends GetView<Controller> {
                     ),
                   ),
                   InkWell(
-                    onTap: controller.decrementQty,
+                    onTap: () => controller.decrementQty(item, cartItems),
                     borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                     child: Icon(
                       Icons.do_not_disturb_on_outlined,
@@ -328,16 +290,18 @@ class Cart extends GetView<Controller> {
                       size: 24,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      '${item.quantity}',
-                      style: Get.textTheme.labelSmall
-                          ?.copyWith(fontWeight: FontWeight.w700),
+                  Obx(
+                    () => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${item.quantity.value}',
+                        style: Get.textTheme.labelSmall
+                            ?.copyWith(fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                   InkWell(
-                    onTap: controller.incrementQty,
+                    onTap: () => controller.incrementQty(item, cartItems),
                     borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                     child: Icon(
                       Icons.add_circle_outline_outlined,

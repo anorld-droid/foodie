@@ -17,5 +17,7 @@ class TriceBinding implements Bindings {
     Get.lazyPut(() => AuthNetworkDataSource(), fenix: true);
     Get.lazyPut(() => StorageNetworkDataSource(), fenix: true);
     Get.lazyPut(() => ImageUseCase(), fenix: true);
+    Get.lazyPut(() => AuthenticateUser(), fenix: true);
+    Get.lazyPut(() => CloudNetWorkDataSource(), fenix: true);
   }
 }

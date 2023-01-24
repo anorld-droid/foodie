@@ -23,12 +23,12 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
     animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
     animationController.repeat();
-
   }
+
   @override
   void onReady() {
     super.onReady();
-    _authenticateUser = AuthenticateUser();
+    _authenticateUser = Get.find();
     _userModelUseCase = UserModelUseCase();
 
     _imageUseCase = Get.find();
@@ -38,7 +38,6 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   Rx<bool> verificationHasPassed = false.obs;
   Rx<bool> inputValidated = false.obs;
   var searching = false.obs;
-
 
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
   final TextEditingController usernameController = TextEditingController();
@@ -66,9 +65,12 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
       final photoUrl = await saveProfilePicture(uid!);
       final username = usernameController.text;
       if (photoUrl != null && username.isNotEmpty) {
-        final User user =
-            User(uid: uid, photoUrl: photoUrl, username: username);
-        _userModelUseCase.uploadUserModel(Constants.users, uid, user);
+        final User user = User(
+            uid: uid,
+            photoUrl: photoUrl,
+            username: username,
+            shippingInfo: null);
+        _userModelUseCase.upload(uid, user);
         message = 'Account created successfully';
         Get.offNamed<void>(Routes.mainScreen);
       }
@@ -107,5 +109,4 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
       return null;
     }
   }
-
 }

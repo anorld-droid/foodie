@@ -45,7 +45,9 @@ class TriceApp extends GetView<TriceAppController> {
             ),
             GetPage(
               name: Routes.cart,
-              page: () => const Cart(),
+              page: () => Cart(
+                cartItems: Get.arguments as List<CartItem>,
+              ),
             ),
           ],
         ));

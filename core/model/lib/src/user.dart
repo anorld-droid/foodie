@@ -1,3 +1,5 @@
+import 'package:model/model.dart';
+
 import 'constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -6,25 +8,36 @@ class User {
   final String uid;
   final String photoUrl;
   final String username;
+  final ShippingInfo? shippingInfo;
 
   const User({
     required this.uid,
     required this.photoUrl,
     required this.username,
+    required this.shippingInfo,
   });
 
-  Map<String, dynamic> toJson() => {
-    Constants.uid: uid,
-    Constants.username: username,
-    Constants.photoUrl: photoUrl,
-  };
+  Map<String, dynamic> toFirestore() => {
+        Constants.uid: uid,
+        Constants.username: username,
+        Constants.photoUrl: photoUrl,
+        Constants.shippingInfo: shippingInfo?.toFirestore()
+      };
 
-  static User fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
+  factory User.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snap,
+    SnapshotOptions? options,
+  ) {
+    var snapshot = snap.data();
     return User(
-        uid: snapshot[Constants.uid] as String,
-        photoUrl: snapshot[Constants.photoUrl] as String,
-        username: snapshot[Constants.username] as String,
-        );
+      uid: snapshot?[Constants.uid] as String,
+      photoUrl: snapshot?[Constants.photoUrl] as String,
+      username: snapshot?[Constants.username] as String,
+      shippingInfo: snapshot?[Constants.shippingInfo] != null
+          ? ShippingInfo.fromFirestore(
+              snapshot?[Constants.shippingInfo] as Map<String, dynamic>,
+              options)
+          : null,
+    );
   }
 }

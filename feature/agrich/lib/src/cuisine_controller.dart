@@ -1,5 +1,6 @@
 import 'package:agrich/src/strings.dart';
 import 'package:common/common.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -8,14 +9,23 @@ import 'package:model/model.dart';
 class CuisineController extends GetxController {
   late final TextEditingController searchController;
   late final List<CuisineModel> items;
-  late final int itemsLength;
-  late final List<CuisineItem> cartItems;
   late final FocusNode focusNode;
+
+  final List<CartItem> cartItems = [];
+  final Rx<int> cartItemsLength = 0.obs;
   final Rx<bool> editing = false.obs;
   Rx<int> selectedChip = 10.obs;
+
+  late final AuthenticateUser _authenticateUser;
+  late final CartItemsUseCase _cartItemsUseCase;
+
   @override
   void onInit() {
     super.onInit();
+    _authenticateUser = Get.find();
+    _cartItemsUseCase = CartItemsUseCase();
+    getCartItems();
+
     searchController = TextEditingController();
     focusNode = FocusNode();
     focusNode.addListener((() {
@@ -25,14 +35,13 @@ class CuisineController extends GetxController {
   }
 
   void loadData() {
-    cartItems = [];
     items = [
       CuisineModel(
         header: 'Dairy',
         cuisineItems: [
           CuisineItem(
               name: 'Fresh Milk',
-              stockTag: StockTags.inStock,
+              stockTag: StockTags.inStock.name,
               price: 55.00,
               detail:
                   'I built something similar with a CustomScrollView and SliverPersistenHeader, to get the curved effect your header can have a maxExtent and minExtent. When not scrolled the header height will show the curve otherwise when you start scrolling it will also shrink to a set height.',
@@ -48,7 +57,7 @@ class CuisineController extends GetxController {
               photoUrl: Strings.milkUrl),
           CuisineItem(
               name: 'Fresh Milk',
-              stockTag: StockTags.outStock,
+              stockTag: StockTags.outStock.name,
               price: 55.00,
               detail: 'detail',
               nutrients: [
@@ -63,7 +72,7 @@ class CuisineController extends GetxController {
               photoUrl: Strings.milkUrl),
           CuisineItem(
               name: 'Fresh Milk',
-              stockTag: StockTags.inStock,
+              stockTag: StockTags.inStock.name,
               price: 55.00,
               detail: 'detail',
               nutrients: [
@@ -81,7 +90,7 @@ class CuisineController extends GetxController {
       CuisineModel(header: 'Beverages', cuisineItems: [
         CuisineItem(
             name: 'Water',
-            stockTag: StockTags.inStock,
+            stockTag: StockTags.inStock.name,
             price: 60.00,
             detail: 'detail',
             nutrients: [
@@ -96,7 +105,17 @@ class CuisineController extends GetxController {
             photoUrl: Strings.waterUrl),
       ]),
     ];
-    itemsLength = items.length;
+  }
+
+  void getCartItems() async {
+    var snap = await _cartItemsUseCase.get(_authenticateUser.getUserId()!);
+    snap.listen((event) {
+      cartItems.clear();
+      for (var doc in event.docs) {
+        cartItems.add(doc.data());
+      }
+      cartItemsLength.value = cartItems.length;
+    });
   }
 
   void search(String value) {
@@ -104,6 +123,16 @@ class CuisineController extends GetxController {
     //TODO: Search from firebase
   }
   void navigateToDetails(CuisineItem cuisineItem) {
-    Get.toNamed<void>(Routes.cuisineDetail, arguments: cuisineItem);
+    Get.toNamed<void>(
+      Routes.cuisineDetail,
+      arguments: cuisineItem,
+    );
+  }
+
+  void navigateToCart() {
+    Get.toNamed<void>(
+      Routes.cart,
+      arguments: cartItems,
+    );
   }
 }

@@ -7,3 +7,4 @@ export 'src/use_cases/auth_use_case.dart';
 export 'src/use_cases/image_use_case.dart';
 export 'src/use_cases/user_model_use_case.dart';
 export 'src/constants.dart';
+export 'src/use_cases/cart_items_use_case.dart';

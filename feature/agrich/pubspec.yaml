@@ -16,6 +16,8 @@ dependencies:
     path: ../../core/common
   model:
     path: ../../core/model
+  domain:
+    path: ../../core/domain
 
 dev_dependencies:
   flutter_test:

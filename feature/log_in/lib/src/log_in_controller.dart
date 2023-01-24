@@ -33,7 +33,7 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
     super.onInit();
     auth = LocalAuthentication();
 
-    _authenticateUser = AuthenticateUser();
+    _authenticateUser = Get.find();
     _userModelUseCase = UserModelUseCase();
 
     phoneNumberController = TextEditingController();
@@ -52,10 +52,12 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
 
   void loadData() async {
     if (_authenticateUser.isUserSignedIn()) {
-      User user = await _userModelUseCase.getUserModel(
-          Constants.users, _authenticateUser.getUserId()!);
-      username.value = user.username;
-      profilePic.value = user.photoUrl;
+      User? user = await _userModelUseCase.get(_authenticateUser.getUserId()!);
+      if (user != null) {
+        username.value = user.username;
+        profilePic.value = user.photoUrl;
+      }
+
       fingerprintAuth();
     } else {
       logInDialog(Get.context!);
