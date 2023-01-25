@@ -8,7 +8,7 @@ class ShippingModel {
   final String uid;
   final int orderNo;
   final List<CartItem> items;
-  final ShippingStatus status;
+  final String status;
 
   ShippingModel({
     required this.uid,
@@ -16,12 +16,35 @@ class ShippingModel {
     required this.orderNo,
     required this.status,
   });
+  Map<String, dynamic> toFirestore() => {
+        Constants.shippingModel: {
+          Constants.uid: uid,
+          Constants.orderNo: orderNo,
+          Constants.items: items.map((e) => e.toFirestore()),
+          Constants.status: status
+        }
+      };
+
+  factory ShippingModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snap,
+    SnapshotOptions? options,
+  ) {
+    var snapshot = snap.data();
+    List<Map<String, dynamic>> items =
+        snapshot?[Constants.items] as List<Map<String, dynamic>>;
+    return ShippingModel(
+      uid: snapshot?[Constants.uid] as String,
+      items: items.map((e) => CartItem.fromJson(e)) as List<CartItem>,
+      orderNo: snapshot?[Constants.orderNo] as int,
+      status: snapshot?[Constants.status] as String,
+    );
+  }
 }
 
 class ShippingInfo {
-  final String name;
-  final String phoneNumber;
-  final DestinationModel destination;
+  final String? name;
+  final String? phoneNumber;
+  final DestinationModel? destination;
 
   ShippingInfo({
     required this.name,
@@ -33,19 +56,22 @@ class ShippingInfo {
         Constants.shippingInfo: {
           Constants.name: name,
           Constants.phoneNumber: phoneNumber,
-          Constants.destination: destination.toFirestore()
+          Constants.destination: destination?.toFirestore()
         }
       };
 
   factory ShippingInfo.fromFirestore(
-    Map<String, dynamic> snapshot,
+    Map<String, dynamic>? snapshot,
     SnapshotOptions? options,
   ) {
-    DestinationModel destinationModel = DestinationModel.fromFirestore(
-        snapshot[Constants.destination] as Map<String, dynamic>, null);
+    DestinationModel? destinationModel =
+        snapshot?[Constants.destination] != null
+            ? DestinationModel.fromFirestore(
+                snapshot?[Constants.destination] as Map<String, dynamic>, null)
+            : null;
     return ShippingInfo(
-      name: snapshot[Constants.name] as String,
-      phoneNumber: snapshot[Constants.phoneNumber] as String,
+      name: snapshot?[Constants.name] as String?,
+      phoneNumber: snapshot?[Constants.phoneNumber] as String?,
       destination: destinationModel,
     );
   }

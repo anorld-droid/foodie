@@ -12,9 +12,7 @@ class Cart extends GetView<Controller> {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => Controller());
-    controller.calculateSubTotal(cartItems);
-    controller.calculateTotal();
+    Get.lazyPut(() => Controller(items: Rx(cartItems)));
     return Scaffold(
       appBar: const CartAppBar(),
       body: SingleChildScrollView(child: _body()),
@@ -27,7 +25,7 @@ class Cart extends GetView<Controller> {
               topRight: Radius.circular(8),
             )),
         child: InkWell(
-          onTap: () => controller.checkout(cartItems),
+          onTap: () => controller.checkout(),
           borderRadius: BorderRadius.circular(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -67,30 +65,34 @@ class Cart extends GetView<Controller> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Order (${cartItems.length} ${cartItems.length > 1 ? 'items' : 'item'})',
-                style: Get.textTheme.labelSmall
-                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
+                controller.getShippingInfo(),
+                style: Get.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w100,
+                  color: Get.theme.primaryColorDark.withOpacity(.8),
+                ),
               ),
             ],
           ),
         ),
-        _orderItems(),
         const Divider(),
         Padding(
           padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                'Summary (${CommonStrings.currency})',
-                style: Get.textTheme.labelSmall
-                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
+              Obx(
+                () => Text(
+                  'Order (${controller.itemLength.value} ${controller.itemLength.value > 1 ? 'items' : 'item'})',
+                  style: Get.textTheme.labelSmall
+                      ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.start,
+                ),
               ),
             ],
           ),
         ),
+        _orderItems(),
+        const Divider(),
         Padding(
           padding: const EdgeInsets.only(
               top: 8.0, bottom: 8.0, left: 24.0, right: 8.0),
@@ -171,20 +173,6 @@ class Cart extends GetView<Controller> {
         ),
         const Divider(),
         Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                'Shipping Info',
-                style: Get.textTheme.labelSmall
-                    ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ],
-          ),
-        ),
-        Padding(
           padding: const EdgeInsets.only(left: 24.0, bottom: 16.0, right: 8.0),
           child: Row(
             children: [
@@ -205,11 +193,16 @@ class Cart extends GetView<Controller> {
   }
 
   Widget _orderItems() {
-    return Column(
-      children: List.generate(
-        cartItems.length,
-        (index) => _orderItem(
-          cartItems[index],
+    return SizedBox(
+      height: Get.height / 1.9,
+      child: Obx(
+        () => ListView(
+          key: Key(controller.itemLength.value.toString()),
+          children: controller.items.value
+              .map(
+                (e) => _orderItem(e),
+              )
+              .toList(),
         ),
       ),
     );
@@ -263,7 +256,9 @@ class Cart extends GetView<Controller> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: InkWell(
-                  onTap: controller.deleteItem,
+                  onTap: () {
+                    controller.deleteItem(item);
+                  },
                   borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                   child: Icon(
                     Icons.close,
@@ -282,7 +277,7 @@ class Cart extends GetView<Controller> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => controller.decrementQty(item, cartItems),
+                    onTap: () => controller.decrementQty(item),
                     borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                     child: Icon(
                       Icons.do_not_disturb_on_outlined,
@@ -301,7 +296,7 @@ class Cart extends GetView<Controller> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => controller.incrementQty(item, cartItems),
+                    onTap: () => controller.incrementQty(item),
                     borderRadius: const BorderRadius.all(Radius.circular(30.0)),
                     child: Icon(
                       Icons.add_circle_outline_outlined,

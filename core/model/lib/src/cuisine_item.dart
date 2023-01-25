@@ -21,11 +21,12 @@ class CuisineItem {
 
   CartItem asCartItem(int quantity) {
     return CartItem(
+      id: null,
       photoUrl: photoUrl,
       name: name,
       stockTag: stockTag,
       basicPrice: price,
-      sellingPrice: Rx(price),
+      sellingPrice: Rx(price * quantity),
       quantity: Rx(quantity),
     );
   }

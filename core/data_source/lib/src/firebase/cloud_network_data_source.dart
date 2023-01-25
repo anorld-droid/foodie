@@ -88,10 +88,25 @@ class CloudNetWorkDataSource {
     required String doc,
     required Map<String, Object?> data,
   }) async {
-    await _cloudMethods.updateField(
+    await _cloudMethods.updateField<R>(
       collection: collection,
       doc: doc,
       data: data,
     );
+  }
+
+  /// delete the file from the specified path
+  /// NOTE: docPath should be user id
+  Future<void> deleteDocFromMulitiCollection<R>({
+    required String collectionName,
+    required String docPath,
+    required String collectionPath,
+    required String docId,
+  }) async {
+    await _cloudMethods.deleteDocFromMulitiCollection<R>(
+        collectionName: collectionName,
+        docPath: docPath,
+        collectionPath: collectionPath,
+        docId: docId);
   }
 }

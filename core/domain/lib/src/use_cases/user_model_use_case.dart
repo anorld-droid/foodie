@@ -30,6 +30,18 @@ class UserModelUseCase {
     return snap.data();
   }
 
+  /// Get the file to the specified path
+  /// NOTE: doc should be user id
+  Future<ShippingInfo?> getShippingInfo(String doc) async {
+    final snap = await _cloudNetWorkDataSource.getDoc<User>(
+        collection: Constants.users,
+        doc: doc,
+        fromFirestore: User.fromFirestore,
+        toFirestore: (User user, _) => user.toFirestore());
+    ;
+    return snap.data()?.shippingInfo;
+  }
+
   /// update the file to the specified path
   /// NOTE: docPath should be user id
   Future<void> updateShippingInfo({

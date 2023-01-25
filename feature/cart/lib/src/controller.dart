@@ -8,6 +8,8 @@ import 'package:domain/domain.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 class Controller extends GetxController {
+  final Rx<List<CartItem>> items;
+  Controller({required this.items}) : super();
   late final TextEditingController nameController;
   late final TextEditingController phoneController;
   late final TextEditingController buildingController;
@@ -17,6 +19,8 @@ class Controller extends GetxController {
 
   late final AuthenticateUser _authenticateUser;
   late final UserModelUseCase _userModelUseCase;
+  late final ShippingUseCase _shippingUseCase;
+  late final CartItemsUseCase _cartItemsUseCase;
 
   final Rx<Destinations> destinations =
       Rx(const Destinations(destinations: []));
@@ -24,13 +28,15 @@ class Controller extends GetxController {
   final Rx<String> destinationArea = Rx('');
 
   final Rx<ShippingStatus> shippingStatus = Rx(ShippingStatus.none);
-  final Rx<ShippingInfo?> shippingInfo = Rx(null);
+  final Rx<ShippingInfo?> _shippingInfo = Rx(null);
 
   final Rx<bool> loading = false.obs;
 
   final Rx<double> subTotal = 0.0.obs;
   final Rx<double> total = 0.0.obs;
   final Rx<double> shippingFee = 0.0.obs;
+
+  final Rx<int> itemLength = 0.obs;
 
   @override
   void onInit() {
@@ -42,6 +48,8 @@ class Controller extends GetxController {
   void initializeVar() {
     _authenticateUser = Get.find();
     _userModelUseCase = UserModelUseCase();
+    _shippingUseCase = ShippingUseCase();
+    _cartItemsUseCase = CartItemsUseCase();
 
     nameController = TextEditingController();
     phoneController = TextEditingController();
@@ -49,6 +57,9 @@ class Controller extends GetxController {
     floorController = TextEditingController();
     roomController = TextEditingController();
     landmarkController = TextEditingController();
+
+    itemLength.value = items.value.length;
+    calculateTotal();
   }
 
   void loadData() async {
@@ -64,6 +75,8 @@ class Controller extends GetxController {
         DestinationModel(town: 'Kisumu', area: 'Kondele'),
       ],
     );
+    _shippingInfo.value =
+        await _userModelUseCase.getShippingInfo(_authenticateUser.getUserId()!);
     destinationTown.value = destinations.value.destinations.first.town;
     destinationArea.value = destinations.value.destinations.first.area;
 
@@ -74,6 +87,14 @@ class Controller extends GetxController {
   String getTown(String destination) {
     var dest = destination.split(',').first;
     return dest;
+  }
+
+  String getShippingInfo() {
+    if (_shippingInfo.value?.name != null) {
+      return 'Shipping to:\n  ${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber},\n  ${_shippingInfo.value?.destination?.town}, ${_shippingInfo.value?.destination?.area},\n  ${_shippingInfo.value?.destination?.building}, ${_shippingInfo.value?.destination?.floorNo}, ${_shippingInfo.value?.destination?.roomNo},\n  ${_shippingInfo.value?.destination?.landmark}.';
+    } else {
+      return 'No shipping destination, yet!';
+    }
   }
 
   String getArea(String destination) => destination.split(',').last;
@@ -87,9 +108,9 @@ class Controller extends GetxController {
     return destinationValue;
   }
 
-  void calculateSubTotal(List<CartItem> cartItems) {
+  void _calculateSubTotal() {
     var sum = 0.0;
-    for (var item in cartItems) {
+    for (var item in items.value) {
       sum += item.sellingPrice.value;
     }
     subTotal.value = sum;
@@ -97,48 +118,54 @@ class Controller extends GetxController {
   }
 
   void calculateTotal() {
+    _calculateSubTotal();
     total.value = subTotal.value + shippingFee.value;
   }
 
-  void checkout(List<CartItem> cartItems) {
-    if (shippingInfo.value != null) {
-      // ignore: unused_local_variable
+  void checkout() async {
+    if (_shippingInfo.value != null) {
       ShippingModel shippingModel = ShippingModel(
         uid: _authenticateUser.getUserId()!,
-        items: cartItems,
+        items: items.value,
         orderNo: 1,
-        status: ShippingStatus.none,
+        status: ShippingStatus.none.name,
       );
+      await _shippingUseCase.upload(
+        userId: _authenticateUser.getUserId()!,
+        shippingModel: shippingModel,
+      );
+      shortToast('Checkout successful');
     } else {
-      showDialog<Widget>(
+      await showDialog<Widget>(
           context: Get.context!,
           barrierDismissible: false,
           barrierLabel:
               MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-          barrierColor: Colors.black87,
+          barrierColor: Get.theme.primaryColorDark.withOpacity(.87),
           builder: (BuildContext buildContext) {
             return const DialogLayout();
           });
     }
   }
 
-  void deleteItem() {
-    //ignore: todo
-    //TODO FUnctionality
-  }
-
-  void incrementQty(CartItem cartItem, List<CartItem> cartItems) {
-    var qty = ++cartItem.quantity.value;
-    cartItem.sellingPrice.value = cartItem.basicPrice * qty;
-    calculateSubTotal(cartItems);
+  void deleteItem(CartItem item) {
+    _cartItemsUseCase.delete(
+      userId: _authenticateUser.getUserId()!,
+      docId: item.id!,
+    );
     calculateTotal();
   }
 
-  void decrementQty(CartItem cartItem, List<CartItem> cartItems) {
+  void incrementQty(CartItem cartItem) {
+    var qty = ++cartItem.quantity.value;
+    cartItem.sellingPrice.value = cartItem.basicPrice * qty;
+    calculateTotal();
+  }
+
+  void decrementQty(CartItem cartItem) {
     if (cartItem.quantity > 1.0) {
       var qty = --cartItem.quantity.value;
       cartItem.sellingPrice.value = cartItem.basicPrice * qty;
-      calculateSubTotal(cartItems);
       calculateTotal();
     }
   }
@@ -165,10 +192,11 @@ class Controller extends GetxController {
             roomNo: roomNo,
             landmark: landmark),
       );
-      _userModelUseCase.updateShippingInfo(
+      await _userModelUseCase.updateShippingInfo(
         userId: _authenticateUser.getUserId()!,
         shippingInfo: shippingInfo,
       );
+      shortToast('Shipping info saved.');
     }
   }
 
@@ -184,7 +212,7 @@ class Controller extends GetxController {
         landmark.isNotEmpty) {
       return true;
     } else {
-      shortToast('Please fill all the details');
+      shortToast('Please, fill all the details');
       return false;
     }
   }

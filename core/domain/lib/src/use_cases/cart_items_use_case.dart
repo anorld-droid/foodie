@@ -24,7 +24,6 @@ class CartItemsUseCase {
   }
 
   /// Get the file to the specified path
-  /// NOTE: doc should be user id
   Future<Stream<QuerySnapshot<CartItem>>> get(String userId) async {
     return await _cloudNetWorkDataSource.getDocs(
         collectionName: Constants.cartItems,
@@ -32,5 +31,18 @@ class CartItemsUseCase {
         collectionPath: Constants.items,
         fromFirestore: CartItem.fromFirestore,
         toFirestore: (CartItem cartItem, _) => cartItem.toFirestore());
+  }
+
+  /// delete the file from the specified path
+  Future<void> delete<CartItem>({
+    required String userId,
+    required String docId,
+  }) async {
+    await _cloudNetWorkDataSource.deleteDocFromMulitiCollection<CartItem>(
+      collectionName: Constants.cartItems,
+      docPath: userId,
+      collectionPath: Constants.items,
+      docId: docId,
+    );
   }
 }

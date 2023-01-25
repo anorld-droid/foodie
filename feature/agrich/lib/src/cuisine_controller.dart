@@ -112,7 +112,9 @@ class CuisineController extends GetxController {
     snap.listen((event) {
       cartItems.clear();
       for (var doc in event.docs) {
-        cartItems.add(doc.data());
+        CartItem cartItem = doc.data();
+        cartItem.id = doc.id;
+        cartItems.add(cartItem);
       }
       cartItemsLength.value = cartItems.length;
     });

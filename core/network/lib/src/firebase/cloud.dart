@@ -88,4 +88,20 @@ class CloudMethods {
   }) async {
     await mFirestore.collection(collection).doc(doc).update(data);
   }
+
+  /// delete the file from the specified path
+  /// NOTE: docPath should be user id
+  Future<void> deleteDocFromMulitiCollection<R>({
+    required String collectionName,
+    required String docPath,
+    required String collectionPath,
+    required String docId,
+  }) async {
+    await mFirestore
+        .collection(collectionName)
+        .doc(docPath)
+        .collection(collectionPath)
+        .doc(docId)
+        .delete();
+  }
 }
