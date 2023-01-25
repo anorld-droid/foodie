@@ -6,6 +6,7 @@ class Constants {
   static String photoUrl = 'photoUrl';
   static String name = 'name';
   static String stockTag = 'stockTag';
+  static String price = 'price';
   static String basicPrice = 'basicPrice';
   static String sellingPrice = 'sellingPrice';
   static String quantity = 'quantity';
@@ -22,4 +23,8 @@ class Constants {
   static String orderNo = 'orderNumber';
   static String items = 'items';
   static String status = 'status';
+  static String header = 'header';
+  static String cuisineItems = 'cuisineItems';
+  static String detail = 'detail';
+  static String nutrients = 'nutrients';
 }

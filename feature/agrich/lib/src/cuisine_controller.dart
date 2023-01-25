@@ -1,4 +1,3 @@
-import 'package:agrich/src/strings.dart';
 import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,122 +7,75 @@ import 'package:model/model.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
 class CuisineController extends GetxController {
   late final TextEditingController searchController;
-  late final List<CuisineModel> items;
+  final Rx<List<CuisineModel>> items = Rx([]);
+  final Rx<List<CuisineItem>> searchItems = Rx([]);
   late final FocusNode focusNode;
 
-  final List<CartItem> cartItems = [];
+  final Rx<List<CartItem>> cartItems = Rx([]);
   final Rx<int> cartItemsLength = 0.obs;
   final Rx<bool> editing = false.obs;
   Rx<int> selectedChip = 10.obs;
 
   late final AuthenticateUser _authenticateUser;
   late final CartItemsUseCase _cartItemsUseCase;
+  late final CuisineModelUseCase _cuisineModelUseCase;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    _authenticateUser = Get.find();
-    _cartItemsUseCase = CartItemsUseCase();
-    getCartItems();
 
-    searchController = TextEditingController();
-    focusNode = FocusNode();
+    initialize();
+    setListeners();
+    await loadData();
+  }
+
+  void setListeners() {
     focusNode.addListener((() {
       editing.value = focusNode.hasFocus;
     }));
-    loadData();
   }
 
-  void loadData() {
-    items = [
-      CuisineModel(
-        header: 'Dairy',
-        cuisineItems: [
-          CuisineItem(
-              name: 'Fresh Milk',
-              stockTag: StockTags.inStock.name,
-              price: 55.00,
-              detail:
-                  'I built something similar with a CustomScrollView and SliverPersistenHeader, to get the curved effect your header can have a maxExtent and minExtent. When not scrolled the header height will show the curve otherwise when you start scrolling it will also shrink to a set height.',
-              nutrients: [
-                'ingridients',
-                'ingridient',
-                'ingridiens',
-                'ingridiets',
-                'ingridints',
-                'ingridents',
-                'ingriients'
-              ],
-              photoUrl: Strings.milkUrl),
-          CuisineItem(
-              name: 'Fresh Milk',
-              stockTag: StockTags.outStock.name,
-              price: 55.00,
-              detail: 'detail',
-              nutrients: [
-                'ingridients',
-                'ingridient',
-                'ingridiens',
-                'ingridiets',
-                'ingridints',
-                'ingridents',
-                'ingriients'
-              ],
-              photoUrl: Strings.milkUrl),
-          CuisineItem(
-              name: 'Fresh Milk',
-              stockTag: StockTags.inStock.name,
-              price: 55.00,
-              detail: 'detail',
-              nutrients: [
-                'ingridients',
-                'ingridient',
-                'ingridiens',
-                'ingridiets',
-                'ingridints',
-                'ingridents',
-                'ingriients'
-              ],
-              photoUrl: Strings.milkUrl),
-        ],
-      ),
-      CuisineModel(header: 'Beverages', cuisineItems: [
-        CuisineItem(
-            name: 'Water',
-            stockTag: StockTags.inStock.name,
-            price: 60.00,
-            detail: 'detail',
-            nutrients: [
-              'ingridients',
-              'ingridient',
-              'ingridiens',
-              'ingridiets',
-              'ingridints',
-              'ingridents',
-              'ingriients'
-            ],
-            photoUrl: Strings.waterUrl),
-      ]),
-    ];
+  void initialize() {
+    _authenticateUser = Get.find();
+    _cartItemsUseCase = CartItemsUseCase();
+    _cuisineModelUseCase = CuisineModelUseCase();
+    searchController = TextEditingController();
+    focusNode = FocusNode();
+  }
+
+  Future<void> loadData() async {
+    var snap = await _cuisineModelUseCase.get(_authenticateUser.getUserId()!);
+    snap.listen((event) {
+      items.value.clear();
+      for (var item in event.docs) {
+        items.value.add(item.data());
+      }
+      items.refresh();
+    });
+    getCartItems();
   }
 
   void getCartItems() async {
     var snap = await _cartItemsUseCase.get(_authenticateUser.getUserId()!);
     snap.listen((event) {
-      cartItems.clear();
+      cartItems.value.clear();
       for (var doc in event.docs) {
         CartItem cartItem = doc.data();
         cartItem.id = doc.id;
-        cartItems.add(cartItem);
+        cartItems.value.add(cartItem);
       }
-      cartItemsLength.value = cartItems.length;
+      cartItemsLength.value = cartItems.value.length;
+      cartItems.refresh();
     });
   }
 
   void search(String value) {
+    // items.value.clear();
     //ignore: todo
-    //TODO: Search from firebase
+    //TODO: Search from firebase,
+    //use listener, remove on dispose
   }
+
   void navigateToDetails(CuisineItem cuisineItem) {
     Get.toNamed<void>(
       Routes.cuisineDetail,

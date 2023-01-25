@@ -20,7 +20,7 @@ class ShippingModel {
         Constants.shippingModel: {
           Constants.uid: uid,
           Constants.orderNo: orderNo,
-          Constants.items: items.map((e) => e.toFirestore()),
+          Constants.items: items.map((e) => e.toFirestore()).toList(),
           Constants.status: status
         }
       };
@@ -30,11 +30,13 @@ class ShippingModel {
     SnapshotOptions? options,
   ) {
     var snapshot = snap.data();
-    List<Map<String, dynamic>> items =
-        snapshot?[Constants.items] as List<Map<String, dynamic>>;
+    List<dynamic> items = snapshot?[Constants.items] as List<dynamic>;
     return ShippingModel(
       uid: snapshot?[Constants.uid] as String,
-      items: items.map((e) => CartItem.fromJson(e)) as List<CartItem>,
+      items: items.map((e) {
+        e as Map<String, dynamic>;
+        return CartItem.fromJson(e);
+      }) as List<CartItem>,
       orderNo: snapshot?[Constants.orderNo] as int,
       status: snapshot?[Constants.status] as String,
     );

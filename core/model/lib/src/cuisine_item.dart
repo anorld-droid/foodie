@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:model/model.dart';
+import 'package:model/src/constants.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
 
@@ -28,6 +29,31 @@ class CuisineItem {
       basicPrice: price,
       sellingPrice: Rx(price * quantity),
       quantity: Rx(quantity),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      Constants.name: name,
+      Constants.stockTag: stockTag,
+      Constants.price: price,
+      Constants.detail: detail,
+      Constants.nutrients: nutrients,
+      Constants.photoUrl: photoUrl,
+    };
+  }
+
+  factory CuisineItem.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    var nutrients = json[Constants.nutrients] as List;
+    return CuisineItem(
+      name: json[Constants.name] as String,
+      stockTag: json[Constants.stockTag] as String,
+      price: json[Constants.price] as double,
+      detail: json[Constants.detail] as String,
+      nutrients: nutrients.map((e) => e.toString()).toList(),
+      photoUrl: json[Constants.photoUrl] as String,
     );
   }
 }

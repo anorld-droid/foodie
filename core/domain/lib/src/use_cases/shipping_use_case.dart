@@ -15,9 +15,9 @@ class ShippingUseCase {
     required ShippingModel shippingModel,
   }) async {
     await _cloudNetWorkDataSource.appendDoc<ShippingModel>(
-        collectionName: Constants.orders,
-        docPath: userId,
-        collectionPath: Constants.items,
+        collectionName: Constants.cuisine,
+        docPath: Constants.orders,
+        collectionPath: userId,
         file: shippingModel,
         fromFirestore: ShippingModel.fromFirestore,
         toFirestore: (ShippingModel shippingModel, _) =>
@@ -27,9 +27,9 @@ class ShippingUseCase {
   /// Get the file to the specified path
   Future<Stream<QuerySnapshot<ShippingModel>>> get(String userId) async {
     return await _cloudNetWorkDataSource.getDocs(
-        collectionName: Constants.orders,
-        docPath: userId,
-        collectionPath: Constants.items,
+        collectionName: Constants.cuisine,
+        docPath: Constants.orders,
+        collectionPath: userId,
         fromFirestore: ShippingModel.fromFirestore,
         toFirestore: (ShippingModel shippingModel, _) =>
             shippingModel.toFirestore());

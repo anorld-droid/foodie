@@ -3,7 +3,6 @@ import 'package:agrich/src/widgets/chips.dart';
 import 'package:agrich/src/widgets/list_item_no_tagline.dart';
 import 'package:agrich/src/widgets/list_item_search_results.dart';
 import 'package:agrich/src/widgets/list_item_with_tagline.dart';
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -24,7 +23,8 @@ class Cuisine extends GetView<CuisineController> {
           () => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              controller.editing.value
+              controller.editing.value ||
+                      controller.searchController.text.isNotEmpty
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -44,23 +44,20 @@ class Cuisine extends GetView<CuisineController> {
                             ),
                           ),
                         ),
-                        ListView.builder(
-                            physics: const ClampingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: controller.items.length,
-                            itemBuilder: (BuildContext context, int index) =>
-                                ListItemSearchResult(
-                                    cuisineItems:
-                                        controller.items[0].cuisineItems,
-                                    onTap: controller.navigateToDetails)),
+                        ListItemSearchResult(
+                          cuisineItems: controller.searchItems.value,
+                          onTap: controller.navigateToDetails,
+                        ),
                       ],
                     )
                   : ListView.builder(
+                      key: Key(controller.items.value.length.toString()),
                       physics: const ClampingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: controller.items.length,
+                      itemCount: controller.items.value.length,
                       itemBuilder: (BuildContext context, int index) {
-                        CuisineModel cuisineModel = controller.items[index];
+                        CuisineModel cuisineModel =
+                            controller.items.value[index];
                         if (index % 2 == 0) {
                           return ListItemWithTagLine(
                               cuisineModel: cuisineModel,

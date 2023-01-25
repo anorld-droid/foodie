@@ -7,12 +7,12 @@ import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 class Cart extends GetView<Controller> {
-  final List<CartItem> cartItems;
+  final Rx<List<CartItem>> cartItems;
   const Cart({super.key, required this.cartItems});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => Controller(items: Rx(cartItems)));
+    Get.lazyPut(() => Controller(items: cartItems));
     return Scaffold(
       appBar: const CartAppBar(),
       body: SingleChildScrollView(child: _body()),

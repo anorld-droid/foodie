@@ -8,4 +8,5 @@ export 'src/use_cases/image_use_case.dart';
 export 'src/use_cases/user_model_use_case.dart';
 export 'src/use_cases/cart_items_use_case.dart';
 export 'src/use_cases/shipping_use_case.dart';
+export 'src/use_cases/cuisine_model_use_case.dart';
 export 'src/constants.dart';

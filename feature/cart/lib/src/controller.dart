@@ -39,13 +39,14 @@ class Controller extends GetxController {
   final Rx<int> itemLength = 0.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    initializeVar();
-    loadData();
+    initialize();
+
+    await loadData();
   }
 
-  void initializeVar() {
+  void initialize() {
     _authenticateUser = Get.find();
     _userModelUseCase = UserModelUseCase();
     _shippingUseCase = ShippingUseCase();
@@ -62,7 +63,7 @@ class Controller extends GetxController {
     calculateTotal();
   }
 
-  void loadData() async {
+  Future<void> loadData() async {
     loading.value = true;
     destinations.value = const Destinations(
       destinations: [
@@ -115,15 +116,32 @@ class Controller extends GetxController {
     }
     subTotal.value = sum;
     shippingFee.value = sum * 0.2;
+    subTotal.refresh();
+    shippingFee.refresh();
   }
 
   void calculateTotal() {
     _calculateSubTotal();
     total.value = subTotal.value + shippingFee.value;
+    total.refresh();
   }
 
   void checkout() async {
-    if (_shippingInfo.value != null) {
+    if (_shippingInfo.value?.name != null) {
+      await showDialog<Widget>(
+          context: Get.context!,
+          barrierDismissible: false,
+          barrierLabel:
+              MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
+          barrierColor: Get.theme.primaryColorDark.withOpacity(.87),
+          builder: (BuildContext buildContext) {
+            return const DialogLayout();
+          });
+
+      shortToast('Checkout successful');
+    } else if (items.value.isEmpty) {
+      longToast('Add items to cart to proceed.');
+    } else {
       ShippingModel shippingModel = ShippingModel(
         uid: _authenticateUser.getUserId()!,
         items: items.value,
@@ -134,17 +152,6 @@ class Controller extends GetxController {
         userId: _authenticateUser.getUserId()!,
         shippingModel: shippingModel,
       );
-      shortToast('Checkout successful');
-    } else {
-      await showDialog<Widget>(
-          context: Get.context!,
-          barrierDismissible: false,
-          barrierLabel:
-              MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-          barrierColor: Get.theme.primaryColorDark.withOpacity(.87),
-          builder: (BuildContext buildContext) {
-            return const DialogLayout();
-          });
     }
   }
 
@@ -153,6 +160,9 @@ class Controller extends GetxController {
       userId: _authenticateUser.getUserId()!,
       docId: item.id!,
     );
+    items.value.removeWhere((element) => element.id == item.id);
+    itemLength.value = items.value.length;
+    items.refresh();
     calculateTotal();
   }
 
