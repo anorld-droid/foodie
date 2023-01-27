@@ -5,6 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CloudMethods {
   final FirebaseFirestore mFirestore = FirebaseFirestore.instance;
 
+  CloudMethods() {
+    mFirestore.settings = const Settings(
+      persistenceEnabled: true,
+      cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+    );
+  }
+
   /// Upload the file to the specified path
   /// NOTE: doc should be user id
   Future<void> setDoc<R>(

@@ -15,9 +15,9 @@ class CartItemsUseCase {
     required CartItem cartItem,
   }) async {
     await _cloudNetWorkDataSource.appendDoc<CartItem>(
-        collectionName: Constants.cartItems,
-        docPath: docPath,
-        collectionPath: Constants.items,
+        collectionName: Constants.cuisine,
+        docPath: Constants.cartItems,
+        collectionPath: docPath,
         file: cartItem,
         fromFirestore: CartItem.fromFirestore,
         toFirestore: (CartItem cartItem, _) => cartItem.toFirestore());
@@ -26,9 +26,9 @@ class CartItemsUseCase {
   /// Get the file to the specified path
   Future<Stream<QuerySnapshot<CartItem>>> get(String userId) async {
     return await _cloudNetWorkDataSource.getDocs(
-        collectionName: Constants.cartItems,
-        docPath: userId,
-        collectionPath: Constants.items,
+        collectionName: Constants.cuisine,
+        docPath: Constants.cartItems,
+        collectionPath: userId,
         fromFirestore: CartItem.fromFirestore,
         toFirestore: (CartItem cartItem, _) => cartItem.toFirestore());
   }
@@ -39,9 +39,9 @@ class CartItemsUseCase {
     required String docId,
   }) async {
     await _cloudNetWorkDataSource.deleteDocFromMulitiCollection<CartItem>(
-      collectionName: Constants.cartItems,
-      docPath: userId,
-      collectionPath: Constants.items,
+      collectionName: Constants.cuisine,
+      docPath: Constants.cartItems,
+      collectionPath: userId,
       docId: docId,
     );
   }

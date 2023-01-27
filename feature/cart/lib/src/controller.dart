@@ -2,7 +2,6 @@ import 'package:cart/src/widgets/dialog_layout.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:model/model.dart';
 import 'package:domain/domain.dart';
 
@@ -127,7 +126,7 @@ class Controller extends GetxController {
   }
 
   void checkout() async {
-    if (_shippingInfo.value?.name != null) {
+    if (_shippingInfo.value?.name == null) {
       await showDialog<Widget>(
           context: Get.context!,
           barrierDismissible: false,
@@ -137,8 +136,6 @@ class Controller extends GetxController {
           builder: (BuildContext buildContext) {
             return const DialogLayout();
           });
-
-      shortToast('Checkout successful');
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');
     } else {
@@ -152,6 +149,7 @@ class Controller extends GetxController {
         userId: _authenticateUser.getUserId()!,
         shippingModel: shippingModel,
       );
+      shortToast('Checkout successful');
     }
   }
 

@@ -69,11 +69,8 @@ class CuisineController extends GetxController {
     });
   }
 
-  void search(String value) {
-    // items.value.clear();
-    //ignore: todo
-    //TODO: Search from firebase,
-    //use listener, remove on dispose
+  Future<void> search(String value) async {
+   searchItems.value = await _cuisineModelUseCase.search(value);
   }
 
   void navigateToDetails(CuisineItem cuisineItem) {

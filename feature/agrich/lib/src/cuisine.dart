@@ -35,19 +35,29 @@ class Cuisine extends GetView<CuisineController> {
                               Chips.values.length,
                               (index) => TriceFilterChips(
                                 text: Chips.values[index].name,
-                                onChipSelected: (value) {
+                                onChipSelected: (value) async {
                                   controller.selectedChip.value = value;
-                                  controller.search(Chips.values[value].name);
+                                  await controller
+                                      .search(Chips.values[value].name);
                                 },
                                 index: index,
                               ),
                             ),
                           ),
                         ),
-                        ListItemSearchResult(
-                          cuisineItems: controller.searchItems.value,
-                          onTap: controller.navigateToDetails,
-                        ),
+                        controller.searchItems.value.isEmpty &&
+                                    controller.selectedChip.value != 10 ||
+                                controller.searchController.text.isNotEmpty
+                            ? Center(
+                                child: Text(
+                                  'Item not found.',
+                                  style: Get.textTheme.bodyLarge,
+                                ),
+                              )
+                            : ListItemSearchResult(
+                                cuisineItems: controller.searchItems.value,
+                                onTap: controller.navigateToDetails,
+                              ),
                       ],
                     )
                   : ListView.builder(
