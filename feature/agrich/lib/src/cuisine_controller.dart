@@ -55,6 +55,12 @@ class CuisineController extends GetxController {
     getCartItems();
   }
 
+  void resetSearch() {
+    selectedChip.value = 10;
+    searchController.clear();
+    focusNode.unfocus();
+  }
+
   void getCartItems() async {
     var snap = await _cartItemsUseCase.get(_authenticateUser.getUserId()!);
     snap.listen((event) {
@@ -70,7 +76,7 @@ class CuisineController extends GetxController {
   }
 
   Future<void> search(String value) async {
-   searchItems.value = await _cuisineModelUseCase.search(value);
+    searchItems.value = await _cuisineModelUseCase.search(value);
   }
 
   void navigateToDetails(CuisineItem cuisineItem) {

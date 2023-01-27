@@ -24,7 +24,8 @@ class Cuisine extends GetView<CuisineController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               controller.editing.value ||
-                      controller.searchController.text.isNotEmpty
+                      controller.searchController.text.isNotEmpty ||
+                      controller.selectedChip.value != 10
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -36,9 +37,14 @@ class Cuisine extends GetView<CuisineController> {
                               (index) => TriceFilterChips(
                                 text: Chips.values[index].name,
                                 onChipSelected: (value) async {
-                                  controller.selectedChip.value = value;
-                                  await controller
-                                      .search(Chips.values[value].name);
+                                  if (value == 9) {
+                                    controller.resetSearch();
+                                  } else {
+                                    controller.selectedChip.value = value;
+                                    controller.searchController.clear();
+                                    await controller
+                                        .search(Chips.values[value].name);
+                                  }
                                 },
                                 index: index,
                               ),

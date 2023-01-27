@@ -28,7 +28,8 @@ enum Chips implements NamedEnum {
   grocery,
   legumes,
   grains,
-  combo;
+  combo,
+  reset;
 
   @override
   String get name {
@@ -51,6 +52,8 @@ enum Chips implements NamedEnum {
         return 'Grains';
       case Chips.combo:
         return 'Combo';
+      case Chips.reset:
+        return '#Reset';
     }
   }
 }
