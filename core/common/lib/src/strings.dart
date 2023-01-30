@@ -11,7 +11,7 @@ class CommonStrings {
   static String hiCars = 'hiCars';
   static String apartment = 'Residence';
   static String tasks = 'Tasks';
-  static String cuisine = 'Cuisine 2.o';
+  static String cuisine = 'Cuisine 2.0';
   static String eSolar = 'eSolar';
   static String todoSvg = 'assets/icons/todo.svg';
 }

@@ -107,7 +107,7 @@ class FABBottomAppBar extends GetView<BottomAppBarController> {
                   Obx(() => controller.selectedIndex.value == index
                       ? Text(
                           item.text,
-                          style: Get.textTheme.bodySmall
+                          style: Get.textTheme.bodyLarge
                               ?.copyWith(color: selectedColor),
                         )
                       : const SizedBox())
