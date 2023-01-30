@@ -36,7 +36,8 @@ class User {
       shippingInfo: snapshot?[Constants.shippingInfo] != null
           ? ShippingInfo.fromFirestore(
               snapshot?[Constants.shippingInfo] as Map<String, dynamic>,
-              options)
+              options,
+            )
           : null,
     );
   }

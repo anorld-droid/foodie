@@ -64,6 +64,23 @@ class CloudNetWorkDataSource {
 
   /// Get the file to the specified path
   /// NOTE: doc should be user id
+  Future<Stream<DocumentSnapshot<R>>> getDocStream<R>(
+      {required String collection,
+      required String doc,
+      required R Function(
+              DocumentSnapshot<Map<String, dynamic>>, SnapshotOptions?)
+          fromFirestore,
+      required Map<String, Object?> Function(R, SetOptions?)
+          toFirestore}) async {
+    return await _cloudMethods.getDocStream(
+        collection: collection,
+        doc: doc,
+        fromFirestore: fromFirestore,
+        toFirestore: toFirestore);
+  }
+
+  /// Get the file to the specified path
+  /// NOTE: doc should be user id
   Future<Stream<QuerySnapshot<R>>> getDocs<R>(
       {required String collectionName,
       required String docPath,

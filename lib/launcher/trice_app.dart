@@ -23,7 +23,7 @@ class TriceApp extends GetView<TriceAppController> {
           theme: Themes.light,
           darkTheme: Themes.dark,
           themeMode: controller.themeMode.value,
-          initialRoute: Routes.root,
+          initialRoute: Routes.mainScreen,
           getPages: [
             GetPage(
               name: Routes.root,

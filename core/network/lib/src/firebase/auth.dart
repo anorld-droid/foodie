@@ -56,6 +56,10 @@ class UserAuth {
     return _auth.currentUser?.displayName;
   }
 
+  String? getPhoneNumber() {
+    return _auth.currentUser?.phoneNumber;
+  }
+
   String? getUserPhotoUrl() {
     return _auth.currentUser?.photoURL;
   }

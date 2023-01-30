@@ -27,4 +27,11 @@ class Constants {
   static String cuisineItems = 'cuisineItems';
   static String detail = 'detail';
   static String nutrients = 'nutrients';
+
+  // Mpesa Payments
+  static String merchantRequestID = 'MerchantRequestID';
+  static String checkoutRequestID = 'CheckoutRequestID';
+  static String responseCode = 'ResponseCode';
+  static String responseDescription = 'ResponseDescription';
+  static String customerMessage = 'CustomerMessage';
 }

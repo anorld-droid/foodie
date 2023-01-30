@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_source/data_source.dart';
 import 'package:domain/domain.dart';
 import 'package:get/get.dart';
@@ -32,14 +33,13 @@ class UserModelUseCase {
 
   /// Get the file to the specified path
   /// NOTE: doc should be user id
-  Future<ShippingInfo?> getShippingInfo(String doc) async {
-    final snap = await _cloudNetWorkDataSource.getDoc<User>(
+  Future<Stream<DocumentSnapshot<User>>> getShippingInfo(String doc) async {
+    final snap = await _cloudNetWorkDataSource.getDocStream<User>(
         collection: Constants.users,
         doc: doc,
         fromFirestore: User.fromFirestore,
         toFirestore: (User user, _) => user.toFirestore());
-    ;
-    return snap.data()?.shippingInfo;
+    return snap;
   }
 
   /// update the file to the specified path
@@ -51,7 +51,7 @@ class UserModelUseCase {
     await _cloudNetWorkDataSource.updateField<ShippingInfo>(
       collection: Constants.users,
       doc: userId,
-      data: {Constants.shippingInfo: shippingInfo.toFirestore()},
+      data: shippingInfo.toFirestore(),
     );
   }
 }

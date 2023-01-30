@@ -68,9 +68,13 @@ class FABBottomAppBar extends GetView<BottomAppBarController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: iconSize),
-            Text(
-              centerItemText,
-              style: Get.textTheme.labelMedium,
+            Obx(
+              () => controller.selectedIndex.value == 5
+                  ? Text(
+                      centerItemText,
+                      style: Get.textTheme.labelMedium,
+                    )
+                  : const SizedBox(),
             ),
           ],
         ),
@@ -100,13 +104,13 @@ class FABBottomAppBar extends GetView<BottomAppBarController> {
                           ? selectedColor
                           : color,
                       size: iconSize)),
-                  Obx(() => Text(
-                        item.text,
-                        style: Get.textTheme.bodyLarge?.copyWith(
-                            color: controller.selectedIndex.value == index
-                                ? selectedColor
-                                : color),
-                      ))
+                  Obx(() => controller.selectedIndex.value == index
+                      ? Text(
+                          item.text,
+                          style: Get.textTheme.bodySmall
+                              ?.copyWith(color: selectedColor),
+                        )
+                      : const SizedBox())
                 ],
               ),
             ),

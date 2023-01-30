@@ -10,4 +10,5 @@ class Constants {
   static String shippingInfo = 'shippingInfo';
   static String cuisine = 'cuisine';
   static String home = 'home';
+  static String payments = 'payments';
 }

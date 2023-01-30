@@ -24,33 +24,62 @@ class Cart extends GetView<Controller> {
               topLeft: Radius.circular(8),
               topRight: Radius.circular(8),
             )),
-        child: InkWell(
-          onTap: () => controller.checkout(),
-          borderRadius: BorderRadius.circular(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  alignment: AlignmentDirectional.center,
-                  height: 40,
-                  width: Get.width * 0.50,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                    color: Get.theme.primaryColorDark,
-                  ),
-                  child: Text(
-                    'Checkout',
-                    style: Get.textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Get.theme.backgroundColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            InkWell(
+              onTap: () => controller.shippingDialog(),
+              borderRadius: BorderRadius.circular(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    alignment: AlignmentDirectional.center,
+                    height: 40,
+                    width: Get.width * 0.45,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
+                      color: Get.theme.primaryColorDark,
                     ),
-                  ),
-                ),
-              )
-            ],
-          ),
+                    child: Text(
+                      'Update destination',
+                      style: Get.textTheme.displayMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Get.theme.backgroundColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () => controller.checkout(),
+              borderRadius: BorderRadius.circular(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    alignment: AlignmentDirectional.center,
+                    height: 40,
+                    width: Get.width * 0.45,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
+                      color: Get.theme.primaryColorDark,
+                    ),
+                    child: Text(
+                      'Checkout',
+                      style: Get.textTheme.displayMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Get.theme.backgroundColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

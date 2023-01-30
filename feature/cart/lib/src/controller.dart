@@ -20,6 +20,7 @@ class Controller extends GetxController {
   late final UserModelUseCase _userModelUseCase;
   late final ShippingUseCase _shippingUseCase;
   late final CartItemsUseCase _cartItemsUseCase;
+  late final PaymentOptionsUseCase _paymentOptionsUseCase;
 
   final Rx<Destinations> destinations =
       Rx(const Destinations(destinations: []));
@@ -50,6 +51,7 @@ class Controller extends GetxController {
     _userModelUseCase = UserModelUseCase();
     _shippingUseCase = ShippingUseCase();
     _cartItemsUseCase = CartItemsUseCase();
+    _paymentOptionsUseCase = PaymentOptionsUseCase();
 
     nameController = TextEditingController();
     phoneController = TextEditingController();
@@ -75,8 +77,12 @@ class Controller extends GetxController {
         DestinationModel(town: 'Kisumu', area: 'Kondele'),
       ],
     );
-    _shippingInfo.value =
+    var user =
         await _userModelUseCase.getShippingInfo(_authenticateUser.getUserId()!);
+    user.listen((event) {
+      User user = event.data()!;
+      _shippingInfo.value = user.shippingInfo;
+    });
     destinationTown.value = destinations.value.destinations.first.town;
     destinationArea.value = destinations.value.destinations.first.area;
 
@@ -90,7 +96,7 @@ class Controller extends GetxController {
   }
 
   String getShippingInfo() {
-    if (_shippingInfo.value?.name != null) {
+    if (_shippingInfo.value != null) {
       return 'Shipping to:\n  ${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber},\n  ${_shippingInfo.value?.destination?.town}, ${_shippingInfo.value?.destination?.area},\n  ${_shippingInfo.value?.destination?.building}, ${_shippingInfo.value?.destination?.floorNo}, ${_shippingInfo.value?.destination?.roomNo},\n  ${_shippingInfo.value?.destination?.landmark}.';
     } else {
       return 'No shipping destination, yet!';
@@ -125,31 +131,51 @@ class Controller extends GetxController {
     total.refresh();
   }
 
+  Future<void> shippingDialog() async {
+    await showDialog<Widget>(
+        context: Get.context!,
+        barrierDismissible: false,
+        barrierLabel:
+            MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
+        barrierColor: Get.theme.primaryColorDark.withOpacity(.87),
+        builder: (BuildContext buildContext) {
+          return const DialogLayout();
+        });
+  }
+
   void checkout() async {
     if (_shippingInfo.value?.name == null) {
-      await showDialog<Widget>(
-          context: Get.context!,
-          barrierDismissible: false,
-          barrierLabel:
-              MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-          barrierColor: Get.theme.primaryColorDark.withOpacity(.87),
-          builder: (BuildContext buildContext) {
-            return const DialogLayout();
-          });
+      shippingDialog();
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');
     } else {
+      await _transact();
+    }
+  }
+
+  Future<void> _transact() async {
+    final status = await _paymentOptionsUseCase.withMPesa(
+        _authenticateUser.getUserId()!,
+        total.value.toStringAsFixed(0),
+        _authenticateUser.getPhoneNumber()!,
+        'food items');
+    if (status != null) {
       ShippingModel shippingModel = ShippingModel(
         uid: _authenticateUser.getUserId()!,
         items: items.value,
-        orderNo: 1,
+        orderNo: status,
         status: ShippingStatus.none.name,
       );
       await _shippingUseCase.upload(
         userId: _authenticateUser.getUserId()!,
         shippingModel: shippingModel,
       );
+      for (var element in items.value) {
+        deleteItem(element);
+      }
       shortToast('Checkout successful');
+    } else {
+      longToast('Use your mpesa number in destination then try again.');
     }
   }
 
@@ -180,13 +206,13 @@ class Controller extends GetxController {
 
   Future<void> saveShippingInfo() async {
     String name = nameController.text;
-    String phoneNumber = nameController.text;
-    String town = nameController.text;
-    String area = nameController.text;
-    String building = nameController.text;
-    String floorNo = nameController.text;
-    String roomNo = nameController.text;
-    String landmark = nameController.text;
+    String phoneNumber = phoneController.text;
+    String town = destinationTown.value;
+    String area = destinationArea.value;
+    String building = buildingController.text;
+    String floorNo = floorController.text;
+    String roomNo = roomController.text;
+    String landmark = landmarkController.text;
     if (validateInput(
         name, phoneNumber, town, area, building, floorNo, roomNo, landmark)) {
       ShippingInfo shippingInfo = ShippingInfo(

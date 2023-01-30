@@ -21,14 +21,12 @@ class DestinationModel {
   });
 
   Map<String, dynamic> toFirestore() => {
-        Constants.destination: {
-          Constants.town: town,
-          Constants.area: area,
-          Constants.building: building,
-          Constants.floorNo: floorNo,
-          Constants.roomNo: roomNo,
-          Constants.landmark: landmark,
-        }
+        Constants.town: town,
+        Constants.area: area,
+        Constants.building: building,
+        Constants.floorNo: floorNo,
+        Constants.roomNo: roomNo,
+        Constants.landmark: landmark,
       };
 
   factory DestinationModel.fromFirestore(

@@ -9,9 +9,9 @@ class CommonStrings {
 
   //Bottom bar
   static String hiCars = 'hiCars';
-  static String apartment = 'Apartment';
+  static String apartment = 'Residence';
   static String tasks = 'Tasks';
-  static String cuisine = 'Cuisine 2.0';
+  static String cuisine = 'Cuisine 2.o';
   static String eSolar = 'eSolar';
   static String todoSvg = 'assets/icons/todo.svg';
 }

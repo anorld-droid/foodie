@@ -29,6 +29,10 @@ class AuthNetworkDataSource {
     return _userAuth.getUserName();
   }
 
+  String? getPhoneNumber() {
+    return _userAuth.getPhoneNumber();
+  }
+
   String? getUserPhotoUrl() {
     return _userAuth.getUserPhotoUrl();
   }

@@ -6,7 +6,7 @@ import 'package:model/src/constants.dart';
 
 class ShippingModel {
   final String uid;
-  final int orderNo;
+  final String orderNo;
   final List<CartItem> items;
   final String status;
 
@@ -37,7 +37,7 @@ class ShippingModel {
         e as Map<String, dynamic>;
         return CartItem.fromJson(e);
       }) as List<CartItem>,
-      orderNo: snapshot?[Constants.orderNo] as int,
+      orderNo: snapshot?[Constants.orderNo] as String,
       status: snapshot?[Constants.status] as String,
     );
   }

@@ -57,6 +57,8 @@ class TextFieldInput extends StatelessWidget {
                 fontWeight: FontWeight.w300),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(width: .3, color: backgroundColor)),
+            enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(width: .0, color: Colors.white)),
             fillColor: Colors.white,
             focusColor: Colors.black,
             filled: true,
@@ -138,6 +140,7 @@ class CustomTextField extends StatelessWidget {
         child: TextField(
           focusNode: focusNode,
           style: Get.textTheme.bodyMedium,
+          keyboardType: textInputType,
           cursorColor: Get.theme.primaryColorDark,
           onChanged: onChanged,
           onSubmitted: onSubmitted,

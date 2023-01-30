@@ -67,6 +67,21 @@ class CloudMethods {
         .get();
   }
 
+  Future<Stream<DocumentSnapshot<R>>> getDocStream<R>(
+      {required String collection,
+      required String doc,
+      required R Function(
+              DocumentSnapshot<Map<String, dynamic>>, SnapshotOptions?)
+          fromFirestore,
+      required Map<String, Object?> Function(R, SetOptions?)
+          toFirestore}) async {
+    return mFirestore
+        .collection(collection)
+        .doc(doc)
+        .withConverter(fromFirestore: fromFirestore, toFirestore: toFirestore)
+        .snapshots();
+  }
+
   /// Get the files from the specified path
   /// NOTE: docPath should be user id
   Future<Stream<QuerySnapshot<R>>> getDocs<R>(

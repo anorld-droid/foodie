@@ -31,6 +31,10 @@ class AuthenticateUser {
     return _authNetworkDataSource.getUserName();
   }
 
+  String? getPhoneNumber() {
+    return _authNetworkDataSource.getPhoneNumber();
+  }
+
   String? getUserProfilePic() {
     return _authNetworkDataSource.getUserPhotoUrl();
   }

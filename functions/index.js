@@ -16,8 +16,8 @@ admin.initializeApp();
 exports.safaricom = functions.https.onRequest( async (req, res) => {
   const reqId = req.body.Body.stkCallback.CheckoutRequestID;
   const result = req.body.Body;
-  const writeResult = await admin.firestore().collection("cuisine")
-      .doc("payments").collection(reqId).add(result);
+  const writeResult = await admin.firestore().collection("payments")
+      .doc(reqId).set(result);
   // Send back a message that we've successfully written the message
   res.json({result: `Message with ID: ${writeResult.id} added.`});
 });
