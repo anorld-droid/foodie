@@ -111,7 +111,7 @@ class CuisineDetail extends GetView<Controller> {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     'Qty',
-                    style: Get.textTheme.bodyMedium
+                    style: Get.textTheme.bodyLarge
                         ?.copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -158,7 +158,7 @@ class CuisineDetail extends GetView<Controller> {
                       color: Get.theme.primaryColorDark),
                   child: Text(
                     'ADD TO CART',
-                    style: Get.textTheme.displayMedium?.copyWith(
+                    style: Get.textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Get.theme.backgroundColor),
                   ),
@@ -182,7 +182,7 @@ class CuisineDetail extends GetView<Controller> {
             children: [
               Text(
                 cuisineItem.name,
-                style: Get.textTheme.headlineSmall
+                style: Get.textTheme.bodyLarge
                     ?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(
@@ -190,7 +190,7 @@ class CuisineDetail extends GetView<Controller> {
               ),
               Text(
                 cuisineItem.stockTag,
-                style: Get.textTheme.bodyMedium?.copyWith(
+                style: Get.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),
                 ),
@@ -201,7 +201,7 @@ class CuisineDetail extends GetView<Controller> {
               Obx(
                 () => Text(
                   "${CommonStrings.currency} ${controller.sellingPrice.value.toStringAsFixed(2)}",
-                  style: Get.textTheme.bodyMedium
+                  style: Get.textTheme.bodySmall
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
@@ -216,7 +216,7 @@ class CuisineDetail extends GetView<Controller> {
             children: [
               Text(
                 'Details',
-                style: Get.textTheme.bodyMedium?.copyWith(
+                style: Get.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),
                 ),
@@ -227,7 +227,7 @@ class CuisineDetail extends GetView<Controller> {
               Obx(
                 () => Text(
                   cuisineItem.detail,
-                  style: Get.textTheme.bodyMedium
+                  style: Get.textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.w400),
                   softWrap: true,
                   maxLines: controller.seeMore.value ? 20 : 5,
@@ -242,7 +242,7 @@ class CuisineDetail extends GetView<Controller> {
                     child: Obx(
                       () => Text(
                         controller.seeMore.value ? 'SEE LESS' : 'SEE MORE',
-                        style: Get.textTheme.bodyMedium
+                        style: Get.textTheme.bodySmall
                             ?.copyWith(fontWeight: FontWeight.w700),
                       ),
                     ),
@@ -254,7 +254,7 @@ class CuisineDetail extends GetView<Controller> {
               ),
               Text(
                 'Nutritional Value',
-                style: Get.textTheme.bodyMedium?.copyWith(
+                style: Get.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),
                 ),
@@ -283,8 +283,7 @@ class CuisineDetail extends GetView<Controller> {
                   (cuisineItem.nutrients.length - 1)
               ? '$nutrient.'
               : '$nutrient,',
-          style:
-              Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w400),
+          style: Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
           softWrap: true,
           maxLines: controller.seeMore.value ? 20 : 5,
           overflow: TextOverflow.ellipsis,

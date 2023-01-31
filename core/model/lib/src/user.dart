@@ -41,4 +41,21 @@ class User {
           : null,
     );
   }
+
+  factory User.fromJson(
+    Map<String, dynamic> json,
+    SnapshotOptions? options,
+  ) {
+    return User(
+      uid: json[Constants.uid] as String,
+      photoUrl: json[Constants.photoUrl] as String,
+      username: json[Constants.username] as String,
+      shippingInfo: json[Constants.shippingInfo] != null
+          ? ShippingInfo.fromFirestore(
+              json[Constants.shippingInfo] as Map<String, dynamic>,
+              options,
+            )
+          : null,
+    );
+  }
 }

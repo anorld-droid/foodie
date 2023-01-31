@@ -2,6 +2,7 @@ import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:local_auth/local_auth.dart';
@@ -97,11 +98,24 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
   Future<void> verifyNumber() async {
     searching.value = true;
     if (inputValidated.value) {
-      await _authenticateUser.withPhoneNUmber(phoneNumber.phoneNumber!,
-          verificationCompleted: (bool value) {
-        verificationHasPassed.value = value;
-        navigateToMainScreen();
-      });
+      final String mobileNumber = phoneNumber.phoneNumber!;
+      var userExists = await _userModelUseCase.exists(mobileNumber);
+      if (userExists) {
+        await _authenticateUser.withPhoneNUmber(phoneNumber.phoneNumber!,
+            verificationCompleted: (bool value) {
+          verificationHasPassed.value = value;
+          navigateToMainScreen();
+        });
+      } else {
+        Fluttertoast.showToast(
+            msg: 'Phone number not registered.',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
     }
     searching.value = false;
   }

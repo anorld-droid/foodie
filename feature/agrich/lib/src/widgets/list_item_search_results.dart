@@ -51,13 +51,17 @@ class ListItemSearchResult extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 4),
-              child: Text(
-                cuisineItem.name,
-                softWrap: true,
-                style: Get.textTheme.bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.bold),
+            SizedBox(
+              width: 100,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10.0, right: 4),
+                child: Text(
+                  cuisineItem.name,
+                  softWrap: true,
+                  style: Get.textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.clip,
+                ),
               ),
             ),
             Container(

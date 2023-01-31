@@ -7,6 +7,10 @@ import 'package:model/model.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 class UserModelUseCase {
   final CloudNetWorkDataSource _cloudNetWorkDataSource = Get.find();
+  final SearchNetworkDataSource _searchNetworkDataSource =
+      SearchNetworkDataSource();
+  final RealtimeNetworkDataSource _realtimeNetworkDataSource =
+      RealtimeNetworkDataSource();
 
   /// Upload the file to the specified path
   /// NOTE: doc should be user id
@@ -53,5 +57,17 @@ class UserModelUseCase {
       doc: userId,
       data: shippingInfo.toFirestore(),
     );
+  }
+
+  Future<void> savePhoneNumber(String query) async {
+    return await _realtimeNetworkDataSource.save(
+      path: 'users',
+      value: query,
+    );
+  }
+
+  Future<bool> exists(String query) async {
+    final users = await _realtimeNetworkDataSource.values(path: 'users');
+    return users.contains(query);
   }
 }

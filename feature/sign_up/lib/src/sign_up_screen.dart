@@ -193,7 +193,7 @@ class SignUp extends GetView<SignUpController> {
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      controller.signInWithGoogle();
+                                      controller.verifyNumber();
                                     },
                                     child: Container(
                                         height: Get.height * 0.06,

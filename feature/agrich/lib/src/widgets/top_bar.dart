@@ -34,6 +34,7 @@ class CuisineTopBar extends GetView<CuisineController>
           },
           icon: Icons.search,
           height: 40,
+          textStyle: Get.textTheme.bodySmall,
           focusNode: controller.focusNode,
           textEditingController: controller.searchController,
           textInputType: TextInputType.text,

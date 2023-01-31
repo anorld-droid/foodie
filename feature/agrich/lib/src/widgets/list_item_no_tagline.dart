@@ -70,7 +70,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
               padding: const EdgeInsets.only(top: 12.0),
               child: Text(
                 item.name,
-                style: Get.textTheme.labelSmall
+                style: Get.textTheme.bodyLarge
                     ?.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),

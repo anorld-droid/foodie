@@ -21,6 +21,7 @@ class Controller extends GetxController {
   late final ShippingUseCase _shippingUseCase;
   late final CartItemsUseCase _cartItemsUseCase;
   late final PaymentOptionsUseCase _paymentOptionsUseCase;
+  late final SendMessageUseCase _sendMessageUseCase;
 
   final Rx<Destinations> destinations =
       Rx(const Destinations(destinations: []));
@@ -29,6 +30,7 @@ class Controller extends GetxController {
 
   final Rx<ShippingStatus> shippingStatus = Rx(ShippingStatus.none);
   final Rx<ShippingInfo?> _shippingInfo = Rx(null);
+  final Rx<String> shippingAddress = Rx('');
 
   final Rx<bool> loading = false.obs;
 
@@ -52,6 +54,7 @@ class Controller extends GetxController {
     _shippingUseCase = ShippingUseCase();
     _cartItemsUseCase = CartItemsUseCase();
     _paymentOptionsUseCase = PaymentOptionsUseCase();
+    _sendMessageUseCase = SendMessageUseCase();
 
     nameController = TextEditingController();
     phoneController = TextEditingController();
@@ -82,6 +85,7 @@ class Controller extends GetxController {
     user.listen((event) {
       User user = event.data()!;
       _shippingInfo.value = user.shippingInfo;
+      getShippingInfo();
     });
     destinationTown.value = destinations.value.destinations.first.town;
     destinationArea.value = destinations.value.destinations.first.area;
@@ -95,11 +99,12 @@ class Controller extends GetxController {
     return dest;
   }
 
-  String getShippingInfo() {
-    if (_shippingInfo.value != null) {
-      return 'Shipping to:\n  ${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber},\n  ${_shippingInfo.value?.destination?.town}, ${_shippingInfo.value?.destination?.area},\n  ${_shippingInfo.value?.destination?.building}, ${_shippingInfo.value?.destination?.floorNo}, ${_shippingInfo.value?.destination?.roomNo},\n  ${_shippingInfo.value?.destination?.landmark}.';
+  void getShippingInfo() {
+    if (_shippingInfo.value?.name == null) {
+      shippingAddress.value = 'No shipping destination, yet!';
     } else {
-      return 'No shipping destination, yet!';
+      shippingAddress.value =
+          'Shipping to:\n  ${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber},\n  ${_shippingInfo.value?.destination?.town}, ${_shippingInfo.value?.destination?.area},\n  ${_shippingInfo.value?.destination?.building}, ${_shippingInfo.value?.destination?.floorNo}, ${_shippingInfo.value?.destination?.roomNo},\n  ${_shippingInfo.value?.destination?.landmark}.';
     }
   }
 
@@ -150,6 +155,7 @@ class Controller extends GetxController {
       longToast('Add items to cart to proceed.');
     } else {
       await _transact();
+      sendMessage();
     }
   }
 
@@ -175,8 +181,15 @@ class Controller extends GetxController {
       }
       shortToast('Checkout successful');
     } else {
-      longToast('Use your mpesa number in destination then try again.');
+      longToast('Payment operation failed.');
     }
+  }
+
+  void sendMessage() {
+    String text = 'Your order has been received and is being processed.';
+    MessageBird sms =
+        MessageBird(to: _authenticateUser.getPhoneNumber()!, text: text);
+    _sendMessageUseCase.invoke(messageBird: sms);
   }
 
   void deleteItem(CartItem item) {

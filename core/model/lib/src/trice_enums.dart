@@ -77,7 +77,7 @@ enum ShippingStatus implements NamedEnum {
       case ShippingStatus.delivered:
         return 'Your order has been delivered, thank you for choosing Cuisine 2.0 .';
       case ShippingStatus.none:
-        return 'No order, yet!.';
+        return 'No order, yet!';
     }
   }
 }

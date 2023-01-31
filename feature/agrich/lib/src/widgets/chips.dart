@@ -37,7 +37,7 @@ class TriceFilterChips extends GetView<CuisineController> {
           ),
           child: Text(
             text,
-            style: Get.textTheme.bodyLarge?.copyWith(
+            style: Get.textTheme.bodySmall?.copyWith(
                 color: controller.selectedChip.value == index
                     ? Get.theme.backgroundColor
                     : Get.theme.primaryColorDark),

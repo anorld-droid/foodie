@@ -50,20 +50,36 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
 
   Future<void> verifyNumber() async {
     if (inputValidated.value) {
-      await _authenticateUser.withPhoneNUmber(phoneNumber.phoneNumber!,
-          verificationCompleted: (bool value) {
-        verificationHasPassed.value = value;
-      });
+      final String mobileNumber = phoneNumber.phoneNumber!;
+      var userExists = await _userModelUseCase.exists(mobileNumber);
+      if (!userExists) {
+        await _authenticateUser.withPhoneNUmber(mobileNumber,
+            verificationCompleted: (bool value) {
+          verificationHasPassed.value = value;
+        });
+        await _uploadUserInfo();
+        await _userModelUseCase.savePhoneNumber(mobileNumber);
+      } else {
+        Fluttertoast.showToast(
+            msg: 'Phone number already registered.',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
     }
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<void> _uploadUserInfo() async {
     searching.value = true;
     var message = 'Sign up failed, please try again';
     if (verificationHasPassed.value) {
       String? uid = _authenticateUser.getUserId();
       final photoUrl = await saveProfilePicture(uid!);
       final username = usernameController.text;
+      final phoneNumber = phoneController.text;
       if (photoUrl != null && username.isNotEmpty) {
         final User user = User(
             uid: uid,

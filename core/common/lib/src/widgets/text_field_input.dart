@@ -100,6 +100,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final Color backgroundColor;
   final bool isPass;
+  final TextStyle? textStyle;
   final TextInputType textInputType;
   final String hintText;
   final IconData? icon;
@@ -117,6 +118,7 @@ class CustomTextField extends StatelessWidget {
       {Key? key,
       required this.textEditingController,
       this.isPass = false,
+      this.textStyle,
       required this.textInputType,
       required this.hintText,
       this.onIconTap,
@@ -139,7 +141,7 @@ class CustomTextField extends StatelessWidget {
       child: Center(
         child: TextField(
           focusNode: focusNode,
-          style: Get.textTheme.bodyMedium,
+          style: textStyle ?? Get.textTheme.bodyLarge,
           keyboardType: textInputType,
           cursorColor: Get.theme.primaryColorDark,
           onChanged: onChanged,

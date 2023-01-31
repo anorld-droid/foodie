@@ -57,6 +57,7 @@ class DefaultFirebaseOptions {
     appId: '1:368625392986:android:b0bc8fa6136ac7ecd72763',
     messagingSenderId: '368625392986',
     projectId: 'trice-project',
+    databaseURL: 'https://trice-project-default-rtdb.firebaseio.com',
     storageBucket: 'trice-project.appspot.com',
   );
 }

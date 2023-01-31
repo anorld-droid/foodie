@@ -34,4 +34,12 @@ class Constants {
   static String responseCode = 'ResponseCode';
   static String responseDescription = 'ResponseDescription';
   static String customerMessage = 'CustomerMessage';
+
+  //MessageBird
+  static String channelId = 'channelId';
+  static String to = 'to';
+  static String type = 'type';
+  static const String text = 'text';
+  static String content = 'content';
+  static const String channelIdValue = '2b501d4248b948f68084703efbf7ea45';
 }

@@ -8,11 +8,24 @@ class Apartment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        CommonStrings.underDevelopment,
-        style: Get.textTheme.bodyLarge,
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          CommonStrings.underDevelopmentTitle,
+          style: Get.textTheme.bodyLarge?.copyWith(
+            letterSpacing: 0.0,
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          CommonStrings.underDevelopmentDesc,
+          style: Get.textTheme.bodySmall?.copyWith(
+              color: Get.textTheme.bodyLarge?.color?.withOpacity(.8)),
+        ),
+      ],
     );
   }
 }

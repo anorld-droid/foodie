@@ -4,7 +4,8 @@ class CommonStrings {
   static String appName = 'Trice';
   static String appDev = 'Patrice Mulindi';
   static String duplicateIcon = 'assets/icons/duplicate.svg';
-  static String underDevelopment = 'Under development';
+  static String underDevelopmentTitle = 'This is currently work in progress.';
+  static String underDevelopmentDesc = 'Grab a beverage and check back later!';
   static String currency = 'Ksh ';
 
   //Bottom bar

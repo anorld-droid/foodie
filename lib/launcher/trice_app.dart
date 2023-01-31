@@ -18,6 +18,14 @@ class TriceApp extends GetView<TriceAppController> {
   Widget build(BuildContext context) {
     Get.lazyPut<TriceAppController>(() => TriceAppController(), fenix: true);
     return Obx(() => GetMaterialApp(
+          builder: (context, child) {
+            final mediaQueryData = MediaQuery.of(context);
+            final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.3);
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: scale),
+              child: child ?? const SizedBox(),
+            );
+          },
           initialBinding: TriceBinding(),
           debugShowCheckedModeBanner: false,
           theme: Themes.light,

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "368625392986",
+    "firebase_url": "https://trice-project-default-rtdb.firebaseio.com",
     "project_id": "trice-project",
     "storage_bucket": "trice-project.appspot.com"
   },

@@ -17,12 +17,10 @@ class ShippingModel {
     required this.status,
   });
   Map<String, dynamic> toFirestore() => {
-        Constants.shippingModel: {
-          Constants.uid: uid,
-          Constants.orderNo: orderNo,
-          Constants.items: items.map((e) => e.toFirestore()).toList(),
-          Constants.status: status
-        }
+        Constants.uid: uid,
+        Constants.orderNo: orderNo,
+        Constants.items: items.map((e) => e.toFirestore()).toList(),
+        Constants.status: status
       };
 
   factory ShippingModel.fromFirestore(
@@ -55,11 +53,9 @@ class ShippingInfo {
   });
 
   Map<String, dynamic> toFirestore() => {
-        Constants.shippingInfo: {
-          Constants.name: name,
-          Constants.phoneNumber: phoneNumber,
-          Constants.destination: destination?.toFirestore()
-        }
+        Constants.name: name,
+        Constants.phoneNumber: phoneNumber,
+        Constants.destination: destination?.toFirestore()
       };
 
   factory ShippingInfo.fromFirestore(

@@ -11,4 +11,7 @@ class Constants {
   static String cuisine = 'cuisine';
   static String home = 'home';
   static String payments = 'payments';
+  static String trice = 'trice';
+  static String messagebird = 'messagebird';
+  static String messages = 'messages';
 }

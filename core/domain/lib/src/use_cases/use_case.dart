@@ -9,3 +9,4 @@ export 'shipping_use_case.dart';
 export 'cuisine_model_use_case.dart';
 export 'app_init.dart';
 export 'payment_options_use_case.dart';
+export 'send_message_use_case.dart';
