@@ -11,7 +11,7 @@ class CuisineModelUseCase {
       SearchNetworkDataSource();
 
   /// Get the cuisine home items to the specified path
-  Future<Stream<QuerySnapshot<CuisineModel>>> get(String userId) async {
+  Future<Stream<QuerySnapshot<CuisineModel>>> get() async {
     return await _cloudNetWorkDataSource.getDocs(
         collectionName: Constants.cuisine,
         docPath: Constants.home,

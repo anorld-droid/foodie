@@ -15,13 +15,13 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
   late final LocalAuthentication auth;
   late final AuthenticateUser _authenticateUser;
   late final UserModelUseCase _userModelUseCase;
-  late final TextEditingController phoneNumberController;
-  late final TextEditingController verificationController;
+  late final TextEditingController emailController;
+  late final TextEditingController passwordController;
   late AnimationController animationController;
 
   Rx<bool> authenticated = false.obs;
   var username = ''.obs;
-  var profilePic = ''.obs;
+  Rx<String?> profilePic = ''.obs;
   Rx<String> verificationCode = ''.obs;
   Rx<bool> verificationHasPassed = false.obs;
   Rx<bool> inputValidated = false.obs;
@@ -37,12 +37,11 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
     _authenticateUser = Get.find();
     _userModelUseCase = UserModelUseCase();
 
-    phoneNumberController = TextEditingController();
-    verificationController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
 
     animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    animationController.repeat();
   }
 
   @override
@@ -56,7 +55,7 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
       User? user = await _userModelUseCase.get(_authenticateUser.getUserId()!);
       if (user != null) {
         username.value = user.username;
-        profilePic.value = user.photoUrl;
+        profilePic.value = user.photoUrl ?? '';
       }
 
       fingerprintAuth();
@@ -95,36 +94,67 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  Future<void> verifyNumber() async {
+  Future<void> sigIn() async {
     searching.value = true;
-    if (inputValidated.value) {
-      final String mobileNumber = phoneNumber.phoneNumber!;
-      var userExists = await _userModelUseCase.exists(mobileNumber);
-      if (userExists) {
-        await _authenticateUser.withPhoneNUmber(phoneNumber.phoneNumber!,
-            verificationCompleted: (bool value) {
-          verificationHasPassed.value = value;
-          navigateToMainScreen();
-        });
-      } else {
-        Fluttertoast.showToast(
-            msg: 'Phone number not registered.',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0);
+    animationController.repeat();
+    String message = '';
+    final authInputs = await validInputs();
+    if (authInputs.isNotEmpty) {
+      message = await _authenticateUser.signInWithEmailPassword(
+          emailAddress: authInputs['email']!,
+          password: authInputs['password']!);
+      if (message == 'Successful authentication.') {
+        navigateToMainScreen();
       }
     }
+    if (message.isNotEmpty) {
+      Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
     searching.value = false;
+    animationController.reset();
   }
 
-  void onCodeReceived() {
-    _authenticateUser.onCodeSent(verificationCode.value);
+  Future<Map<String, String>> validInputs() async {
+    final emailAddress = emailController.text;
+    final password = passwordController.text;
+    var message = '';
+    Map<String, String> authInputs = {};
+    if (!(emailAddress.isEmail) && emailAddress.isEmpty) {
+      message = 'Invalid email address';
+    } else if (password.isEmpty) {
+      message = 'Invalid password.';
+    } else {
+      authInputs = {'email': emailAddress, 'password': password};
+    }
+    if (message.isNotEmpty) {
+      Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+    return authInputs;
   }
 
   void navigateToSignup() => Get.offAllNamed<void>(Routes.signupScreen);
 
   void navigateToMainScreen() => Get.offAllNamed<void>(Routes.mainScreen);
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 }

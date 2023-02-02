@@ -6,14 +6,17 @@ import 'package:get/get.dart';
 class AuthenticateUser {
   final AuthNetworkDataSource _authNetworkDataSource = Get.find();
 
-  Future<void> withPhoneNUmber(String phoneNumber,
-      {required Function verificationCompleted}) async {
-    _authNetworkDataSource.signInWithPhoneNumber(phoneNumber,
-        verificationCompleted: verificationCompleted);
+  Future<String> createAccount(
+      {required String emailAddress, required String password}) async {
+    return _authNetworkDataSource.createAccount(
+        emailAddress: emailAddress, password: password);
   }
 
-  String onCodeSent(String verificationId) =>
-      _authNetworkDataSource.onCodeSent(verificationId);
+  Future<String> signInWithEmailPassword(
+      {required String emailAddress, required String password}) async {
+    return _authNetworkDataSource.signInWithEmailPassword(
+        emailAddress: emailAddress, password: password);
+  }
 
   String? getUserId() {
     return _authNetworkDataSource.getUserId();

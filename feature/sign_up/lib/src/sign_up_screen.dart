@@ -2,7 +2,6 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:sign_up/src/sign_up_controller.dart';
 import 'package:sign_up/src/strings.dart';
 
@@ -45,7 +44,7 @@ class SignUp extends GetView<SignUpController> {
                               child: Center(
                                 child: Text(
                                   Strings.createAccount,
-                                  style: Get.theme.textTheme.labelSmall
+                                  style: Get.theme.textTheme.bodyLarge
                                       ?.copyWith(
                                           color: Colors.white,
                                           letterSpacing: 4.0,
@@ -90,7 +89,7 @@ class SignUp extends GetView<SignUpController> {
                                 () => Stack(
                                   alignment: AlignmentDirectional.center,
                                   children: [
-                                    controller.image.value == null
+                                    controller.image?.value == null
                                         ? const CircleAvatar(
                                             backgroundColor: Colors.black,
                                             radius: 50,
@@ -99,7 +98,7 @@ class SignUp extends GetView<SignUpController> {
                                             radius: 50,
                                             backgroundColor: Colors.black,
                                             backgroundImage: MemoryImage(
-                                                controller.image.value!),
+                                                controller.image!.value!),
                                           ),
                                     InkWell(
                                       onTap: () async {
@@ -123,68 +122,24 @@ class SignUp extends GetView<SignUpController> {
                             children: <Widget>[
                               TextFieldInput(
                                 backgroundColor: Colors.white,
-                                hintText: Strings.username,
-                                icon: Icons.person_outline,
-                                textInputType: TextInputType.name,
+                                hintText: Strings.email,
+                                icon: Icons.email_outlined,
+                                textInputType: TextInputType.emailAddress,
                                 textEditingController:
-                                    controller.usernameController,
+                                    controller.emailController,
+                                textStyle: Get.textTheme.bodyLarge
+                                    ?.copyWith(color: Colors.black),
                               ),
-                              Card(
-                                color: Colors.white,
-                                child: Container(
-                                  margin: const EdgeInsets.all(8.0),
-                                  width: Get.width - 70,
-                                  child: InternationalPhoneNumberInput(
-                                    countries: const ['KE'],
-                                    maxLength: 13,
-                                    onInputChanged: (PhoneNumber number) {
-                                      controller.phoneNumber = number;
-                                    },
-                                    onInputValidated: (bool value) {
-                                      controller.inputValidated.value = value;
-                                    },
-                                    ignoreBlank: false,
-                                    autoValidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    initialValue: controller.phoneNumber,
-                                    cursorColor: Colors.black,
-                                    inputDecoration: InputDecoration(
-                                        hintText: Strings.phoneNumber,
-                                        focusColor: Colors.black,
-                                        focusedBorder:
-                                            const UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: .3,
-                                                    color: Colors.white)),
-                                        enabledBorder:
-                                            const UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    width: .0,
-                                                    color: Colors.white)),
-                                        border: const UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                width: .3,
-                                                color: Colors.white))),
-                                    textFieldController:
-                                        controller.phoneController,
-                                    selectorTextStyle: Get
-                                        .theme.textTheme.bodyMedium
-                                        ?.copyWith(
-                                            color: Colors.black,
-                                            letterSpacing: 1.0,
-                                            height: 2,
-                                            fontWeight: FontWeight.w300),
-                                    textStyle: Get.theme.textTheme.bodyMedium
-                                        ?.copyWith(
-                                            color: Colors.black,
-                                            letterSpacing: 1.0,
-                                            height: 2,
-                                            fontWeight: FontWeight.w300),
-                                    formatInput: true,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                            signed: true, decimal: true),
-                                  ),
+                              TextFieldInput(
+                                backgroundColor: Colors.white,
+                                hintText: Strings.password,
+                                icon: Icons.password_outlined,
+                                isPass: true,
+                                textInputType: TextInputType.visiblePassword,
+                                textEditingController:
+                                    controller.passwordController,
+                                textStyle: Get.textTheme.bodyLarge?.copyWith(
+                                  color: Colors.black,
                                 ),
                               ),
                               Column(
@@ -193,11 +148,11 @@ class SignUp extends GetView<SignUpController> {
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      controller.verifyNumber();
+                                      await controller.createAccount();
                                     },
                                     child: Container(
-                                        height: Get.height * 0.06,
-                                        width: Get.width / 1.5,
+                                        height: Get.height * 0.04,
+                                        width: Get.width * 0.5,
                                         color: Colors.transparent,
                                         child: Container(
                                           decoration: const BoxDecoration(
@@ -211,12 +166,9 @@ class SignUp extends GetView<SignUpController> {
                                                   Radius.circular(30.0))),
                                           child: Center(
                                             child: Text(
-                                              controller.verificationHasPassed
-                                                      .value
-                                                  ? Strings.verified
-                                                  : Strings.getCode,
+                                              Strings.createAccount,
                                               textAlign: TextAlign.center,
-                                              style: Get.textTheme.bodyLarge
+                                              style: Get.textTheme.bodySmall
                                                   ?.copyWith(
                                                       color: Colors.white,
                                                       height: 0),
@@ -232,7 +184,7 @@ class SignUp extends GetView<SignUpController> {
                                       children: [
                                         Text(
                                           Strings.alreadyHaveAnAccount,
-                                          style: Get.theme.textTheme.bodyMedium
+                                          style: Get.theme.textTheme.bodyLarge
                                               ?.copyWith(
                                                   color: Colors.black,
                                                   letterSpacing: 1.0,
@@ -247,8 +199,7 @@ class SignUp extends GetView<SignUpController> {
                                           onTap: controller.navigateToLogIn,
                                           child: Text(
                                             Strings.logIn,
-                                            style: Get
-                                                .theme.textTheme.bodyMedium
+                                            style: Get.theme.textTheme.bodyLarge
                                                 ?.copyWith(
                                                     color: Colors.black,
                                                     letterSpacing: 1.0,

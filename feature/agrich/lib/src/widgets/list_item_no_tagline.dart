@@ -24,8 +24,8 @@ class ListItemNoTagLine extends GetView<CuisineController> {
         children: [
           Text(
             cuisineModel.header,
-            style: Get.textTheme.labelSmall
-                ?.copyWith(fontSize: 22, fontWeight: FontWeight.bold),
+            style:
+                Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 200,

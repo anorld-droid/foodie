@@ -4,7 +4,7 @@ class Constants {
   static String profilePicUrl = 'profilePics';
   static String users = 'users';
   static String cartItems = 'cartItems';
-  static String destinnations = 'destinations';
+  static String destinations = 'destinations';
   static String orders = 'orders';
   static String orderStatus = 'orderStatus';
   static String shippingInfo = 'shippingInfo';

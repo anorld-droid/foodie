@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 14.01.2023.
 class User {
   final String uid;
-  final String photoUrl;
+  final String? photoUrl;
   final String username;
   final ShippingInfo? shippingInfo;
 
@@ -31,7 +31,7 @@ class User {
     var snapshot = snap.data();
     return User(
       uid: snapshot?[Constants.uid] as String,
-      photoUrl: snapshot?[Constants.photoUrl] as String,
+      photoUrl: snapshot?[Constants.photoUrl] as String?,
       username: snapshot?[Constants.username] as String,
       shippingInfo: snapshot?[Constants.shippingInfo] != null
           ? ShippingInfo.fromFirestore(

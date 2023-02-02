@@ -42,6 +42,20 @@ class DestinationModel {
       landmark: snapshot[Constants.landmark] as String,
     );
   }
+  factory DestinationModel.fromDocumetSnapshotFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snap,
+    SnapshotOptions? options,
+  ) {
+    var snapshot = snap.data();
+    return DestinationModel(
+      town: snapshot?[Constants.town] as String,
+      area: snapshot?[Constants.area] as String,
+      building: snapshot?[Constants.building] as String?,
+      floorNo: snapshot?[Constants.floorNo] as String?,
+      roomNo: snapshot?[Constants.roomNo] as String?,
+      landmark: snapshot?[Constants.landmark] as String?,
+    );
+  }
 }
 
 class Destinations {

@@ -2,6 +2,7 @@ import 'package:cart/src/widgets/dialog_layout.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:model/model.dart';
 import 'package:domain/domain.dart';
 
@@ -22,11 +23,16 @@ class Controller extends GetxController {
   late final CartItemsUseCase _cartItemsUseCase;
   late final PaymentOptionsUseCase _paymentOptionsUseCase;
   late final SendMessageUseCase _sendMessageUseCase;
+  late final GetDestinationsUseCase _getDestinationsUseCase;
 
   final Rx<Destinations> destinations =
       Rx(const Destinations(destinations: []));
   final Rx<String> destinationTown = Rx('');
   final Rx<String> destinationArea = Rx('');
+  final Rx<String> topDestination = Rx('');
+
+  PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
+  Rx<bool> inputValidated = false.obs;
 
   final Rx<ShippingStatus> shippingStatus = Rx(ShippingStatus.none);
   final Rx<ShippingInfo?> _shippingInfo = Rx(null);
@@ -55,6 +61,7 @@ class Controller extends GetxController {
     _cartItemsUseCase = CartItemsUseCase();
     _paymentOptionsUseCase = PaymentOptionsUseCase();
     _sendMessageUseCase = SendMessageUseCase();
+    _getDestinationsUseCase = GetDestinationsUseCase();
 
     nameController = TextEditingController();
     phoneController = TextEditingController();
@@ -69,17 +76,17 @@ class Controller extends GetxController {
 
   Future<void> loadData() async {
     loading.value = true;
-    destinations.value = const Destinations(
-      destinations: [
-        DestinationModel(town: 'Kisumu', area: 'Milimani'),
-        DestinationModel(town: 'Kisumu', area: 'Nyalenda A'),
-        DestinationModel(town: 'Kisumu', area: 'Nyalenda B'),
-        DestinationModel(town: 'CBD', area: ''),
-        DestinationModel(town: 'Kisumu', area: 'Manyatta B'),
-        DestinationModel(town: 'Kisumu', area: 'Obunga'),
-        DestinationModel(town: 'Kisumu', area: 'Kondele'),
-      ],
-    );
+    var snap = await _getDestinationsUseCase.get();
+    snap.listen((event) {
+      var destin = <DestinationModel>[];
+      for (var dest in event.docs) {
+        destin.add(dest.data());
+      }
+      destinations.value = Destinations(destinations: destin);
+      destinationTown.value = destinations.value.destinations.first.town;
+      destinationArea.value = destinations.value.destinations.first.area;
+      loadDestination(destinationTown.value, destinationArea.value);
+    });
     var user =
         await _userModelUseCase.getShippingInfo(_authenticateUser.getUserId()!);
     user.listen((event) {
@@ -87,8 +94,6 @@ class Controller extends GetxController {
       _shippingInfo.value = user.shippingInfo;
       getShippingInfo();
     });
-    destinationTown.value = destinations.value.destinations.first.town;
-    destinationArea.value = destinations.value.destinations.first.area;
 
     shippingStatus.value = ShippingStatus.none;
     loading.value = false;
@@ -109,14 +114,22 @@ class Controller extends GetxController {
   }
 
   String getArea(String destination) => destination.split(',').last;
-  String getDestination(String town, String area) {
-    var destinationValue = '';
+  void loadDestination(String town, String area) {
     if (town == area || area.isEmpty) {
-      destinationValue = town;
+      topDestination.value = town;
     } else {
-      destinationValue = '$town, $area';
+      topDestination.value = '$town, $area';
     }
-    return destinationValue;
+  }
+
+  String convertDestination(String town, String area) {
+    var dest = '';
+    if (town == area || area.isEmpty) {
+      dest = town;
+    } else {
+      dest = '$town, $area';
+    }
+    return dest;
   }
 
   void _calculateSubTotal() {
@@ -160,26 +173,40 @@ class Controller extends GetxController {
   }
 
   Future<void> _transact() async {
-    final status = await _paymentOptionsUseCase.withMPesa(
+    final reqID = await _paymentOptionsUseCase.withMPesa(
         _authenticateUser.getUserId()!,
         total.value.toStringAsFixed(0),
-        _authenticateUser.getPhoneNumber()!,
+        _shippingInfo.value!.phoneNumber!,
         'food items');
-    if (status != null) {
-      ShippingModel shippingModel = ShippingModel(
-        uid: _authenticateUser.getUserId()!,
-        items: items.value,
-        orderNo: status,
-        status: ShippingStatus.none.name,
-      );
-      await _shippingUseCase.upload(
-        userId: _authenticateUser.getUserId()!,
-        shippingModel: shippingModel,
-      );
-      for (var element in items.value) {
-        deleteItem(element);
-      }
-      shortToast('Checkout successful');
+    if (reqID != null) {
+      final snap = await _paymentOptionsUseCase.getPaymentStatus(reqId: reqID);
+      snap.listen((event) async {
+        var element =
+            event.docs.firstWhereOrNull((element) => element.id == reqID);
+        if (element != null) {
+          var data = MpesaResultPayment.fromJson(element.data()['stkCallback']);
+          if (data.responseCode == 0) {
+            ShippingModel shippingModel = ShippingModel(
+              uid: _authenticateUser.getUserId()!,
+              items: items.value,
+              orderNo: reqID,
+              status: ShippingStatus.none.name,
+            );
+            await _shippingUseCase.upload(
+              userId: _authenticateUser.getUserId()!,
+              shippingModel: shippingModel,
+            );
+            items.value.clear();
+            itemLength.value = items.value.length;
+            items.refresh();
+            calculateTotal();
+            await Future.delayed(const Duration(seconds: 2));
+            shortToast('Checkout successful');
+          } else {
+            longToast(data.responseDescription);
+          }
+        }
+      });
     } else {
       longToast('Payment operation failed.');
     }
@@ -188,7 +215,7 @@ class Controller extends GetxController {
   void sendMessage() {
     String text = 'Your order has been received and is being processed.';
     MessageBird sms =
-        MessageBird(to: _authenticateUser.getPhoneNumber()!, text: text);
+        MessageBird(to: _shippingInfo.value!.phoneNumber!, text: text);
     _sendMessageUseCase.invoke(messageBird: sms);
   }
 
@@ -219,7 +246,7 @@ class Controller extends GetxController {
 
   Future<void> saveShippingInfo() async {
     String name = nameController.text;
-    String phoneNumber = phoneController.text;
+    String mobileNumber = phoneNumber.phoneNumber!;
     String town = destinationTown.value;
     String area = destinationArea.value;
     String building = buildingController.text;
@@ -227,10 +254,10 @@ class Controller extends GetxController {
     String roomNo = roomController.text;
     String landmark = landmarkController.text;
     if (validateInput(
-        name, phoneNumber, town, area, building, floorNo, roomNo, landmark)) {
+        name, mobileNumber, town, area, building, floorNo, roomNo, landmark)) {
       ShippingInfo shippingInfo = ShippingInfo(
         name: name,
-        phoneNumber: phoneNumber,
+        phoneNumber: mobileNumber,
         destination: DestinationModel(
             town: town,
             area: area,
@@ -244,6 +271,7 @@ class Controller extends GetxController {
         shippingInfo: shippingInfo,
       );
       shortToast('Shipping info saved.');
+      Get.back();
     }
   }
 
@@ -256,7 +284,8 @@ class Controller extends GetxController {
         building.isNotEmpty &&
         floorNo.isNotEmpty &&
         roomNo.isNotEmpty &&
-        landmark.isNotEmpty) {
+        landmark.isNotEmpty &&
+        inputValidated.value) {
       return true;
     } else {
       shortToast('Please, fill all the details');

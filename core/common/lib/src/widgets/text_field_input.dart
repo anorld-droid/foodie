@@ -8,6 +8,7 @@ class TextFieldInput extends StatelessWidget {
   final Color backgroundColor;
   final bool isPass;
   final TextInputType textInputType;
+  final TextStyle? textStyle;
   final String hintText;
   final IconData? icon;
   final String suffixText;
@@ -20,6 +21,7 @@ class TextFieldInput extends StatelessWidget {
       required this.textEditingController,
       this.isPass = false,
       this.width,
+      this.textStyle,
       required this.textInputType,
       required this.hintText,
       this.onIconTap,
@@ -37,24 +39,26 @@ class TextFieldInput extends StatelessWidget {
         margin: const EdgeInsets.all(8.0),
         width: Get.width - 70,
         child: TextField(
-          style: GoogleFonts.inter(
-              fontStyle: FontStyle.normal,
-              color: Colors.black,
-              fontSize: 18.0,
-              letterSpacing: 1.0,
-              fontWeight: FontWeight.w500),
+          style: textStyle ??
+              GoogleFonts.inter(
+                  fontStyle: FontStyle.normal,
+                  color: Colors.black,
+                  fontSize: 18.0,
+                  letterSpacing: 1.0,
+                  fontWeight: FontWeight.w500),
           showCursor: true,
           cursorColor: Colors.black,
           onChanged: onChanged,
           controller: textEditingController,
           decoration: InputDecoration(
             labelText: hintText,
-            labelStyle: GoogleFonts.inter(
-                fontStyle: FontStyle.normal,
-                color: Colors.black,
-                fontSize: 18.0,
-                letterSpacing: 1.0,
-                fontWeight: FontWeight.w300),
+            labelStyle: textStyle ??
+                GoogleFonts.inter(
+                    fontStyle: FontStyle.normal,
+                    color: Colors.black,
+                    fontSize: 18.0,
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w300),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(width: .3, color: backgroundColor)),
             enabledBorder: const UnderlineInputBorder(

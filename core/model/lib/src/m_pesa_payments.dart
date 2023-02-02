@@ -6,9 +6,9 @@ import 'package:model/src/constants.dart';
 class MpesaResultPayment {
   final String merchantRequestID;
   final String checkoutRequestID;
-  final String responseCode;
+  final int responseCode;
   final String responseDescription;
-  final String customerMessage;
+  final String? customerMessage;
 
   MpesaResultPayment({
     required this.merchantRequestID,
@@ -20,7 +20,7 @@ class MpesaResultPayment {
   Map<String, dynamic> toFirestore() => {
         Constants.merchantRequestID: merchantRequestID,
         Constants.checkoutRequestID: checkoutRequestID,
-        Constants.responseCode: responseCode,
+        Constants.resultCode: responseCode,
         Constants.responseDescription: responseDescription,
         Constants.customerMessage: customerMessage,
       };
@@ -33,9 +33,21 @@ class MpesaResultPayment {
     return MpesaResultPayment(
       merchantRequestID: snapshot?[Constants.merchantRequestID] as String,
       checkoutRequestID: snapshot?[Constants.checkoutRequestID] as String,
-      responseCode: snapshot?[Constants.responseCode] as String,
+      responseCode: snapshot?[Constants.responseCode] as int,
       responseDescription: snapshot?[Constants.responseDescription] as String,
-      customerMessage: snapshot?[Constants.customerMessage] as String,
+      customerMessage: snapshot?[Constants.customerMessage] as String?,
+    );
+  }
+
+  factory MpesaResultPayment.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MpesaResultPayment(
+      merchantRequestID: json[Constants.merchantRequestID] as String,
+      checkoutRequestID: json[Constants.checkoutRequestID] as String,
+      responseCode: json[Constants.resultCode] as int,
+      responseDescription: json[Constants.resultDesc] as String,
+      customerMessage: json[Constants.customerMessage] as String?,
     );
   }
 }

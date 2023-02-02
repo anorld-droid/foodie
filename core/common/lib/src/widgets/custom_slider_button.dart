@@ -48,7 +48,7 @@ class CustomSliderButton extends StatelessWidget {
                 style: GoogleFonts.inter(
                     fontStyle: FontStyle.normal,
                     color: Colors.white,
-                    fontSize: 18.0,
+                    fontSize: 14.0,
                     height: 0,
                     letterSpacing: 1.0,
                     fontWeight: FontWeight.w600),

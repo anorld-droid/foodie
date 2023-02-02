@@ -25,77 +25,46 @@ class LogInDialog extends GetView<LogInController> {
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Card(
-                      color: Colors.white,
-                      child: Container(
-                        margin: const EdgeInsets.all(8.0),
-                        width: Get.width - 70,
-                        child: InternationalPhoneNumberInput(
-                          countries: const ['KE'],
-                          maxLength: 13,
-                          onInputChanged: (PhoneNumber number) {
-                            controller.phoneNumber = number;
-                          },
-                          onInputValidated: (bool value) {
-                            controller.inputValidated.value = value;
-                          },
-                          ignoreBlank: false,
-                          autoValidateMode: AutovalidateMode.onUserInteraction,
-                          initialValue: controller.phoneNumber,
-                          cursorColor: Colors.black,
-                          inputDecoration: InputDecoration(
-                              hintText: Strings.phoneNumber,
-                              focusColor: Colors.white,
-                              focusedBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: .0, color: Colors.white)),
-                              enabledBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: .0, color: Colors.white)),
-                              border: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      width: .0, color: Colors.white))),
-                          textFieldController: controller.phoneNumberController,
-                          selectorTextStyle: Get.theme.textTheme.bodyMedium
-                              ?.copyWith(
-                                  color: Colors.black,
-                                  letterSpacing: 1.0,
-                                  height: 2,
-                                  fontWeight: FontWeight.w300),
-                          textStyle: Get.theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.black,
-                              letterSpacing: 1.0,
-                              height: 2,
-                              fontWeight: FontWeight.w300),
-                          formatInput: true,
-                          keyboardType: const TextInputType.numberWithOptions(
-                              signed: true, decimal: true),
-                        ),
-                      ),
+                    TextFieldInput(
+                      backgroundColor: Colors.white,
+                      hintText: Strings.email,
+                      icon: Icons.email_outlined,
+                      textInputType: TextInputType.emailAddress,
+                      textEditingController: controller.emailController,
+                      textStyle: Get.textTheme.bodyLarge
+                          ?.copyWith(color: Colors.black),
                     ),
-                    Obx(() => InkWell(
-                          onTap: controller.verifyNumber,
+                    TextFieldInput(
+                      backgroundColor: Colors.white,
+                      hintText: Strings.password,
+                      icon: Icons.password_outlined,
+                      isPass: true,
+                      textInputType: TextInputType.visiblePassword,
+                      textEditingController: controller.passwordController,
+                      textStyle: Get.textTheme.bodyLarge
+                          ?.copyWith(color: Colors.black),
+                    ),
+                    InkWell(
+                      onTap: controller.sigIn,
+                      child: Container(
+                          height: Get.height / 22,
+                          width: Get.width / 4,
+                          color: Colors.transparent,
                           child: Container(
-                              height: Get.height / 22,
-                              width: Get.width / 4,
-                              color: Colors.transparent,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30))),
-                                child: Center(
-                                  child: Text(
-                                    controller.verificationHasPassed.value
-                                        ? Strings.verified
-                                        : Strings.getCode,
-                                    textAlign: TextAlign.center,
-                                    style: Get.textTheme.bodyLarge?.copyWith(
-                                        color: Colors.white, height: 0),
-                                  ),
-                                ),
-                              )),
-                        ))
+                            decoration: const BoxDecoration(
+                                color: Colors.black,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30))),
+                            child: Center(
+                              child: Text(
+                                Strings.logIn,
+                                textAlign: TextAlign.center,
+                                style: Get.textTheme.bodySmall
+                                    ?.copyWith(color: Colors.white, height: 0),
+                              ),
+                            ),
+                          )),
+                    )
                   ]),
               Obx(() {
                 Widget widget;

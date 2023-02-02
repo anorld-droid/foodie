@@ -4,41 +4,42 @@ import 'package:firebase_auth/firebase_auth.dart';
 class UserAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> signInWithPhoneNumber(String phoneNumber,
-      {required Function verificationCompleted}) async {
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await _auth.signInWithCredential(credential);
-        verificationCompleted(true);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          // ignore: todo
-          //TODO: Log to crashlytics
-        }
-        verificationCompleted(false);
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        // Update the UI - wait for the user to enter the SMS code
-        String smsCode = onCodeSent();
-        if (smsCode.isNotEmpty) {
-          // Create a PhoneAuthCredential with the code
-          PhoneAuthCredential credential = PhoneAuthProvider.credential(
-              verificationId: verificationId, smsCode: smsCode);
-          // Sign the user in (or link) with the credential
-          await _auth.signInWithCredential(credential);
-        }
-      },
-      timeout: const Duration(seconds: 60),
-      codeAutoRetrievalTimeout: (String verificationId) {
-        // ignore: todo
-        ///TODO('In the next phase add the counter time feature')
-      },
-    );
+  Future<String> createAccount(
+      {required String emailAddress, required String password}) async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+      return 'Account created succesfully';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        return 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        return 'The account already exists for that email.';
+      } else {
+        return e.message ?? 'Authentication error occurred.';
+      }
+    } catch (e) {
+      return e.toString();
+    }
   }
 
-  String onCodeSent({String verificationId = ''}) => verificationId;
+  Future<String> signInWithEmailPassword(
+      {required String emailAddress, required String password}) async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: emailAddress, password: password);
+      return 'Successful authentication.';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        return 'Wrong password provided for that user.';
+      }
+      return e.message ?? 'Authentication error';
+    }
+  }
 
   Future<void> signOut() async {
     return _auth.signOut();
@@ -53,7 +54,7 @@ class UserAuth {
   }
 
   String? getUserName() {
-    return _auth.currentUser?.displayName;
+    return _auth.currentUser?.displayName ?? _auth.currentUser?.email;
   }
 
   String? getPhoneNumber() {

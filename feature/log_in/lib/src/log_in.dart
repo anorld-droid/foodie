@@ -47,12 +47,9 @@ class LogIn extends GetView<LogInController> {
                         ),
                         Text(
                           Strings.logIn,
-                          style: GoogleFonts.inter(
-                              fontStyle: FontStyle.normal,
+                          style: Get.theme.textTheme.bodyLarge?.copyWith(
                               color: Colors.black,
-                              fontSize: 24.0,
-                              height: 0,
-                              letterSpacing: 2.0,
+                              letterSpacing: 4.0,
                               fontWeight: FontWeight.w500),
                         ),
                       ],
@@ -94,34 +91,32 @@ class LogIn extends GetView<LogInController> {
                         ),
                         Text(
                           Strings.welcome,
-                          style: GoogleFonts.inter(
-                              fontStyle: FontStyle.normal,
+                          style: Get.theme.textTheme.bodyMedium?.copyWith(
                               color: Colors.white,
-                              fontSize: 28.0,
+                              letterSpacing: 1.0,
                               height: 0,
-                              letterSpacing: 6.0,
-                              fontWeight: FontWeight.w200),
+                              fontWeight: FontWeight.w300),
                         ),
                         const SizedBox(
                           height: 12,
                         ),
-                        Obx((() => (Text(
-                              controller.username.value,
-                              style: GoogleFonts.inter(
-                                  fontStyle: FontStyle.normal,
-                                  color: Colors.white,
-                                  fontSize: 28.0,
-                                  height: 0,
-                                  letterSpacing: .2,
-                                  fontWeight: FontWeight.w300),
-                            )))),
+                        Obx(
+                          (() => (Text(
+                                controller.username.value,
+                                style: Get.theme.textTheme.bodyLarge?.copyWith(
+                                    color: Colors.white,
+                                    letterSpacing: 1.0,
+                                    height: 0,
+                                    fontWeight: FontWeight.w300),
+                              ))),
+                        ),
                       ],
                     ),
                     Center(
                       child: Column(
                         children: [
                           IconButton(
-                            onPressed: controller.fingerprintAuth,
+                            onPressed: controller.loadData,
                             icon: Obx(() => Icon(
                                   Icons.fingerprint_outlined,
                                   color: Colors.white.withOpacity(
@@ -130,13 +125,14 @@ class LogIn extends GetView<LogInController> {
                                 )),
                             iconSize: 100,
                           ),
-                          Text(Strings.logInPrompt,
-                              style: GoogleFonts.inter(
-                                  fontStyle: FontStyle.normal,
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  height: 0,
-                                  fontWeight: FontWeight.w200))
+                          Text(
+                            Strings.logInPrompt,
+                            style: Get.theme.textTheme.bodyLarge?.copyWith(
+                                color: Colors.white,
+                                letterSpacing: 1.0,
+                                height: 0,
+                                fontWeight: FontWeight.w300),
+                          ),
                         ],
                       ),
                     ),
@@ -171,13 +167,11 @@ class LogIn extends GetView<LogInController> {
                           children: [
                             Text(
                               Strings.dontHaveAccount,
-                              style: GoogleFonts.inter(
-                                  fontStyle: FontStyle.normal,
+                              style: Get.theme.textTheme.bodyLarge?.copyWith(
                                   color: Colors.white,
-                                  fontSize: 18.0,
+                                  letterSpacing: 1.0,
                                   height: 0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w400),
+                                  fontWeight: FontWeight.w300),
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.clip,
                             ),
@@ -187,13 +181,12 @@ class LogIn extends GetView<LogInController> {
                                 onTap: controller.navigateToSignup,
                                 child: Text(
                                   Strings.signup,
-                                  style: GoogleFonts.inter(
-                                      fontStyle: FontStyle.normal,
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                      height: 0,
-                                      letterSpacing: 1.0,
-                                      fontWeight: FontWeight.w600),
+                                  style: Get.theme.textTheme.bodyLarge
+                                      ?.copyWith(
+                                          color: Colors.white,
+                                          letterSpacing: 1.0,
+                                          height: 0,
+                                          fontWeight: FontWeight.w300),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -217,12 +210,13 @@ class LogIn extends GetView<LogInController> {
                   () => Stack(
                     alignment: AlignmentDirectional.center,
                     children: [
-                      controller.profilePic.value.isNotEmpty
+                      controller.profilePic.value != null &&
+                              controller.profilePic.value!.isNotEmpty
                           ? CircleAvatar(
                               backgroundColor: Colors.black,
                               radius: 65,
                               backgroundImage:
-                                  NetworkImage(controller.profilePic.value),
+                                  NetworkImage(controller.profilePic.value!),
                             )
                           : const CircleAvatar(
                               backgroundColor: Colors.black,

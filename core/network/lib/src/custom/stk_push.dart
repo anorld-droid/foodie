@@ -57,12 +57,9 @@ class STKPush {
           },
         ),
       );
-      var json = response.body;
-      print(json);
-      // return json['CheckoutRequestID'] as String;
-      return null;
+      var json = jsonDecode(response.body);
+      return json['CheckoutRequestID'] as String;
     } catch (error) {
-      print(error.toString());
       // ignore: todo
       //TODO Log to firebase crashlytics
       return null;

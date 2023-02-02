@@ -2,6 +2,7 @@ import 'package:cart/src/controller.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
 class DialogLayout extends GetView<Controller> {
@@ -16,7 +17,7 @@ class DialogLayout extends GetView<Controller> {
           children: [
             Center(
               child: SizedBox(
-                height: Get.height * 0.6,
+                height: Get.height * 0.7,
                 width: Get.width - 24,
                 child: Card(
                   color: Get.theme.backgroundColor,
@@ -40,14 +41,65 @@ class DialogLayout extends GetView<Controller> {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 8),
-                          child: CustomTextField(
-                            textEditingController: controller.phoneController,
-                            textInputType: TextInputType.phone,
-                            borderRadius: 8,
-                            height: 48,
-                            hintText: 'Phone number (M-Pesa)',
-                            labelText: 'Phone number',
-                            backgroundColor: Get.theme.backgroundColor,
+                          child: Card(
+                            elevation: 0,
+                            color: Get.theme.backgroundColor,
+                            child: Container(
+                              margin: const EdgeInsets.all(8.0),
+                              width: Get.width * 0.65,
+                              child: InternationalPhoneNumberInput(
+                                countries: const ['KE'],
+                                maxLength: 13,
+                                onInputChanged: (PhoneNumber number) {
+                                  controller.phoneNumber = number;
+                                },
+                                onInputValidated: (bool value) {
+                                  controller.inputValidated.value = value;
+                                },
+                                ignoreBlank: false,
+                                autoValidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                initialValue: controller.phoneNumber,
+                                cursorColor: Colors.black,
+                                inputDecoration: InputDecoration(
+                                  hintText: 'Phone number',
+                                  focusColor: Get.theme.backgroundColor,
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: .0,
+                                      color: Get.theme.backgroundColor,
+                                    ),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: .0,
+                                      color: Get.theme.backgroundColor,
+                                    ),
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: .0,
+                                      color: Get.theme.backgroundColor,
+                                    ),
+                                  ),
+                                ),
+                                textFieldController: controller.phoneController,
+                                selectorTextStyle:
+                                    Get.theme.textTheme.bodyMedium?.copyWith(
+                                        letterSpacing: 1.0,
+                                        height: 2,
+                                        fontWeight: FontWeight.w300),
+                                textStyle: Get.theme.textTheme.bodyMedium
+                                    ?.copyWith(
+                                        letterSpacing: 1.0,
+                                        height: 2,
+                                        fontWeight: FontWeight.w300),
+                                formatInput: true,
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                        signed: true, decimal: true),
+                              ),
+                            ),
                           ),
                         ),
                         Padding(

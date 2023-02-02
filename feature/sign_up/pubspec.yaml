@@ -11,10 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
-  intl_phone_number_input: ^0.7.2
   flutter_svg: ^1.1.6
   fluttertoast: ^8.1.2
-
 
   # Modules
   common:
@@ -30,4 +28,3 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
-

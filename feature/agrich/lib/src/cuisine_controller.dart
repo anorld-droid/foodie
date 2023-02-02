@@ -44,7 +44,7 @@ class CuisineController extends GetxController {
   }
 
   Future<void> loadData() async {
-    var snap = await _cuisineModelUseCase.get(_authenticateUser.getUserId()!);
+    var snap = await _cuisineModelUseCase.get();
     snap.listen((event) {
       items.value.clear();
       for (var item in event.docs) {

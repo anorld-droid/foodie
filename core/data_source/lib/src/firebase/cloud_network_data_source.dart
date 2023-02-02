@@ -79,6 +79,14 @@ class CloudNetWorkDataSource {
         toFirestore: toFirestore);
   }
 
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getCollectionStream<R>({
+    required String collection,
+  }) async {
+    return _cloudMethods.getCollectionStream(
+      collection: collection,
+    );
+  }
+
   /// Get the file to the specified path
   /// NOTE: doc should be user id
   Future<Stream<QuerySnapshot<R>>> getDocs<R>(
@@ -125,5 +133,21 @@ class CloudNetWorkDataSource {
         docPath: docPath,
         collectionPath: collectionPath,
         docId: docId);
+  }
+
+  /// get docs with specific values
+  Future<QuerySnapshot<R>> filterDocs<R>(
+      {required String collection,
+      required String filterValue,
+      required R Function(
+              DocumentSnapshot<Map<String, dynamic>>, SnapshotOptions?)
+          fromFirestore,
+      required Map<String, Object?> Function(R, SetOptions?)
+          toFirestore}) async {
+    return await _cloudMethods.filterDocs(
+        collection: collection,
+        filterValue: filterValue,
+        fromFirestore: fromFirestore,
+        toFirestore: toFirestore);
   }
 }

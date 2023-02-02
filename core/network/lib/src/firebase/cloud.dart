@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class CloudMethods {
-  final FirebaseFirestore mFirestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   CloudMethods() {
-    mFirestore.settings = const Settings(
+    _firestore.settings = const Settings(
       persistenceEnabled: true,
       cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
     );
@@ -23,7 +23,7 @@ class CloudMethods {
           fromFirestore,
       required Map<String, Object?> Function(R, SetOptions?)
           toFirestore}) async {
-    await mFirestore
+    await _firestore
         .collection(collection)
         .doc(doc)
         .withConverter(fromFirestore: fromFirestore, toFirestore: toFirestore)
@@ -42,7 +42,7 @@ class CloudMethods {
           fromFirestore,
       required Map<String, Object?> Function(R, SetOptions?)
           toFirestore}) async {
-    await mFirestore
+    await _firestore
         .collection(collectionName)
         .doc(docPath)
         .collection(collectionPath)
@@ -60,7 +60,7 @@ class CloudMethods {
           fromFirestore,
       required Map<String, Object?> Function(R, SetOptions?)
           toFirestore}) async {
-    return mFirestore
+    return _firestore
         .collection(collection)
         .doc(doc)
         .withConverter(fromFirestore: fromFirestore, toFirestore: toFirestore)
@@ -75,11 +75,17 @@ class CloudMethods {
           fromFirestore,
       required Map<String, Object?> Function(R, SetOptions?)
           toFirestore}) async {
-    return mFirestore
+    return _firestore
         .collection(collection)
         .doc(doc)
         .withConverter(fromFirestore: fromFirestore, toFirestore: toFirestore)
         .snapshots();
+  }
+
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getCollectionStream<R>({
+    required String collection,
+  }) async {
+    return _firestore.collection(collection).snapshots();
   }
 
   /// Get the files from the specified path
@@ -93,7 +99,7 @@ class CloudMethods {
           fromFirestore,
       required Map<String, Object?> Function(R, SetOptions?)
           toFirestore}) async {
-    return mFirestore
+    return _firestore
         .collection(collectionName)
         .doc(docPath)
         .collection(collectionPath)
@@ -108,7 +114,7 @@ class CloudMethods {
     required String doc,
     required Map<String, Object?> data,
   }) async {
-    await mFirestore.collection(collection).doc(doc).update(data);
+    await _firestore.collection(collection).doc(doc).update(data);
   }
 
   /// delete the file from the specified path
@@ -119,11 +125,26 @@ class CloudMethods {
     required String collectionPath,
     required String docId,
   }) async {
-    await mFirestore
+    await _firestore
         .collection(collectionName)
         .doc(docPath)
         .collection(collectionPath)
         .doc(docId)
         .delete();
+  }
+
+  Future<QuerySnapshot<R>> filterDocs<R>(
+      {required String collection,
+      required String filterValue,
+      required R Function(
+              DocumentSnapshot<Map<String, dynamic>>, SnapshotOptions?)
+          fromFirestore,
+      required Map<String, Object?> Function(R, SetOptions?)
+          toFirestore}) async {
+    return await _firestore
+        .collection(collection)
+        .where(filterValue, isEqualTo: true)
+        .withConverter(fromFirestore: fromFirestore, toFirestore: toFirestore)
+        .get();
   }
 }

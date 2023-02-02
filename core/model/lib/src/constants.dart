@@ -32,8 +32,10 @@ class Constants {
   static String merchantRequestID = 'MerchantRequestID';
   static String checkoutRequestID = 'CheckoutRequestID';
   static String responseCode = 'ResponseCode';
-  static String responseDescription = 'ResponseDescription';
+  static String responseDescription = 'ResultDesc';
   static String customerMessage = 'CustomerMessage';
+  static String resultCode = 'ResultCode';
+  static String resultDesc = 'ResultDesc';
 
   //MessageBird
   static String channelId = 'channelId';

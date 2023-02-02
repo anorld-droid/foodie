@@ -19,32 +19,32 @@ class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
         ),
       ),
       title: Obx(() => Text(
-            '${Strings.deliveryTo} ${controller.getDestination(controller.destinationTown.value, controller.destinationArea.value)}',
-            style: Get.textTheme.displayMedium,
+            '${Strings.deliveryTo} ${controller.topDestination.value}',
+            style: Get.textTheme.bodyLarge,
           )),
       backgroundColor: Get.theme.backgroundColor,
       actions: [
-        PopupMenuButton(
-          initialValue: controller.getDestination(
-              controller.destinationTown.value,
-              controller.destinationArea.value),
-          elevation: 0,
-          icon: Icon(
-            Icons.expand_more,
-            color: Get.theme.primaryColorDark,
-          ),
-          position: PopupMenuPosition.under,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(8),
+        Obx(
+          () => PopupMenuButton(
+            initialValue: controller.topDestination.value,
+            elevation: 0,
+            icon: Icon(
+              Icons.expand_more,
+              color: Get.theme.primaryColorDark,
             ),
+            position: PopupMenuPosition.under,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+            itemBuilder: (context) => _destinations(),
+            onSelected: (value) {
+              controller.destinationTown.value =
+                  controller.getTown(value as String);
+              controller.destinationArea.value = controller.getArea(value);
+            },
           ),
-          itemBuilder: (context) => _destinations(),
-          onSelected: (value) {
-            controller.destinationTown.value =
-                controller.getTown(value as String);
-            controller.destinationArea.value = controller.getArea(value);
-          },
         ),
       ],
     );
@@ -54,17 +54,18 @@ class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
     List<PopupMenuEntry> popupMenuItems = [];
     for (var destination in controller.destinations.value.destinations) {
       var destinationValue =
-          controller.getDestination(destination.town, destination.area);
+          controller.convertDestination(destination.town, destination.area);
       popupMenuItems.add(
         PopupMenuItem(
           value: destinationValue,
           child: Text(
             destinationValue,
-            style: Get.textTheme.displayMedium,
+            style: Get.textTheme.bodyLarge,
           ),
         ),
       );
     }
+
     return popupMenuItems;
   }
 

@@ -53,9 +53,11 @@ class ShippingInfo {
   });
 
   Map<String, dynamic> toFirestore() => {
-        Constants.name: name,
-        Constants.phoneNumber: phoneNumber,
-        Constants.destination: destination?.toFirestore()
+        Constants.shippingInfo: {
+          Constants.name: name,
+          Constants.phoneNumber: phoneNumber,
+          Constants.destination: destination?.toFirestore()
+        }
       };
 
   factory ShippingInfo.fromFirestore(
