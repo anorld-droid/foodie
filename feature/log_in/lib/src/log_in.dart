@@ -2,7 +2,6 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/src/strings.dart';
 
 import 'log_in_controller.dart';

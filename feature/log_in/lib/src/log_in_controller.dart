@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:log_in/src/strings.dart';
 import 'package:log_in/src/widgets/log_in_dialog.dart';
@@ -27,7 +26,6 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
   Rx<bool> inputValidated = false.obs;
   var searching = false.obs;
 
-  PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
 
   @override
   void onInit() {

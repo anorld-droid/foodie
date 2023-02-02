@@ -1,7 +1,6 @@
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:log_in/src/log_in_controller.dart';
 import 'package:log_in/src/strings.dart';
 
