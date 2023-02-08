@@ -15,13 +15,6 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  apartment:
-    dependency: "direct main"
-    description:
-      path: "feature/apartment"
-      relative: true
-    source: path
-    version: "0.0.1"
   async:
     dependency: transitive
     description:
@@ -134,13 +127,6 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  e_solar:
-    dependency: "direct main"
-    description:
-      path: "feature/e_solar"
-      relative: true
-    source: path
-    version: "0.0.1"
   equatable:
     dependency: transitive
     description:
@@ -211,27 +197,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  firebase_database:
-    dependency: transitive
-    description:
-      name: firebase_database
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "10.0.9"
-  firebase_database_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_database_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.2+17"
-  firebase_database_web:
-    dependency: transitive
-    description:
-      name: firebase_database_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1+19"
   firebase_storage:
     dependency: transitive
     description:
@@ -310,13 +275,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  hi_cars:
-    dependency: "direct main"
-    description:
-      path: "feature/hi_cars"
-      relative: true
-    source: path
-    version: "0.0.1"
   http:
     dependency: transitive
     description:
@@ -707,13 +665,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
-  tasks:
-    dependency: "direct main"
-    description:
-      path: "feature/tasks"
-      relative: true
-    source: path
-    version: "0.0.1"
   term_glyph:
     dependency: transitive
     description:

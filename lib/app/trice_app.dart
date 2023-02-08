@@ -1,3 +1,4 @@
+import 'package:agrich/agrich.dart';
 import 'package:cart/cart.dart';
 import 'package:common/common.dart';
 import 'package:cuisine_detail/cuisine_detail.dart';
@@ -7,8 +8,7 @@ import 'package:get/get.dart';
 import 'package:log_in/log_in.dart';
 import 'package:model/model.dart';
 import 'package:sign_up/sign_up.dart';
-import 'package:trice/launcher/trice_app_controller.dart';
-import 'package:trice/main_screen.dart';
+import 'package:trice/app/trice_app_controller.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 11.01.2023.
 class TriceApp extends GetView<TriceAppController> {
@@ -38,12 +38,12 @@ class TriceApp extends GetView<TriceAppController> {
               page: () => const LogIn(),
             ),
             GetPage(
-              name: Routes.signupScreen,
+              name: Routes.signUp,
               page: () => const SignUp(),
             ),
             GetPage(
-              name: Routes.mainScreen,
-              page: () => const MainScreen(),
+              name: Routes.cuisine,
+              page: () => const Cuisine(),
             ),
             GetPage(
               name: Routes.cuisineDetail,

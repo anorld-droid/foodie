@@ -1,8 +1,10 @@
+import 'package:agrich/agrich.dart';
 import 'package:agrich/src/cuisine_controller.dart';
 import 'package:agrich/src/widgets/chips.dart';
 import 'package:agrich/src/widgets/list_item_no_tagline.dart';
 import 'package:agrich/src/widgets/list_item_search_results.dart';
 import 'package:agrich/src/widgets/list_item_with_tagline.dart';
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -13,8 +15,9 @@ class Cuisine extends GetView<CuisineController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.find<CuisineController>();
+    Get.lazyPut((() => CuisineController()));
     return Scaffold(
+      appBar: const CuisineTopBar(accountBalance: '00.00'),
       resizeToAvoidBottomInset: false,
       floatingActionButton: _buildFAB(),
       //Floating action but

@@ -26,22 +26,14 @@ dependencies:
     path: core/model
   agrich:
     path: feature/agrich
-  apartment:
-    path: feature/apartment
   cart:
     path: feature/cart
   cuisine_detail:
     path: feature/cuisine_detail
-  e_solar:
-    path: feature/e_solar
-  hi_cars:
-    path: feature/hi_cars
   log_in:
     path: feature/log_in
   sign_up:
     path: feature/sign_up
-  tasks:
-    path: feature/tasks
 
 dev_dependencies:
   flutter_test:

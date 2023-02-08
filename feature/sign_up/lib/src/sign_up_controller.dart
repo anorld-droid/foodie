@@ -50,8 +50,10 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
       message = await _authenticateUser.createAccount(
           emailAddress: authInputs['email']!,
           password: authInputs['password']!);
-      await _uploadUserInfo(_authenticateUser.getUserName() ?? 'Anonymous');
-      Get.offNamed<void>(Routes.mainScreen);
+      if (message == 'Account created successfully') {
+        await _uploadUserInfo(_authenticateUser.getUserName() ?? 'Anonymous');
+        Get.offNamed<void>(Routes.cuisine);
+      }
     }
     if (message.isNotEmpty) {
       Fluttertoast.showToast(

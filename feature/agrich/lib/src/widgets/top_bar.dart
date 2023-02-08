@@ -12,7 +12,7 @@ class CuisineTopBar extends GetView<CuisineController>
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut((() => CuisineController()));
+    Get.find<CuisineController>();
     return AppBar(
       elevation: 0,
       leading: Container(

@@ -26,7 +26,6 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
   Rx<bool> inputValidated = false.obs;
   var searching = false.obs;
 
-
   @override
   void onInit() {
     super.onInit();
@@ -88,7 +87,7 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
     }
 
     if (authenticated.value) {
-      navigateToMainScreen();
+      navigateToMain();
     }
   }
 
@@ -102,7 +101,7 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
           emailAddress: authInputs['email']!,
           password: authInputs['password']!);
       if (message == 'Successful authentication.') {
-        navigateToMainScreen();
+        navigateToMain();
       }
     }
     if (message.isNotEmpty) {
@@ -146,9 +145,9 @@ class LogInController extends GetxController with GetTickerProviderStateMixin {
     return authInputs;
   }
 
-  void navigateToSignup() => Get.offAllNamed<void>(Routes.signupScreen);
+  void navigateToSignup() => Get.offAllNamed<void>(Routes.signUp);
 
-  void navigateToMainScreen() => Get.offAllNamed<void>(Routes.mainScreen);
+  void navigateToMain() => Get.offAllNamed<void>(Routes.cuisine);
 
   @override
   void dispose() {
