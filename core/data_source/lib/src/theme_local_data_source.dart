@@ -2,14 +2,14 @@ import 'package:get/get.dart';
 import 'package:preference/preference.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 11.01.2023.
-class ThemeLocalDataSource {
-  final ThemePrefHelper prefHelper =  Get.find();
+class PrefLocalDataSource {
+  final PrefHelper prefHelper = Get.find();
 
-  Future<dynamic> saveValueDarkTheme(bool value) async {
-    prefHelper.saveValueDarkTheme(value);
+  Future<dynamic> saveBoolValue(final String key, bool value) async {
+    prefHelper.saveBoolValue(key, value);
   }
 
-  Future<bool?> getValueDarkTheme() async {
-    return prefHelper.getValueDarkTheme();
+  Future<bool?> getBoolValue(final String key) async {
+    return prefHelper.getBoolValue(key);
   }
 }

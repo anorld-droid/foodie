@@ -13,13 +13,16 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   late final AuthenticateUser _authenticateUser;
   late final UserModelUseCase _userModelUseCase;
   late AnimationController animationController;
-  Rx<Uint8List?>? image = Uint8List(1).obs;
+  late OnboardingStatus _onboardingStatus;
+
+  Rx<Uint8List?> image = Uint8List(1).obs;
   late final ImageUseCase _imageUseCase;
   @override
   void onInit() {
     super.onInit();
     animationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _onboardingStatus = OnboardingStatus();
   }
 
   @override
@@ -28,7 +31,7 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
     _authenticateUser = Get.find();
     _userModelUseCase = UserModelUseCase();
     _imageUseCase = Get.find();
-    image = null;
+    image.value = null;
   }
 
   Rx<bool> inputValidated = false.obs;
@@ -52,6 +55,7 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
           password: authInputs['password']!);
       if (message == 'Account created successfully') {
         await _uploadUserInfo(_authenticateUser.getUserName() ?? 'Anonymous');
+        await _onboardingStatus.update(true);
         Get.offNamed<void>(Routes.cuisine);
       }
     }
@@ -117,12 +121,13 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> selectImage() async {
-    image?.value = await pickImageFromGallery();
+    final Uint8List? selectedImage = await pickImageFromGallery();
+    image.value = selectedImage;
   }
 
   Future<String?> saveProfilePicture(String uid) async {
-    return image != null
-        ? await _imageUseCase.saveProfilePic(image!.value!, uid)
+    return image.value != null
+        ? await _imageUseCase.saveProfilePic(image.value!, uid)
         : null;
   }
 

@@ -89,7 +89,7 @@ class SignUp extends GetView<SignUpController> {
                                 () => Stack(
                                   alignment: AlignmentDirectional.center,
                                   children: [
-                                    controller.image?.value == null
+                                    controller.image.value == null
                                         ? const CircleAvatar(
                                             backgroundColor: Colors.black,
                                             radius: 50,
@@ -98,7 +98,7 @@ class SignUp extends GetView<SignUpController> {
                                             radius: 50,
                                             backgroundColor: Colors.black,
                                             backgroundImage: MemoryImage(
-                                                controller.image!.value!),
+                                                controller.image.value!),
                                           ),
                                     InkWell(
                                       onTap: () async {

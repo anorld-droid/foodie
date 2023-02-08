@@ -8,12 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TriceBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ThemePrefHelper>(() {
+    Get.lazyPut<PrefHelper>(() {
       final preferences = SharedPreferences.getInstance();
-      return ThemePrefHelper(preferences: preferences);
+      return PrefHelper(preferences: preferences);
     }, fenix: true);
     Get.lazyPut(() => ThemeHelper(), fenix: true);
-    Get.lazyPut(() => ThemeLocalDataSource(), fenix: true);
+    Get.lazyPut(() => PrefLocalDataSource(), fenix: true);
     Get.lazyPut(() => AuthNetworkDataSource(), fenix: true);
     Get.lazyPut(() => StorageNetworkDataSource(), fenix: true);
     Get.lazyPut(() => ImageUseCase(), fenix: true);
