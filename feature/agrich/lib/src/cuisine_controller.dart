@@ -1,6 +1,7 @@
 import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 
@@ -36,9 +37,17 @@ class CuisineController extends GetxController {
   }
 
   void initialize() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      // Status bar color
+      statusBarColor: Get.theme.backgroundColor,
+      // Status bar brightness (optional)
+      statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
+    ));
+
     _authenticateUser = Get.find();
     _cartItemsUseCase = CartItemsUseCase();
     _cuisineModelUseCase = CuisineModelUseCase();
+
     searchController = TextEditingController();
     focusNode = FocusNode();
   }

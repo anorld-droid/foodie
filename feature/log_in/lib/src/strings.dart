@@ -2,12 +2,12 @@
 class Strings {
   static String logIn = 'Log in';
   static String email = 'Enter your email';
-  static String welcome = 'Welcome to Trice, ';
+  static String welcome = 'Welcome to Autone, ';
   static String signToAnotherAccount = 'Slide to change account';
   static String dontHaveAccount = 'Don\'t have an account?';
   static String signup = 'Sign up';
   static String scanFingerprint = 'Scan your fingerprint';
-  static String localizedReason = 'Use Fingerprint for Trice login';
+  static String localizedReason = 'Use Fingerprint for Autone login';
   static String password = 'Password';
   static String verified = 'Verified';
   static String verify = 'Verify';
