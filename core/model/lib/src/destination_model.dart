@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:model/src/constants.dart';
 
@@ -44,6 +42,7 @@ class DestinationModel {
       landmark: snapshot[Constants.landmark] as String,
     );
   }
+
   factory DestinationModel.fromDocumetSnapshotFirestore(
     DocumentSnapshot<Map<String, dynamic>> snap,
     SnapshotOptions? options,

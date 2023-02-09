@@ -82,7 +82,7 @@ class CloudNetWorkDataSource {
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getCollectionStream<R>({
     required String collection,
   }) async {
-    return _cloudMethods.getCollectionStream(
+    return _cloudMethods.getCollectionStream<R>(
       collection: collection,
     );
   }

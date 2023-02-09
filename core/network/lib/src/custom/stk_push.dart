@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 import 'package:network/src/constants.dart';
 
@@ -25,11 +24,11 @@ class STKPush {
       String amount, String mobileNumber, String item) async {
     String phoneNumber = mobileNumber.substring(1);
     final accessCredentials = await getAccessCode();
-    var date = DateTime.now();
-    var timestamp = DateFormat('yyyyMMddHHmmss').format(date);
-    final String password = base64Encode(
-      utf8.encode('${Constants.businessCode}${Constants.passKey}$timestamp}'),
-    );
+    // var date = DateTime.now();
+    // var timestamp = DateFormat('yyyyMMddHHmmss').format(date);
+    // final String password = base64Encode(
+    //   utf8.encode('${Constants.businessCode}${Constants.passKey}$timestamp}'),
+    // );
 
     try {
       final response = await http.post(

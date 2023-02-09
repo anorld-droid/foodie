@@ -27,7 +27,6 @@ class UserModelUseCase {
         doc: doc,
         fromFirestore: User.fromFirestore,
         toFirestore: (User user, _) => user.toFirestore());
-    ;
     return snap.data();
   }
 

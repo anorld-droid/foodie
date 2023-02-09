@@ -119,7 +119,6 @@ class CuisineController extends GetxController
   }
 
   Future<void> pay(String amount, String type) async {
-    Get.back<void>();
     if (phoneNumber.phoneNumber != null && inputValidated.value) {
       final reqID = await _paymentOptionsUseCase.withMPesa(
           _authenticateUser.getUserId()!,
@@ -127,6 +126,7 @@ class CuisineController extends GetxController
           phoneNumber.phoneNumber!,
           'account upgrade');
       if (reqID != null) {
+        Get.back<void>();
         final snap = await _paymentOptionsUseCase
             .getPaymentStatus<MpesaResultPayment>(reqId: reqID);
         snap.listen((event) async {

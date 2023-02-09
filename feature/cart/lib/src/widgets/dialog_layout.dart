@@ -217,21 +217,4 @@ class DialogLayout extends GetView<Controller> {
       ),
     );
   }
-
-  List<PopupMenuEntry> _countyDestinations() {
-    List<PopupMenuEntry> popupMenuItems = [];
-    for (var destination in controller.destinations.value.destinations.keys) {
-      popupMenuItems.add(
-        PopupMenuItem(
-          value: destination,
-          child: Text(
-            destination,
-            style: Get.textTheme.bodySmall,
-          ),
-        ),
-      );
-    }
-
-    return popupMenuItems;
-  }
 }
