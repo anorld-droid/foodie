@@ -101,9 +101,10 @@ class Cuisine extends GetView<CuisineController> {
         children: [
           FloatingActionButton(
             enableFeedback: true,
+            elevation: 2,
             heroTag: 'Cart Button',
             onPressed: controller.navigateToCart,
-            backgroundColor: Get.theme.backgroundColor,
+            backgroundColor: Get.theme.primaryColorDark.withOpacity(.15),
             child: Icon(
               Icons.shopping_cart,
               color: Get.theme.primaryColorDark,
@@ -114,12 +115,6 @@ class Cuisine extends GetView<CuisineController> {
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
             constraints: const BoxConstraints(minHeight: 32, minWidth: 32),
             decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      color: Get.theme.primaryColorDark.withAlpha(50))
-                ],
                 borderRadius: BorderRadius.circular(16),
                 color: Get.theme.backgroundColor),
             child: Center(
@@ -131,7 +126,7 @@ class Cuisine extends GetView<CuisineController> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

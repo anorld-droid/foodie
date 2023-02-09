@@ -21,19 +21,20 @@ class Cart extends GetView<Controller> {
       bottomNavigationBar: Container(
         height: 56,
         decoration: BoxDecoration(
-            color: Get.theme.backgroundColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(8),
-              topRight: Radius.circular(8),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Get.theme.primaryColorDark.withOpacity(.35),
-                spreadRadius: 1.0,
-                blurRadius: .5,
-                blurStyle: BlurStyle.inner,
-              )
-            ]),
+          color: Get.theme.backgroundColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Get.theme.primaryColorDark.withOpacity(.35),
+              spreadRadius: 1.0,
+              blurRadius: .5,
+              blurStyle: BlurStyle.inner,
+            )
+          ],
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

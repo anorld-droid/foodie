@@ -22,29 +22,37 @@ class CuisineDetail extends GetView<Controller> {
             handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
             sliver: SliverAppBar(
               expandedHeight: 300.0,
-              backgroundColor: Get.theme.backgroundColor,
+              elevation: 2,
+              backgroundColor: Get.theme.primaryColorDark.withOpacity(.05),
               floating: false,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(8),
+                  bottomRight: Radius.circular(8),
                 ),
               ),
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        cuisineItem.photoUrl,
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          cuisineItem.photoUrl,
+                        ),
+                        fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.elliptical(30, 15),
-                      bottomRight: Radius.elliptical(30, 15),
-                    ),
-                  ),
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.elliptical(30, 15),
+                        bottomRight: Radius.elliptical(30, 15),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Get.theme.primaryColorDark.withOpacity(.35),
+                          spreadRadius: 1.0,
+                          blurRadius: .5,
+                          blurStyle: BlurStyle.inner,
+                        )
+                      ]),
                 ),
               ),
               leading: Container(
@@ -99,9 +107,17 @@ class CuisineDetail extends GetView<Controller> {
         decoration: BoxDecoration(
             color: Get.theme.backgroundColor,
             borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            )),
+              topLeft: Radius.circular(8),
+              topRight: Radius.circular(8),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Get.theme.primaryColorDark.withOpacity(.35),
+                spreadRadius: 1.0,
+                blurRadius: .5,
+                blurStyle: BlurStyle.inner,
+              )
+            ]),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
