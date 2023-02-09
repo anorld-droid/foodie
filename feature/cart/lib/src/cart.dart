@@ -1,4 +1,6 @@
 import 'package:cart/src/controller.dart';
+import 'package:cart/src/widgets/order_item.dart';
+import 'package:cart/src/widgets/shipping_items.dart';
 import 'package:cart/src/widgets/top_bar.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,15 @@ class Cart extends GetView<Controller> {
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(8),
               topRight: Radius.circular(8),
-            )),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Get.theme.primaryColorDark.withOpacity(.35),
+                spreadRadius: 1.0,
+                blurRadius: .5,
+                blurStyle: BlurStyle.inner,
+              )
+            ]),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -91,18 +101,20 @@ class Cart extends GetView<Controller> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Obx(
-                () => Text(
-                  controller.shippingAddress.value,
-                  style: Get.textTheme.bodySmall?.copyWith(
-                    color: Get.theme.primaryColorDark.withOpacity(.9),
-                  ),
-                ),
-              ),
-            ],
+          child: Obx(
+            () => controller.orderedItems.value.isEmpty
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        ShippingStatus.none.name,
+                        style: Get.textTheme.bodySmall?.copyWith(
+                          color: Get.theme.primaryColorDark.withOpacity(.9),
+                        ),
+                      ),
+                    ],
+                  )
+                : ShippingItems(shippingItems: controller.orderedItems.value),
           ),
         ),
         const Divider(),
@@ -122,7 +134,7 @@ class Cart extends GetView<Controller> {
             ],
           ),
         ),
-        _orderItems(),
+        const OrderItems(),
         const Divider(),
         Padding(
           padding: const EdgeInsets.only(
@@ -138,7 +150,7 @@ class Cart extends GetView<Controller> {
               ),
               Obx(
                 () => Text(
-                  controller.subTotal.value.toStringAsFixed(2),
+                  '${CommonStrings.currency}${controller.subTotal.value.toStringAsFixed(2)}',
                   style: Get.textTheme.bodyLarge?.copyWith(
                     color: Get.theme.primaryColorDark.withOpacity(.8),
                   ),
@@ -161,7 +173,7 @@ class Cart extends GetView<Controller> {
               ),
               Obx(
                 () => Text(
-                  controller.shippingFee.value.toStringAsFixed(2),
+                  '${CommonStrings.currency}${controller.shippingFee.value.toStringAsFixed(2)}',
                   style: Get.textTheme.bodyLarge?.copyWith(
                     color: Get.theme.primaryColorDark.withOpacity(.8),
                   ),
@@ -187,7 +199,7 @@ class Cart extends GetView<Controller> {
               ),
               Obx(
                 () => Text(
-                  controller.total.value.toStringAsFixed(2),
+                  '${CommonStrings.currency}${controller.total.value.toStringAsFixed(2)}',
                   style: Get.textTheme.bodyLarge?.copyWith(
                     color: Get.theme.primaryColorDark.withOpacity(.8),
                   ),
@@ -200,12 +212,12 @@ class Cart extends GetView<Controller> {
         Padding(
           padding: const EdgeInsets.only(left: 24.0, bottom: 16.0, right: 8.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Obx(
                 () => Text(
-                  controller.shippingStatus.value.name,
-                  style: Get.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
+                  controller.shippingAddress.value,
+                  style: Get.textTheme.bodySmall?.copyWith(
                     color: Get.theme.primaryColorDark.withOpacity(.9),
                   ),
                 ),
@@ -214,144 +226,6 @@ class Cart extends GetView<Controller> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _orderItems() {
-    return SizedBox(
-      height: Get.height / 1.9,
-      child: Obx(
-        () => ListView(
-          key: Key(controller.itemLength.value.toString()),
-          children: controller.items.value
-              .map(
-                (e) => _orderItem(e),
-              )
-              .toList(),
-        ),
-      ),
-    );
-  }
-
-  Widget _orderItem(CartItem item) {
-    return SizedBox(
-      width: Get.width * 0.8,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            CircleAvatar(
-              radius: 48,
-              backgroundImage: NetworkImage(
-                item.photoUrl,
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          item.name,
-                          style: Get.textTheme.bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                controller.deleteItem(item);
-                              },
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(30.0)),
-                              child: Icon(
-                                Icons.close,
-                                color: Get.theme.primaryColorDark,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        item.stockTag,
-                        style: Get.textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.w100,
-                          color: Get.theme.primaryColorDark.withOpacity(.8),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Obx(
-                          () => Text(
-                            "${CommonStrings.currency}${item.sellingPrice.value.toStringAsFixed(2)}",
-                            style: Get.textTheme.bodySmall
-                                ?.copyWith(fontWeight: FontWeight.w700),
-                            overflow: TextOverflow.clip,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Qty',
-                                style: Get.textTheme.bodySmall
-                                    ?.copyWith(fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () => controller.decrementQty(item),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(30.0)),
-                              child: Icon(
-                                Icons.do_not_disturb_on_outlined,
-                                color: Get.theme.primaryColorDark,
-                                size: 24,
-                              ),
-                            ),
-                            Obx(
-                              () => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  '${item.quantity.value}',
-                                  style: Get.textTheme.labelSmall
-                                      ?.copyWith(fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () => controller.incrementQty(item),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(30.0)),
-                              child: Icon(
-                                Icons.add_circle_outline_outlined,
-                                color: Get.theme.primaryColorDark,
-                                size: 24,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

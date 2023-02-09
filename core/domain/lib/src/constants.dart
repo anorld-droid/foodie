@@ -14,4 +14,5 @@ class Constants {
   static String trice = 'trice';
   static String messagebird = 'messagebird';
   static String messages = 'messages';
+  static String subscription = 'subscription';
 }

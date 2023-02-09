@@ -10,13 +10,12 @@ class GetDestinationsUseCase {
 
   /// Get the file to the specified path
   /// Get the cuisine home items to the specified path
-  Future<Stream<QuerySnapshot<DestinationModel>>> get() async {
-    return await _cloudNetWorkDataSource.getDocs(
-        collectionName: Constants.cuisine,
-        docPath: Constants.destinations,
-        collectionPath: Constants.items,
-        fromFirestore: DestinationModel.fromDocumetSnapshotFirestore,
-        toFirestore: (DestinationModel destinationModel, _) =>
-            destinationModel.toFirestore());
+  Future<Stream<DocumentSnapshot<Destinations>>> get() async {
+    return await _cloudNetWorkDataSource.getDocStream(
+        collection: Constants.cuisine,
+        doc: Constants.destinations,
+        fromFirestore: Destinations.fromFirestore,
+        toFirestore: (Destinations destinations, _) =>
+            destinations.toFirestore());
   }
 }

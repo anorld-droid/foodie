@@ -24,17 +24,18 @@ class Controller extends GetxController {
   late final PaymentOptionsUseCase _paymentOptionsUseCase;
   late final SendMessageUseCase _sendMessageUseCase;
   late final GetDestinationsUseCase _getDestinationsUseCase;
+  late final SubscriptionUseCase _subscriptionUseCase;
 
   final Rx<Destinations> destinations =
-      Rx(const Destinations(destinations: []));
-  final Rx<String> destinationTown = Rx('');
-  final Rx<String> destinationArea = Rx('');
-  final Rx<String> topDestination = Rx('');
+      Rx(const Destinations(destinations: {}));
+  final Rx<String> county = Rx('');
+  final Rx<String> town = Rx('');
 
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
   Rx<bool> inputValidated = false.obs;
 
-  final Rx<ShippingStatus> shippingStatus = Rx(ShippingStatus.none);
+  final Rx<List<ShippingModel>> orderedItems = Rx([]);
+  final Rx<Subscription?> subscription = Rx(null);
   final Rx<ShippingInfo?> _shippingInfo = Rx(null);
   final Rx<String> shippingAddress = Rx('');
 
@@ -62,6 +63,7 @@ class Controller extends GetxController {
     _paymentOptionsUseCase = PaymentOptionsUseCase();
     _sendMessageUseCase = SendMessageUseCase();
     _getDestinationsUseCase = GetDestinationsUseCase();
+    _subscriptionUseCase = SubscriptionUseCase();
 
     nameController = TextEditingController();
     phoneController = TextEditingController();
@@ -76,17 +78,21 @@ class Controller extends GetxController {
 
   Future<void> loadData() async {
     loading.value = true;
+    //Get shipping infomation, days and time supported
+    await _subscriptionUseCase.get().then(
+          (value) => subscription.value = value.data(),
+        );
+
+    //Retrive autone's delivery destinations
     var snap = await _getDestinationsUseCase.get();
     snap.listen((event) {
-      var destin = <DestinationModel>[];
-      for (var dest in event.docs) {
-        destin.add(dest.data());
-      }
-      destinations.value = Destinations(destinations: destin);
-      destinationTown.value = destinations.value.destinations.first.town;
-      destinationArea.value = destinations.value.destinations.first.area;
-      loadDestination(destinationTown.value, destinationArea.value);
+      destinations.value = event.data() ??
+          const Destinations(
+            destinations: {},
+          );
     });
+
+    //Retrive user delivery destination
     var user =
         await _userModelUseCase.getShippingInfo(_authenticateUser.getUserId()!);
     user.listen((event) {
@@ -94,14 +100,15 @@ class Controller extends GetxController {
       _shippingInfo.value = user.shippingInfo;
       getShippingInfo();
     });
-
-    shippingStatus.value = ShippingStatus.none;
-    loading.value = false;
-  }
-
-  String getTown(String destination) {
-    var dest = destination.split(',').first;
-    return dest;
+    // Load the items, ordered by the user
+    var shipSnap = await _shippingUseCase.get(_authenticateUser.getUserId()!);
+    shipSnap.listen((event) {
+      var ordItems = <ShippingModel>[];
+      for (var element in event.docs) {
+        ordItems.add(element.data());
+      }
+      orderedItems.value = ordItems;
+    });
   }
 
   void getShippingInfo() {
@@ -109,27 +116,8 @@ class Controller extends GetxController {
       shippingAddress.value = 'No shipping destination, yet!';
     } else {
       shippingAddress.value =
-          'Shipping to:\n  ${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber},\n  ${_shippingInfo.value?.destination?.town}, ${_shippingInfo.value?.destination?.area},\n  ${_shippingInfo.value?.destination?.building}, ${_shippingInfo.value?.destination?.floorNo}, ${_shippingInfo.value?.destination?.roomNo},\n  ${_shippingInfo.value?.destination?.landmark}.';
+          'Shipping to:\n  ${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber}.\n  ${_shippingInfo.value?.destination?.county}, ${_shippingInfo.value?.destination?.town}.';
     }
-  }
-
-  String getArea(String destination) => destination.split(',').last;
-  void loadDestination(String town, String area) {
-    if (town == area || area.isEmpty) {
-      topDestination.value = town;
-    } else {
-      topDestination.value = '$town, $area';
-    }
-  }
-
-  String convertDestination(String town, String area) {
-    var dest = '';
-    if (town == area || area.isEmpty) {
-      dest = town;
-    } else {
-      dest = '$town, $area';
-    }
-    return dest;
   }
 
   void _calculateSubTotal() {
@@ -145,7 +133,15 @@ class Controller extends GetxController {
 
   void calculateTotal() {
     _calculateSubTotal();
-    total.value = subTotal.value + shippingFee.value;
+
+    if (subscription.value != null) {
+      total.value = subscription.value!.shippingStatus
+          ? subTotal.value
+          : subTotal.value + shippingFee.value;
+    } else {
+      total.value = subTotal.value + shippingFee.value;
+    }
+
     total.refresh();
   }
 
@@ -155,7 +151,7 @@ class Controller extends GetxController {
         barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.primaryColorDark.withOpacity(.87),
+        barrierColor: Get.theme.backgroundColor.withOpacity(.87),
         builder: (BuildContext buildContext) {
           return const DialogLayout();
         });
@@ -246,25 +242,23 @@ class Controller extends GetxController {
 
   Future<void> saveShippingInfo() async {
     String name = nameController.text;
-    String mobileNumber = phoneNumber.phoneNumber!;
-    String town = destinationTown.value;
-    String area = destinationArea.value;
-    String building = buildingController.text;
-    String floorNo = floorController.text;
-    String roomNo = roomController.text;
-    String landmark = landmarkController.text;
+    String? mobileNumber = phoneNumber.phoneNumber;
+    String countyValue = county.value;
+    String townValue = town.value;
+
     if (validateInput(
-        name, mobileNumber, town, area, building, floorNo, roomNo, landmark)) {
+      name,
+      mobileNumber,
+      countyValue,
+      townValue,
+    )) {
       ShippingInfo shippingInfo = ShippingInfo(
         name: name,
         phoneNumber: mobileNumber,
         destination: DestinationModel(
-            town: town,
-            area: area,
-            building: building,
-            floorNo: floorNo,
-            roomNo: roomNo,
-            landmark: landmark),
+          county: countyValue,
+          town: townValue,
+        ),
       );
       await _userModelUseCase.updateShippingInfo(
         userId: _authenticateUser.getUserId()!,
@@ -275,16 +269,12 @@ class Controller extends GetxController {
     }
   }
 
-  bool validateInput(String name, String phoneNumber, String town, String area,
-      String building, String floorNo, String roomNo, String landmark) {
+  bool validateInput(
+      String name, String? phoneNumber, String county, String town) {
     if (name.isNotEmpty &&
-        phoneNumber.isNotEmpty &&
+        phoneNumber != null &&
+        county.isNotEmpty &&
         town.isNotEmpty &&
-        area.isNotEmpty &&
-        building.isNotEmpty &&
-        floorNo.isNotEmpty &&
-        roomNo.isNotEmpty &&
-        landmark.isNotEmpty &&
         inputValidated.value) {
       return true;
     } else {

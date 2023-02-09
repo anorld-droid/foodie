@@ -9,19 +9,22 @@ class User {
   final String? photoUrl;
   final String username;
   final ShippingInfo? shippingInfo;
+  final String account;
 
   const User({
     required this.uid,
     required this.photoUrl,
     required this.username,
     required this.shippingInfo,
+    this.account = 'Free',
   });
 
   Map<String, dynamic> toFirestore() => {
         Constants.uid: uid,
         Constants.username: username,
         Constants.photoUrl: photoUrl,
-        Constants.shippingInfo: shippingInfo?.toFirestore()
+        Constants.shippingInfo: shippingInfo?.toFirestore(),
+        Constants.account: account
       };
 
   factory User.fromFirestore(
@@ -39,6 +42,7 @@ class User {
               options,
             )
           : null,
+      account: snapshot?[Constants.account] as String,
     );
   }
 
@@ -56,6 +60,7 @@ class User {
               options,
             )
           : null,
+      account: json[Constants.account] as String,
     );
   }
 }

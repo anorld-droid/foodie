@@ -10,3 +10,4 @@ export 'src/destination_model.dart';
 export 'src/shipping_model.dart';
 export 'src/m_pesa_payments.dart';
 export 'src/messagebird_model.dart';
+export 'src/subscription.dart';

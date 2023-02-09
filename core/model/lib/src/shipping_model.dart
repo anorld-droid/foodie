@@ -34,7 +34,7 @@ class ShippingModel {
       items: items.map((e) {
         e as Map<String, dynamic>;
         return CartItem.fromJson(e);
-      }) as List<CartItem>,
+      }).toList(),
       orderNo: snapshot?[Constants.orderNo] as String,
       status: snapshot?[Constants.status] as String,
     );

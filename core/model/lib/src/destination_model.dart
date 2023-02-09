@@ -1,11 +1,13 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:model/src/constants.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 
 class DestinationModel {
+  final String county;
   final String town;
-  final String area;
   final String? building;
   final String? floorNo;
   final String? roomNo;
@@ -16,13 +18,13 @@ class DestinationModel {
     this.floorNo,
     this.roomNo,
     this.landmark,
+    required this.county,
     required this.town,
-    required this.area,
   });
 
   Map<String, dynamic> toFirestore() => {
+        Constants.county: county,
         Constants.town: town,
-        Constants.area: area,
         Constants.building: building,
         Constants.floorNo: floorNo,
         Constants.roomNo: roomNo,
@@ -34,8 +36,8 @@ class DestinationModel {
     SnapshotOptions? options,
   ) {
     return DestinationModel(
-      town: snapshot[Constants.town] as String,
-      area: snapshot[Constants.area] as String,
+      county: snapshot[Constants.town] as String,
+      town: snapshot[Constants.county] as String,
       building: snapshot[Constants.building] as String,
       floorNo: snapshot[Constants.floorNo] as String,
       roomNo: snapshot[Constants.roomNo] as String,
@@ -48,8 +50,8 @@ class DestinationModel {
   ) {
     var snapshot = snap.data();
     return DestinationModel(
+      county: snapshot?[Constants.county] as String,
       town: snapshot?[Constants.town] as String,
-      area: snapshot?[Constants.area] as String,
       building: snapshot?[Constants.building] as String?,
       floorNo: snapshot?[Constants.floorNo] as String?,
       roomNo: snapshot?[Constants.roomNo] as String?,
@@ -59,7 +61,28 @@ class DestinationModel {
 }
 
 class Destinations {
-  final List<DestinationModel> destinations;
+  final Map<String, List<String>> destinations;
 
   const Destinations({required this.destinations});
+
+  Map<String, dynamic> toFirestore() => {
+        Constants.destination: destinations,
+      };
+
+  factory Destinations.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snap,
+    SnapshotOptions? options,
+  ) {
+    var snapshot = snap.data();
+    var destinations = snapshot?[Constants.destination] as Map<String, dynamic>;
+    return Destinations(
+      destinations: destinations.map((key, value) {
+        value as List;
+        return MapEntry(
+          key,
+          value.map((e) => e as String).toList(),
+        );
+      }),
+    );
+  }
 }

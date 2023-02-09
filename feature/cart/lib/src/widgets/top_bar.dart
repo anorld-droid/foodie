@@ -12,61 +12,21 @@ class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
     Get.find<Controller>();
     return AppBar(
       elevation: 2,
+      shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(8),
           bottomRight: Radius.circular(8),
         ),
       ),
-      title: Obx(() => Text(
-            '${Strings.deliveryTo} ${controller.topDestination.value}',
-            style: Get.textTheme.bodyLarge,
-          )),
+      title: Obx(
+        () => Text(
+          controller.subscription.value?.shippingInfo ?? Strings.shippingDays,
+          style: Get.textTheme.bodySmall,
+        ),
+      ),
       backgroundColor: Get.theme.backgroundColor,
-      actions: [
-        Obx(
-          () => PopupMenuButton(
-            initialValue: controller.topDestination.value,
-            elevation: 0,
-            icon: Icon(
-              Icons.expand_more,
-              color: Get.theme.primaryColorDark,
-            ),
-            position: PopupMenuPosition.under,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
-              ),
-            ),
-            itemBuilder: (context) => _destinations(),
-            onSelected: (value) {
-              controller.destinationTown.value =
-                  controller.getTown(value as String);
-              controller.destinationArea.value = controller.getArea(value);
-            },
-          ),
-        ),
-      ],
     );
-  }
-
-  List<PopupMenuEntry> _destinations() {
-    List<PopupMenuEntry> popupMenuItems = [];
-    for (var destination in controller.destinations.value.destinations) {
-      var destinationValue =
-          controller.convertDestination(destination.town, destination.area);
-      popupMenuItems.add(
-        PopupMenuItem(
-          value: destinationValue,
-          child: Text(
-            destinationValue,
-            style: Get.textTheme.bodyLarge,
-          ),
-        ),
-      );
-    }
-
-    return popupMenuItems;
   }
 
   @override

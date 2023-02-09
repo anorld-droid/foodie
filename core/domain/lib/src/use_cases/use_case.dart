@@ -11,3 +11,4 @@ export 'app_init.dart';
 export 'payment_options_use_case.dart';
 export 'send_message_use_case.dart';
 export 'get_destinations_use_case.dart';
+export 'subscription_use_case.dart';

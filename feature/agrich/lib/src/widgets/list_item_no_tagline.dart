@@ -33,7 +33,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
               physics: const ClampingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: cuisineModel.cuisineItems.length,
-              itemBuilder: (BuildContext context, int index) => _cardWithTag(
+              itemBuilder: (BuildContext context, int index) => _cardWithoutTag(
                 cuisineModel.cuisineItems[index],
                 onItemTap,
               ),
@@ -44,7 +44,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
     );
   }
 
-  Widget _cardWithTag(CuisineItem item, void Function(CuisineItem) onTap) {
+  Widget _cardWithoutTag(CuisineItem item, void Function(CuisineItem) onTap) {
     return Padding(
       padding: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
       child: InkWell(

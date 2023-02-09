@@ -15,7 +15,7 @@ class Constants {
   static String phoneNumber = 'phoneNumber';
   static String destination = 'destination';
   static String town = 'town';
-  static String area = 'area';
+  static String county = 'county';
   static String building = 'building';
   static String floorNo = 'floorNumber';
   static String roomNo = 'roomNumber';
@@ -27,6 +27,8 @@ class Constants {
   static String cuisineItems = 'cuisineItems';
   static String detail = 'detail';
   static String nutrients = 'nutrients';
+  static String account = 'account';
+  static String shippingStatus = 'shippingStatus';
 
   // Mpesa Payments
   static String merchantRequestID = 'MerchantRequestID';

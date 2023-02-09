@@ -120,6 +120,7 @@ class Themes {
   );
 
   static final light = ThemeData.light().copyWith(
+      scaffoldBackgroundColor: Colors.white,
       backgroundColor: Colors.white,
       brightness: Brightness.dark,
       primaryColorDark: Colors.black,
@@ -187,6 +188,7 @@ class Themes {
       ));
 
   static final dark = ThemeData.dark().copyWith(
+      scaffoldBackgroundColor: Colors.black,
       backgroundColor: Colors.black,
       brightness: Brightness.light,
       primaryColorDark: Colors.white,
