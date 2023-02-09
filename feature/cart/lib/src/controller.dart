@@ -38,6 +38,7 @@ class Controller extends GetxController {
   final Rx<Subscription?> subscription = Rx(null);
   final Rx<ShippingInfo?> _shippingInfo = Rx(null);
   final Rx<String> shippingAddress = Rx('');
+  final Rx<bool> freeShipping = Rx(true);
 
   final Rx<bool> loading = false.obs;
 
@@ -73,14 +74,15 @@ class Controller extends GetxController {
     landmarkController = TextEditingController();
 
     itemLength.value = items.value.length;
-    calculateTotal();
   }
 
   Future<void> loadData() async {
     loading.value = true;
     //Get shipping infomation, days and time supported
     await _subscriptionUseCase.get().then(
-          (value) => subscription.value = value.data(),
+          (value) => value.listen((event) {
+            subscription.value = event.data();
+          }),
         );
 
     //Retrive autone's delivery destinations
@@ -99,6 +101,7 @@ class Controller extends GetxController {
       User user = event.data()!;
       _shippingInfo.value = user.shippingInfo;
       getShippingInfo();
+      getShippingStatus(user);
     });
     // Load the items, ordered by the user
     var shipSnap = await _shippingUseCase.get(_authenticateUser.getUserId()!);
@@ -109,6 +112,15 @@ class Controller extends GetxController {
       }
       orderedItems.value = ordItems;
     });
+  }
+
+  void getShippingStatus(User user) {
+    if (subscription.value != null) {
+      freeShipping.value =
+          (user.account == 'Free' || user.account == 'Platinum') &&
+              subscription.value!.shippingStatus;
+    }
+    calculateTotal();
   }
 
   void getShippingInfo() {
@@ -126,22 +138,15 @@ class Controller extends GetxController {
       sum += item.sellingPrice.value;
     }
     subTotal.value = sum;
-    shippingFee.value = sum * 0.2;
+    shippingFee.value = freeShipping.value ? 0 : sum * 0.2;
+
     subTotal.refresh();
     shippingFee.refresh();
   }
 
   void calculateTotal() {
     _calculateSubTotal();
-
-    if (subscription.value != null) {
-      total.value = subscription.value!.shippingStatus
-          ? subTotal.value
-          : subTotal.value + shippingFee.value;
-    } else {
-      total.value = subTotal.value + shippingFee.value;
-    }
-
+    total.value = subTotal.value + shippingFee.value;
     total.refresh();
   }
 
@@ -158,7 +163,11 @@ class Controller extends GetxController {
   }
 
   void checkout() async {
-    if (_shippingInfo.value?.name == null) {
+    double shipAmount = subscription.value?.minShipAmount.toDouble() ?? 150.00;
+    if (total.value < shipAmount) {
+      shortToast(
+          'We start shipping for amounts above ${CommonStrings.currency}${shipAmount.toStringAsFixed(0)}');
+    } else if (_shippingInfo.value?.name == null) {
       shippingDialog();
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');

@@ -9,8 +9,8 @@ class SubscriptionUseCase {
   final CloudNetWorkDataSource _cloudNetWorkDataSource = Get.find();
 
   // Get the file to the specified path
-  Future<DocumentSnapshot<Subscription>> get() async {
-    return await _cloudNetWorkDataSource.getDoc(
+  Future<Stream<DocumentSnapshot<Subscription>>> get() async {
+    return await _cloudNetWorkDataSource.getDocStream(
       collection: Constants.cuisine,
       doc: Constants.subscription,
       fromFirestore: Subscription.fromFirestore,

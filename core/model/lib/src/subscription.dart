@@ -5,11 +5,17 @@ import 'package:model/src/constants.dart';
 class Subscription {
   final String shippingInfo;
   final bool shippingStatus;
+  final int minShipAmount;
 
-  Subscription({required this.shippingInfo, required this.shippingStatus});
+  Subscription({
+    required this.shippingInfo,
+    required this.shippingStatus,
+    required this.minShipAmount,
+  });
   Map<String, dynamic> toFirestore() => {
         Constants.shippingInfo: shippingInfo,
         Constants.shippingStatus: shippingStatus,
+        Constants.minShipAmount: minShipAmount,
       };
 
   factory Subscription.fromFirestore(
@@ -18,8 +24,8 @@ class Subscription {
   ) {
     var snapshot = snap.data();
     return Subscription(
-      shippingInfo: snapshot?[Constants.shippingInfo] as String,
-      shippingStatus: snapshot?[Constants.shippingStatus] as bool,
-    );
+        shippingInfo: snapshot?[Constants.shippingInfo] as String,
+        shippingStatus: snapshot?[Constants.shippingStatus] as bool,
+        minShipAmount: snapshot?[Constants.minShipAmount] as int);
   }
 }

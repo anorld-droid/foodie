@@ -29,6 +29,7 @@ class Constants {
   static String nutrients = 'nutrients';
   static String account = 'account';
   static String shippingStatus = 'shippingStatus';
+  static String minShipAmount = 'minShipAmount';
 
   // Mpesa Payments
   static String merchantRequestID = 'MerchantRequestID';
