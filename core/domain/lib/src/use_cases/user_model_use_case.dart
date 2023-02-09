@@ -55,6 +55,19 @@ class UserModelUseCase {
     );
   }
 
+  /// update the file to the specified path
+  /// NOTE: docPath should be user id
+  Future<void> updateAccountType({
+    required String userId,
+    required String accountType,
+  }) async {
+    await _cloudNetWorkDataSource.updateField<String>(
+      collection: Constants.users,
+      doc: userId,
+      data: {'account': accountType},
+    );
+  }
+
   Future<bool> exists(String query) async {
     final users = await _cloudNetWorkDataSource.filterDocs(
         collection: Constants.users,

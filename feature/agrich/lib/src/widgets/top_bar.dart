@@ -14,17 +14,8 @@ class CuisineTopBar extends GetView<CuisineController>
   Widget build(BuildContext context) {
     Get.find<CuisineController>();
     return AppBar(
-      elevation: 0,
-      leading: Container(
-          padding: const EdgeInsets.only(left: 16),
-          alignment: AlignmentDirectional.center,
-          child: RichText(
-            text: TextSpan(
-              text: '${CommonStrings.currency}$accountBalance',
-              style: Get.textTheme.displaySmall
-                  ?.copyWith(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-          )),
+      elevation: 2,
+      shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
       title: CustomTextField(
           onIconTap: () async {
             controller.search(controller.searchController.text);
@@ -42,12 +33,17 @@ class CuisineTopBar extends GetView<CuisineController>
           borderRadius: 30,
           maxLength: 16,
           backgroundColor: Get.theme.primaryColorDark.withOpacity(.12)),
-      leadingWidth: accountBalance.length < 6
-          ? 96
-          : accountBalance.length < 7
-              ? 104
-              : 120,
       backgroundColor: Get.theme.backgroundColor,
+      actions: [
+        IconButton(
+          onPressed: () async => await controller.subscriptionOptions(),
+          icon: Icon(
+            Icons.money_off,
+            color: Get.theme.primaryColorDark,
+          ),
+          color: Get.theme.primaryColorDark,
+        )
+      ],
     );
   }
 

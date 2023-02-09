@@ -8,7 +8,7 @@ class Constants {
   static int businessCode = 174379;
   static String callbackUrl =
       'https://us-central1-trice-project.cloudfunctions.net/safaricom';
-  static String accountReference = 'Trice, Cuisine 2.0';
+  static String accountReference = 'Autone';
   static String transactionDesc = 'Payment of ';
   static String passKey =
       ''; //TODO: request from m-pesabusiness@safaricom.co.ke

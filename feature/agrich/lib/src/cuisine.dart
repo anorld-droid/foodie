@@ -101,10 +101,10 @@ class Cuisine extends GetView<CuisineController> {
         children: [
           FloatingActionButton(
             enableFeedback: true,
-            elevation: 2,
+            elevation: 10,
             heroTag: 'Cart Button',
             onPressed: controller.navigateToCart,
-            backgroundColor: Get.theme.primaryColorDark.withOpacity(.15),
+            backgroundColor: Get.theme.backgroundColor,
             child: Icon(
               Icons.shopping_cart,
               color: Get.theme.primaryColorDark,
