@@ -162,7 +162,7 @@ class CuisineDetail extends GetView<Controller> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: InkWell(
-                onTap: () => controller.addToCart(cuisineItem),
+                onTap: () async => await controller.addToCart(cuisineItem),
                 borderRadius: BorderRadius.circular(30),
                 child: Container(
                   alignment: AlignmentDirectional.center,
@@ -278,34 +278,19 @@ class CuisineDetail extends GetView<Controller> {
               const SizedBox(
                 height: 16,
               ),
-              Wrap(
-                children: _buildNutrients(),
-              )
+              Text(
+                cuisineItem.nutrients,
+                style: Get.textTheme.bodyLarge
+                    ?.copyWith(fontWeight: FontWeight.w400),
+                softWrap: true,
+                maxLines: controller.seeMore.value ? 20 : 5,
+                overflow: TextOverflow.ellipsis,
+              ),
             ],
           ),
         ),
         const Divider()
       ],
     );
-  }
-
-  List<Widget> _buildNutrients() {
-    List<Widget> nutrientsText = [];
-    for (var nutrient in cuisineItem.nutrients) {
-      nutrientsText.add(Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: Text(
-          cuisineItem.nutrients.indexOf(nutrient) ==
-                  (cuisineItem.nutrients.length - 1)
-              ? '$nutrient.'
-              : '$nutrient,',
-          style: Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
-          softWrap: true,
-          maxLines: controller.seeMore.value ? 20 : 5,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ));
-    }
-    return nutrientsText;
   }
 }

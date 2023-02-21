@@ -9,7 +9,7 @@ class CuisineItem {
   final String stockTag;
   final double price;
   final String detail;
-  final List<String> nutrients;
+  final String nutrients;
   final String photoUrl;
 
   CuisineItem(
@@ -46,13 +46,12 @@ class CuisineItem {
   factory CuisineItem.fromJson(
     Map<String, dynamic> json,
   ) {
-    var nutrients = json[Constants.nutrients] as List;
     return CuisineItem(
       name: json[Constants.name] as String,
       stockTag: json[Constants.stockTag] as String,
       price: json[Constants.price] as double,
       detail: json[Constants.detail] as String,
-      nutrients: nutrients.map((e) => e.toString()).toList(),
+      nutrients: json[Constants.nutrients] as String,
       photoUrl: json[Constants.photoUrl] as String,
     );
   }

@@ -21,6 +21,6 @@ class TriceAppController extends GetxController {
   Future<void> initializeViews() async {
     themeMode.value = await _themeHelper.getThemeData();
     final bool done = await _onboardingStatus.done();
-    Get.offAllNamed<void>(done ? Routes.root : Routes.signUp);
+    // Get.offAllNamed<void>(done ? Routes.root : Routes.signUp);
   }
 }
