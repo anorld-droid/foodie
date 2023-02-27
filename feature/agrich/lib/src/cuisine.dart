@@ -3,7 +3,6 @@ import 'package:agrich/src/cuisine_controller.dart';
 import 'package:agrich/src/widgets/chips.dart';
 import 'package:agrich/src/widgets/list_item_no_tagline.dart';
 import 'package:agrich/src/widgets/list_item_search_results.dart';
-import 'package:agrich/src/widgets/list_item_with_tagline.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -23,7 +22,6 @@ class Cuisine extends GetView<CuisineController> {
       body: SingleChildScrollView(
         child: Obx(
           () => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               controller.editing.value ||
                       controller.searchController.text.isNotEmpty ||
@@ -76,16 +74,10 @@ class Cuisine extends GetView<CuisineController> {
                       itemBuilder: (BuildContext context, int index) {
                         CuisineModel cuisineModel =
                             controller.items.value[index];
-                        if (index % 2 == 0) {
-                          return ListItemWithTagLine(
-                              cuisineModel: cuisineModel,
-                              onItemTap: controller.navigateToDetails);
-                        } else {
-                          return ListItemNoTagLine(
-                            cuisineModel: cuisineModel,
-                            onItemTap: controller.navigateToDetails,
-                          );
-                        }
+                        return ListItemNoTagLine(
+                          cuisineModel: cuisineModel,
+                          onItemTap: controller.navigateToDetails,
+                        );
                       }),
             ],
           ),

@@ -4,6 +4,7 @@ import 'package:common/common.dart';
 import 'package:cuisine_detail/cuisine_detail.dart';
 import 'package:di/di.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:log_in/log_in.dart';
 import 'package:model/model.dart';
@@ -16,6 +17,12 @@ class TriceApp extends GetView<TriceAppController> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      // Status bar color
+      statusBarColor: Get.theme.backgroundColor,
+      // Status bar brightness (optional)
+      statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
+    ));
     Get.lazyPut<TriceAppController>(() => TriceAppController(), fenix: true);
     return Obx(() => GetMaterialApp(
           builder: (context, child) {

@@ -6,3 +6,4 @@ export 'custom_slider_button.dart';
 export 'text_field_input.dart';
 export 'circular_progress_indicator.dart';
 export 'toast.dart';
+export 'auth_dialog.dart';

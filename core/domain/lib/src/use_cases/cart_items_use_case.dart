@@ -1,12 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_source/data_source.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 class CartItemsUseCase {
   final CloudNetWorkDataSource _cloudNetWorkDataSource = Get.find();
+  final AuthenticateUser _authenticateUser = Get.find();
+
+  String addToCart(CuisineItem cuisineItem, int qty, Widget authDialog) {
+    if (_authenticateUser.isUserSignedIn()) {
+      upload(
+        docPath: _authenticateUser.getUserId()!,
+        cartItem: cuisineItem.asCartItem(qty),
+      );
+      return 'Added to cart';
+    } else {
+      _showAuthDialog(Get.context!, authDialog);
+      return 'Try again';
+    }
+  }
+
+  Future<void> _showAuthDialog(BuildContext context, Widget authDialog) async {
+    showDialog<Widget>(
+        context: context,
+        barrierDismissible: false,
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors.black87,
+        builder: (BuildContext buildContext) {
+          return authDialog;
+        });
+  }
 
   /// Append the file to the specified path
   /// NOTE: doc should be user id

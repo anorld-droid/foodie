@@ -49,9 +49,6 @@ class SubscriptionLayout extends GetView<CuisineController> {
                     Tab(
                       text: 'Platinum',
                     ),
-                    Tab(
-                      text: 'Gold',
-                    ),
                   ],
                 ),
               ),
@@ -81,17 +78,7 @@ class SubscriptionLayout extends GetView<CuisineController> {
                     _tabViewLayout(
                       '0',
                       [
-                        'Available for only 30 days',
                         'Home Town delivery',
-                        'Limited Products',
-                      ],
-                    ),
-                    _tabViewLayout(
-                      '3000',
-                      [
-                        'Unlimited prooducts',
-                        'Ready meal options',
-                        'Recurring delivery',
                       ],
                     ),
                     _tabViewLayout(

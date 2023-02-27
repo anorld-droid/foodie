@@ -1,4 +1,5 @@
 import 'package:agrich/src/cuisine_controller.dart';
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -18,7 +19,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
   Widget build(BuildContext context) {
     Get.find<CuisineController>();
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,7 +29,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
                 Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 200,
+            height: 305,
             child: ListView.builder(
               physics: const ClampingScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -45,34 +46,140 @@ class ListItemNoTagLine extends GetView<CuisineController> {
   }
 
   Widget _cardWithoutTag(CuisineItem item, void Function(CuisineItem) onTap) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
+    return Container(
+      margin: const EdgeInsets.only(left: 12),
+      width: Get.width * 0.85,
       child: InkWell(
         onTap: () => onTap(item),
         borderRadius: const BorderRadius.all(
           Radius.circular(16),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Card(
-              shape: const CircleBorder(),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
               elevation: !Get.isDarkMode ? 0 : 7,
-              child: CircleAvatar(
-                radius: 64,
-                backgroundImage: NetworkImage(
-                  item.photoUrl,
+              child: Container(
+                width: Get.width * 0.85,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Get.theme.primaryColorDark.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(8),
+                  image: DecorationImage(
+                      image: NetworkImage(
+                        item.photoUrl,
+                      ),
+                      fit: BoxFit.cover),
                 ),
-                backgroundColor: Get.theme.primaryColorDark.withOpacity(0.12),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 12.0),
-              child: Text(
-                item.name,
-                style: Get.textTheme.bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+            SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.name,
+                            style: Get.textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                            softWrap: true,
+                            maxLines: 4,
+                            overflow: TextOverflow.visible,
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            item.stockTag,
+                            style: Get.textTheme.bodySmall?.copyWith(
+                              fontWeight: FontWeight.w100,
+                              color: Get.theme.primaryColorDark.withOpacity(.8),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Obx(
+                            () => Text(
+                              '${CommonStrings.currency} ${controller.sellingPrice.value.toStringAsFixed(2)}',
+                              style: Get.textTheme.bodySmall
+                                  ?.copyWith(fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 4.0, vertical: 1),
+                            child: Text(
+                              'Qty',
+                              style: Get.textTheme.bodyLarge
+                                  ?.copyWith(fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => controller.decrementQty(item.price),
+                            child: Icon(
+                              Icons.do_not_disturb_on_outlined,
+                              color: Get.theme.primaryColorDark,
+                              size: 24,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 2.0, vertical: 1),
+                            child: Obx(
+                              () => Text(
+                                '${controller.qty.value}',
+                                style: Get.textTheme.bodyLarge
+                                    ?.copyWith(fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => controller.incrementQty(item.price),
+                            child: Icon(
+                              Icons.add_circle_outline_outlined,
+                              color: Get.theme.primaryColorDark,
+                              size: 24,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: controller.checkout,
+                      borderRadius: BorderRadius.circular(30),
+                      child: Container(
+                        alignment: AlignmentDirectional.center,
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(30.0)),
+                            color: Get.theme.primaryColorDark),
+                        child: Icon(
+                          Icons.attach_money,
+                          color: Get.theme.backgroundColor,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ],

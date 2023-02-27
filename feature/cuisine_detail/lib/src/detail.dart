@@ -144,7 +144,7 @@ class CuisineDetail extends GetView<Controller> {
                   child: Obx(
                     () => Text(
                       '${controller.qty.value}',
-                      style: Get.textTheme.labelSmall
+                      style: Get.textTheme.bodyLarge
                           ?.copyWith(fontWeight: FontWeight.w700),
                     ),
                   ),
@@ -162,7 +162,7 @@ class CuisineDetail extends GetView<Controller> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: InkWell(
-                onTap: () async => await controller.addToCart(cuisineItem),
+                onTap: () => controller.addToCart(cuisineItem),
                 borderRadius: BorderRadius.circular(30),
                 child: Container(
                   alignment: AlignmentDirectional.center,

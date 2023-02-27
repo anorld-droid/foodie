@@ -184,12 +184,14 @@ class Controller extends GetxController {
         _shippingInfo.value!.phoneNumber!,
         'food items');
     if (reqID != null) {
-      final snap = await _paymentOptionsUseCase.getPaymentStatus(reqId: reqID);
+      final snap = await _paymentOptionsUseCase
+          .getPaymentStatus<MpesaResultPayment>(reqId: reqID);
       snap.listen((event) async {
         var element =
             event.docs.firstWhereOrNull((element) => element.id == reqID);
         if (element != null) {
-          var data = MpesaResultPayment.fromJson(element.data()['stkCallback']);
+          var data = MpesaResultPayment.fromJson(
+              element.data()['stkCallback'] as Map<String, dynamic>);
           if (data.responseCode == 0) {
             ShippingModel shippingModel = ShippingModel(
               uid: _authenticateUser.getUserId()!,
@@ -205,7 +207,7 @@ class Controller extends GetxController {
             itemLength.value = items.value.length;
             items.refresh();
             calculateTotal();
-            await Future.delayed(const Duration(seconds: 2));
+            await Future<void>.delayed(const Duration(seconds: 2));
             shortToast('Checkout successful');
           } else {
             longToast(data.responseDescription);
@@ -225,7 +227,7 @@ class Controller extends GetxController {
   }
 
   void deleteItem(CartItem item) {
-    _cartItemsUseCase.delete(
+    _cartItemsUseCase.delete<CartItem>(
       userId: _authenticateUser.getUserId()!,
       docId: item.id!,
     );
@@ -274,7 +276,7 @@ class Controller extends GetxController {
         shippingInfo: shippingInfo,
       );
       shortToast('Shipping info saved.');
-      Get.back();
+      Get.back<void>();
     }
   }
 
