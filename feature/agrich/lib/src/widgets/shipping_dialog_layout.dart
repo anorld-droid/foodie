@@ -181,6 +181,18 @@ class ShippingDialogLayout extends GetView<CuisineController> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0, left: 16.0),
+                        child: CustomTextField(
+                          textEditingController: controller.nameController,
+                          textInputType: TextInputType.name,
+                          borderRadius: 8,
+                          height: 48,
+                          hintText: 'Building/Floor No/House No',
+                          labelText: 'Residence',
+                          backgroundColor: Get.theme.backgroundColor,
+                        ),
+                      ),
                       const SizedBox(
                         height: 20,
                       ),

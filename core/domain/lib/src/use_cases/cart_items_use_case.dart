@@ -10,26 +10,26 @@ class CartItemsUseCase {
   final CloudNetWorkDataSource _cloudNetWorkDataSource = Get.find();
   final AuthenticateUser _authenticateUser = Get.find();
 
-  String addToCart(CuisineItem cuisineItem, int qty, Widget authDialog) {
+  String addToCart(CuisineItem cuisineItem, Widget authDialog) {
     if (_authenticateUser.isUserSignedIn()) {
       upload(
         docPath: _authenticateUser.getUserId()!,
-        cartItem: cuisineItem.asCartItem(qty),
+        cartItem: cuisineItem.asCartItem(),
       );
       return 'Added to cart';
     } else {
-      _showAuthDialog(Get.context!, authDialog);
+      showAuthDialog(Get.context!, authDialog);
       return 'Try again';
     }
   }
 
-  Future<void> _showAuthDialog(BuildContext context, Widget authDialog) async {
+  Future<void> showAuthDialog(BuildContext context, Widget authDialog) async {
     showDialog<Widget>(
         context: context,
         barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: Colors.black87,
+        barrierColor: Get.theme.backgroundColor,
         builder: (BuildContext buildContext) {
           return authDialog;
         });

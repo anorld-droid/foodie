@@ -86,8 +86,6 @@ class SubscriptionLayout extends GetView<CuisineController> {
                       [
                         'Personalized meal options',
                         'Hire professional chef',
-                        'Home/Office delivery',
-                        'Daily delivery',
                         'Free delivery',
                       ],
                     ),

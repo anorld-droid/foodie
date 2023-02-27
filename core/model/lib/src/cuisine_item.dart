@@ -7,7 +7,9 @@ import 'package:model/src/constants.dart';
 class CuisineItem {
   final String name;
   final String stockTag;
-  final double price;
+  final double basicPrice;
+  final Rx<double> sellingPrice;
+  final Rx<int> quantity;
   final String detail;
   final String nutrients;
   final String photoUrl;
@@ -15,20 +17,22 @@ class CuisineItem {
   CuisineItem(
       {required this.name,
       required this.stockTag,
-      required this.price,
+      required this.basicPrice,
+      required this.sellingPrice,
+      required this.quantity,
       required this.detail,
       required this.nutrients,
       required this.photoUrl});
 
-  CartItem asCartItem(int quantity) {
+  CartItem asCartItem() {
     return CartItem(
       id: null,
       photoUrl: photoUrl,
       name: name,
       stockTag: stockTag,
-      basicPrice: price,
-      sellingPrice: Rx(price * quantity),
-      quantity: Rx(quantity),
+      basicPrice: basicPrice,
+      sellingPrice: sellingPrice,
+      quantity: quantity,
     );
   }
 
@@ -36,7 +40,9 @@ class CuisineItem {
     return {
       Constants.name: name,
       Constants.stockTag: stockTag,
-      Constants.price: price,
+      Constants.basicPrice: basicPrice,
+      Constants.sellingPrice: sellingPrice.value,
+      Constants.quantity: quantity.value,
       Constants.detail: detail,
       Constants.nutrients: nutrients,
       Constants.photoUrl: photoUrl,
@@ -49,7 +55,9 @@ class CuisineItem {
     return CuisineItem(
       name: json[Constants.name] as String,
       stockTag: json[Constants.stockTag] as String,
-      price: json[Constants.price] as double,
+      basicPrice: json[Constants.basicPrice] as double,
+      sellingPrice: Rx(json[Constants.sellingPrice] as double),
+      quantity: Rx(json[Constants.quantity] as int),
       detail: json[Constants.detail] as String,
       nutrients: json[Constants.nutrients] as String,
       photoUrl: json[Constants.photoUrl] as String,

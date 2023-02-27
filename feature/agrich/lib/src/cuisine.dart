@@ -66,19 +66,21 @@ class Cuisine extends GetView<CuisineController> {
                               ),
                       ],
                     )
-                  : ListView.builder(
-                      key: Key(controller.items.value.length.toString()),
-                      physics: const ClampingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: controller.items.value.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        CuisineModel cuisineModel =
-                            controller.items.value[index];
-                        return ListItemNoTagLine(
-                          cuisineModel: cuisineModel,
-                          onItemTap: controller.navigateToDetails,
-                        );
-                      }),
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: List.generate(
+                          controller.items.value.length,
+                          (index) {
+                            CuisineModel cuisineModel =
+                                controller.items.value[index];
+                            return ListItemNoTagLine(
+                              cuisineModel: cuisineModel,
+                              onItemTap: controller.navigateToDetails,
+                            );
+                          },
+                        ),
+                      ),
+                    )
             ],
           ),
         ),

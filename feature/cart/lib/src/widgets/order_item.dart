@@ -93,7 +93,7 @@ class OrderItems extends GetView<Controller> {
                       children: [
                         Obx(
                           () => Text(
-                            "${CommonStrings.currency}${item.sellingPrice.value.toStringAsFixed(2)}",
+                            '${CommonStrings.currency}${item.sellingPrice.value.toStringAsFixed(2)}',
                             style: Get.textTheme.bodySmall
                                 ?.copyWith(fontWeight: FontWeight.w700),
                             overflow: TextOverflow.clip,

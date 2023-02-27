@@ -12,7 +12,7 @@ class CuisineDetail extends GetView<Controller> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => Controller());
-    controller.sellingPrice.value = cuisineItem.price;
+    controller.sellingPrice.value = cuisineItem.sellingPrice.value;
     return Scaffold(
       body: SafeArea(
           child: NestedScrollView(headerSliverBuilder:
@@ -132,7 +132,7 @@ class CuisineDetail extends GetView<Controller> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => controller.decrementQty(cuisineItem.price),
+                  onTap: () => controller.decrementQty(cuisineItem.basicPrice),
                   child: Icon(
                     Icons.do_not_disturb_on_outlined,
                     color: Get.theme.primaryColorDark,
@@ -150,7 +150,7 @@ class CuisineDetail extends GetView<Controller> {
                   ),
                 ),
                 InkWell(
-                  onTap: () => controller.incrementQty(cuisineItem.price),
+                  onTap: () => controller.incrementQty(cuisineItem.basicPrice),
                   child: Icon(
                     Icons.add_circle_outline_outlined,
                     color: Get.theme.primaryColorDark,

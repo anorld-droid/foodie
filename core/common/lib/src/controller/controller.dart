@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 
-class Controller extends GetxController with GetTickerProviderStateMixin {
+class CommonController extends GetxController with GetTickerProviderStateMixin {
   late final TabController tabController;
 
   late final AuthenticateUser _authenticateUser;

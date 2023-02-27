@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
-class AuthDialog extends GetView<Controller> {
+class AuthDialog extends GetView<CommonController> {
   const AuthDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => Controller());
+    Get.lazyPut(() => CommonController());
     return Column(
       children: [
         Padding(

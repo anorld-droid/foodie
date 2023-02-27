@@ -45,10 +45,6 @@ class CuisineController extends GetxController
 
   Rx<bool> inputValidated = false.obs;
 
-  final Rx<double> subTotal = 0.0.obs;
-  final Rx<double> total = 0.0.obs;
-  final Rx<double> shippingFee = 0.0.obs;
-
   final Rx<Subscription?> subscription = Rx(null);
   final Rx<String> shippingAddress = Rx('');
   final Rx<bool> freeShipping = Rx(true);
@@ -157,38 +153,54 @@ class CuisineController extends GetxController
   }
 
   Future<void> pay(String amount, String type) async {
-    if (phoneNumber.phoneNumber != null && inputValidated.value) {
-      final reqID = await _paymentOptionsUseCase.withMPesa(
-          _authenticateUser.getUserId()!,
-          amount,
-          phoneNumber.phoneNumber!,
-          'account upgrade');
-      if (reqID != null) {
-        Get.back<void>();
-        final snap = await _paymentOptionsUseCase
-            .getPaymentStatus<MpesaResultPayment>(reqId: reqID);
-        snap.listen((event) async {
-          var snapshot =
-              event.docs.firstWhereOrNull((element) => element.id == reqID);
-          if (snapshot != null) {
-            var data = MpesaResultPayment.fromJson(
-                snapshot.data()['stkCallback'] as Map<String, dynamic>);
-            if (data.responseCode == 0) {
-              await _userModelUseCase.updateAccountType(
-                  userId: _authenticateUser.getUserId()!, accountType: type);
-              await Future<void>.delayed(const Duration(seconds: 2));
-              shortToast('Upgrade successful');
-            } else {
-              longToast(data.responseDescription);
+    if (_authenticateUser.isUserSignedIn()) {
+      if (phoneNumber.phoneNumber != null && inputValidated.value) {
+        final reqID = await _paymentOptionsUseCase.withMPesa(
+            _authenticateUser.getUserId()!,
+            amount,
+            phoneNumber.phoneNumber!,
+            'account upgrade');
+        if (reqID != null) {
+          Get.back<void>();
+          final snap = await _paymentOptionsUseCase
+              .getPaymentStatus<MpesaResultPayment>(reqId: reqID);
+          snap.listen((event) async {
+            var snapshot =
+                event.docs.firstWhereOrNull((element) => element.id == reqID);
+            if (snapshot != null) {
+              var data = MpesaResultPayment.fromJson(
+                  snapshot.data()['stkCallback'] as Map<String, dynamic>);
+              if (data.responseCode == 0) {
+                await _userModelUseCase.updateAccountType(
+                    userId: _authenticateUser.getUserId()!, accountType: type);
+                await Future<void>.delayed(const Duration(seconds: 2));
+                shortToast('Upgrade successful');
+              } else {
+                longToast(data.responseDescription);
+              }
             }
-          }
-        });
+          });
+        } else {
+          longToast('Payment operation failed.');
+        }
       } else {
-        longToast('Payment operation failed.');
+        longToast('Enter your phone number.');
       }
     } else {
-      longToast('Enter your phone number.');
+      showAuthDialog();
     }
+  }
+
+  Future<void> showAuthDialog() async {
+    showDialog<Widget>(
+        context: Get.context!,
+        barrierDismissible: false,
+        barrierLabel:
+            MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
+        barrierColor: Get.theme.backgroundColor,
+        builder: (BuildContext buildContext) {
+          return const AuthDialog();
+        });
   }
 
   void sendMessage() {
@@ -236,25 +248,30 @@ class CuisineController extends GetxController
     );
   }
 
-  void checkout() async {
-    double shipAmount = subscription.value?.minShipAmount.toDouble() ?? 150.00;
-    if (total.value < shipAmount) {
-      shortToast(
-          'We start shipping for amounts above ${CommonStrings.currency}${shipAmount.toStringAsFixed(0)}');
-    } else if (_shippingInfo.value?.name == null) {
-      shippingDialog();
-    } else if (items.value.isEmpty) {
-      longToast('Add items to cart to proceed.');
+  void checkout(double amount) async {
+    if (_authenticateUser.isUserSignedIn()) {
+      double shipAmount =
+          subscription.value?.minShipAmount.toDouble() ?? 150.00;
+      if (amount < shipAmount) {
+        shortToast(
+            'We start shipping for amounts above ${CommonStrings.currency}${shipAmount.toStringAsFixed(0)}');
+      } else if (_shippingInfo.value?.name == null) {
+        shippingDialog();
+      } else if (items.value.isEmpty) {
+        longToast('Add items to cart to proceed.');
+      } else {
+        await _transact(amount.toStringAsFixed(0));
+        sendOrderMessage();
+      }
     } else {
-      await _transact();
-      sendOrderMessage();
+      showAuthDialog();
     }
   }
 
-  Future<void> _transact() async {
+  Future<void> _transact(String amount) async {
     final reqID = await _paymentOptionsUseCase.withMPesa(
         _authenticateUser.getUserId()!,
-        total.value.toStringAsFixed(0),
+        amount,
         _shippingInfo.value!.phoneNumber!,
         'food items');
     if (reqID != null) {
@@ -277,10 +294,6 @@ class CuisineController extends GetxController
               userId: _authenticateUser.getUserId()!,
               shippingModel: shippingModel,
             );
-            cartItems.value.clear();
-            itemLength.value = items.value.length;
-            cartItems.refresh();
-            calculateTotal();
             await Future<void>.delayed(const Duration(seconds: 2));
             shortToast('Checkout successful');
           } else {
@@ -300,17 +313,6 @@ class CuisineController extends GetxController
     _sendMessageUseCase.invoke(messageBird: sms);
   }
 
-  void deleteItem(CartItem item) {
-    _cartItemsUseCase.delete(
-      userId: _authenticateUser.getUserId()!,
-      docId: item.id!,
-    );
-    cartItems.value.removeWhere((element) => element.id == item.id);
-    itemLength.value = cartItems.value.length;
-    cartItems.refresh();
-    calculateTotal();
-  }
-
   Future<void> shippingDialog() async {
     await showDialog<Widget>(
         context: Get.context!,
@@ -323,33 +325,15 @@ class CuisineController extends GetxController
         });
   }
 
-  void _calculateSubTotal() {
-    var sum = 0.0;
-    for (var item in cartItems.value) {
-      sum += item.sellingPrice.value;
-    }
-    subTotal.value = sum;
-    shippingFee.value = freeShipping.value ? 0 : sum * 0.2;
-
-    subTotal.refresh();
-    shippingFee.refresh();
+  void incrementQty(CuisineItem item) {
+    var qty = ++item.quantity.value;
+    item.sellingPrice.value = item.basicPrice * qty;
   }
 
-  void calculateTotal() {
-    _calculateSubTotal();
-    total.value = subTotal.value + shippingFee.value;
-    total.refresh();
-  }
-
-  void incrementQty(double basicPrice) {
-    qty.value++;
-    sellingPrice.value = basicPrice * qty.value;
-  }
-
-  void decrementQty(double basicPrice) {
-    if (qty.value > 1.0) {
-      qty.value--;
-      sellingPrice.value = basicPrice * qty.value;
+  void decrementQty(CuisineItem item) {
+    if (item.quantity > 1.0) {
+      var qty = --item.quantity.value;
+      item.sellingPrice.value = item.basicPrice * qty;
     }
   }
 
