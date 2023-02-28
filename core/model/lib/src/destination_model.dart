@@ -9,13 +9,13 @@ class DestinationModel {
   final String? building;
   final String? floorNo;
   final String? roomNo;
-  final String? landmark;
+  final String? area;
 
   const DestinationModel({
     this.building,
     this.floorNo,
     this.roomNo,
-    this.landmark,
+    this.area,
     required this.county,
     required this.town,
   });
@@ -26,7 +26,7 @@ class DestinationModel {
         Constants.building: building,
         Constants.floorNo: floorNo,
         Constants.roomNo: roomNo,
-        Constants.landmark: landmark,
+        Constants.area: area,
       };
 
   factory DestinationModel.fromFirestore(
@@ -39,7 +39,7 @@ class DestinationModel {
       building: snapshot[Constants.building] as String,
       floorNo: snapshot[Constants.floorNo] as String,
       roomNo: snapshot[Constants.roomNo] as String,
-      landmark: snapshot[Constants.landmark] as String,
+      area: snapshot[Constants.area] as String,
     );
   }
 
@@ -54,13 +54,13 @@ class DestinationModel {
       building: snapshot?[Constants.building] as String?,
       floorNo: snapshot?[Constants.floorNo] as String?,
       roomNo: snapshot?[Constants.roomNo] as String?,
-      landmark: snapshot?[Constants.landmark] as String?,
+      area: snapshot?[Constants.area] as String?,
     );
   }
 }
 
 class Destinations {
-  final Map<String, List<String>> destinations;
+  final Map<String, List<Map<String, List<String>>>> destinations;
 
   const Destinations({required this.destinations});
 
@@ -78,9 +78,20 @@ class Destinations {
       destinations: destinations.map((key, value) {
         value as List;
         return MapEntry(
-          key,
-          value.map((e) => e as String).toList(),
-        );
+            key,
+            value.map((e) {
+              e as Map<String, dynamic>;
+              return e.map((town, area) {
+                area as List;
+                return MapEntry(
+                    town,
+                    area
+                        .map(
+                          (a) => a as String,
+                        )
+                        .toList());
+              });
+            }).toList());
       }),
     );
   }

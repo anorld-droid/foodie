@@ -15,6 +15,7 @@ class CuisineController extends GetxController
   late final TextEditingController nameController;
   late final TextEditingController searchController;
   late final TextEditingController phoneController;
+  late final TextEditingController buildingController;
 
   final Rx<List<CuisineModel>> items = Rx([]);
   final Rx<List<CuisineItem>> searchItems = Rx([]);
@@ -54,6 +55,7 @@ class CuisineController extends GetxController
       Rx(const Destinations(destinations: {}));
   final Rx<String> county = Rx('');
   final Rx<String> town = Rx('');
+  final Rx<String> area = Rx('');
 
   final Rx<int> itemLength = 0.obs;
 
@@ -92,6 +94,7 @@ class CuisineController extends GetxController
     nameController = TextEditingController();
     searchController = TextEditingController();
     phoneController = TextEditingController();
+    buildingController = TextEditingController();
     focusNode = FocusNode();
 
     tabController = TabController(length: 2, vsync: this);
@@ -124,6 +127,20 @@ class CuisineController extends GetxController
           );
     });
     itemLength.value = items.value.length;
+  }
+
+  List<String> getTowns() {
+    return destinations.value.destinations[county.value]
+            ?.map((e) => e.keys.first)
+            .toList() ??
+        [];
+  }
+
+  List<String> getAreas() {
+    return destinations.value.destinations[county.value]?.firstWhere(
+            (element) => element.containsKey(town.value),
+            orElse: (() => {}))[town.value] ??
+        [];
   }
 
   Future<void> subscriptionOptions() async {
@@ -342,20 +359,25 @@ class CuisineController extends GetxController
     String? mobileNumber = phoneNumber.phoneNumber;
     String countyValue = county.value;
     String townValue = town.value;
+    String areaValue = area.value;
+    String building = buildingController.text;
 
     if (validateInput(
       name,
       mobileNumber,
       countyValue,
       townValue,
+      areaValue,
+      building,
     )) {
       ShippingInfo shippingInfo = ShippingInfo(
         name: name,
         phoneNumber: mobileNumber,
         destination: DestinationModel(
-          county: countyValue,
-          town: townValue,
-        ),
+            county: countyValue,
+            town: townValue,
+            area: areaValue,
+            building: building),
       );
       await _userModelUseCase.updateShippingInfo(
         userId: _authenticateUser.getUserId()!,
@@ -366,13 +388,15 @@ class CuisineController extends GetxController
     }
   }
 
-  bool validateInput(
-      String name, String? phoneNumber, String county, String town) {
+  bool validateInput(String name, String? phoneNumber, String county,
+      String town, String area, String building) {
     if (name.isNotEmpty &&
         phoneNumber != null &&
         county.isNotEmpty &&
         town.isNotEmpty &&
-        inputValidated.value) {
+        inputValidated.value &&
+        building.isNotEmpty &&
+        area.isNotEmpty) {
       return true;
     } else {
       shortToast('Please, fill all the details');

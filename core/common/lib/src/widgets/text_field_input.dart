@@ -133,6 +133,7 @@ class CustomTextField extends StatelessWidget {
           cursorColor: Get.theme.primaryColorDark,
           onChanged: onChanged,
           onSubmitted: onSubmitted,
+          scrollPadding: const EdgeInsets.all(40),
           controller: textEditingController,
           decoration: InputDecoration(
             labelText: labelText,

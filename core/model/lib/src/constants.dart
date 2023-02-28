@@ -19,7 +19,7 @@ class Constants {
   static String building = 'building';
   static String floorNo = 'floorNumber';
   static String roomNo = 'roomNumber';
-  static String landmark = 'landmark';
+  static String area = 'area';
   static String orderNo = 'orderNumber';
   static String items = 'items';
   static String status = 'status';

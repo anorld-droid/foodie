@@ -29,7 +29,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
                 Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 305,
+            height: 315,
             child: ListView.builder(
               physics: const ClampingScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -47,7 +47,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
 
   Widget _cardWithoutTag(CuisineItem item, void Function(CuisineItem) onTap) {
     return Container(
-      margin: const EdgeInsets.only(left: 12),
+      margin: const EdgeInsets.only(left: 12, top: 8),
       width: Get.width * 0.85,
       child: Column(
         children: [
@@ -55,15 +55,15 @@ class ListItemNoTagLine extends GetView<CuisineController> {
             onTap: () => onTap(item),
             child: Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(0),
               ),
-              elevation: !Get.isDarkMode ? 0 : 7,
+              elevation: !Get.isDarkMode ? 0 : 0,
               child: Container(
                 width: Get.width * 0.85,
                 height: 200,
                 decoration: BoxDecoration(
                   color: Get.theme.primaryColorDark.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(0),
                   image: DecorationImage(
                       image: NetworkImage(
                         item.photoUrl,
