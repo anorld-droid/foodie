@@ -1,26 +1,32 @@
-import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 
 class TriceAppController extends GetxController {
-  late ThemeHelper _themeHelper;
-  late OnboardingStatus _onboardingStatus;
   Rx<ThemeMode> themeMode = ThemeMode.system.obs;
+  final SendMessageUseCase _messageUseCase = SendMessageUseCase();
 
   @override
-  void onReady() async {
+  void onReady() {
     super.onReady();
-    _themeHelper = Get.find();
-    _onboardingStatus = OnboardingStatus();
-    await initializeViews();
-  }
-
-  Future<void> initializeViews() async {
-    themeMode.value = await _themeHelper.getThemeData();
-    final bool done = await _onboardingStatus.done();
-    // Get.offAllNamed<void>(done ? Routes.root : Routes.signUp);
+    _messageUseCase.pushNotification(({body, dataBody, dataTitle, title}) {
+      if (title != null &&
+          body != null &&
+          dataTitle != null &&
+          dataBody != null) {
+        showSimpleNotification(
+          Text(
+            title,
+            style: Get.textTheme.bodyLarge,
+          ),
+          subtitle: Text(body, style: Get.textTheme.bodySmall),
+          background: Get.theme.backgroundColor,
+          duration: const Duration(seconds: 2),
+        );
+      }
+    });
   }
 }

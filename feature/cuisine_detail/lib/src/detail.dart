@@ -205,7 +205,7 @@ class CuisineDetail extends GetView<Controller> {
                 height: 4,
               ),
               Text(
-                cuisineItem.stockTag,
+                cuisineItem.store,
                 style: Get.textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w100,
                   color: Get.theme.primaryColorDark.withOpacity(.8),

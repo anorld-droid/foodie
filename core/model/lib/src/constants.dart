@@ -23,6 +23,7 @@ class Constants {
   static String orderNo = 'orderNumber';
   static String items = 'items';
   static String status = 'status';
+  static String store = 'store';
   static String header = 'header';
   static String cuisineItems = 'cuisineItems';
   static String detail = 'detail';

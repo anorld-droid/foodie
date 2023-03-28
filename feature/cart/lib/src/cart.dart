@@ -40,7 +40,7 @@ class Cart extends GetView<Controller> {
           children: [
             InkWell(
               onTap: () => controller.shippingDialog(),
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(0.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -50,7 +50,7 @@ class Cart extends GetView<Controller> {
                     width: Get.width * 0.45,
                     decoration: BoxDecoration(
                       borderRadius:
-                          const BorderRadius.all(Radius.circular(8.0)),
+                          const BorderRadius.all(Radius.circular(0.0)),
                       color: Get.theme.primaryColorDark,
                     ),
                     child: Text(
@@ -66,7 +66,7 @@ class Cart extends GetView<Controller> {
             ),
             InkWell(
               onTap: () => controller.checkout(),
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(0.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -76,7 +76,7 @@ class Cart extends GetView<Controller> {
                     width: Get.width * 0.45,
                     decoration: BoxDecoration(
                       borderRadius:
-                          const BorderRadius.all(Radius.circular(8.0)),
+                          const BorderRadius.all(Radius.circular(0.0)),
                       color: Get.theme.primaryColorDark,
                     ),
                     child: Text(

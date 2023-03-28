@@ -6,7 +6,8 @@ import 'package:model/src/constants.dart';
 
 class CuisineItem {
   final String name;
-  final String stockTag;
+  final int stockTag;
+  final String store;
   final double basicPrice;
   final Rx<double> sellingPrice;
   final Rx<int> quantity;
@@ -16,6 +17,7 @@ class CuisineItem {
 
   CuisineItem(
       {required this.name,
+      required this.store,
       required this.stockTag,
       required this.basicPrice,
       required this.sellingPrice,
@@ -29,6 +31,7 @@ class CuisineItem {
       id: null,
       photoUrl: photoUrl,
       name: name,
+      store: store,
       stockTag: stockTag,
       basicPrice: basicPrice,
       sellingPrice: sellingPrice,
@@ -39,6 +42,7 @@ class CuisineItem {
   Map<String, dynamic> toJson() {
     return {
       Constants.name: name,
+      Constants.store: store,
       Constants.stockTag: stockTag,
       Constants.basicPrice: basicPrice,
       Constants.sellingPrice: sellingPrice.value,
@@ -54,7 +58,8 @@ class CuisineItem {
   ) {
     return CuisineItem(
       name: json[Constants.name] as String,
-      stockTag: json[Constants.stockTag] as String,
+      store: json[Constants.store] as String,
+      stockTag: json[Constants.stockTag] as int,
       basicPrice: json[Constants.basicPrice] as double,
       sellingPrice: Rx(json[Constants.sellingPrice] as double),
       quantity: Rx(json[Constants.quantity] as int),

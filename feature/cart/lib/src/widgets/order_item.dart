@@ -81,7 +81,7 @@ class OrderItems extends GetView<Controller> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        item.stockTag,
+                        item.store,
                         style: Get.textTheme.bodySmall?.copyWith(
                           fontWeight: FontWeight.w100,
                           color: Get.theme.primaryColorDark.withOpacity(.8),

@@ -96,7 +96,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
                           height: 4,
                         ),
                         Text(
-                          item.stockTag,
+                          item.store,
                           style: Get.textTheme.bodySmall?.copyWith(
                             fontWeight: FontWeight.w100,
                             color: Get.theme.primaryColorDark.withOpacity(.8),
@@ -172,7 +172,7 @@ class ListItemNoTagLine extends GetView<CuisineController> {
                           color: Get.theme.primaryColorDark),
                       child: Icon(
                         Icons.attach_money,
-                        color: Get.theme.backgroundColor,
+                        color: Get.theme.colorScheme.background,
                       ),
                     ),
                   )
