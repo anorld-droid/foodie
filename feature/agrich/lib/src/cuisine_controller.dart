@@ -404,5 +404,7 @@ class CuisineController extends GetxController
     }
   }
 
+  void favorites() {}
+  void recentOrders() {}
   void repeatLastOrder() {}
 }

@@ -15,7 +15,7 @@ class CuisineTopBar extends GetView<CuisineController> {
     Get.find<CuisineController>();
     return Container(
       margin: const EdgeInsets.only(top: 8.0),
-      height: Get.height * 0.35,
+      height: Get.height * 0.40,
       decoration: BoxDecoration(
         color: Get.theme.primaryColorDark,
         borderRadius: const BorderRadius.only(
@@ -117,7 +117,39 @@ class CuisineTopBar extends GetView<CuisineController> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: controller.repeatLastOrder,
+                  onTap: controller.favorites,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.favorite_outline,
+                        color: Get.theme.colorScheme.background,
+                      ),
+                      const SizedBox(
+                        width: 8.0,
+                      ),
+                      Text(
+                        'Favorites',
+                        style: Get.textTheme.bodySmall?.copyWith(
+                          color: Get.theme.colorScheme.background,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 4.0,
+                ),
+                Divider(
+                  color: Get.theme.colorScheme.secondary.withOpacity(.25),
+                  thickness: 1.5,
+                ),
+                const SizedBox(
+                  height: 4.0,
+                ),
+                InkWell(
+                  onTap: controller.recentOrders,
                   child: Row(
                     children: [
                       Icon(
