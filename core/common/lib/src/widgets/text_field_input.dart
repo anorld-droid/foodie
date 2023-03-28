@@ -148,7 +148,7 @@ class CustomTextField extends StatelessWidget {
             focusColor: backgroundColor,
             filled: true,
             hintText: hintText,
-            suffixIcon: InkWell(
+            prefixIcon: InkWell(
               onTap: onIconTap,
               child: Icon(
                 icon,

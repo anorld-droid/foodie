@@ -65,7 +65,7 @@ class CuisineController extends GetxController
 
     initialize();
     setListeners();
-    await loadData();
+    // await loadData();
   }
 
   void setListeners() {
@@ -77,7 +77,7 @@ class CuisineController extends GetxController
   void initialize() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: Get.theme.backgroundColor,
+      statusBarColor: Get.theme.colorScheme.background,
       // Status bar brightness (optional)
       statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
     ));
@@ -403,4 +403,6 @@ class CuisineController extends GetxController
       return false;
     }
   }
+
+  void repeatLastOrder() {}
 }

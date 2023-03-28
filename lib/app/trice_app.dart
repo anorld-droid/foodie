@@ -19,52 +19,52 @@ class TriceApp extends GetView<TriceAppController> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: Get.theme.backgroundColor,
+      statusBarColor: Get.theme.colorScheme.background,
       // Status bar brightness (optional)
-      statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
+      statusBarIconBrightness:
+          Get.theme.colorScheme.brightness, // For Android (dark icons)
     ));
     Get.lazyPut<TriceAppController>(() => TriceAppController(), fenix: true);
-    return Obx(() => GetMaterialApp(
-          builder: (context, child) {
-            final mediaQueryData = MediaQuery.of(context);
-            final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.3);
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: scale),
-              child: child ?? const SizedBox(),
-            );
-          },
-          initialBinding: TriceBinding(),
-          debugShowCheckedModeBanner: false,
-          theme: Themes.light,
-          darkTheme: Themes.dark,
-          themeMode: controller.themeMode.value,
-          initialRoute: Routes.cuisine,
-          getPages: [
-            GetPage(
-              name: Routes.root,
-              page: () => const LogIn(),
-            ),
-            GetPage(
-              name: Routes.signUp,
-              page: () => const SignUp(),
-            ),
-            GetPage(
-              name: Routes.cuisine,
-              page: () => const Cuisine(),
-            ),
-            GetPage(
-              name: Routes.cuisineDetail,
-              page: () => CuisineDetail(
-                cuisineItem: Get.arguments as CuisineItem,
-              ),
-            ),
-            GetPage(
-              name: Routes.cart,
-              page: () => Cart(
-                cartItems: Get.arguments as Rx<List<CartItem>>,
-              ),
-            ),
-          ],
-        ));
+    return GetMaterialApp(
+      builder: (context, child) {
+        final mediaQueryData = MediaQuery.of(context);
+        final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.3);
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: scale),
+          child: child ?? const SizedBox(),
+        );
+      },
+      initialBinding: TriceBinding(),
+      debugShowCheckedModeBanner: false,
+      darkTheme: Themes.dark,
+      themeMode: ThemeMode.dark,
+      initialRoute: Routes.cuisine,
+      getPages: [
+        GetPage(
+          name: Routes.root,
+          page: () => const LogIn(),
+        ),
+        GetPage(
+          name: Routes.signUp,
+          page: () => const SignUp(),
+        ),
+        GetPage(
+          name: Routes.cuisine,
+          page: () => const Cuisine(),
+        ),
+        GetPage(
+          name: Routes.cuisineDetail,
+          page: () => CuisineDetail(
+            cuisineItem: Get.arguments as CuisineItem,
+          ),
+        ),
+        GetPage(
+          name: Routes.cart,
+          page: () => Cart(
+            cartItems: Get.arguments as Rx<List<CartItem>>,
+          ),
+        ),
+      ],
+    );
   }
 }

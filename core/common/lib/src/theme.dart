@@ -124,61 +124,61 @@ class Themes {
     brightness: Brightness.dark,
     primaryColorDark: Colors.black,
     textTheme: TextTheme(
-      displaySmall: GoogleFonts.notoSerif(
+      displaySmall: GoogleFonts.montserratAlternates(
           fontSize: 24,
           color: Colors.black,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      headlineLarge: GoogleFonts.inter(
+      headlineLarge: GoogleFonts.montserratAlternates(
           fontSize: 32,
           color: Colors.black,
           letterSpacing: 0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      headlineMedium: GoogleFonts.inter(
+      headlineMedium: GoogleFonts.montserratAlternates(
           fontSize: 28,
           color: Colors.black,
           letterSpacing: 0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      headlineSmall: GoogleFonts.inter(
+      headlineSmall: GoogleFonts.montserratAlternates(
           fontSize: 24,
           color: Colors.black,
           letterSpacing: 0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      labelMedium: GoogleFonts.inter(
+      labelMedium: GoogleFonts.montserratAlternates(
           fontSize: 12,
           color: Colors.black,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      labelSmall: GoogleFonts.montserrat(
+      labelSmall: GoogleFonts.montserratAlternates(
           fontSize: 20,
           color: Colors.black,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      bodyLarge: GoogleFonts.inter(
+      bodyLarge: GoogleFonts.montserratAlternates(
           fontSize: 16,
           color: Colors.black,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      bodyMedium: GoogleFonts.inter(
+      bodyMedium: GoogleFonts.montserratAlternates(
           fontSize: 18,
           color: Colors.black,
           letterSpacing: .5,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      bodySmall: GoogleFonts.rubik(
+      bodySmall: GoogleFonts.montserratAlternates(
           fontSize: 14,
           color: Colors.black,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      displayMedium: GoogleFonts.montserrat(
+      displayMedium: GoogleFonts.montserratAlternates(
           fontSize: 16,
           color: Colors.black,
           letterSpacing: 1.0,
@@ -187,7 +187,7 @@ class Themes {
     ),
     colorScheme: const ColorScheme(
         background: Colors.white,
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primary: Color(0xFF00BF63),
         onPrimary: Colors.white,
         secondary: Colors.white12,
@@ -200,65 +200,65 @@ class Themes {
   );
 
   static final dark = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: Color.fromARGB(255, 230, 232, 230),
     brightness: Brightness.light,
-    primaryColorDark: Colors.white,
+    primaryColorDark: Color.fromARGB(255, 250, 250, 250),
     textTheme: TextTheme(
-      displaySmall: GoogleFonts.notoSerif(
+      displaySmall: GoogleFonts.montserratAlternates(
           fontSize: 24,
           color: Colors.white,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      headlineLarge: GoogleFonts.inter(
+      headlineLarge: GoogleFonts.rubik(
           fontSize: 32,
           color: Colors.white,
           letterSpacing: 0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      headlineMedium: GoogleFonts.inter(
+      headlineMedium: GoogleFonts.montserratAlternates(
           fontSize: 28,
           color: Colors.white,
           letterSpacing: 0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      headlineSmall: GoogleFonts.inter(
+      headlineSmall: GoogleFonts.montserratAlternates(
           fontSize: 24,
           color: Colors.white,
           letterSpacing: 0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      labelMedium: GoogleFonts.inter(
+      labelMedium: GoogleFonts.montserratAlternates(
           fontSize: 12,
           color: Colors.white,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      labelSmall: GoogleFonts.montserrat(
+      labelSmall: GoogleFonts.montserratAlternates(
           fontSize: 20,
           color: Colors.white,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      bodyLarge: GoogleFonts.inter(
+      bodyLarge: GoogleFonts.montserratAlternates(
           fontSize: 16,
           color: Colors.white,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      bodyMedium: GoogleFonts.inter(
+      bodyMedium: GoogleFonts.montserratAlternates(
           fontSize: 18,
           color: Colors.white,
           letterSpacing: .5,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      bodySmall: GoogleFonts.rubik(
+      bodySmall: GoogleFonts.montserratAlternates(
           fontSize: 14,
           color: Colors.white,
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      displayMedium: GoogleFonts.montserrat(
+      displayMedium: GoogleFonts.montserratAlternates(
           fontSize: 16,
           color: Colors.white,
           letterSpacing: 1.0,
@@ -270,12 +270,12 @@ class Themes {
         brightness: Brightness.light,
         primary: Color(0xFF00BF63),
         onPrimary: Colors.black,
-        secondary: Color(0xFF2E3133),
+        secondary: Color(0xFF393939),
         onSecondary: Colors.white,
         error: Colors.red,
         onError: Colors.white,
         onBackground: Colors.white,
-        surface: Colors.black26,
-        onSurface: Colors.white24),
+        surface: Colors.black,
+        onSurface: Colors.white),
   );
 }

@@ -15,7 +15,6 @@ class Cuisine extends GetView<CuisineController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => CuisineController(), fenix: true);
     return Scaffold(
-      appBar: const CuisineTopBar(accountBalance: '00.00'),
       resizeToAvoidBottomInset: false,
       floatingActionButton: _buildFAB(),
       //Floating action but
@@ -23,6 +22,7 @@ class Cuisine extends GetView<CuisineController> {
         child: Obx(
           () => Column(
             children: [
+              const CuisineTopBar(),
               controller.editing.value ||
                       controller.searchController.text.isNotEmpty ||
                       controller.selectedChip.value != 10
