@@ -1,6 +1,7 @@
 import 'package:agrich/agrich.dart';
 import 'package:agrich/src/cuisine_controller.dart';
 import 'package:agrich/src/widgets/chips.dart';
+import 'package:agrich/src/widgets/list_item.dart';
 import 'package:agrich/src/widgets/list_item_no_tagline.dart';
 import 'package:agrich/src/widgets/list_item_search_results.dart';
 import 'package:flutter/material.dart';
@@ -67,19 +68,16 @@ class Cuisine extends GetView<CuisineController> {
                       ],
                     )
                   : SingleChildScrollView(
-                      child: Column(
-                        children: List.generate(
-                          controller.items.value.length,
-                          (index) {
-                            CuisineModel cuisineModel =
-                                controller.items.value[index];
-                            return ListItemNoTagLine(
-                              cuisineModel: cuisineModel,
-                              onItemTap: controller.navigateToDetails,
-                            );
-                          },
-                        ),
-                      ),
+                      child: Column(children: const [GlassRectangle()]
+                          //  List.generate(
+                          //   controller.items.value.length,
+                          //   (index) {
+                          //     CuisineModel cuisineModel =
+                          //         controller.items.value[index];
+                          //     return const GlassRectangle();
+                          //   },
+                          // ),
+                          ),
                     )
             ],
           ),
