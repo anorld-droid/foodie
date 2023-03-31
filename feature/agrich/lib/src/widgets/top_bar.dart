@@ -17,7 +17,7 @@ class CuisineTopBar extends GetView<CuisineController> {
       margin: const EdgeInsets.only(top: 8.0),
       height: Get.height * 0.40,
       decoration: BoxDecoration(
-        color: Get.theme.primaryColorDark,
+        color: Get.theme.colorScheme.primaryContainer,
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(30.0),
           bottomRight: Radius.circular(30.0),
@@ -27,7 +27,7 @@ class CuisineTopBar extends GetView<CuisineController> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Get.theme.colorScheme.background,
+              color: Get.theme.colorScheme.primaryContainer,
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(30.0),
                 bottomRight: Radius.circular(30.0),
@@ -105,7 +105,7 @@ class CuisineTopBar extends GetView<CuisineController> {
                     hintText: Strings.searchHintText,
                     borderRadius: 12,
                     maxLength: 16,
-                    backgroundColor: Get.theme.colorScheme.secondary,
+                    backgroundColor: Get.theme.colorScheme.onBackground,
                   ),
                 ),
               ],
@@ -114,43 +114,48 @@ class CuisineTopBar extends GetView<CuisineController> {
           Padding(
             padding: const EdgeInsets.only(
                 top: 16.0, left: 16.0, bottom: 8.0, right: 16.0),
-            child: Column(
+            child: Wrap(
+              alignment: WrapAlignment.spaceAround,
               children: [
-                InkWell(
-                  onTap: controller.favorites,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.favorite_outline,
-                        color: Get.theme.colorScheme.background,
+                Container(
+                  decoration: BoxDecoration(
+                      color: Get.theme.colorScheme.onBackground,
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: controller.favorites,
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.favorite,
+                            color: Get.theme.colorScheme.background,
+                          ),
+                          const SizedBox(
+                            width: 8.0,
+                          ),
+                          Text(
+                            'Favorites',
+                            style: Get.textTheme.bodySmall?.copyWith(
+                              color: Get.theme.colorScheme.background,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 8.0,
-                      ),
-                      Text(
-                        'Favorites',
-                        style: Get.textTheme.bodySmall?.copyWith(
-                          color: Get.theme.colorScheme.background,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 0,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 4.0,
-                ),
-                Divider(
-                  color: Get.theme.colorScheme.secondary.withOpacity(.25),
-                  thickness: 1.5,
                 ),
                 const SizedBox(
                   height: 4.0,
                 ),
                 InkWell(
                   onTap: controller.recentOrders,
-                  child: Row(
+                  child: Column(
                     children: [
                       Icon(
                         Icons.history,
@@ -172,16 +177,12 @@ class CuisineTopBar extends GetView<CuisineController> {
                 const SizedBox(
                   height: 4.0,
                 ),
-                Divider(
-                  color: Get.theme.colorScheme.secondary.withOpacity(.25),
-                  thickness: 1.5,
-                ),
                 const SizedBox(
                   height: 4.0,
                 ),
                 InkWell(
                   onTap: controller.repeatLastOrder,
-                  child: Row(
+                  child: Column(
                     children: [
                       Icon(
                         Icons.find_replace,
@@ -209,37 +210,5 @@ class CuisineTopBar extends GetView<CuisineController> {
         ],
       ),
     );
-    //   return AppBar(
-    //     elevation: 2,
-    //     shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
-    //     title: CustomTextField(
-    //         onIconTap: () async {
-    //           controller.search(controller.searchController.text);
-    //         },
-    //         onSubmitted: (value) async {
-    //           controller.search(value);
-    //         },
-    //         icon: Icons.search,
-    //         height: 40,
-    //         textStyle: Get.textTheme.bodySmall,
-    //         focusNode: controller.focusNode,
-    //         textEditingController: controller.searchController,
-    //         textInputType: TextInputType.text,
-    //         hintText: Strings.searchHintText,
-    //         borderRadius: 30,
-    //         maxLength: 16,
-    //         backgroundColor: Get.theme.primaryColorDark.withOpacity(.12)),
-    //     backgroundColor: Get.theme.backgroundColor,
-    //     actions: [
-    //       IconButton(
-    //         onPressed: () async => await controller.subscriptionOptions(),
-    //         icon: Icon(
-    //           Icons.money_off,
-    //           color: Get.theme.primaryColorDark,
-    //         ),
-    //         color: Get.theme.primaryColorDark,
-    //       )
-    //     ],
-    //   );
   }
 }

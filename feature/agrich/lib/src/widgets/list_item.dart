@@ -1,18 +1,4 @@
-// BackdropFilter(
-//                 filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-//                 child: new Container(
-//                   width: 200.0,
-//                   height: 200.0,
-//                   decoration: new BoxDecoration(
-//                     color: Colors.grey.shade200.withOpacity(0.5)
-//                   ),
-//                   child: new Center(
-//                     child: new Text(
-//                       'Frosted',
-//                       style: Theme.of(context).textTheme.display3
-//                     ),
-//                   ),
-//                 ),
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,23 +12,32 @@ class GlassRectangle extends StatelessWidget {
       children: [
         ClipPath(
           clipper: RightConcaveClipper(),
-          child: Container(
-            width: 160,
-            height: 220,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                  bottomLeft: Radius.circular(25),
-                  bottomRight: Radius.circular(6)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  blurRadius: 5,
-                  spreadRadius: 1,
+          child: ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+              child: Container(
+                width: 160,
+                height: 220,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Get.theme.colorScheme.onBackground.withOpacity(0.4),
+                      Get.theme.colorScheme.onBackground.withOpacity(0.2),
+                    ],
+                    begin: AlignmentDirectional.topStart,
+                    end: AlignmentDirectional.bottomEnd,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                      bottomLeft: Radius.circular(24),
+                      bottomRight: Radius.circular(6)),
+                  border: Border.all(
+                    width: 1.5,
+                    color: Get.theme.colorScheme.onBackground.withOpacity(0.2),
+                  ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -51,7 +46,7 @@ class GlassRectangle extends StatelessWidget {
           right: 0,
           child: Container(
               decoration: BoxDecoration(
-                  color: Get.theme.primaryColor,
+                  color: Get.theme.colorScheme.onBackground,
                   borderRadius: BorderRadius.circular(30)),
               child: IconButton(
                 onPressed: () {},
@@ -84,7 +79,25 @@ class RightConcaveClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(CustomClipper old) {
-    return old != this;
+  bool shouldReclip(CustomClipper<dynamic> oldClipper) {
+    return oldClipper != this;
   }
 }
+
+// ClipRect(
+//               child: new BackdropFilter(
+//                 filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+//                 child: new Container(
+//                   width: 200.0,
+//                   height: 200.0,
+//                   decoration: new BoxDecoration(
+//                     color: Colors.grey.shade200.withOpacity(0.5)
+//                   ),
+//                   child: new Center(
+//                     child: new Text(
+//                       'Frosted',
+//                       style: Theme.of(context).textTheme.display3
+//                     ),
+//                   ),
+//                 ),
+//               ),)

@@ -77,7 +77,7 @@ class CuisineController extends GetxController
   void initialize() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: Get.theme.colorScheme.background,
+      statusBarColor: Get.theme.colorScheme.primaryContainer,
       // Status bar brightness (optional)
       statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
     ));

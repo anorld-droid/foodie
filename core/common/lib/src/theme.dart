@@ -200,7 +200,7 @@ class Themes {
   );
 
   static final dark = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Color.fromARGB(255, 230, 232, 230),
+    scaffoldBackgroundColor: Color.fromARGB(5, 0, 0, 0),
     brightness: Brightness.light,
     primaryColorDark: Color.fromARGB(255, 250, 250, 250),
     textTheme: TextTheme(
@@ -210,7 +210,7 @@ class Themes {
           letterSpacing: 1.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      headlineLarge: GoogleFonts.rubik(
+      headlineLarge: GoogleFonts.roboto(
           fontSize: 32,
           color: Colors.white,
           letterSpacing: 0,
@@ -272,6 +272,8 @@ class Themes {
         onPrimary: Colors.black,
         secondary: Color(0xFF393939),
         onSecondary: Colors.white,
+        primaryContainer: Colors.transparent,
+        secondaryContainer: Color.fromARGB(71, 5, 52, 49),
         error: Colors.red,
         onError: Colors.white,
         onBackground: Colors.white,

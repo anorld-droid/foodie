@@ -19,7 +19,7 @@ class TriceApp extends GetView<TriceAppController> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       // Status bar color
-      statusBarColor: Get.theme.colorScheme.background,
+      statusBarColor: Get.theme.colorScheme.primaryContainer,
       // Status bar brightness (optional)
       statusBarIconBrightness:
           Get.theme.colorScheme.brightness, // For Android (dark icons)
