@@ -1,11 +1,7 @@
-import 'dart:math';
-import 'dart:ui';
-
 import 'package:agrich/agrich.dart';
 import 'package:agrich/src/cuisine_controller.dart';
 import 'package:agrich/src/widgets/chips.dart';
 import 'package:agrich/src/widgets/list_item.dart';
-import 'package:agrich/src/widgets/list_item_no_tagline.dart';
 import 'package:agrich/src/widgets/list_item_search_results.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +16,6 @@ class Cuisine extends GetView<CuisineController> {
     Get.lazyPut(() => CuisineController(), fenix: true);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // floatingActionButton: _buildFAB(),
       //Floating action but
       body: Stack(
         children: [
@@ -35,73 +30,12 @@ class Cuisine extends GetView<CuisineController> {
                     end: Alignment.topCenter,
                     colors: [
                       Get.theme.colorScheme.background,
-                      Color.fromARGB(181, 5, 52, 49),
-                      Color.fromARGB(71, 5, 52, 49),
-                      // Get.theme.colorScheme.primary,
-                      // Get.theme.colorScheme.background,
+                      const Color.fromARGB(181, 5, 52, 49),
+                      const Color.fromARGB(71, 5, 52, 49),
                     ],
-                    // stops: const [0.3, 0.85, 1.0],
                   ),
                 ),
               ),
-              // Container(
-              //   height: Get.height,
-              //   decoration: const BoxDecoration(
-              //     border: Border(),
-              //     gradient: LinearGradient(
-              //         colors: [
-              //           // Get.theme.colorScheme.primary,
-              //           Color.fromARGB(250, 250, 116, 2),
-              //           Color.fromARGB(70, 250, 116, 2),
-              //           Color.fromARGB(0, 250, 116, 2),
-
-              //           // Get.theme.colorScheme.primary.withGreen(140),
-              //           // Get.theme.colorScheme.primary.withGreen(130),
-              //           // Get.theme.colorScheme.onBackground.withOpacity(0),
-              //           // Get.theme.colorScheme.background.withOpacity(0),
-              //         ],
-              //         tileMode: TileMode.decal,
-              //         begin: Alignment.topLeft,
-              //         end: Alignment.bottomRight),
-              //   ),
-              // ),
-              // Container(
-              //   height: Get.height,
-              //   decoration: const BoxDecoration(
-              //     border: Border(),
-              //     gradient: RadialGradient(
-              //         colors: [
-              //           Color.fromARGB(250, 65, 105, 225),
-              //           Color.fromARGB(200, 65, 105, 225),
-              //           Color.fromARGB(100, 65, 105, 225),
-              //         ],
-              //         tileMode: TileMode.decal,
-              //         center: Alignment(-0.5, 0.2),
-              //         // focalRadius: 1,
-              //         radius: 0.5),
-              //   ),
-              // ),
-              // BackdropFilter(
-              //   filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-              //   child: Container(
-              //     height: Get.height,
-              //     decoration: BoxDecoration(
-              //       gradient: LinearGradient(
-              //         colors: [
-              //           Get.theme.colorScheme.background.withOpacity(0.4),
-              //           Get.theme.colorScheme.background.withOpacity(0.2),
-              //         ],
-              //         begin: AlignmentDirectional.topStart,
-              //         end: AlignmentDirectional.bottomEnd,
-              //       ),
-              //       border: Border.all(
-              //         width: 0.0,
-              //         color:
-              //             Get.theme.colorScheme.onBackground.withOpacity(0.2),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
           Container(
@@ -186,40 +120,32 @@ class Cuisine extends GetView<CuisineController> {
     );
   }
 
-  Widget _buildFAB() {
-    return FittedBox(
-      child: Stack(
-        alignment: const Alignment(1.4, -2.4),
-        children: [
-          FloatingActionButton(
-            enableFeedback: true,
-            elevation: 10,
-            heroTag: 'Cart Button',
-            onPressed: controller.navigateToCart,
-            backgroundColor: Get.theme.backgroundColor,
-            child: Icon(
-              Icons.shopping_cart,
-              color: Get.theme.primaryColorDark,
-              size: 32,
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-            constraints: const BoxConstraints(minHeight: 32, minWidth: 32),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Get.theme.backgroundColor),
-            child: Center(
-              child: Obx(
-                () => Text(
-                  '${controller.cartItemsLength.value}',
-                  style: Get.textTheme.bodyMedium!
-                      .copyWith(color: Get.theme.primaryColorDark),
-                ),
-              ),
-            ),
-          ),
-        ],
+  Widget _body(List<String> tabs, List<CuisineItem> cuisineItems) {
+    return Column(
+      children: [
+        _bodyTabView(tabs),
+        TabBarView(
+            controller: controller.tabController,
+            children: List.generate(cuisineItems.length, (index) => null)),
+      ],
+    );
+  }
+
+  Widget _bodyTabView(List<String> tabs) {
+    return TabBar(
+      labelColor: Get.theme.colorScheme.onBackground,
+      indicatorColor: Get.theme.colorScheme.onBackground,
+      unselectedLabelColor: Get.theme.colorScheme.onBackground,
+      indicator: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Get.theme.primaryColorDark,
+      ),
+      controller: controller.tabController,
+      tabs: List.generate(
+        tabs.length,
+        (index) => Tab(
+          text: tabs[index],
+        ),
       ),
     );
   }

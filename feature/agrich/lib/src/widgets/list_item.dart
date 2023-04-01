@@ -2,9 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/model.dart';
 
-class GlassRectangle extends StatelessWidget {
-  const GlassRectangle({super.key});
+class FoodieListItem extends StatelessWidget {
+  final CuisineItem cuisineItem;
+  const FoodieListItem({super.key, required this.cuisineItem});
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,39 @@ class GlassRectangle extends StatelessWidget {
                     color: Get.theme.colorScheme.onBackground.withOpacity(0.2),
                   ),
                 ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 140,
+                      height: 140,
+                      decoration: BoxDecoration(
+                        color: Get.theme.primaryColorDark.withOpacity(0.12),
+                        image: DecorationImage(
+                            image: NetworkImage(
+                              cuisineItem.photoUrl,
+                            ),
+                            fit: BoxFit.contain),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      cuisineItem.name,
+                      softWrap: true,
+                      style: Get.textTheme.bodyLarge
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.clip,
+                    ),
+                    Text(
+                      cuisineItem.store,
+                      softWrap: true,
+                      style: Get.textTheme.bodySmall
+                          ?.copyWith(fontWeight: FontWeight.w300),
+                      overflow: TextOverflow.clip,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -54,7 +89,6 @@ class GlassRectangle extends StatelessWidget {
                   Icons.shopping_basket_outlined,
                   color: Get.theme.colorScheme.background,
                 ),
-                color: Get.theme.primaryColor,
               )),
         ),
       ],
