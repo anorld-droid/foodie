@@ -35,25 +35,29 @@ class Cuisine extends GetView<CuisineController> {
           () => Column(
             children: [
               const CuisineTopBar(),
-              TabBar(
-                labelColor: Get.theme.colorScheme.onBackground,
-                indicatorColor: Get.theme.colorScheme.onBackground,
-                unselectedLabelColor: Get.theme.colorScheme.onBackground,
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                controller: controller.tabController.value,
-                tabs: List.generate(
-                  controller.items.value.length,
-                  (index) => Tab(
-                      child: Text(
-                    controller.items.value[index].header,
-                    style: Get.textTheme.bodySmall
-                        ?.copyWith(color: Get.theme.colorScheme.onBackground),
-                  )),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TabBar(
+                  labelColor: Get.theme.colorScheme.onBackground,
+                  indicatorColor: Get.theme.colorScheme.onBackground,
+                  unselectedLabelColor: Get.theme.colorScheme.onBackground,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorPadding:
+                      const EdgeInsets.symmetric(horizontal: 16.0),
+                  controller: controller.tabController.value,
+                  tabs: List.generate(
+                    controller.items.value.length,
+                    (index) => Tab(
+                        child: Text(
+                      controller.items.value[index].header,
+                      style: Get.textTheme.bodySmall
+                          ?.copyWith(color: Get.theme.colorScheme.onBackground),
+                    )),
+                  ),
                 ),
               ),
               SizedBox(
-                height: Get.height * 0.60,
+                height: Get.height * 0.695,
                 width: Get.width,
                 child: TabBarView(
                   controller: controller.tabController.value,
@@ -73,14 +77,12 @@ class Cuisine extends GetView<CuisineController> {
 
   Widget _bodyLayout(List<CuisineItem> items) {
     return Container(
-      height: Get.height * 0.60,
+      height: Get.height * 0.695,
       width: Get.width,
       margin: const EdgeInsets.only(left: 16.0),
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.75,
-        ),
+            crossAxisCount: 2, childAspectRatio: 0.75, mainAxisSpacing: 16.0),
         shrinkWrap: true,
         itemCount: items.length,
         padding: const EdgeInsets.all(16.0),

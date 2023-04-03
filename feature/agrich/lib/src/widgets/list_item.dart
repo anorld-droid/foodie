@@ -45,7 +45,7 @@ class FoodieListItem extends StatelessWidget {
                   children: [
                     Center(
                       child: Container(
-                        width: 100,
+                        width: 120,
                         height: 120,
                         decoration: BoxDecoration(
                           borderRadius: const BorderRadius.only(

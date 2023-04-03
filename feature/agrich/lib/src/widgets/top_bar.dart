@@ -45,7 +45,7 @@ class CuisineTopBar extends GetView<CuisineController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Foodie',
+                        Strings.appName,
                         style: Get.textTheme.headlineLarge,
                       ),
                       InkWell(
@@ -130,110 +130,6 @@ class CuisineTopBar extends GetView<CuisineController> {
               ],
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(10),
-          //   child: Wrap(
-          //     alignment: WrapAlignment.spaceAround,
-          //     children: [
-          //       Container(
-          //         decoration: BoxDecoration(
-          //             color: Get.theme.colorScheme.primary,
-          //             borderRadius: BorderRadius.circular(8)),
-          //         child: Padding(
-          //           padding: const EdgeInsets.all(8.0),
-          //           child: InkWell(
-          //             onTap: controller.favorites,
-          //             child: Column(
-          //               children: [
-          //                 Icon(
-          //                   Icons.local_shipping_outlined,
-          //                   color: Get.theme.colorScheme.onBackground,
-          //                 ),
-          //                 const SizedBox(
-          //                   width: 8.0,
-          //                 ),
-          //                 Text(
-          //                   'Track Delivery',
-          //                   style: Get.textTheme.bodySmall?.copyWith(
-          //                     color: Get.theme.colorScheme.onBackground,
-          //                     fontWeight: FontWeight.bold,
-          //                     letterSpacing: 0,
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //       const SizedBox(
-          //         width: 10.0,
-          //       ),
-          //       Container(
-          //         decoration: BoxDecoration(
-          //           color: Get.theme.colorScheme.primary,
-          //           borderRadius: BorderRadius.circular(8),
-          //         ),
-          //         child: Padding(
-          //           padding: const EdgeInsets.all(8.0),
-          //           child: InkWell(
-          //             onTap: controller.recentOrders,
-          //             child: Column(
-          //               children: [
-          //                 Icon(
-          //                   Icons.history,
-          //                   color: Get.theme.colorScheme.onBackground,
-          //                 ),
-          //                 const SizedBox(
-          //                   width: 8.0,
-          //                 ),
-          //                 Text(
-          //                   'Recent orders',
-          //                   style: Get.textTheme.bodySmall?.copyWith(
-          //                       color: Get.theme.colorScheme.onBackground,
-          //                       fontWeight: FontWeight.bold,
-          //                       letterSpacing: 0),
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //       const SizedBox(
-          //         width: 10.0,
-          //       ),
-          //       Container(
-          //         decoration: BoxDecoration(
-          //           color: Get.theme.colorScheme.primary,
-          //           borderRadius: BorderRadius.circular(8),
-          //         ),
-          //         child: Padding(
-          //           padding: const EdgeInsets.all(8.0),
-          //           child: InkWell(
-          //             onTap: controller.repeatLastOrder,
-          //             child: Column(
-          //               children: [
-          //                 Icon(
-          //                   Icons.find_replace,
-          //                   color: Get.theme.colorScheme.onBackground,
-          //                 ),
-          //                 const SizedBox(
-          //                   width: 8.0,
-          //                 ),
-          //                 Text(
-          //                   'Repeat last order',
-          //                   style: Get.textTheme.bodySmall?.copyWith(
-          //                       color: Get.theme.colorScheme.onBackground,
-          //                       fontWeight: FontWeight.bold,
-          //                       letterSpacing: 0),
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );
