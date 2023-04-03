@@ -1,6 +1,5 @@
 import 'package:agrich/src/widgets/dialog_layout.dart';
 import 'package:agrich/src/widgets/shipping_dialog_layout.dart';
-import 'package:agrich/src/widgets/subscription.dart';
 import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,7 @@ class CuisineController extends GetxController
 
   final Rx<int> qty = 1.obs;
 
-  late final TabController tabController;
+  final Rx<TabController?> tabController = Rx(null);
 
   late final Rx<double> sellingPrice = 0.0.obs;
 
@@ -65,7 +64,7 @@ class CuisineController extends GetxController
 
     initialize();
     setListeners();
-    // await loadData();
+    await loadData();
   }
 
   void setListeners() {
@@ -96,8 +95,6 @@ class CuisineController extends GetxController
     phoneController = TextEditingController();
     buildingController = TextEditingController();
     focusNode = FocusNode();
-
-    tabController = TabController(length: 2, vsync: this);
   }
 
   Future<void> loadData() async {
@@ -108,6 +105,9 @@ class CuisineController extends GetxController
         items.value.add(item.data());
       }
       items.refresh();
+      tabController.value =
+          TabController(length: items.value.length, vsync: this);
+      tabController.refresh();
     });
     if (_authenticateUser.isUserSignedIn()) {
       getCartItems();
@@ -141,20 +141,6 @@ class CuisineController extends GetxController
             (element) => element.containsKey(town.value),
             orElse: (() => {}))[town.value] ??
         [];
-  }
-
-  Future<void> subscriptionOptions() async {
-    Get.bottomSheet<bool?>(const SubscriptionLayout(),
-        barrierColor: Get.theme.primaryColorDark.withOpacity(.1),
-        backgroundColor: Get.theme.backgroundColor,
-        elevation: 4,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.horizontal(
-            left: Radius.circular(16.0),
-            right: Radius.circular(16.0),
-          ),
-        ),
-        isScrollControlled: true);
   }
 
   Future<void> upgradeAccount(String amount, String type) async {

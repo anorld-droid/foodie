@@ -278,6 +278,6 @@ class Themes {
         onError: Colors.white,
         onBackground: Colors.white,
         surface: Colors.black,
-        onSurface: Colors.white),
+        onSurface: Colors.grey),
   );
 }

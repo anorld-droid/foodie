@@ -15,7 +15,7 @@ class CuisineTopBar extends GetView<CuisineController> {
     Get.find<CuisineController>();
     return Container(
       margin: const EdgeInsets.only(top: 8.0),
-      height: Get.height * 0.40,
+      // height: Get.height * 0.2,
       decoration: BoxDecoration(
         color: Get.theme.colorScheme.primaryContainer,
         borderRadius: const BorderRadius.only(
@@ -88,133 +88,152 @@ class CuisineTopBar extends GetView<CuisineController> {
                       left: 10.0,
                       right: 10.0,
                       bottom: Get.height * 0.02),
-                  child: CustomTextField(
-                    onIconTap: () async {
-                      controller.search(controller.searchController.text);
-                    },
-                    onSubmitted: (value) async {
-                      controller.search(value);
-                    },
-                    icon: Icons.search,
-                    height: 80,
-                    textStyle: Get.textTheme.bodySmall
-                        ?.copyWith(fontWeight: FontWeight.w800),
-                    focusNode: controller.focusNode,
-                    textEditingController: controller.searchController,
-                    textInputType: TextInputType.text,
-                    hintText: Strings.searchHintText,
-                    borderRadius: 12,
-                    maxLength: 16,
-                    backgroundColor: Get.theme.colorScheme.onBackground,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Wrap(
-              alignment: WrapAlignment.spaceAround,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Get.theme.colorScheme.primary,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: controller.favorites,
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.local_shipping_outlined,
-                            color: Get.theme.colorScheme.onBackground,
-                          ),
-                          const SizedBox(
-                            width: 8.0,
-                          ),
-                          Text(
-                            'Track Delivery',
-                            style: Get.textTheme.bodySmall?.copyWith(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: Get.width * 0.80,
+                        child: CustomTextField(
+                          onIconTap: () async {
+                            controller.search(controller.searchController.text);
+                          },
+                          onSubmitted: (value) async {
+                            controller.search(value);
+                          },
+                          icon: Icons.search,
+                          height: 80,
+                          textStyle: Get.textTheme.bodySmall
+                              ?.copyWith(fontWeight: FontWeight.w800),
+                          focusNode: controller.focusNode,
+                          textEditingController: controller.searchController,
+                          textInputType: TextInputType.text,
+                          hintText: Strings.searchHintText,
+                          borderRadius: 12,
+                          maxLength: 16,
+                          backgroundColor: Get.theme.colorScheme.onBackground,
+                        ),
+                      ),
+                      Container(
+                          decoration: BoxDecoration(
                               color: Get.theme.colorScheme.onBackground,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0,
+                              borderRadius: BorderRadius.circular(30.0)),
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.unfold_more_double_outlined,
+                              color: Get.theme.colorScheme.background,
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Get.theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: controller.recentOrders,
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.history,
-                            color: Get.theme.colorScheme.onBackground,
-                          ),
-                          const SizedBox(
-                            width: 8.0,
-                          ),
-                          Text(
-                            'Recent orders',
-                            style: Get.textTheme.bodySmall?.copyWith(
-                                color: Get.theme.colorScheme.onBackground,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Get.theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: controller.repeatLastOrder,
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.find_replace,
-                            color: Get.theme.colorScheme.onBackground,
-                          ),
-                          const SizedBox(
-                            width: 8.0,
-                          ),
-                          Text(
-                            'Repeat last order',
-                            style: Get.textTheme.bodySmall?.copyWith(
-                                color: Get.theme.colorScheme.onBackground,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0),
-                          ),
-                        ],
-                      ),
-                    ),
+                          )),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
+          // Padding(
+          //   padding: const EdgeInsets.all(10),
+          //   child: Wrap(
+          //     alignment: WrapAlignment.spaceAround,
+          //     children: [
+          //       Container(
+          //         decoration: BoxDecoration(
+          //             color: Get.theme.colorScheme.primary,
+          //             borderRadius: BorderRadius.circular(8)),
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(8.0),
+          //           child: InkWell(
+          //             onTap: controller.favorites,
+          //             child: Column(
+          //               children: [
+          //                 Icon(
+          //                   Icons.local_shipping_outlined,
+          //                   color: Get.theme.colorScheme.onBackground,
+          //                 ),
+          //                 const SizedBox(
+          //                   width: 8.0,
+          //                 ),
+          //                 Text(
+          //                   'Track Delivery',
+          //                   style: Get.textTheme.bodySmall?.copyWith(
+          //                     color: Get.theme.colorScheme.onBackground,
+          //                     fontWeight: FontWeight.bold,
+          //                     letterSpacing: 0,
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //       const SizedBox(
+          //         width: 10.0,
+          //       ),
+          //       Container(
+          //         decoration: BoxDecoration(
+          //           color: Get.theme.colorScheme.primary,
+          //           borderRadius: BorderRadius.circular(8),
+          //         ),
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(8.0),
+          //           child: InkWell(
+          //             onTap: controller.recentOrders,
+          //             child: Column(
+          //               children: [
+          //                 Icon(
+          //                   Icons.history,
+          //                   color: Get.theme.colorScheme.onBackground,
+          //                 ),
+          //                 const SizedBox(
+          //                   width: 8.0,
+          //                 ),
+          //                 Text(
+          //                   'Recent orders',
+          //                   style: Get.textTheme.bodySmall?.copyWith(
+          //                       color: Get.theme.colorScheme.onBackground,
+          //                       fontWeight: FontWeight.bold,
+          //                       letterSpacing: 0),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //       const SizedBox(
+          //         width: 10.0,
+          //       ),
+          //       Container(
+          //         decoration: BoxDecoration(
+          //           color: Get.theme.colorScheme.primary,
+          //           borderRadius: BorderRadius.circular(8),
+          //         ),
+          //         child: Padding(
+          //           padding: const EdgeInsets.all(8.0),
+          //           child: InkWell(
+          //             onTap: controller.repeatLastOrder,
+          //             child: Column(
+          //               children: [
+          //                 Icon(
+          //                   Icons.find_replace,
+          //                   color: Get.theme.colorScheme.onBackground,
+          //                 ),
+          //                 const SizedBox(
+          //                   width: 8.0,
+          //                 ),
+          //                 Text(
+          //                   'Repeat last order',
+          //                   style: Get.textTheme.bodySmall?.copyWith(
+          //                       color: Get.theme.colorScheme.onBackground,
+          //                       fontWeight: FontWeight.bold,
+          //                       letterSpacing: 0),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

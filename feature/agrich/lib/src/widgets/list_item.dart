@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -19,12 +20,12 @@ class FoodieListItem extends StatelessWidget {
               filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
               child: Container(
                 width: 160,
-                height: 220,
+                height: 270,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Get.theme.colorScheme.onBackground.withOpacity(0.4),
-                      Get.theme.colorScheme.onBackground.withOpacity(0.2),
+                      Get.theme.colorScheme.onSurface.withOpacity(0.4),
+                      Get.theme.colorScheme.onSurface.withOpacity(0.2),
                     ],
                     begin: AlignmentDirectional.topStart,
                     end: AlignmentDirectional.bottomEnd,
@@ -40,35 +41,49 @@ class FoodieListItem extends StatelessWidget {
                   ),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 140,
-                      height: 140,
-                      decoration: BoxDecoration(
-                        color: Get.theme.primaryColorDark.withOpacity(0.12),
-                        image: DecorationImage(
-                            image: NetworkImage(
-                              cuisineItem.photoUrl,
-                            ),
-                            fit: BoxFit.contain),
+                    Center(
+                      child: Container(
+                        width: 100,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(24),
+                            topRight: Radius.circular(24),
+                          ),
+                          color: Get.theme.colorScheme.primaryContainer,
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                cuisineItem.photoUrl,
+                              ),
+                              fit: BoxFit.cover),
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      cuisineItem.name,
-                      softWrap: true,
-                      style: Get.textTheme.bodyLarge
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.clip,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0, left: 8.0),
+                      child: Text(
+                        cuisineItem.name,
+                        softWrap: true,
+                        style: Get.textTheme.bodySmall
+                            ?.copyWith(fontWeight: FontWeight.w800),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
                     ),
-                    Text(
-                      cuisineItem.store,
-                      softWrap: true,
-                      style: Get.textTheme.bodySmall
-                          ?.copyWith(fontWeight: FontWeight.w300),
-                      overflow: TextOverflow.clip,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, top: 4.0),
+                      child: Text(
+                        cuisineItem.store,
+                        softWrap: true,
+                        style: Get.textTheme.bodySmall
+                            ?.copyWith(fontWeight: FontWeight.w300),
+                        overflow: TextOverflow.clip,
+                      ),
                     ),
                   ],
                 ),
@@ -78,7 +93,7 @@ class FoodieListItem extends StatelessWidget {
         ),
         Positioned(
           bottom: 12,
-          right: 0,
+          right: 20,
           child: Container(
               decoration: BoxDecoration(
                   color: Get.theme.colorScheme.onBackground,
@@ -86,11 +101,22 @@ class FoodieListItem extends StatelessWidget {
               child: IconButton(
                 onPressed: () {},
                 icon: Icon(
-                  Icons.shopping_basket_outlined,
+                  Icons.shopping_bag_outlined,
                   color: Get.theme.colorScheme.background,
                 ),
               )),
         ),
+        Positioned(
+          bottom: 27,
+          left: 10,
+          child: Obx(
+            () => Text(
+              '${CommonStrings.currency} ${cuisineItem.sellingPrice.value.toStringAsFixed(2)}',
+              style: Get.textTheme.bodySmall
+                  ?.copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -117,21 +143,3 @@ class RightConcaveClipper extends CustomClipper<Path> {
     return oldClipper != this;
   }
 }
-
-// ClipRect(
-//               child: new BackdropFilter(
-//                 filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-//                 child: new Container(
-//                   width: 200.0,
-//                   height: 200.0,
-//                   decoration: new BoxDecoration(
-//                     color: Colors.grey.shade200.withOpacity(0.5)
-//                   ),
-//                   child: new Center(
-//                     child: new Text(
-//                       'Frosted',
-//                       style: Theme.of(context).textTheme.display3
-//                     ),
-//                   ),
-//                 ),
-//               ),)
