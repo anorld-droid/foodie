@@ -57,4 +57,6 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   }
 
   void termsCondition() {}
+
+  void addToFavorite() {}
 }

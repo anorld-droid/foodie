@@ -114,16 +114,17 @@ class CuisineTopBar extends GetView<CuisineController> {
                         ),
                       ),
                       Container(
-                          decoration: BoxDecoration(
-                              color: Get.theme.colorScheme.onBackground,
-                              borderRadius: BorderRadius.circular(30.0)),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.unfold_more_double_outlined,
-                              color: Get.theme.colorScheme.background,
-                            ),
-                          )),
+                        decoration: BoxDecoration(
+                            color: Get.theme.colorScheme.onBackground,
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.unfold_more_double_outlined,
+                            color: Get.theme.colorScheme.background,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

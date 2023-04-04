@@ -390,6 +390,13 @@ class CuisineController extends GetxController
     }
   }
 
+  void addToCart(CuisineItem cuisineItem) {
+    _cartItemsUseCase.addToCart(
+      cuisineItem,
+      const AuthDialog(),
+    );
+  }
+
   void favorites() {}
   void recentOrders() {}
   void repeatLastOrder() {}

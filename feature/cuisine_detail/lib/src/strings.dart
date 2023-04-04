@@ -10,4 +10,6 @@ class Strings {
   static String verificationId = 'Verification Id';
   static String getCode = 'Get code';
   static String logInPrompt = 'Tap to log in with fingerprint';
+  static String back = 'Back';
+  static String favorites = 'Favorites';
 }
