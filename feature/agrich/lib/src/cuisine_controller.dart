@@ -39,7 +39,7 @@ class CuisineController extends GetxController
 
   final Rx<int> qty = 1.obs;
 
-  final Rx<TabController?> tabController = Rx(null);
+  late Rx<TabController> tabController;
 
   late final Rx<double> sellingPrice = 0.0.obs;
 
@@ -95,6 +95,7 @@ class CuisineController extends GetxController
     phoneController = TextEditingController();
     buildingController = TextEditingController();
     focusNode = FocusNode();
+    tabController = Rx(TabController(length: 0, vsync: this));
   }
 
   Future<void> loadData() async {
@@ -105,8 +106,8 @@ class CuisineController extends GetxController
         items.value.add(item.data());
       }
       items.refresh();
-      tabController.value =
-          TabController(length: items.value.length, vsync: this);
+      tabController =
+          Rx(TabController(length: items.value.length, vsync: this));
       tabController.refresh();
     });
     if (_authenticateUser.isUserSignedIn()) {

@@ -14,6 +14,7 @@ class CuisineItem {
   final String detail;
   final String nutrients;
   final String photoUrl;
+  final List<String> favorites;
 
   CuisineItem(
       {required this.name,
@@ -24,7 +25,8 @@ class CuisineItem {
       required this.quantity,
       required this.detail,
       required this.nutrients,
-      required this.photoUrl});
+      required this.photoUrl,
+      required this.favorites});
 
   CartItem asCartItem() {
     return CartItem(
@@ -50,12 +52,14 @@ class CuisineItem {
       Constants.detail: detail,
       Constants.nutrients: nutrients,
       Constants.photoUrl: photoUrl,
+      Constants.favorites: favorites,
     };
   }
 
   factory CuisineItem.fromJson(
     Map<String, dynamic> json,
   ) {
+    var favorites = json[Constants.favorites] as List;
     return CuisineItem(
       name: json[Constants.name] as String,
       store: json[Constants.store] as String,
@@ -66,6 +70,7 @@ class CuisineItem {
       detail: json[Constants.detail] as String,
       nutrients: json[Constants.nutrients] as String,
       photoUrl: json[Constants.photoUrl] as String,
+      favorites: favorites.map((e) => e as String).toList(),
     );
   }
 }

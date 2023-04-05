@@ -271,13 +271,13 @@ class Themes {
         primary: Color(0xFF00BF63),
         onPrimary: Colors.black,
         secondary: Color(0xFF393939),
-        onSecondary: Colors.white,
+        onSecondary: Colors.white10,
         primaryContainer: Colors.transparent,
         secondaryContainer: Color.fromARGB(71, 5, 52, 49),
         error: Colors.red,
         onError: Colors.white,
         onBackground: Colors.white,
-        surface: Colors.black,
+        surface: Color(0xFF272a32),
         onSurface: Colors.grey),
   );
 }

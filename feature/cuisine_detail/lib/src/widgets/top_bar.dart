@@ -11,7 +11,7 @@ class DetailTopBar extends GetView<Controller> {
     Get.lazyPut(() => Controller());
     return Container(
       width: Get.width,
-      margin: const EdgeInsets.only(top: 36, left: 16, right: 16, bottom: 16),
+      margin: const EdgeInsets.only(top: 36, bottom: 16),
       color: Get.theme.colorScheme.primaryContainer,
       child: Padding(
         padding: const EdgeInsets.all(8.0),

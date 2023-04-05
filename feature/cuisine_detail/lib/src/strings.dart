@@ -12,4 +12,5 @@ class Strings {
   static String logInPrompt = 'Tap to log in with fingerprint';
   static String back = 'Back';
   static String favorites = 'Favorites';
+  static String description = 'Description';
 }
