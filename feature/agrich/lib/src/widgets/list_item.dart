@@ -106,7 +106,7 @@ class FoodieListItem extends GetView<CuisineController> {
                 child: IconButton(
                   onPressed: () => controller.addToCart(cuisineItem),
                   icon: Icon(
-                    Icons.add,
+                    Icons.add_shopping_cart_outlined,
                     color: Get.theme.colorScheme.background,
                   ),
                 )),

@@ -207,7 +207,7 @@ class Themes {
       displaySmall: GoogleFonts.montserratAlternates(
           fontSize: 24,
           color: Colors.white,
-          letterSpacing: 1.0,
+          letterSpacing: 0.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
       headlineLarge: GoogleFonts.roboto(
@@ -231,37 +231,37 @@ class Themes {
       labelMedium: GoogleFonts.montserratAlternates(
           fontSize: 12,
           color: Colors.white,
-          letterSpacing: 1.0,
+          letterSpacing: 0.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
       labelSmall: GoogleFonts.montserratAlternates(
           fontSize: 20,
           color: Colors.white,
-          letterSpacing: 1.0,
+          letterSpacing: 0.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
       bodyLarge: GoogleFonts.montserratAlternates(
           fontSize: 16,
           color: Colors.white,
-          letterSpacing: 1.0,
+          letterSpacing: 0.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
       bodyMedium: GoogleFonts.montserratAlternates(
           fontSize: 18,
           color: Colors.white,
-          letterSpacing: .5,
+          letterSpacing: 0.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
       bodySmall: GoogleFonts.montserratAlternates(
           fontSize: 14,
           color: Colors.white,
-          letterSpacing: 1.0,
+          letterSpacing: 0.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
       displayMedium: GoogleFonts.montserratAlternates(
           fontSize: 16,
           color: Colors.white,
-          letterSpacing: 1.0,
+          letterSpacing: 0.0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
     ),

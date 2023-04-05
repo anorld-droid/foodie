@@ -13,4 +13,7 @@ class Strings {
   static String back = 'Back';
   static String favorites = 'Favorites';
   static String description = 'Description';
+  static String nutritionalValue = 'Nutritional Value';
+  static String items = 'items';
+  static String item = 'item';
 }
