@@ -50,10 +50,11 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   }
 
   void addToCart(CuisineItem cuisineItem) {
-    _cartItemsUseCase.addToCart(
+    final msg = _cartItemsUseCase.addToCart(
       cuisineItem,
       const AuthDialog(),
     );
+    shortToast(msg);
   }
 
   void termsCondition() {}
