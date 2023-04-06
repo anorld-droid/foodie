@@ -15,7 +15,7 @@ class OrderItems extends GetView<Controller> {
     return Obx(() => SizedBox(
           height: controller.itemLength.value == 0
               ? Get.height * 0.05
-              : Get.height * (0.20 * controller.itemLength.value),
+              : Get.height * (0.175 * controller.itemLength.value),
           child: Column(
             key: Key(controller.itemLength.value.toString()),
             children: controller.items.value
@@ -34,16 +34,16 @@ class OrderItems extends GetView<Controller> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Get.theme.colorScheme.onSurface.withOpacity(0.6),
-            Get.theme.colorScheme.onSurface.withOpacity(0.3),
+            Get.theme.colorScheme.onBackground.withOpacity(0.4),
+            Get.theme.colorScheme.onBackground.withOpacity(0.1),
           ],
           begin: AlignmentDirectional.topStart,
           end: AlignmentDirectional.bottomEnd,
         ),
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
-          width: 1.5,
-          color: Get.theme.colorScheme.onBackground.withOpacity(0.2),
+          width: 1.0,
+          color: Get.theme.colorScheme.onBackground.withOpacity(0.05),
         ),
       ),
       child: Padding(
