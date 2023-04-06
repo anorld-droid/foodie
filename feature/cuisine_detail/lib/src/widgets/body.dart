@@ -273,18 +273,6 @@ class DetailBody extends GetView<Controller> {
                     const SizedBox(
                       height: 16,
                     ),
-                    Text(
-                      Strings.nutritionalValue,
-                      style: Get.textTheme.bodyMedium
-                          ?.copyWith(fontWeight: FontWeight.w800),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    ReadMoreText(
-                      cuisineItem.nutrients,
-                      trimLines: 3,
-                    ),
                     const SizedBox(
                       height: 8,
                     ),

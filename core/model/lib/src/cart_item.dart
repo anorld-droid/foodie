@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:model/src/constants.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
-
 class CartItem {
   String? id;
   final String photoUrl;
@@ -28,6 +27,7 @@ class CartItem {
         Constants.id: id,
         Constants.name: name,
         Constants.photoUrl: photoUrl,
+        Constants.store: store,
         Constants.stockTag: stockTag,
         Constants.basicPrice: basicPrice,
         Constants.sellingPrice: sellingPrice.value,

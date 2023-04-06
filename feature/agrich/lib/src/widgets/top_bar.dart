@@ -70,8 +70,8 @@ class CuisineTopBar extends GetView<CuisineController> {
                                   Obx(
                                     () => Text(
                                       '${controller.cartItemsLength.value}',
-                                      style: Get.textTheme.bodyMedium?.copyWith(
-                                        fontWeight: FontWeight.w600,
+                                      style: Get.textTheme.bodySmall?.copyWith(
+                                        fontWeight: FontWeight.w300,
                                       ),
                                     ),
                                   ),

@@ -1,8 +1,6 @@
 import 'package:cart/src/controller.dart';
-import 'package:cart/src/widgets/order_item.dart';
-import 'package:cart/src/widgets/shipping_items.dart';
+import 'package:cart/src/widgets/body.dart';
 import 'package:cart/src/widgets/top_bar.dart';
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -17,7 +15,7 @@ class Cart extends GetView<Controller> {
     Get.lazyPut(() => Controller(items: cartItems));
     return Scaffold(
       appBar: const CartAppBar(),
-      body: SingleChildScrollView(child: _body()),
+      body: const CartBody(),
       bottomNavigationBar: Container(
         height: 56,
         decoration: BoxDecoration(
@@ -94,139 +92,6 @@ class Cart extends GetView<Controller> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _body() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 16.0),
-          child: Obx(
-            () => controller.orderedItems.value.isEmpty
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        ShippingStatus.none.name,
-                        style: Get.textTheme.bodySmall?.copyWith(
-                          color: Get.theme.primaryColorDark.withOpacity(.9),
-                        ),
-                      ),
-                    ],
-                  )
-                : ShippingItems(shippingItems: controller.orderedItems.value),
-          ),
-        ),
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Obx(
-                () => Text(
-                  'Order (${controller.itemLength.value} ${controller.itemLength.value > 1 ? 'items' : 'item'})',
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const OrderItems(),
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.only(
-              top: 8.0, bottom: 8.0, left: 24.0, right: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Subtotal',
-                style: Get.textTheme.bodyLarge?.copyWith(
-                  color: Get.theme.primaryColorDark.withOpacity(.8),
-                ),
-              ),
-              Obx(
-                () => Text(
-                  '${CommonStrings.currency}${controller.subTotal.value.toStringAsFixed(2)}',
-                  style: Get.textTheme.bodyLarge?.copyWith(
-                    color: Get.theme.primaryColorDark.withOpacity(.8),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-              top: 8.0, bottom: 8.0, left: 24.0, right: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Shipping & Handling',
-                style: Get.textTheme.bodyLarge?.copyWith(
-                  color: Get.theme.primaryColorDark.withOpacity(.8),
-                ),
-              ),
-              Obx(
-                () => Text(
-                  '${CommonStrings.currency}${controller.shippingFee.value.toStringAsFixed(2)}',
-                  style: Get.textTheme.bodyLarge?.copyWith(
-                    color: Get.theme.primaryColorDark.withOpacity(.8),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                'Total',
-                style: Get.textTheme.bodyLarge?.copyWith(
-                  color: Get.theme.primaryColorDark.withOpacity(.8),
-                ),
-              ),
-              const SizedBox(
-                width: 8.0,
-              ),
-              Obx(
-                () => Text(
-                  '${CommonStrings.currency}${controller.total.value.toStringAsFixed(2)}',
-                  style: Get.textTheme.bodyLarge?.copyWith(
-                    color: Get.theme.primaryColorDark.withOpacity(.8),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.only(left: 24.0, bottom: 16.0, right: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Obx(
-                () => Text(
-                  controller.shippingAddress.value,
-                  style: Get.textTheme.bodySmall?.copyWith(
-                    color: Get.theme.primaryColorDark.withOpacity(.9),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

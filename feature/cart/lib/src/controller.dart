@@ -32,7 +32,6 @@ class Controller extends GetxController {
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
   Rx<bool> inputValidated = false.obs;
 
-  final Rx<List<ShippingModel>> orderedItems = Rx([]);
   final Rx<Subscription?> subscription = Rx(null);
   final Rx<ShippingInfo?> _shippingInfo = Rx(null);
   final Rx<String> shippingAddress = Rx('');
@@ -97,15 +96,6 @@ class Controller extends GetxController {
       _shippingInfo.value = user.shippingInfo;
       getShippingInfo();
       getShippingStatus(user);
-    });
-    // Load the items, ordered by the user
-    var shipSnap = await _shippingUseCase.get(_authenticateUser.getUserId()!);
-    shipSnap.listen((event) {
-      var ordItems = <ShippingModel>[];
-      for (var element in event.docs) {
-        ordItems.add(element.data());
-      }
-      orderedItems.value = ordItems;
     });
   }
 
