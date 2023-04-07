@@ -8,7 +8,6 @@ void shortToast(String msg) {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: Get.theme.colorScheme.background,
       textColor: Get.theme.primaryColorDark,
       fontSize: 16.0);
 }
@@ -19,7 +18,6 @@ void longToast(String msg) {
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: Get.theme.colorScheme.background,
       textColor: Get.theme.primaryColorDark,
       fontSize: 16.0);
 }

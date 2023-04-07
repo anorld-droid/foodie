@@ -83,7 +83,7 @@ class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
               ),
             ),
             child: Icon(
-              Icons.edit_location_alt_outlined,
+              Icons.mode_of_travel_outlined,
               color: Get.theme.colorScheme.onBackground,
               // size: 24,
             ),

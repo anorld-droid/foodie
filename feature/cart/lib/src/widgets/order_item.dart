@@ -49,7 +49,6 @@ class OrderItems extends GetView<Controller> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
               width: 120,
@@ -66,18 +65,22 @@ class OrderItems extends GetView<Controller> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 24.0),
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          item.name,
-                          style: Get.textTheme.bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                        SizedBox(
+                          width: Get.width * 0.45,
+                          child: Text(
+                            item.name,
+                            style: Get.textTheme.bodyLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
