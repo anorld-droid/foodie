@@ -18,46 +18,10 @@ class Cart extends GetView<Controller> {
       body: const CartBody(),
       bottomNavigationBar: Container(
         height: 56,
-        decoration: BoxDecoration(
-          color: Get.theme.colorScheme.background,
-          boxShadow: [
-            BoxShadow(
-              color: Get.theme.primaryColorDark.withOpacity(.35),
-              spreadRadius: 1.0,
-              blurRadius: .5,
-              blurStyle: BlurStyle.inner,
-            )
-          ],
-        ),
+        color: Get.theme.colorScheme.background,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            InkWell(
-              onTap: controller.shippingDialog,
-              borderRadius: BorderRadius.circular(30.0),
-              child: Container(
-                height: 40,
-                width: 40,
-                margin: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Get.theme.colorScheme.background,
-                      const Color.fromARGB(181, 5, 52, 49),
-                      const Color.fromARGB(71, 5, 52, 49),
-                    ],
-                  ),
-                ),
-                child: Icon(
-                  Icons.edit_location_alt_outlined,
-                  color: Get.theme.colorScheme.onBackground,
-                  // size: 24,
-                ),
-              ),
-            ),
             InkWell(
               onTap: () => controller.checkout(),
               borderRadius: BorderRadius.circular(12.0),
@@ -70,16 +34,8 @@ class Cart extends GetView<Controller> {
                     width: Get.width * 0.75,
                     decoration: BoxDecoration(
                       borderRadius:
-                          const BorderRadius.all(Radius.circular(30.0)),
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [
-                          Get.theme.colorScheme.background,
-                          const Color.fromARGB(181, 5, 52, 49),
-                          const Color.fromARGB(71, 5, 52, 49),
-                        ],
-                      ),
+                          const BorderRadius.all(Radius.circular(12.0)),
+                      color: Get.theme.colorScheme.onSecondary,
                     ),
                     child: Text(
                       'Checkout',
@@ -91,6 +47,22 @@ class Cart extends GetView<Controller> {
                     ),
                   )
                 ],
+              ),
+            ),
+            InkWell(
+              onTap: controller.shippingDialog,
+              borderRadius: BorderRadius.circular(30.0),
+              child: Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  color: Get.theme.colorScheme.onSecondary,
+                ),
+                child: Icon(
+                  Icons.edit_location_alt_outlined,
+                  color: Get.theme.colorScheme.onBackground,
+                ),
               ),
             ),
           ],

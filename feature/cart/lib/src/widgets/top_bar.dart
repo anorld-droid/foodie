@@ -79,13 +79,11 @@ class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
                   const Color.fromARGB(181, 5, 52, 49),
                   const Color.fromARGB(71, 5, 52, 49),
                 ],
-                // stops: const [0.5, 0.8, 1.0],
               ),
             ),
             child: Icon(
               Icons.mode_of_travel_outlined,
               color: Get.theme.colorScheme.onBackground,
-              // size: 24,
             ),
           ),
         ),

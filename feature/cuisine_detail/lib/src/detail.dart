@@ -15,7 +15,7 @@ class CuisineDetail extends GetView<Controller> {
     Get.lazyPut(() => Controller());
     controller.sellingPrice.value = cuisineItem.sellingPrice.value;
     return Scaffold(
-      backgroundColor: Get.theme.colorScheme.onBackground,
+      backgroundColor: Get.theme.colorScheme.primaryContainer,
       body: DetailBody(cuisineItem: cuisineItem),
       bottomNavigationBar: BottomNav(cuisineItem: cuisineItem),
     );

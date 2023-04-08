@@ -1,6 +1,8 @@
+import 'package:common/common.dart';
 import 'package:cuisine_detail/src/controller.dart';
 import 'package:cuisine_detail/src/strings.dart';
 import 'package:cuisine_detail/src/widgets/read_more.dart';
+import 'package:cuisine_detail/src/widgets/restaurants.dart';
 import 'package:cuisine_detail/src/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,18 +16,11 @@ class DetailBody extends GetView<Controller> {
   Widget build(BuildContext context) {
     Get.find<Controller>();
     return Container(
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0)),
-          color: Get.theme.colorScheme.background),
+      decoration: BoxDecoration(color: Get.theme.colorScheme.background),
       child: Container(
         height: Get.height,
         padding: const EdgeInsets.only(left: 8.0),
         decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0)),
           gradient: RadialGradient(colors: [
             Color.fromARGB(181, 5, 52, 49),
             Color.fromARGB(71, 5, 52, 49)
@@ -67,15 +62,15 @@ class DetailBody extends GetView<Controller> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SizedBox(
-                  height: Get.height * 0.45,
+                  height: Get.height * 0.48,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: Get.width * 0.35,
+                        width: Get.width * 0.30,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,46 +78,6 @@ class DetailBody extends GetView<Controller> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                      color: Get.theme.colorScheme.onSecondary),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0, vertical: 2.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const SizedBox(
-                                          width: 6.0,
-                                        ),
-                                        const Icon(
-                                          Icons.favorite,
-                                          color: Color(0xFFea2962),
-                                        ),
-                                        const SizedBox(
-                                          width: 6.0,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              '${cuisineItem.favorites.length}',
-                                              style: Get.textTheme.bodyLarge
-                                                  ?.copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                // color:
-                                                //     Get.theme.colorScheme.background,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 6.0,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
                                 const SizedBox(
                                   height: 16.0,
                                 ),
@@ -134,94 +89,64 @@ class DetailBody extends GetView<Controller> {
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0, vertical: 4.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
+                                    child: Column(
                                       children: [
-                                        const SizedBox(
-                                          width: 6.0,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              cuisineItem.stockTag == 1
-                                                  ? 'In stock'
-                                                  : 'Out of Stock',
-                                              style: Get.textTheme.bodyLarge
-                                                  ?.copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                // color:
-                                                //     Get.theme.colorScheme.background,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 6.0,
+                                        Text(
+                                          cuisineItem.stockTag == 1
+                                              ? 'In stock'
+                                              : 'Out of Stock',
+                                          style:
+                                              Get.textTheme.bodyLarge?.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            // color:
+                                            //     Get.theme.colorScheme.background,
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.expand_less_outlined,
+                                      color: Get.theme.colorScheme.onBackground
+                                          .withOpacity(0.8),
+                                      size: 32,
+                                    ),
+                                  ),
+                                ),
+                                SingleChildScrollView(
+                                  child: SizedBox(
+                                    height: Get.height * 0.27,
+                                    child: Column(
+                                      children: const [
+                                        Restaurants(
+                                          'Mama Farida',
+                                        ),
+                                        SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        Restaurants(
+                                          'Shamim',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.expand_more_outlined,
+                                      color: Get.theme.colorScheme.onBackground
+                                          .withOpacity(0.8),
+                                      size: 32,
+                                    ),
+                                  ),
+                                ),
                               ],
-                            ),
-                            Container(
-                              height: 100,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  color: Get.theme.colorScheme.onSecondary),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    onTap: () => controller
-                                        .incrementQty(cuisineItem.basicPrice),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Get
-                                                .theme.colorScheme.secondary),
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                        gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                            Get.theme.colorScheme.background,
-                                            const Color.fromARGB(
-                                                181, 5, 52, 49),
-                                            const Color.fromARGB(71, 5, 52, 49),
-                                          ],
-                                          stops: const [0.5, 0.8, 1.0],
-                                        ),
-                                      ),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Get.theme.primaryColorDark,
-                                        size: 24,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: InkWell(
-                                      onTap: () => controller
-                                          .decrementQty(cuisineItem.basicPrice),
-                                      child: Transform.rotate(
-                                        angle: 90 * 3.1415926535897932 / 180,
-                                        child: Icon(
-                                          Icons.remove,
-                                          color: Get
-                                              .theme.colorScheme.onBackground,
-                                          size: 28,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
                             const SizedBox(),
                           ],
@@ -229,8 +154,8 @@ class DetailBody extends GetView<Controller> {
                       ),
                       SizedBox(
                         width: Get.width * 0.52,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Stack(
+                          alignment: const Alignment(1, 0.8),
                           children: [
                             Container(
                               width: Get.width * 0.52,
@@ -244,14 +169,134 @@ class DetailBody extends GetView<Controller> {
                                     fit: BoxFit.contain),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Obx(
+                                () => RichText(
+                                  text: TextSpan(
+                                    text: '',
+                                    style: Get.textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                    children: [
+                                      WidgetSpan(
+                                        child: Transform.translate(
+                                            offset: const Offset(-4, -5.8),
+                                            child: Text(
+                                              'x',
+                                              style: Get.textTheme.bodySmall
+                                                  ?.copyWith(
+                                                fontWeight: FontWeight.w100,
+                                                textBaseline:
+                                                    TextBaseline.alphabetic,
+                                              ),
+                                            )),
+                                      ),
+                                      TextSpan(
+                                        text: '${controller.qty.value}',
+                                        style: Get.textTheme.headlineSmall
+                                            ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
-              //     const Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 16.0, horizontal: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(
+                      () => RichText(
+                        text: TextSpan(
+                          text: '',
+                          children: [
+                            WidgetSpan(
+                              child: Transform.translate(
+                                  offset: const Offset(0, -12),
+                                  child: Text(
+                                    CommonStrings.currency.toLowerCase(),
+                                    style: Get.textTheme.bodySmall?.copyWith(
+                                      fontWeight: FontWeight.w100,
+                                      textBaseline: TextBaseline.alphabetic,
+                                    ),
+                                  )),
+                            ),
+                            TextSpan(
+                              text: controller.sellingPrice.value
+                                  .toStringAsFixed(2),
+                              style: Get.textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 35,
+                      width: 90,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Get.theme.colorScheme.onSecondary),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () =>
+                                controller.incrementQty(cuisineItem.basicPrice),
+                            child: Container(
+                              padding: const EdgeInsets.all(4.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Get.theme.colorScheme.secondary),
+                                borderRadius: BorderRadius.circular(30.0),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Get.theme.colorScheme.background,
+                                    const Color.fromARGB(181, 5, 52, 49),
+                                    const Color.fromARGB(71, 5, 52, 49),
+                                  ],
+                                  stops: const [0.5, 0.8, 1.0],
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.add,
+                                color: Get.theme.primaryColorDark,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 4.0),
+                            child: InkWell(
+                              onTap: () => controller
+                                  .decrementQty(cuisineItem.basicPrice),
+                              child: Icon(
+                                Icons.remove,
+                                color: Get.theme.colorScheme.onBackground,
+                                size: 28,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Column(
