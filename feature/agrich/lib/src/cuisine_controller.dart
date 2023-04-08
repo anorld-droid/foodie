@@ -1,5 +1,6 @@
 import 'package:agrich/src/widgets/dialog_layout.dart';
 import 'package:agrich/src/widgets/shipping_dialog_layout.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class CuisineController extends GetxController
   late final AuthenticateUser _authenticateUser;
   late final CartItemsUseCase _cartItemsUseCase;
   late final CuisineModelUseCase _cuisineModelUseCase;
+  late final CuisineItemUseCase _cuisineItemUseCase;
   late final UserModelUseCase _userModelUseCase;
   late final ShippingUseCase _shippingUseCase;
   late final PaymentOptionsUseCase _paymentOptionsUseCase;
@@ -85,6 +87,7 @@ class CuisineController extends GetxController
     _authenticateUser = Get.find();
     _cartItemsUseCase = CartItemsUseCase();
     _cuisineModelUseCase = CuisineModelUseCase();
+    _cuisineItemUseCase = CuisineItemUseCase();
     _userModelUseCase = UserModelUseCase();
     _shippingUseCase = ShippingUseCase();
     _paymentOptionsUseCase = PaymentOptionsUseCase();
@@ -128,6 +131,10 @@ class CuisineController extends GetxController
           );
     });
     itemLength.value = items.value.length;
+  }
+
+  Stream<QuerySnapshot<CuisineItem>> getCuisineItems(String header) {
+    return _cuisineItemUseCase.get(header);
   }
 
   List<String> getTowns() {

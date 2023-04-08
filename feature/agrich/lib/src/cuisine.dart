@@ -1,6 +1,7 @@
 import 'package:agrich/agrich.dart';
 import 'package:agrich/src/cuisine_controller.dart';
 import 'package:agrich/src/widgets/list_item.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -64,9 +65,10 @@ class Cuisine extends GetView<CuisineController> {
                 child: TabBarView(
                   controller: controller.tabController.value,
                   children: List.generate(
-                      controller.items.value.length, (index) => const SizedBox()
-                      // _bodyLayout(controller.items.value[index].cuisineItems),
-                      ),
+                    controller.items.value.length,
+                    (index) =>
+                        _bodyLayout(controller.items.value[index].header),
+                  ),
                 ),
               ),
             ],
@@ -76,21 +78,38 @@ class Cuisine extends GetView<CuisineController> {
     );
   }
 
-  Widget _bodyLayout(List<CuisineItem> items) {
+  Widget _bodyLayout(String header) {
     return Container(
       height: Get.height * 0.695,
       width: Get.width,
       margin: const EdgeInsets.only(left: 16.0),
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, childAspectRatio: 0.75, mainAxisSpacing: 16.0),
-        shrinkWrap: true,
-        itemCount: items.length,
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: (context, index) => FoodieListItem(
-          cuisineItem: items[index],
-        ),
-      ),
+      child: StreamBuilder<QuerySnapshot<CuisineItem>>(
+          stream: controller.getCuisineItems(header),
+          builder:
+              (context, AsyncSnapshot<QuerySnapshot<CuisineItem>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: GradientCircularProgressIndicator(
+                gradientColors: [
+                  Get.theme.colorScheme.primary,
+                  Get.theme.colorScheme.background
+                ],
+                radius: Get.width * 0.3,
+              ));
+            }
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.75,
+                  mainAxisSpacing: 16.0),
+              shrinkWrap: true,
+              itemCount: snapshot.data!.docs.length,
+              padding: const EdgeInsets.all(16.0),
+              itemBuilder: (context, index) => FoodieListItem(
+                cuisineItem: snapshot.data!.docs[index].data(),
+              ),
+            );
+          }),
     );
   }
 }

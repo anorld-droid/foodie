@@ -56,20 +56,22 @@ class CuisineItem {
     SnapshotOptions? options,
   ) {
     var snap = snapshot.data();
-    var favorites = snap?[Constants.favorites] as Map<String, String>;
-    var stockTag = snap?[Constants.stockTag] as Map<String, int>;
-    var basicPrice = snap?[Constants.basicPrice] as Map<String, double>;
-    var sellingPrice = snap?[Constants.sellingPrice] as Map<String, double>;
+    var favorites = snap?[Constants.favorites] as Map<String, dynamic>;
+    var stockTag = snap?[Constants.stockTag] as Map<String, dynamic>;
+    var basicPrice = snap?[Constants.basicPrice] as Map<String, dynamic>;
+    var sellingPrice = snap?[Constants.sellingPrice] as Map<String, dynamic>;
     return CuisineItem(
       name: snap?[Constants.name] as String,
       store: snap?[Constants.store] as String,
-      stockTag: stockTag,
-      basicPrice: basicPrice,
-      sellingPrice: Rx(sellingPrice),
+      stockTag: stockTag.map((key, value) => MapEntry(key, value as int)),
+      basicPrice:
+          basicPrice.map((key, value) => MapEntry(key, value as double)),
+      sellingPrice:
+          Rx(sellingPrice.map((key, value) => MapEntry(key, value as double))),
       quantity: Rx(snap?[Constants.quantity] as int),
       detail: snap?[Constants.detail] as String,
       photoUrl: snap?[Constants.photoUrl] as String,
-      favorites: favorites,
+      favorites: favorites.map((key, value) => MapEntry(key, value as String)),
     );
   }
 }
