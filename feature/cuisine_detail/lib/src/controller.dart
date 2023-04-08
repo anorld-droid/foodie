@@ -14,12 +14,20 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
 
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
+  late final CommonController _mainController;
 
   final Rx<bool> seeMore = false.obs;
   late final Rx<double> sellingPrice = 0.0.obs;
   final Rx<int> qty = 1.obs;
+  late final Rx<String> store;
 
   var searching = false.obs;
+  @override
+  void onInit() {
+    super.onInit();
+    _mainController = Get.find<CommonController>();
+    store = _mainController.store;
+  }
 
   @override
   void onReady() {
@@ -49,10 +57,13 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
     sellingPrice.value = 0;
   }
 
-  void addToCart(CuisineItem cuisineItem) {
+  void addToCart(
+    CuisineItem cuisineItem,
+  ) {
     final msg = _cartItemsUseCase.addToCart(
       cuisineItem,
       const AuthDialog(),
+      store.value,
     );
     shortToast(msg);
   }

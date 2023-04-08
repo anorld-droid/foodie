@@ -10,11 +10,11 @@ class CartItemsUseCase {
   final CloudNetWorkDataSource _cloudNetWorkDataSource = Get.find();
   final AuthenticateUser _authenticateUser = Get.find();
 
-  String addToCart(CuisineItem cuisineItem, Widget authDialog) {
+  String addToCart(CuisineItem cuisineItem, Widget authDialog, String store) {
     if (_authenticateUser.isUserSignedIn()) {
       upload(
         docPath: _authenticateUser.getUserId()!,
-        cartItem: cuisineItem.asCartItem(),
+        cartItem: cuisineItem.asCartItem(store),
       );
       return 'Added to cart';
     } else {
@@ -29,7 +29,7 @@ class CartItemsUseCase {
         barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: Get.theme.backgroundColor,
+        barrierColor: Get.theme.colorScheme.primaryContainer,
         builder: (BuildContext buildContext) {
           return authDialog;
         });

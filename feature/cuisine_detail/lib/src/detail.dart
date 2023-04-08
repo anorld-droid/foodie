@@ -1,3 +1,4 @@
+import 'package:common/common.dart';
 import 'package:cuisine_detail/src/controller.dart';
 import 'package:cuisine_detail/src/widgets/body.dart';
 import 'package:cuisine_detail/src/widgets/bottom_nav.dart';
@@ -13,7 +14,8 @@ class CuisineDetail extends GetView<Controller> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => Controller());
-    controller.sellingPrice.value = cuisineItem.sellingPrice.value;
+    controller.sellingPrice.value =
+        cuisineItem.sellingPrice.value[controller.store.value]!;
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.primaryContainer,
       body: DetailBody(cuisineItem: cuisineItem),

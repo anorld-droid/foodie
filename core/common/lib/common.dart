@@ -6,3 +6,4 @@ export 'src/widgets/common.dart';
 export 'src/strings.dart';
 export 'src/routing/routes.dart';
 export 'src/utils/image_chooser.dart';
+export 'src/controller/controller.dart';

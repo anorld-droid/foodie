@@ -10,6 +10,7 @@ class User {
   final String username;
   final ShippingInfo? shippingInfo;
   final String account;
+  final String favoriteStore;
 
   const User({
     required this.uid,
@@ -17,6 +18,7 @@ class User {
     required this.username,
     required this.shippingInfo,
     this.account = 'Free',
+    this.favoriteStore = 'Foodie',
   });
 
   Map<String, dynamic> toFirestore() => {
@@ -24,7 +26,8 @@ class User {
         Constants.username: username,
         Constants.photoUrl: photoUrl,
         Constants.shippingInfo: shippingInfo?.toFirestore(),
-        Constants.account: account
+        Constants.account: account,
+        Constants.favoriteStore: favoriteStore
       };
 
   factory User.fromFirestore(
@@ -33,17 +36,17 @@ class User {
   ) {
     var snapshot = snap.data();
     return User(
-      uid: snapshot?[Constants.uid] as String,
-      photoUrl: snapshot?[Constants.photoUrl] as String?,
-      username: snapshot?[Constants.username] as String,
-      shippingInfo: snapshot?[Constants.shippingInfo] != null
-          ? ShippingInfo.fromFirestore(
-              snapshot?[Constants.shippingInfo] as Map<String, dynamic>,
-              options,
-            )
-          : null,
-      account: snapshot?[Constants.account] as String,
-    );
+        uid: snapshot?[Constants.uid] as String,
+        photoUrl: snapshot?[Constants.photoUrl] as String?,
+        username: snapshot?[Constants.username] as String,
+        shippingInfo: snapshot?[Constants.shippingInfo] != null
+            ? ShippingInfo.fromFirestore(
+                snapshot?[Constants.shippingInfo] as Map<String, dynamic>,
+                options,
+              )
+            : null,
+        account: snapshot?[Constants.account] as String,
+        favoriteStore: snapshot?[Constants.favoriteStore] as String);
   }
 
   factory User.fromJson(
@@ -61,6 +64,7 @@ class User {
             )
           : null,
       account: json[Constants.account] as String,
+      favoriteStore: json[Constants.favoriteStore] as String,
     );
   }
 }

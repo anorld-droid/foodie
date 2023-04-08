@@ -15,6 +15,7 @@ class DetailBody extends GetView<Controller> {
   @override
   Widget build(BuildContext context) {
     Get.find<Controller>();
+    final mainController = Get.find<CommonController>();
     return Container(
       decoration: BoxDecoration(color: Get.theme.colorScheme.background),
       child: Container(
@@ -254,8 +255,8 @@ class DetailBody extends GetView<Controller> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           InkWell(
-                            onTap: () =>
-                                controller.incrementQty(cuisineItem.basicPrice),
+                            onTap: () => controller.incrementQty(cuisineItem
+                                .basicPrice[mainController.store.value]!),
                             child: Container(
                               padding: const EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
@@ -282,8 +283,8 @@ class DetailBody extends GetView<Controller> {
                           Padding(
                             padding: const EdgeInsets.only(right: 4.0),
                             child: InkWell(
-                              onTap: () => controller
-                                  .decrementQty(cuisineItem.basicPrice),
+                              onTap: () => controller.decrementQty(cuisineItem
+                                  .basicPrice[mainController.store.value]!),
                               child: Icon(
                                 Icons.remove,
                                 color: Get.theme.colorScheme.onBackground,

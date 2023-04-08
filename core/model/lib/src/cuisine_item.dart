@@ -6,15 +6,14 @@ import 'package:model/src/constants.dart';
 
 class CuisineItem {
   final String name;
-  final int stockTag;
+  final Map<String, int> stockTag;
   final String store;
-  final double basicPrice;
-  final Rx<double> sellingPrice;
+  final Map<String, double> basicPrice;
+  final Rx<Map<String, double>> sellingPrice;
   final Rx<int> quantity;
   final String detail;
-  final String nutrients;
   final String photoUrl;
-  final List<String> favorites;
+  final List<Map<String, String>> favorites;
 
   CuisineItem(
       {required this.name,
@@ -24,19 +23,18 @@ class CuisineItem {
       required this.sellingPrice,
       required this.quantity,
       required this.detail,
-      required this.nutrients,
       required this.photoUrl,
       required this.favorites});
 
-  CartItem asCartItem() {
+  CartItem asCartItem(String selectedStore) {
     return CartItem(
       id: null,
       photoUrl: photoUrl,
       name: name,
-      store: store,
-      stockTag: stockTag,
-      basicPrice: basicPrice,
-      sellingPrice: sellingPrice,
+      store: selectedStore,
+      stockTag: stockTag[selectedStore] ?? 0,
+      basicPrice: basicPrice[selectedStore]!,
+      sellingPrice: Rx(sellingPrice.value[selectedStore]!),
       quantity: quantity,
     );
   }
@@ -50,7 +48,6 @@ class CuisineItem {
       Constants.sellingPrice: sellingPrice.value,
       Constants.quantity: quantity.value,
       Constants.detail: detail,
-      Constants.nutrients: nutrients,
       Constants.photoUrl: photoUrl,
       Constants.favorites: favorites,
     };
@@ -59,18 +56,20 @@ class CuisineItem {
   factory CuisineItem.fromJson(
     Map<String, dynamic> json,
   ) {
-    var favorites = json[Constants.favorites] as List;
+    List<dynamic> favorites = json[Constants.favorites] as List<dynamic>;
+    var stockTag = json[Constants.stockTag] as Map<String, int>;
+    var basicPrice = json[Constants.basicPrice] as Map<String, double>;
+    var sellingPrice = json[Constants.sellingPrice] as Map<String, double>;
     return CuisineItem(
       name: json[Constants.name] as String,
       store: json[Constants.store] as String,
-      stockTag: json[Constants.stockTag] as int,
-      basicPrice: json[Constants.basicPrice] as double,
-      sellingPrice: Rx(json[Constants.sellingPrice] as double),
+      stockTag: stockTag,
+      basicPrice: basicPrice,
+      sellingPrice: Rx(sellingPrice),
       quantity: Rx(json[Constants.quantity] as int),
       detail: json[Constants.detail] as String,
-      nutrients: json[Constants.nutrients] as String,
       photoUrl: json[Constants.photoUrl] as String,
-      favorites: favorites.map((e) => e as String).toList(),
+      favorites: favorites.map((e) => e as Map<String, String>).toList(),
     );
   }
 }

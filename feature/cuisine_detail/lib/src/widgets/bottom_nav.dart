@@ -11,6 +11,7 @@ class BottomNav extends GetView<Controller> {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<Controller>();
     return Container(
       decoration: BoxDecoration(color: Get.theme.colorScheme.background),
       child: Container(

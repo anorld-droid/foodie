@@ -15,6 +15,7 @@ class CuisineController extends GetxController
   late final TextEditingController searchController;
   late final TextEditingController phoneController;
   late final TextEditingController buildingController;
+  late final CommonController _mainController;
 
   final Rx<List<CuisineModel>> items = Rx([]);
   final Rx<List<CuisineItem>> searchItems = Rx([]);
@@ -24,6 +25,8 @@ class CuisineController extends GetxController
   final Rx<int> cartItemsLength = 0.obs;
   final Rx<bool> editing = false.obs;
   Rx<int> selectedChip = 10.obs;
+
+  late final Rx<String> store;
 
   late final AuthenticateUser _authenticateUser;
   late final CartItemsUseCase _cartItemsUseCase;
@@ -80,6 +83,9 @@ class CuisineController extends GetxController
       // Status bar brightness (optional)
       statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
     ));
+
+    _mainController = Get.find<CommonController>();
+    store = _mainController.store;
 
     _authenticateUser = Get.find();
     _cartItemsUseCase = CartItemsUseCase();
@@ -323,7 +329,7 @@ class CuisineController extends GetxController
         barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.backgroundColor.withOpacity(.87),
+        barrierColor: Get.theme.colorScheme.background.withOpacity(.87),
         builder: (BuildContext buildContext) {
           return const ShippingDialogLayout();
         });
@@ -331,13 +337,14 @@ class CuisineController extends GetxController
 
   void incrementQty(CuisineItem item) {
     var qty = ++item.quantity.value;
-    item.sellingPrice.value = item.basicPrice * qty;
+    item.sellingPrice.value[store.value] = item.basicPrice[store.value]! * qty;
   }
 
   void decrementQty(CuisineItem item) {
     if (item.quantity > 1.0) {
       var qty = --item.quantity.value;
-      item.sellingPrice.value = item.basicPrice * qty;
+      item.sellingPrice.value[store.value] =
+          item.basicPrice[store.value]! * qty;
     }
   }
 
@@ -395,6 +402,7 @@ class CuisineController extends GetxController
     final message = _cartItemsUseCase.addToCart(
       cuisineItem,
       const AuthDialog(),
+      store.value,
     );
     shortToast(message);
   }

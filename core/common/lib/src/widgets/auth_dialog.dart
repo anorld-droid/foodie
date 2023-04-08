@@ -10,7 +10,7 @@ class AuthDialog extends GetView<CommonController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => CommonController());
+    Get.find<CommonController>();
     return Column(
       children: [
         Padding(

@@ -18,6 +18,8 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
 
   late OnboardingStatus _onboardingStatus;
 
+  late final Rx<String> store;
+
   @override
   void onReady() {
     super.onReady();
@@ -26,23 +28,22 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    initialize();
+    await initialize();
   }
 
-  void initialize() {
+  Future<void> initialize() async {
     _authenticateUser = Get.find();
     _onboardingStatus = OnboardingStatus();
     _userModelUseCase = UserModelUseCase();
-    // _paymentOptionsUseCase = PaymentOptionsUseCase();
-    // _sendMessageUseCase = SendMessageUseCase();
 
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    // focusNode = FocusNode();
 
     tabController = TabController(length: 2, vsync: this);
+    User? user = await _userModelUseCase.get(_authenticateUser.getUserId()!);
+    store.value = user?.favoriteStore ?? 'Foodie';
   }
 
   Future<void> sigIn() async {
