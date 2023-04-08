@@ -5,17 +5,13 @@ import 'package:model/src/constants.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 class CuisineModel {
   final String header;
-  final List<CuisineItem> cuisineItems;
 
-  CuisineModel({required this.header, required this.cuisineItems});
+  CuisineModel({
+    required this.header,
+  });
 
   Map<String, dynamic> toFirestore() => {
         Constants.header: header,
-        Constants.cuisineItems: cuisineItems
-            .map(
-              (e) => e.toJson(),
-            )
-            .toList(),
       };
 
   factory CuisineModel.fromFirestore(
@@ -23,12 +19,8 @@ class CuisineModel {
     SnapshotOptions? options,
   ) {
     var snapshot = snap.data();
-    List<dynamic> items = snapshot?[Constants.cuisineItems] as List<dynamic>;
     return CuisineModel(
-        header: snapshot?[Constants.header] as String,
-        cuisineItems: items.map((e) {
-          e as Map<String, dynamic>;
-          return CuisineItem.fromJson(e);
-        }).toList());
+      header: snapshot?[Constants.header] as String,
+    );
   }
 }

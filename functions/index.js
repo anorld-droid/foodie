@@ -8,11 +8,7 @@ admin.initializeApp();
 
 // // Create and deploy your first functions
 // // https://firebase.google.com/docs/functions/get-started
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+
 exports.safaricom = functions.https.onRequest( async (req, res) => {
   const reqId = req.body.Body.stkCallback.CheckoutRequestID;
   const result = req.body.Body;
@@ -20,4 +16,11 @@ exports.safaricom = functions.https.onRequest( async (req, res) => {
       .doc(reqId).set(result);
   // Send back a message that we've successfully written the message
   res.json({result: `Message with ID: ${writeResult.id} added.`});
+});
+
+exports.getSubCollections = functions.https.onCall(async (data, context) => {
+  const docPath = data.docPath;
+  const collections = await admin.firestore().doc(docPath).listCollections();
+  const collectionIds = collections.map((col) => col.id);
+  return {collections: collectionIds};
 });

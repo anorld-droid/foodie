@@ -14,11 +14,11 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
   late final TextEditingController passwordController;
 
   late AnimationController animationController;
+  final Rx<String> store = Rx('');
+
   var searching = false.obs;
 
   late OnboardingStatus _onboardingStatus;
-
-  late final Rx<String> store;
 
   @override
   void onReady() {
@@ -42,8 +42,9 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
     passwordController = TextEditingController();
 
     tabController = TabController(length: 2, vsync: this);
+
     User? user = await _userModelUseCase.get(_authenticateUser.getUserId()!);
-    store.value = user?.favoriteStore ?? 'Foodie';
+    store.value = user!.favoriteStore;
   }
 
   Future<void> sigIn() async {

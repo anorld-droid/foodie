@@ -26,7 +26,7 @@ class CuisineController extends GetxController
   final Rx<bool> editing = false.obs;
   Rx<int> selectedChip = 10.obs;
 
-  late final Rx<String> store;
+  final Rx<String> store = Rx('');
 
   late final AuthenticateUser _authenticateUser;
   late final CartItemsUseCase _cartItemsUseCase;
@@ -44,7 +44,7 @@ class CuisineController extends GetxController
 
   late Rx<TabController> tabController;
 
-  late final Rx<double> sellingPrice = 0.0.obs;
+  final Rx<double> sellingPrice = 0.0.obs;
 
   Rx<bool> inputValidated = false.obs;
 
@@ -64,7 +64,12 @@ class CuisineController extends GetxController
   @override
   void onInit() async {
     super.onInit();
-
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      // Status bar color
+      statusBarColor: Get.theme.colorScheme.primaryContainer,
+      // Status bar brightness (optional)
+      statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
+    ));
     initialize();
     setListeners();
     await loadData();
@@ -77,16 +82,6 @@ class CuisineController extends GetxController
   }
 
   void initialize() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      // Status bar color
-      statusBarColor: Get.theme.colorScheme.primaryContainer,
-      // Status bar brightness (optional)
-      statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
-    ));
-
-    _mainController = Get.find<CommonController>();
-    store = _mainController.store;
-
     _authenticateUser = Get.find();
     _cartItemsUseCase = CartItemsUseCase();
     _cuisineModelUseCase = CuisineModelUseCase();
@@ -100,22 +95,21 @@ class CuisineController extends GetxController
     searchController = TextEditingController();
     phoneController = TextEditingController();
     buildingController = TextEditingController();
+
     focusNode = FocusNode();
     tabController = Rx(TabController(length: 0, vsync: this));
+    _mainController = Get.find<CommonController>();
+    store.value = _mainController.store.value;
   }
 
   Future<void> loadData() async {
-    var snap = await _cuisineModelUseCase.get();
-    snap.listen((event) {
-      items.value.clear();
-      for (var item in event.docs) {
-        items.value.add(item.data());
-      }
-      items.refresh();
-      tabController =
-          Rx(TabController(length: items.value.length, vsync: this));
-      tabController.refresh();
-    });
+    var snap = await _cuisineModelUseCase.getHeaders();
+
+    print(snap);
+    items.value = snap;
+    tabController = Rx(TabController(length: items.value.length, vsync: this));
+    tabController.refresh();
+
     if (_authenticateUser.isUserSignedIn()) {
       getCartItems();
       var user = await _userModelUseCase.get(_authenticateUser.getUserId()!);

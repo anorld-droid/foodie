@@ -12,4 +12,5 @@ class Constants {
   static String transactionDesc = 'Payment of ';
   static String passKey =
       ''; //TODO: request from m-pesabusiness@safaricom.co.ke
+  static String getSubCollections = 'getSubCollections';
 }

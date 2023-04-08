@@ -25,6 +25,7 @@ class TriceApp extends GetView<TriceAppController> {
           Get.theme.colorScheme.brightness, // For Android (dark icons)
     ));
     Get.lazyPut<TriceAppController>(() => TriceAppController(), fenix: true);
+    Get.lazyPut<CommonController>(() => CommonController(), fenix: true);
     return GetMaterialApp(
       builder: (context, child) {
         final mediaQueryData = MediaQuery.of(context);

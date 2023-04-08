@@ -9,28 +9,26 @@ class CuisineModelUseCase {
   final CloudNetWorkDataSource _cloudNetWorkDataSource = Get.find();
   final SearchNetworkDataSource _searchNetworkDataSource =
       SearchNetworkDataSource();
+  final CloudFunctionsNetworkDataSource _cloudFunctionsNetworkDataSource =
+      CloudFunctionsNetworkDataSource();
 
   /// Get the cuisine home items to the specified path
-  Future<Stream<QuerySnapshot<CuisineModel>>> get() async {
-    return await _cloudNetWorkDataSource.getDocs(
-        collectionName: Constants.cuisine,
-        docPath: Constants.home,
-        collectionPath: Constants.items,
-        fromFirestore: CuisineModel.fromFirestore,
-        toFirestore: (CuisineModel cuisineModel, _) =>
-            cuisineModel.toFirestore());
+  Future<List<CuisineModel>> getHeaders() async {
+    var items = await _cloudFunctionsNetworkDataSource
+        .get('${Constants.cuisine}/${Constants.home}');
+    return items.map((e) => CuisineModel(header: e)).toList();
   }
 
   Future<List<CuisineItem>> search(String query) async {
     var json = await _searchNetworkDataSource.invoke(query);
     List<CuisineItem> items = [];
-    for (var element in json) {
-      var cuisineItemList = element['document']['cuisineItems'] as List;
-      for (var item in cuisineItemList) {
-        item as Map<String, dynamic>;
-        items.add(CuisineItem.fromJson(item));
-      }
-    }
+    // for (var element in json) {
+    //   var cuisineItemList = element['document']['cuisineItems'] as List;
+    //   for (var item in cuisineItemList) {
+    //     item as Map<String, dynamic>;
+    //     items.add(CuisineItem.fromJson(item));
+    //   }
+    // }
     return items;
   }
 }

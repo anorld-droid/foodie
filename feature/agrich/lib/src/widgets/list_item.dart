@@ -13,6 +13,8 @@ class FoodieListItem extends GetView<CuisineController> {
   @override
   Widget build(BuildContext context) {
     Get.find<CuisineController>();
+    final mainController = Get.find<CommonController>();
+
     return InkWell(
       onTap: () => controller.navigateToDetails(cuisineItem),
       child: Stack(
@@ -116,7 +118,7 @@ class FoodieListItem extends GetView<CuisineController> {
             left: 10,
             child: Obx(
               () => Text(
-                '${CommonStrings.currency} ${cuisineItem.sellingPrice.value[controller.store.value]!.toStringAsFixed(2)}',
+                '${CommonStrings.currency} ${cuisineItem.sellingPrice.value[mainController.store.value]!.toStringAsFixed(2)}',
                 style: Get.textTheme.bodySmall
                     ?.copyWith(fontWeight: FontWeight.w700),
               ),

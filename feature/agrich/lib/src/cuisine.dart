@@ -1,6 +1,7 @@
 import 'package:agrich/agrich.dart';
 import 'package:agrich/src/cuisine_controller.dart';
 import 'package:agrich/src/widgets/list_item.dart';
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -50,8 +51,9 @@ class Cuisine extends GetView<CuisineController> {
                     (index) => Tab(
                         child: Text(
                       controller.items.value[index].header,
-                      style: Get.textTheme.bodySmall
-                          ?.copyWith(color: Get.theme.colorScheme.onBackground),
+                      style: Get.textTheme.bodySmall?.copyWith(
+                        color: Get.theme.colorScheme.onBackground,
+                      ),
                     )),
                   ),
                 ),
@@ -62,10 +64,9 @@ class Cuisine extends GetView<CuisineController> {
                 child: TabBarView(
                   controller: controller.tabController.value,
                   children: List.generate(
-                    controller.items.value.length,
-                    (index) =>
-                        _bodyLayout(controller.items.value[index].cuisineItems),
-                  ),
+                      controller.items.value.length, (index) => const SizedBox()
+                      // _bodyLayout(controller.items.value[index].cuisineItems),
+                      ),
                 ),
               ),
             ],

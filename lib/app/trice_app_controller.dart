@@ -1,4 +1,3 @@
-import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,6 @@ class TriceAppController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    Get.lazyPut(() => CommonController());
     _messageUseCase = SendMessageUseCase();
   }
 

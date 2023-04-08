@@ -79,6 +79,11 @@ class CloudNetWorkDataSource {
         toFirestore: toFirestore);
   }
 
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getCollectionNames(
+      {required String collection, required String doc}) {
+    return _cloudMethods.getCollectionNames(collection, doc);
+  }
+
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getCollectionStream<R>({
     required String collection,
   }) async {

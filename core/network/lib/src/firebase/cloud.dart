@@ -147,4 +147,13 @@ class CloudMethods {
         .withConverter(fromFirestore: fromFirestore, toFirestore: toFirestore)
         .get();
   }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getCollectionNames(
+    String collection,
+    String document,
+  ) {
+    DocumentReference<Map<String, dynamic>> rootRef =
+        _firestore.collection(collection).doc(document);
+    return rootRef.snapshots();
+  }
 }

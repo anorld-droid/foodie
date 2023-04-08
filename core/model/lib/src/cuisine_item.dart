@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 import 'package:model/src/constants.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
-
 class CuisineItem {
   final String name;
   final Map<String, int> stockTag;
@@ -13,7 +13,7 @@ class CuisineItem {
   final Rx<int> quantity;
   final String detail;
   final String photoUrl;
-  final List<Map<String, String>> favorites;
+  final Map<String, String> favorites;
 
   CuisineItem(
       {required this.name,
@@ -39,37 +39,37 @@ class CuisineItem {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      Constants.name: name,
-      Constants.store: store,
-      Constants.stockTag: stockTag,
-      Constants.basicPrice: basicPrice,
-      Constants.sellingPrice: sellingPrice.value,
-      Constants.quantity: quantity.value,
-      Constants.detail: detail,
-      Constants.photoUrl: photoUrl,
-      Constants.favorites: favorites,
-    };
-  }
+  Map<String, dynamic> toFirestore() => {
+        Constants.name: name,
+        Constants.store: store,
+        Constants.stockTag: stockTag,
+        Constants.basicPrice: basicPrice,
+        Constants.sellingPrice: sellingPrice.value,
+        Constants.quantity: quantity.value,
+        Constants.detail: detail,
+        Constants.photoUrl: photoUrl,
+        Constants.favorites: favorites,
+      };
 
-  factory CuisineItem.fromJson(
-    Map<String, dynamic> json,
+  factory CuisineItem.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
   ) {
-    List<dynamic> favorites = json[Constants.favorites] as List<dynamic>;
-    var stockTag = json[Constants.stockTag] as Map<String, int>;
-    var basicPrice = json[Constants.basicPrice] as Map<String, double>;
-    var sellingPrice = json[Constants.sellingPrice] as Map<String, double>;
+    var snap = snapshot.data();
+    var favorites = snap?[Constants.favorites] as Map<String, String>;
+    var stockTag = snap?[Constants.stockTag] as Map<String, int>;
+    var basicPrice = snap?[Constants.basicPrice] as Map<String, double>;
+    var sellingPrice = snap?[Constants.sellingPrice] as Map<String, double>;
     return CuisineItem(
-      name: json[Constants.name] as String,
-      store: json[Constants.store] as String,
+      name: snap?[Constants.name] as String,
+      store: snap?[Constants.store] as String,
       stockTag: stockTag,
       basicPrice: basicPrice,
       sellingPrice: Rx(sellingPrice),
-      quantity: Rx(json[Constants.quantity] as int),
-      detail: json[Constants.detail] as String,
-      photoUrl: json[Constants.photoUrl] as String,
-      favorites: favorites.map((e) => e as Map<String, String>).toList(),
+      quantity: Rx(snap?[Constants.quantity] as int),
+      detail: snap?[Constants.detail] as String,
+      photoUrl: snap?[Constants.photoUrl] as String,
+      favorites: favorites,
     );
   }
 }

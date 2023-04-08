@@ -6,5 +6,6 @@ export 'src/firebase/auth.dart';
 export 'src/firebase/storage.dart';
 export 'src/firebase/cloud.dart';
 export 'src/firebase/messaging.dart';
+export 'src/firebase/fcloud_functions.dart';
 export 'src/custom/search.dart';
 export 'src/custom/stk_push.dart';
