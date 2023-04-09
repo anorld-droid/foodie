@@ -5,6 +5,7 @@ import 'package:model/src/constants.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
 class CuisineItem {
+  String? id;
   final String name;
   final Map<String, int> stockTag;
   final String store;
@@ -13,9 +14,9 @@ class CuisineItem {
   final Rx<int> quantity;
   final String detail;
   final String photoUrl;
-  final Map<String, String> favorites;
+  final Map<String, List<String>> favorites;
 
-  CuisineItem(
+  CuisineItem(this.id,
       {required this.name,
       required this.store,
       required this.stockTag,
@@ -61,6 +62,7 @@ class CuisineItem {
     var basicPrice = snap?[Constants.basicPrice] as Map<String, dynamic>;
     var sellingPrice = snap?[Constants.sellingPrice] as Map<String, dynamic>;
     return CuisineItem(
+      snapshot.id,
       name: snap?[Constants.name] as String,
       store: snap?[Constants.store] as String,
       stockTag: stockTag.map((key, value) => MapEntry(key, value as int)),
@@ -71,7 +73,21 @@ class CuisineItem {
       quantity: Rx(snap?[Constants.quantity] as int),
       detail: snap?[Constants.detail] as String,
       photoUrl: snap?[Constants.photoUrl] as String,
-      favorites: favorites.map((key, value) => MapEntry(key, value as String)),
+      favorites: favorites.map((key, value) {
+        value as List<dynamic>;
+        value
+            .map(
+              (e) => e as String,
+            )
+            .toList();
+        return MapEntry(
+            key,
+            value
+                .map(
+                  (e) => e as String,
+                )
+                .toList());
+      }),
     );
   }
 }

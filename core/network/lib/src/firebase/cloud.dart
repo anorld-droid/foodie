@@ -116,6 +116,23 @@ class CloudMethods {
     await _firestore.collection(collection).doc(doc).update(data);
   }
 
+  /// update the file to the specified path
+  /// NOTE: docPath should be user id
+  Future<void> updateFieldFromMultiCollection<R>({
+    required String parentCol,
+    required String parentDoc,
+    required String childCol,
+    required String childDoc,
+    required Map<String, Object?> data,
+  }) async {
+    await _firestore
+        .collection(parentCol)
+        .doc(parentDoc)
+        .collection(childCol)
+        .doc(childDoc)
+        .update(data);
+  }
+
   /// delete the file from the specified path
   /// NOTE: docPath should be user id
   Future<void> deleteDocFromMulitiCollection<R>({
@@ -145,14 +162,5 @@ class CloudMethods {
         .where(filterValue, isEqualTo: true)
         .withConverter(fromFirestore: fromFirestore, toFirestore: toFirestore)
         .get();
-  }
-
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getCollectionNames(
-    String collection,
-    String document,
-  ) {
-    DocumentReference<Map<String, dynamic>> rootRef =
-        _firestore.collection(collection).doc(document);
-    return rootRef.snapshots();
   }
 }

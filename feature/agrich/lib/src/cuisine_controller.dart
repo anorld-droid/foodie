@@ -1,3 +1,4 @@
+import 'package:agrich/src/strings.dart';
 import 'package:agrich/src/widgets/dialog_layout.dart';
 import 'package:agrich/src/widgets/shipping_dialog_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -107,8 +108,6 @@ class CuisineController extends GetxController
 
   Future<void> loadData() async {
     var snap = await _cuisineModelUseCase.getHeaders();
-
-    print(snap);
     items.value = snap;
     tabController = Rx(TabController(length: items.value.length, vsync: this));
     tabController.refresh();
@@ -157,7 +156,7 @@ class CuisineController extends GetxController
         barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.backgroundColor.withOpacity(.87),
+        barrierColor: Get.theme.colorScheme.background.withOpacity(.87),
         builder: (BuildContext buildContext) {
           return DialogLayout(amount: amount, type: type);
         });
@@ -245,10 +244,10 @@ class CuisineController extends GetxController
     searchItems.value = await _cuisineModelUseCase.search(value);
   }
 
-  void navigateToDetails(CuisineItem cuisineItem) {
+  void navigateToDetails(CuisineItem cuisineItem, String header) {
     Get.toNamed<void>(
       Routes.cuisineDetail,
-      arguments: cuisineItem,
+      arguments: {'cuisineItem': cuisineItem, 'header': header},
     );
   }
 
@@ -409,6 +408,11 @@ class CuisineController extends GetxController
   }
 
   void favorites() {}
-  void recentOrders() {}
-  void repeatLastOrder() {}
+  void quickOptions(String option) {
+    switch (option) {
+      case 'Repeat last order':
+        break;
+      default:
+    }
+  }
 }

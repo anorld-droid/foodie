@@ -107,6 +107,7 @@ class Cuisine extends GetView<CuisineController> {
               padding: const EdgeInsets.all(16.0),
               itemBuilder: (context, index) => FoodieListItem(
                 cuisineItem: snapshot.data!.docs[index].data(),
+                header: header,
               ),
             );
           }),

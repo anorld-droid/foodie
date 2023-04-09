@@ -15,4 +15,5 @@ class Strings {
   static String description = 'Description';
   static String nutritionalValue = 'Nutritional Value';
   static String addToCart = 'Add To Cart';
+  static List<String> menuOptions = ['Search restaurant'];
 }

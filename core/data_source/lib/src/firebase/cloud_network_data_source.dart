@@ -79,11 +79,6 @@ class CloudNetWorkDataSource {
         toFirestore: toFirestore);
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getCollectionNames(
-      {required String collection, required String doc}) {
-    return _cloudMethods.getCollectionNames(collection, doc);
-  }
-
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getCollectionStream<R>({
     required String collection,
   }) async {
@@ -122,6 +117,23 @@ class CloudNetWorkDataSource {
       doc: doc,
       data: data,
     );
+  }
+
+  /// update the file to the specified path
+  /// NOTE: docPath should be user id
+  Future<void> updateFieldFromMultiCollection<R>({
+    required String parentCol,
+    required String parentDoc,
+    required String childCol,
+    required String childDoc,
+    required Map<String, Object?> data,
+  }) async {
+    await _cloudMethods.updateFieldFromMultiCollection<R>(
+        parentCol: parentCol,
+        parentDoc: parentDoc,
+        childCol: childCol,
+        childDoc: childDoc,
+        data: data);
   }
 
   /// delete the file from the specified path

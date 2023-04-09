@@ -8,7 +8,7 @@ class DetailTopBar extends GetView<Controller> implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => Controller());
+    Get.find<Controller>();
     return AppBar(
       elevation: 2,
       leadingWidth: 56.0,
@@ -55,9 +55,13 @@ class DetailTopBar extends GetView<Controller> implements PreferredSizeWidget {
       shadowColor: Get.theme.colorScheme.primaryContainer,
       backgroundColor: Get.theme.colorScheme.primaryContainer,
       actions: [
-        InkWell(
-          onTap: controller.addToFavorite,
-          borderRadius: BorderRadius.circular(30.0),
+        PopupMenuButton<String>(
+          onSelected: controller.moreOptions,
+          padding: const EdgeInsets.all(0.0),
+          elevation: 4.0,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+          color: Get.theme.colorScheme.primaryContainer,
           child: Container(
             height: 40,
             width: 40,
@@ -80,6 +84,17 @@ class DetailTopBar extends GetView<Controller> implements PreferredSizeWidget {
               color: Get.theme.colorScheme.onBackground,
             ),
           ),
+          itemBuilder: (BuildContext context) {
+            return Strings.menuOptions.map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(
+                  choice,
+                  style: Get.textTheme.bodySmall,
+                ),
+              );
+            }).toList();
+          },
         ),
       ],
     );

@@ -15,7 +15,6 @@ class CuisineTopBar extends GetView<CuisineController> {
     Get.find<CuisineController>();
     return Container(
       margin: const EdgeInsets.only(top: 8.0),
-      // height: Get.height * 0.2,
       decoration: BoxDecoration(
         color: Get.theme.colorScheme.primaryContainer,
         borderRadius: const BorderRadius.only(
@@ -114,12 +113,30 @@ class CuisineTopBar extends GetView<CuisineController> {
                         ),
                       ),
                       Container(
+                        width: 50,
+                        height: 50,
                         decoration: BoxDecoration(
                             color: Get.theme.colorScheme.onBackground,
                             borderRadius: BorderRadius.circular(30.0)),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
+                        child: PopupMenuButton<String>(
+                          onSelected: controller.quickOptions,
+                          padding: const EdgeInsets.all(0.0),
+                          position: PopupMenuPosition.under,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0)),
+                          color: Get.theme.colorScheme.background,
+                          itemBuilder: (BuildContext context) {
+                            return Strings.quickItems.map((String choice) {
+                              return PopupMenuItem<String>(
+                                value: choice,
+                                child: Text(
+                                  choice,
+                                  style: Get.textTheme.bodySmall,
+                                ),
+                              );
+                            }).toList();
+                          },
+                          child: Icon(
                             Icons.unfold_more_double_outlined,
                             color: Get.theme.colorScheme.background,
                           ),

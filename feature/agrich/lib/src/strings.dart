@@ -3,4 +3,5 @@ class Strings {
   static String appName = 'foodie';
   static String searchHintText = 'Search for something tasty...';
   static String term = '/year';
+  static List<String> quickItems = ['Repeat last order', 'Track delivery'];
 }

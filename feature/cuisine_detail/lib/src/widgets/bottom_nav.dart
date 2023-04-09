@@ -7,7 +7,8 @@ import 'package:model/model.dart';
 
 class BottomNav extends GetView<Controller> {
   final CuisineItem cuisineItem;
-  const BottomNav({super.key, required this.cuisineItem});
+  final String header;
+  const BottomNav({super.key, required this.cuisineItem, required this.header});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class BottomNav extends GetView<Controller> {
             ),
           ),
           InkWell(
-            onTap: controller.addToFavorite,
+            onTap: () => controller.addToFavorite(cuisineItem, header),
             borderRadius: BorderRadius.circular(30.0),
             child: Container(
               height: 40,
@@ -55,9 +56,14 @@ class BottomNav extends GetView<Controller> {
                 borderRadius: BorderRadius.circular(30.0),
                 color: Get.theme.colorScheme.onSecondary,
               ),
-              child: Icon(
-                Icons.favorite_outline,
-                color: Get.theme.colorScheme.onBackground,
+              child: Obx(
+                () => Icon(
+                    controller.favorite.isTrue
+                        ? Icons.favorite
+                        : Icons.favorite_border_outlined,
+                    color: controller.favorite.isTrue
+                        ? Get.theme.colorScheme.primary
+                        : Get.theme.colorScheme.onBackground),
               ),
             ),
           ),

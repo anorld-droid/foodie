@@ -8,7 +8,9 @@ import 'package:model/model.dart';
 
 class FoodieListItem extends GetView<CuisineController> {
   final CuisineItem cuisineItem;
-  const FoodieListItem({super.key, required this.cuisineItem});
+  final String header;
+  const FoodieListItem(
+      {super.key, required this.cuisineItem, required this.header});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class FoodieListItem extends GetView<CuisineController> {
     final mainController = Get.find<CommonController>();
 
     return InkWell(
-      onTap: () => controller.navigateToDetails(cuisineItem),
+      onTap: () => controller.navigateToDetails(cuisineItem, header),
       child: Stack(
         children: [
           ClipPath(

@@ -56,7 +56,8 @@ class TriceApp extends GetView<TriceAppController> {
         GetPage(
           name: Routes.cuisineDetail,
           page: () => CuisineDetail(
-            cuisineItem: Get.arguments as CuisineItem,
+            cuisineItem: Get.arguments['cuisineItem'] as CuisineItem,
+            header: Get.arguments['header'] as String,
           ),
         ),
         GetPage(

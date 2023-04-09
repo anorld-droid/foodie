@@ -17,4 +17,19 @@ class CuisineItemUseCase {
         fromFirestore: CuisineItem.fromFirestore,
         toFirestore: (CuisineItem cuisineItem, _) => cuisineItem.toFirestore());
   }
+
+  /// update the file to the specified path
+  /// NOTE: docPath should be user id
+  Future<void> update<CuisineItem>({
+    required String childCol,
+    required String childDoc,
+    required Map<String, Object?> data,
+  }) async {
+    await _cloudNetWorkDataSource.updateFieldFromMultiCollection<CuisineItem>(
+        parentCol: Constants.cuisine,
+        parentDoc: Constants.home,
+        childCol: childCol,
+        childDoc: childDoc,
+        data: data);
+  }
 }

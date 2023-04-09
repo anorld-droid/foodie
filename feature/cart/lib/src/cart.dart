@@ -8,7 +8,11 @@ import 'package:model/model.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 class Cart extends GetView<Controller> {
   final Rx<List<CartItem>> cartItems;
-  const Cart({super.key, required this.cartItems});
+
+  const Cart({
+    super.key,
+    required this.cartItems,
+  });
 
   @override
   Widget build(BuildContext context) {

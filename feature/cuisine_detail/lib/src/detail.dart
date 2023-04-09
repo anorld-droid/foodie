@@ -9,17 +9,23 @@ import 'package:model/model.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 class CuisineDetail extends GetView<Controller> {
   final CuisineItem cuisineItem;
-  const CuisineDetail({Key? key, required this.cuisineItem}) : super(key: key);
+  final String header;
+  const CuisineDetail(
+      {Key? key, required this.cuisineItem, required this.header})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => Controller());
+    Get.lazyPut(() => Controller(item: cuisineItem));
     controller.sellingPrice.value =
         cuisineItem.sellingPrice.value[controller.store.value]!;
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.primaryContainer,
       body: DetailBody(cuisineItem: cuisineItem),
-      bottomNavigationBar: BottomNav(cuisineItem: cuisineItem),
+      bottomNavigationBar: BottomNav(
+        cuisineItem: cuisineItem,
+        header: header,
+      ),
     );
   }
 }

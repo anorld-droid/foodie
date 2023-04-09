@@ -52,7 +52,7 @@ class CartItemsUseCase {
 
   /// Get the file to the specified path
   Future<Stream<QuerySnapshot<CartItem>>> get(String userId) async {
-    return await _cloudNetWorkDataSource.getDocs(
+    return _cloudNetWorkDataSource.getDocs(
         collectionName: Constants.cuisine,
         docPath: Constants.cartItems,
         collectionPath: userId,
