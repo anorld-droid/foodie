@@ -1,6 +1,4 @@
-import 'package:agrich/src/strings.dart';
 import 'package:agrich/src/widgets/dialog_layout.dart';
-import 'package:agrich/src/widgets/shipping_dialog_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:common/common.dart';
 import 'package:domain/domain.dart';
@@ -17,7 +15,6 @@ class CuisineController extends GetxController
   late final TextEditingController searchController;
   late final TextEditingController phoneController;
   late final TextEditingController buildingController;
-  late final CommonController _mainController;
 
   final Rx<List<CuisineModel>> items = Rx([]);
   final Rx<List<CuisineItem>> searchItems = Rx([]);
@@ -27,8 +24,6 @@ class CuisineController extends GetxController
   final Rx<int> cartItemsLength = 0.obs;
   final Rx<bool> editing = false.obs;
   Rx<int> selectedChip = 10.obs;
-
-  final Rx<String> store = Rx('');
 
   late final AuthenticateUser _authenticateUser;
   late final CartItemsUseCase _cartItemsUseCase;
@@ -102,8 +97,6 @@ class CuisineController extends GetxController
 
     focusNode = FocusNode();
     tabController = Rx(TabController(length: 0, vsync: this));
-    _mainController = Get.find<CommonController>();
-    store.value = _mainController.store.value;
   }
 
   Future<void> loadData() async {
@@ -258,130 +251,6 @@ class CuisineController extends GetxController
     );
   }
 
-  void checkout(double amount) async {
-    if (_authenticateUser.isUserSignedIn()) {
-      double shipAmount =
-          subscription.value?.minShipAmount.toDouble() ?? 150.00;
-      if (amount < shipAmount) {
-        shortToast(
-            'We start shipping for amounts above ${CommonStrings.currency}${shipAmount.toStringAsFixed(0)}');
-      } else if (_shippingInfo.value?.name == null) {
-        shippingDialog();
-      } else if (items.value.isEmpty) {
-        longToast('Add items to cart to proceed.');
-      } else {
-        await _transact(amount.toStringAsFixed(0));
-        sendOrderMessage();
-      }
-    } else {
-      showAuthDialog();
-    }
-  }
-
-  Future<void> _transact(String amount) async {
-    final reqID = await _paymentOptionsUseCase.withMPesa(
-        _authenticateUser.getUserId()!,
-        amount,
-        _shippingInfo.value!.phoneNumber!,
-        'food items');
-    if (reqID != null) {
-      final querySnapshot = await _paymentOptionsUseCase
-          .getPaymentStatus<MpesaResultPayment>(reqId: reqID);
-      querySnapshot.listen((event) async {
-        var element =
-            event.docs.firstWhereOrNull((element) => element.id == reqID);
-        if (element != null) {
-          var data = MpesaResultPayment.fromJson(
-              element.data()['stkCallback'] as Map<String, dynamic>);
-          if (data.responseCode == 0) {
-            ShippingModel shippingModel = ShippingModel(
-              uid: _authenticateUser.getUserId()!,
-              items: cartItems.value,
-              orderNo: reqID,
-              status: ShippingStatus.none.name,
-            );
-            await _shippingUseCase.upload(
-              userId: _authenticateUser.getUserId()!,
-              shippingModel: shippingModel,
-            );
-            await Future<void>.delayed(const Duration(seconds: 2));
-            shortToast('Checkout successful');
-          } else {
-            longToast(data.responseDescription);
-          }
-        }
-      });
-    } else {
-      longToast('Payment operation failed.');
-    }
-  }
-
-  void sendOrderMessage() {
-    String text = 'Your order has been received and is being processed.';
-    MessageBird sms =
-        MessageBird(to: _shippingInfo.value!.phoneNumber!, text: text);
-    _sendMessageUseCase.invoke(messageBird: sms);
-  }
-
-  Future<void> shippingDialog() async {
-    await showDialog<Widget>(
-        context: Get.context!,
-        barrierDismissible: false,
-        barrierLabel:
-            MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.colorScheme.background.withOpacity(.87),
-        builder: (BuildContext buildContext) {
-          return const ShippingDialogLayout();
-        });
-  }
-
-  void incrementQty(CuisineItem item) {
-    var qty = ++item.quantity.value;
-    item.sellingPrice.value[store.value] = item.basicPrice[store.value]! * qty;
-  }
-
-  void decrementQty(CuisineItem item) {
-    if (item.quantity > 1.0) {
-      var qty = --item.quantity.value;
-      item.sellingPrice.value[store.value] =
-          item.basicPrice[store.value]! * qty;
-    }
-  }
-
-  Future<void> saveShippingInfo() async {
-    String name = nameController.text;
-    String? mobileNumber = phoneNumber.phoneNumber;
-    String countyValue = county.value;
-    String townValue = town.value;
-    String areaValue = area.value;
-    String building = buildingController.text;
-
-    if (validateInput(
-      name,
-      mobileNumber,
-      countyValue,
-      townValue,
-      areaValue,
-      building,
-    )) {
-      ShippingInfo shippingInfo = ShippingInfo(
-        name: name,
-        phoneNumber: mobileNumber,
-        destination: DestinationModel(
-            county: countyValue,
-            town: townValue,
-            area: areaValue,
-            building: building),
-      );
-      await _userModelUseCase.updateShippingInfo(
-        userId: _authenticateUser.getUserId()!,
-        shippingInfo: shippingInfo,
-      );
-      shortToast('Shipping info saved.');
-      Get.back<void>();
-    }
-  }
-
   bool validateInput(String name, String? phoneNumber, String county,
       String town, String area, String building) {
     if (name.isNotEmpty &&
@@ -398,11 +267,11 @@ class CuisineController extends GetxController
     }
   }
 
-  void addToCart(CuisineItem cuisineItem) {
+  void addToCart(CuisineItem cuisineItem, String store) {
     final message = _cartItemsUseCase.addToCart(
       cuisineItem,
       const AuthDialog(),
-      store.value,
+      store,
     );
     shortToast(message);
   }
