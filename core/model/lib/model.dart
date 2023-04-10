@@ -12,3 +12,4 @@ export 'src/m_pesa_payments.dart';
 export 'src/messagebird_model.dart';
 export 'src/subscription.dart';
 export 'src/push_notification.dart';
+export 'src/restaurant.dart';

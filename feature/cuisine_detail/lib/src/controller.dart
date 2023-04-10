@@ -1,5 +1,5 @@
 import 'package:common/common.dart';
-import 'package:cuisine_detail/src/strings.dart';
+import 'package:cuisine_detail/src/widgets/restaurant_search_layout.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +13,7 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   late final CartItemsUseCase _cartItemsUseCase;
   late final CuisineItemUseCase _cuisineItemUseCase;
   late final AuthenticateUser _authenticateUser;
+  late final RestaurantItemUseCase _restaurantItemUseCase;
 
   late final TextEditingController quantityController;
 
@@ -22,18 +23,21 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   late final TextEditingController passwordController;
   late final CommonController _mainController;
 
-  final Rx<bool> seeMore = false.obs;
-  late final Rx<double> sellingPrice = 0.0.obs;
+  final Rx<double> sellingPrice = 0.0.obs;
   final Rx<int> qty = 1.obs;
   final Rx<String> store = Rx('');
   final RxBool favorite = false.obs;
 
-  var searching = false.obs;
+  // Variables for showing restaurant lists
+  late final ScrollController scrollController;
+  final RxBool showTopArrow = false.obs;
+  final RxBool showBottomArrow = true.obs;
 
   @override
   void onInit() {
     super.onInit();
     initialize();
+    setListeners();
     isFavorite(item);
   }
 
@@ -45,16 +49,39 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
   }
 
+  void setListeners() {
+    scrollController.addListener(() {
+      if (scrollController.offset <=
+          scrollController.position.minScrollExtent) {
+        showTopArrow.value = false;
+      } else if (!showTopArrow.value) {
+        showTopArrow.value = true;
+      }
+      if (scrollController.offset >=
+          scrollController.position.maxScrollExtent) {
+        showBottomArrow.value = false;
+      } else if (!showBottomArrow.value) {
+        showBottomArrow.value = true;
+      }
+    });
+  }
+
   void initialize() {
     _mainController = Get.find<CommonController>();
-    store.value = _mainController.store.value;
+    store.value = item.basicPrice.containsKey(_mainController.store.value)
+        ? _mainController.store.value
+        : item.basicPrice.keys.first;
 
     _cartItemsUseCase = CartItemsUseCase();
     _cuisineItemUseCase = CuisineItemUseCase();
     _authenticateUser = AuthenticateUser();
+    _restaurantItemUseCase = RestaurantItemUseCase();
 
     emailController = TextEditingController();
     passwordController = TextEditingController();
+
+    // Restaurants variables
+    scrollController = ScrollController();
   }
 
   void incrementQty(double basicPrice) {
@@ -103,7 +130,7 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
           childDoc: cuisineItem.id!,
           data: {'favorites': favorites});
     } else {
-      await showAuthDialog(
+      await customDialog(
         Get.context!,
         const AuthDialog(),
       );
@@ -118,10 +145,9 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  Future<void> showAuthDialog(BuildContext context, Widget authDialog) async {
+  Future<void> customDialog(BuildContext context, Widget authDialog) async {
     showDialog<Widget>(
         context: context,
-        barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
         barrierColor: Get.theme.colorScheme.primaryContainer,
@@ -130,9 +156,34 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
         });
   }
 
-  void moreOptions(String option) {
+  void changeStore(String name) {
+    if (item.basicPrice.containsKey(name)) {
+      store.value = name;
+      sellingPrice.value = item.basicPrice[name]! * qty.value;
+    } else {
+      shortToast('Selected store doesn\'t offer the chosen food.');
+    }
+  }
+
+  Future<void> moreOptions(String option) async {
     switch (option) {
       case 'Search restaurant':
+        //TODO get current location
+        var snap = _restaurantItemUseCase.get('coordinates');
+        List<Restaurant> restaurants = [];
+        snap.listen((event) {
+          if (event.docs.isNotEmpty) {
+            restaurants.clear();
+            for (var doc in event.docs) {
+              restaurants.add(doc.data());
+            }
+            customDialog(Get.context!, SearchLayout(restaurants));
+          } else {
+            shortToast(
+                'Current location out of range. We\'ll keep you updated');
+          }
+        });
+
         break;
       default:
     }

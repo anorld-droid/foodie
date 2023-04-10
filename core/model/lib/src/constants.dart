@@ -50,4 +50,8 @@ class Constants {
   static const String text = 'text';
   static String content = 'content';
   static const String channelIdValue = '2b501d4248b948f68084703efbf7ea45';
+
+  //Restaurant
+  static String locationName = 'locationName';
+  static String locationCoordinate = 'locationCoordinate';
 }

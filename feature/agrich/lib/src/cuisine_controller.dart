@@ -407,6 +407,12 @@ class CuisineController extends GetxController
     shortToast(message);
   }
 
+  String getStore(CuisineItem cItem, String store) {
+    return cItem.basicPrice.containsKey(store)
+        ? store
+        : cItem.basicPrice.keys.first;
+  }
+
   void favorites() {}
   void quickOptions(String option) {
     switch (option) {

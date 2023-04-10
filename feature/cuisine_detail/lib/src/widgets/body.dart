@@ -15,7 +15,6 @@ class DetailBody extends GetView<Controller> {
   @override
   Widget build(BuildContext context) {
     Get.find<Controller>();
-    final mainController = Get.find<CommonController>();
     return Container(
       decoration: BoxDecoration(color: Get.theme.colorScheme.background),
       child: Container(
@@ -40,11 +39,14 @@ class DetailBody extends GetView<Controller> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      cuisineItem.store,
-                      style: Get.textTheme.bodyLarge?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: Get.theme.colorScheme.primary.withAlpha(200)),
+                    Obx(
+                      () => Text(
+                        controller.store.value,
+                        style: Get.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color:
+                                Get.theme.colorScheme.primary.withAlpha(200)),
+                      ),
                     ),
                     const SizedBox(
                       height: 4,
@@ -90,61 +92,91 @@ class DetailBody extends GetView<Controller> {
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0, vertical: 4.0),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          cuisineItem.stockTag == 1
-                                              ? 'In stock'
-                                              : 'Out of Stock',
-                                          style:
-                                              Get.textTheme.bodyLarge?.copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            // color:
-                                            //     Get.theme.colorScheme.background,
-                                          ),
+                                    child: Obx(
+                                      () => Text(
+                                        cuisineItem.stockTag[
+                                                    controller.store.value] ==
+                                                1
+                                            ? 'In stock'
+                                            : 'Out of Stock',
+                                        style:
+                                            Get.textTheme.bodyLarge?.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          // color:
+                                          //     Get.theme.colorScheme.background,
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.expand_less_outlined,
-                                      color: Get.theme.colorScheme.onBackground
-                                          .withOpacity(0.8),
-                                      size: 32,
-                                    ),
+                                Obx(
+                                  () => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: controller.showTopArrow.value
+                                        ? Center(
+                                            child: IconButton(
+                                              onPressed: () {
+                                                controller.scrollController
+                                                    .animateTo(
+                                                  controller.scrollController
+                                                      .position.minScrollExtent,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                              },
+                                              icon: Icon(
+                                                Icons.expand_less_outlined,
+                                                color: Get.theme.colorScheme
+                                                    .onBackground
+                                                    .withOpacity(0.8),
+                                                size: 32,
+                                              ),
+                                            ),
+                                          )
+                                        : const SizedBox(),
                                   ),
                                 ),
                                 SingleChildScrollView(
                                   child: SizedBox(
                                     height: Get.height * 0.27,
                                     child: Column(
-                                      children: const [
-                                        Restaurants(
-                                          'Mama Farida',
+                                      children: List.generate(
+                                        cuisineItem.basicPrice.keys.length,
+                                        (index) => Restaurants(
+                                          cuisineItem.basicPrice.keys
+                                              .elementAt(index),
                                         ),
-                                        SizedBox(
-                                          height: 8.0,
-                                        ),
-                                        Restaurants(
-                                          'Shamim',
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.expand_more_outlined,
-                                      color: Get.theme.colorScheme.onBackground
-                                          .withOpacity(0.8),
-                                      size: 32,
-                                    ),
+                                Obx(
+                                  () => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: controller.showBottomArrow.value
+                                        ? Center(
+                                            child: IconButton(
+                                              onPressed: () {
+                                                controller.scrollController
+                                                    .animateTo(
+                                                  controller.scrollController
+                                                      .position.maxScrollExtent,
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                              },
+                                              icon: Icon(
+                                                Icons.expand_more_outlined,
+                                                color: Get.theme.colorScheme
+                                                    .onBackground
+                                                    .withOpacity(0.8),
+                                                size: 32,
+                                              ),
+                                            ),
+                                          )
+                                        : const SizedBox(),
                                   ),
                                 ),
                               ],
@@ -256,7 +288,7 @@ class DetailBody extends GetView<Controller> {
                         children: [
                           InkWell(
                             onTap: () => controller.incrementQty(cuisineItem
-                                .basicPrice[mainController.store.value]!),
+                                .basicPrice[controller.store.value]!),
                             child: Container(
                               padding: const EdgeInsets.all(4.0),
                               decoration: BoxDecoration(
@@ -284,7 +316,7 @@ class DetailBody extends GetView<Controller> {
                             padding: const EdgeInsets.only(right: 4.0),
                             child: InkWell(
                               onTap: () => controller.decrementQty(cuisineItem
-                                  .basicPrice[mainController.store.value]!),
+                                  .basicPrice[controller.store.value]!),
                               child: Icon(
                                 Icons.remove,
                                 color: Get.theme.colorScheme.onBackground,

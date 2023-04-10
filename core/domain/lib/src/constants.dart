@@ -15,4 +15,6 @@ class Constants {
   static String messagebird = 'messagebird';
   static String messages = 'messages';
   static String subscription = 'subscription';
+  //Restaurant item use case
+  static String restaurants = 'restaurants';
 }
