@@ -30,7 +30,6 @@ class CuisineController extends GetxController
   late final CuisineModelUseCase _cuisineModelUseCase;
   late final CuisineItemUseCase _cuisineItemUseCase;
   late final UserModelUseCase _userModelUseCase;
-  late final ShippingUseCase _shippingUseCase;
   late final PaymentOptionsUseCase _paymentOptionsUseCase;
   late final GetDestinationsUseCase _getDestinationsUseCase;
   late final SendMessageUseCase _sendMessageUseCase;
@@ -49,7 +48,6 @@ class CuisineController extends GetxController
   final Rx<Subscription?> subscription = Rx(null);
   final Rx<String> shippingAddress = Rx('');
   final Rx<bool> freeShipping = Rx(true);
-  final Rx<ShippingInfo?> _shippingInfo = Rx(null);
 
   final Rx<Destinations> destinations =
       Rx(const Destinations(destinations: {}));
@@ -85,7 +83,6 @@ class CuisineController extends GetxController
     _cuisineModelUseCase = CuisineModelUseCase();
     _cuisineItemUseCase = CuisineItemUseCase();
     _userModelUseCase = UserModelUseCase();
-    _shippingUseCase = ShippingUseCase();
     _paymentOptionsUseCase = PaymentOptionsUseCase();
     _getDestinationsUseCase = GetDestinationsUseCase();
     _sendMessageUseCase = SendMessageUseCase();

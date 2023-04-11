@@ -1,4 +1,5 @@
 import 'package:cart/src/widgets/dialog_layout.dart';
+import 'package:cart/src/widgets/payment.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -160,7 +161,7 @@ class Controller extends GetxController {
         barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.backgroundColor,
+        barrierColor: Get.theme.colorScheme.background,
         builder: (BuildContext buildContext) {
           return const DialogLayout();
         });
@@ -168,7 +169,11 @@ class Controller extends GetxController {
 
   void checkout() async {
     double shipAmount = subscription.value?.minShipAmount.toDouble() ?? 150.00;
-    if (total.value < shipAmount) {
+
+    if (items.value.firstWhereOrNull((element) => element.stockTag == 0) !=
+        null) {
+      shortToast('Kindly, remove items out of stock to proceed.');
+    } else if (total.value < shipAmount) {
       shortToast(
           'We start shipping for amounts above ${CommonStrings.currency}${shipAmount.toStringAsFixed(0)}');
     } else if (_shippingInfo.value?.name == null) {
@@ -176,8 +181,9 @@ class Controller extends GetxController {
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');
     } else {
-      await _transact();
-      sendMessage();
+      bottomSheet();
+      // await _transact();
+      // sendMessage();
     }
   }
 
@@ -303,5 +309,16 @@ class Controller extends GetxController {
       shortToast('Please, fill all the details');
       return false;
     }
+  }
+
+  void bottomSheet() async {
+    bool? closed = await Get.bottomSheet<bool?>(const Payment(),
+        backgroundColor: Get.theme.colorScheme.background,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(30.0))),
+        clipBehavior: Clip.hardEdge,
+        elevation: 4,
+        barrierColor: Get.theme.colorScheme.primaryContainer,
+        isScrollControlled: false);
   }
 }

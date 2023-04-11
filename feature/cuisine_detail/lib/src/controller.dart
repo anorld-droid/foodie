@@ -103,6 +103,8 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   void addToCart(
     CuisineItem cuisineItem,
   ) {
+    cuisineItem.sellingPrice.value[store.value] = sellingPrice.value;
+    cuisineItem.quantity.value = qty.value;
     final msg = _cartItemsUseCase.addToCart(
       cuisineItem,
       const AuthDialog(),
