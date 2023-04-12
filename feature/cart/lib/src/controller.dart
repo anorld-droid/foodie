@@ -46,6 +46,8 @@ class Controller extends GetxController {
 
   final Rx<int> itemLength = 0.obs;
 
+  final Rx<String> selectedOption = 'M-pesa'.obs;
+
   @override
   void onInit() async {
     super.onInit();
@@ -95,6 +97,7 @@ class Controller extends GetxController {
     user.listen((event) {
       User user = event.data()!;
       _shippingInfo.value = user.shippingInfo;
+      phoneController.text = _authenticateUser.getPhoneNumber() ?? '';
       getShippingInfo();
       getShippingStatus(user);
     });
