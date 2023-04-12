@@ -97,7 +97,6 @@ class Controller extends GetxController {
     user.listen((event) {
       User user = event.data()!;
       _shippingInfo.value = user.shippingInfo;
-      phoneController.text = _authenticateUser.getPhoneNumber() ?? '';
       getShippingInfo();
       getShippingStatus(user);
     });
@@ -117,7 +116,11 @@ class Controller extends GetxController {
       shippingAddress.value = 'No shipping destination, yet!';
     } else {
       shippingAddress.value =
-          'Shipping to:\n  ${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber}.\n  ${_shippingInfo.value?.destination?.town}, ${_shippingInfo.value?.destination?.building}.';
+          '${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber}, ${_shippingInfo.value?.destination?.town}, ${_shippingInfo.value?.destination?.building}.';
+      phoneController.text = _shippingInfo.value?.phoneNumber?.substring(
+            4,
+          ) ??
+          '';
     }
   }
 
@@ -318,7 +321,7 @@ class Controller extends GetxController {
     bool? closed = await Get.bottomSheet<bool?>(const Payment(),
         backgroundColor: Get.theme.colorScheme.background,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30.0))),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))),
         clipBehavior: Clip.hardEdge,
         elevation: 4,
         barrierColor: Get.theme.colorScheme.primaryContainer,
