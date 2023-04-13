@@ -12,4 +12,13 @@ class PaymentNetworkDataSource {
       item,
     );
   }
+
+  Future<String?> airteMoney(
+      String amount, String phoneNumber, String item) async {
+    return await _stkPush.invoke(
+      amount,
+      phoneNumber,
+      item,
+    );
+  }
 }

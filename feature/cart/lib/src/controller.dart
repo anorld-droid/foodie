@@ -1,3 +1,4 @@
+import 'package:cart/src/utils/strings.dart';
 import 'package:cart/src/widgets/dialog_layout.dart';
 import 'package:cart/src/widgets/payment.dart';
 import 'package:common/common.dart';
@@ -193,12 +194,21 @@ class Controller extends GetxController {
     }
   }
 
+  void pay() {
+    switch (selectedOption.value) {
+      case 'Airtel Money':
+        break;
+      default:
+    }
+  }
+
   Future<void> _transact() async {
     final reqID = await _paymentOptionsUseCase.withMPesa(
-        _authenticateUser.getUserId()!,
-        total.value.toStringAsFixed(0),
-        _shippingInfo.value!.phoneNumber!,
-        'food items');
+      _authenticateUser.getUserId()!,
+      total.value.toStringAsFixed(0),
+      _shippingInfo.value!.phoneNumber!,
+      'food items',
+    );
     if (reqID != null) {
       final snap = await _paymentOptionsUseCase
           .getPaymentStatus<MpesaResultPayment>(reqId: reqID);

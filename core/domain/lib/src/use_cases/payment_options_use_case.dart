@@ -18,6 +18,15 @@ class PaymentOptionsUseCase {
     );
   }
 
+  // Future<String?> withAirtelMoney(
+  //     String userId, String amount, String phoneNumber, String item) async {
+  //   return await _paymentNetworkDataSource.airtelMoney(
+  //     amount,
+  //     phoneNumber,
+  //     item,
+  //   );
+  // }
+
   /// Return payments collection stream
   /// NOTE: doc should be user id
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>>

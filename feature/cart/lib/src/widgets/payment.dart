@@ -1,4 +1,5 @@
 import 'package:cart/src/controller.dart';
+import 'package:cart/src/utils/strings.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,7 @@ class Payment extends GetView<Controller> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Payment method',
+                        Strings.paymentMethod,
                         style: Get.textTheme.bodySmall
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
@@ -58,8 +59,8 @@ class Payment extends GetView<Controller> {
                           () => DropdownButton<String>(
                             value: controller.selectedOption.value,
                             items: <String>[
-                              'M-pesa',
-                              'Airtel Money',
+                              Strings.mpesa,
+                              Strings.airtelMoney,
                             ].map((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -92,7 +93,7 @@ class Payment extends GetView<Controller> {
                         margin: const EdgeInsets.symmetric(vertical: 8.0),
                         padding: const EdgeInsets.all(14.0),
                         child: Text(
-                          '+254',
+                          Strings.keCountryCode,
                           style: Get.textTheme.bodySmall?.copyWith(
                               color: Get.theme.colorScheme.background),
                         ),
@@ -106,7 +107,7 @@ class Payment extends GetView<Controller> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Shipping to:',
+                          Strings.shippingTo,
                           style: Get.textTheme.bodySmall?.copyWith(
                               color: Get.theme.colorScheme.onBackground,
                               fontWeight: FontWeight.bold),
@@ -125,41 +126,44 @@ class Payment extends GetView<Controller> {
                 ],
               ),
             ),
-            Container(
-              width: Get.width * 0.6,
-              padding: const EdgeInsets.all(12.0),
-              margin: const EdgeInsets.symmetric(vertical: 16.0),
-              decoration: BoxDecoration(
-                color: Get.theme.colorScheme.primary,
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Center(
-                child: Obx(
-                  () => RichText(
-                    text: TextSpan(
-                        text: 'Pay  ',
-                        children: [
-                          WidgetSpan(
-                            child: Transform.translate(
-                                offset: const Offset(-2, -8),
-                                child: Text(
-                                  CommonStrings.currency.toLowerCase(),
-                                  style: Get.textTheme.bodySmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    // color: Get.theme.colorScheme.background,
-                                  ),
-                                )),
-                          ),
-                          TextSpan(
-                            text: controller.total.value.toStringAsFixed(2),
-                            style: Get.textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              // color: Get.theme.colorScheme.background,
+            InkWell(
+              onTap: controller.pay,
+              child: Container(
+                width: Get.width * 0.6,
+                padding: const EdgeInsets.all(12.0),
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.primary,
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: Center(
+                  child: Obx(
+                    () => RichText(
+                      text: TextSpan(
+                          text: Strings.pay,
+                          children: [
+                            WidgetSpan(
+                              child: Transform.translate(
+                                  offset: const Offset(-2, -8),
+                                  child: Text(
+                                    CommonStrings.currency.toLowerCase(),
+                                    style: Get.textTheme.bodySmall?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      textBaseline: TextBaseline.alphabetic,
+                                      // color: Get.theme.colorScheme.background,
+                                    ),
+                                  )),
                             ),
-                          ),
-                        ],
-                        style: Get.textTheme.bodyLarge),
+                            TextSpan(
+                              text: controller.total.value.toStringAsFixed(2),
+                              style: Get.textTheme.bodySmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                // color: Get.theme.colorScheme.background,
+                              ),
+                            ),
+                          ],
+                          style: Get.textTheme.bodyLarge),
+                    ),
                   ),
                 ),
               ),
@@ -188,7 +192,7 @@ class Payment extends GetView<Controller> {
             fillColor: Get.theme.colorScheme.onBackground,
             focusColor: Get.theme.colorScheme.onBackground,
             filled: true,
-            hintText: 'Enter mobile number',
+            hintText: Strings.hintText,
             hintStyle: Get.textTheme.bodySmall
                 ?.copyWith(color: Get.theme.colorScheme.background),
           ),

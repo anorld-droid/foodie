@@ -9,4 +9,12 @@ class Strings {
   static String items = 'items )';
   static String item = 'item )';
   static String order = 'Order';
+  //Payments widget strings
+  static String paymentMethod = 'Payment method';
+  static String mpesa = 'M-pesa';
+  static String airtelMoney = 'Airtel Money';
+  static String keCountryCode = '+254';
+  static String shippingTo = 'Shipping to:';
+  static String pay = 'Pay  ';
+  static String hintText = 'Enter mobile number';
 }
