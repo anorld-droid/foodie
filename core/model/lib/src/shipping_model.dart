@@ -9,18 +9,24 @@ class ShippingModel {
   final String orderNo;
   final List<CartItem> items;
   final String status;
+  final User? courier;
+  final String timeEstimate;
 
   ShippingModel({
     required this.uid,
     required this.items,
     required this.orderNo,
     required this.status,
+    this.courier,
+    required this.timeEstimate,
   });
   Map<String, dynamic> toFirestore() => {
         Constants.uid: uid,
         Constants.orderNo: orderNo,
         Constants.items: items.map((e) => e.toFirestore()).toList(),
-        Constants.status: status
+        Constants.status: status,
+        Constants.courier: courier,
+        Constants.timeEstimate: timeEstimate,
       };
 
   factory ShippingModel.fromFirestore(
@@ -29,15 +35,22 @@ class ShippingModel {
   ) {
     var snapshot = snap.data();
     List<dynamic> items = snapshot?[Constants.items] as List<dynamic>;
+    var courier = snapshot?[Constants.courier];
     return ShippingModel(
-      uid: snapshot?[Constants.uid] as String,
-      items: items.map((e) {
-        e as Map<String, dynamic>;
-        return CartItem.fromJson(e);
-      }).toList(),
-      orderNo: snapshot?[Constants.orderNo] as String,
-      status: snapshot?[Constants.status] as String,
-    );
+        uid: snapshot?[Constants.uid] as String,
+        items: items.map((e) {
+          e as Map<String, dynamic>;
+          return CartItem.fromJson(e);
+        }).toList(),
+        orderNo: snapshot?[Constants.orderNo] as String,
+        status: snapshot?[Constants.status] as String,
+        courier: courier != null
+            ? User.fromJson(
+                courier as Map<String, dynamic>,
+                options,
+              )
+            : null,
+        timeEstimate: snapshot?[Constants.timeEstimate] as String);
   }
 }
 
