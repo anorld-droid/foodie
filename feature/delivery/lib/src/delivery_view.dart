@@ -13,11 +13,12 @@ class Delivery extends GetView<DeliveryController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => DeliveryController(model: shippingModel), fenix: true);
-    return const Scaffold(
-      body: Body(),
-      // bottomNavigationBar: DeliveryDetails(
-      //   shippingModel: shippingModel,
-      // ),
+    return Scaffold(
+      backgroundColor: Colors.white.withAlpha(230),
+      body: const Body(),
+      bottomNavigationBar: DeliveryDetails(
+        shippingModel: shippingModel,
+      ),
     );
   }
 }

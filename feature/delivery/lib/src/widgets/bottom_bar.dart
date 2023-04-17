@@ -19,18 +19,24 @@ class DeliveryDetails extends GetView<DeliveryController> {
       decoration: BoxDecoration(
         color: Get.theme.colorScheme.background,
         borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(30.0),
+          top: Radius.circular(16.0),
         ),
       ),
-      child: Column(
-        children: [
-          Obx(() =>
-              _deliveryTime(controller.time.value, controller.status.value)),
-          const Divider(),
-          Obx(() => _iconInfo(controller.status.value)),
-          const Divider(),
-          shippingModel.courier != null ? _courierInfo() : const SizedBox(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Obx(() => _deliveryTime(controller.time.value,
+                controller.statusTag(controller.status.value))),
+            Divider(
+              color: Colors.white70.withAlpha(130),
+            ),
+            Obx(() => _iconInfo(controller.status.value)),
+            Divider(
+              color: Colors.white70.withAlpha(130),
+            ),
+            shippingModel.courier != null ? _courierInfo() : const SizedBox(),
+          ],
+        ),
       ),
     );
   }
@@ -42,7 +48,8 @@ class DeliveryDetails extends GetView<DeliveryController> {
         children: [
           Text(
             'Estimated delivery time is ${shippingModel.timeEstimate}',
-            style: Get.textTheme.bodyLarge,
+            style:
+                Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 8.0,
@@ -58,36 +65,44 @@ class DeliveryDetails extends GetView<DeliveryController> {
   }
 
   Widget _iconInfo(String status) {
+    int state = status == 'Received'
+        ? 1
+        : status == 'Ready'
+            ? 2
+            : status == 'Shipping'
+                ? 3
+                : 4;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             Icons.receipt_long,
-            color: status == 'Received'
+            color: state >= 1
                 ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onBackground,
+                : Get.theme.colorScheme.onBackground.withAlpha(180),
           ),
-          _separator(status == 'Recieved'),
+          _separator(state >= 2),
           Icon(
             Icons.room_service,
-            color: status == 'Ready'
+            color: state >= 2
                 ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onBackground,
+                : Get.theme.colorScheme.onBackground.withAlpha(180),
           ),
-          _separator(status == 'Ready'),
+          _separator(state >= 3),
           Icon(
             Icons.directions_bike,
-            color: status == 'Shipping'
+            color: state >= 3
                 ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onBackground,
+                : Get.theme.colorScheme.onBackground.withAlpha(180),
           ),
-          _separator(status == 'Shipping'),
+          _separator(state >= 4),
           Icon(
             Icons.check_circle,
-            color: status == 'Delivered'
+            color: state >= 4
                 ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onBackground,
+                : Get.theme.colorScheme.onBackground.withAlpha(180),
           ),
         ],
       ),
@@ -99,14 +114,14 @@ class DeliveryDetails extends GetView<DeliveryController> {
       children: List.generate(
         8,
         (index) => Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(2.0),
           child: Container(
-            height: 12,
-            width: 12,
+            height: 4,
+            width: 4,
             decoration: BoxDecoration(
                 color: status
                     ? Get.theme.colorScheme.primary
-                    : Get.theme.colorScheme.primary,
+                    : Get.theme.colorScheme.onBackground.withAlpha(180),
                 borderRadius: BorderRadius.circular(30.0)),
           ),
         ),

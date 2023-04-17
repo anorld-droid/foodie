@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:delivery/src/strings.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -12,6 +13,9 @@ import 'package:model/model.dart';
 class DeliveryController extends GetxController {
   final ShippingModel model;
   DeliveryController({required this.model});
+
+  late final ShippingUseCase _shippingUseCase;
+  late final AuthenticateUser _authenticateUser;
 
   // Google map coordinate variables declaration
   late Completer<GoogleMapController> mapController;
@@ -28,9 +32,10 @@ class DeliveryController extends GetxController {
   final Rx<String> time = Rx(''); //TODO: Update from stream firestore
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     initVars();
+    await loadData();
     getPolyPoints();
     getCurrentLocation();
     setCustomMarkerIcon();
@@ -43,10 +48,23 @@ class DeliveryController extends GetxController {
       // Status bar brightness (optional)
       statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
     ));
+
+    _shippingUseCase = ShippingUseCase();
+    _authenticateUser = AuthenticateUser();
+
     //Google maps variables initializing
     mapController = Completer();
     sourceLocation = const LatLng(-0.005273248425477859, 34.59785159831812);
     destination = const LatLng(-0.057822991209217858, 34.6032983890644);
+  }
+
+  Future<void> loadData() async {
+    var snap = await _shippingUseCase.getDocs(
+        _authenticateUser.getUserId()!, model.id!);
+    snap.listen((event) {
+      time.value = event.data()!.timeEstimate ?? '';
+      status.value = event.data()!.status;
+    });
   }
 
   ///Decodes encoded google polyline string into list of geo-coordinates suitable for showing route/polyline on maps.
@@ -85,7 +103,7 @@ class DeliveryController extends GetxController {
     googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
-          zoom: 13.5,
+          zoom: 12.5,
           target: LatLng(
             currentLocation.value!.latitude!,
             currentLocation.value!.longitude!,
@@ -106,16 +124,16 @@ class DeliveryController extends GetxController {
     );
   }
 
-  String statusTag(String status, String orderNo) {
+  String statusTag(String status) {
     switch (status) {
       case 'Received':
-        return 'Order $orderNo has been received.';
+        return 'Order ${model.id!.substring(0, 4)}... has been received.';
       case 'Ready':
         return 'Your order has been processed and is ready for shipping';
-      case 'Shippping':
+      case 'Shipping':
         return 'Your order is already on its way to you.';
       default:
-        return 'Order $orderNo delivered';
+        return 'Order  ${model.id!.substring(0, 4)}... delivered';
     }
   }
 

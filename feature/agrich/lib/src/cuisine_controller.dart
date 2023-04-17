@@ -182,7 +182,7 @@ class CuisineController extends GetxController
       case 'Repeat last order':
         break;
       default:
-        navigateToDelivery(orders.value.first);
+        navigateToDelivery(orders.value.last);
     }
   }
 }

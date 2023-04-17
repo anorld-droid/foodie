@@ -28,7 +28,7 @@ class DeliveryMap extends GetView<DeliveryController> {
                   initialCameraPosition: CameraPosition(
                     target: LatLng(controller.currentLocation.value!.latitude!,
                         controller.currentLocation.value!.longitude!),
-                    zoom: 13.5,
+                    zoom: 12.5,
                   ),
                   mapToolbarEnabled: false,
                   markers: {

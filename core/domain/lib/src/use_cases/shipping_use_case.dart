@@ -34,4 +34,17 @@ class ShippingUseCase {
         toFirestore: (ShippingModel shippingModel, _) =>
             shippingModel.toFirestore());
   }
+
+  Future<Stream<DocumentSnapshot<ShippingModel>>> getDocs(
+    String userId,
+    String orderId,
+  ) async {
+    return _cloudNetWorkDataSource.docFromMultiCollection(
+        parentCol: Constants.cuisine,
+        parentDoc: Constants.orders,
+        childCol: userId,
+        childDoc: orderId,
+        toFirestore: (ShippingModel model, _) => model.toFirestore(),
+        fromFirestore: ShippingModel.fromFirestore);
+  }
 }

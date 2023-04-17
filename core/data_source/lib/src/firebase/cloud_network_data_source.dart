@@ -119,6 +119,26 @@ class CloudNetWorkDataSource {
     );
   }
 
+  Future<Stream<DocumentSnapshot<R>>> docFromMultiCollection<R>(
+      {required String parentCol,
+      required String parentDoc,
+      required String childCol,
+      required String childDoc,
+      required R Function(
+              DocumentSnapshot<Map<String, dynamic>>, SnapshotOptions?)
+          fromFirestore,
+      required Map<String, Object?> Function(R, SetOptions?)
+          toFirestore}) async {
+    return _cloudMethods.getDocFromMultiCollection(
+      parentCol: parentCol,
+      parentDoc: parentDoc,
+      childCol: childCol,
+      childDoc: childDoc,
+      fromFirestore: fromFirestore,
+      toFirestore: toFirestore,
+    );
+  }
+
   /// update the file to the specified path
   /// NOTE: docPath should be user id
   Future<void> updateFieldFromMultiCollection<R>({

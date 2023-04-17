@@ -82,6 +82,25 @@ class CloudMethods {
         .snapshots();
   }
 
+  Future<Stream<DocumentSnapshot<R>>> getDocFromMultiCollection<R>(
+      {required String parentCol,
+      required String parentDoc,
+      required String childCol,
+      required String childDoc,
+      required R Function(
+              DocumentSnapshot<Map<String, dynamic>>, SnapshotOptions?)
+          fromFirestore,
+      required Map<String, Object?> Function(R, SetOptions?)
+          toFirestore}) async {
+    return _firestore
+        .collection(parentCol)
+        .doc(parentDoc)
+        .collection(childCol)
+        .doc(childDoc)
+        .withConverter(fromFirestore: fromFirestore, toFirestore: toFirestore)
+        .snapshots();
+  }
+
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getCollectionStream<R>({
     required String collection,
   }) async {
