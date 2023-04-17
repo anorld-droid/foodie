@@ -10,7 +10,6 @@ class DeliveryMap extends GetView<DeliveryController> {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.currentLocation.value);
     return Scaffold(
       body: Obx(
         () => controller.currentLocation.value == null
@@ -24,39 +23,42 @@ class DeliveryMap extends GetView<DeliveryController> {
                   ],
                 ),
               )
-            : GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(controller.currentLocation.value!.latitude!,
-                      controller.currentLocation.value!.longitude!),
-                  zoom: 13.5,
-                ),
-                markers: {
-                  Marker(
-                    markerId: const MarkerId('currentLocation'),
-                    icon: controller.currentLocationIcon,
-                    position: LatLng(
-                      controller.currentLocation.value!.latitude!,
-                      controller.currentLocation.value!.longitude!,
+            : Obx(
+                () => GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(controller.currentLocation.value!.latitude!,
+                        controller.currentLocation.value!.longitude!),
+                    zoom: 13.5,
+                  ),
+                  mapToolbarEnabled: false,
+                  markers: {
+                    Marker(
+                      markerId: const MarkerId('currentLocation'),
+                      icon: controller.currentLocationIcon.value,
+                      position: LatLng(
+                        controller.currentLocation.value!.latitude!,
+                        controller.currentLocation.value!.longitude!,
+                      ),
+                      infoWindow: const InfoWindow(title: 'Courier Location'),
                     ),
-                    infoWindow: const InfoWindow(title: 'Courier Location'),
-                  ),
-                  Marker(
-                      markerId: const MarkerId('destination'),
-                      icon: controller.destinationIcon,
-                      position: controller.destination,
-                      infoWindow: const InfoWindow(title: 'My Location')),
-                },
-                onMapCreated: (mapController) {
-                  controller.mapController.complete(mapController);
-                },
-                polylines: {
-                  Polyline(
-                    polylineId: const PolylineId('route'),
-                    points: controller.polylineCoordinates.value,
-                    color: Get.theme.colorScheme.primary,
-                    width: 6,
-                  ),
-                },
+                    Marker(
+                        markerId: const MarkerId('destination'),
+                        icon: controller.destinationIcon.value,
+                        position: controller.destination,
+                        infoWindow: const InfoWindow(title: 'Destination')),
+                  },
+                  onMapCreated: (mapController) {
+                    controller.mapController.complete(mapController);
+                  },
+                  polylines: {
+                    Polyline(
+                        polylineId: const PolylineId('route'),
+                        points: controller.polylineCoordinates.value,
+                        width: 4,
+                        startCap: Cap.roundCap,
+                        endCap: Cap.roundCap),
+                  },
+                ),
               ),
       ),
     );

@@ -18,9 +18,8 @@ class DeliveryController extends GetxController {
   late final LatLng sourceLocation;
   late final LatLng destination;
   //Google maps marker icons
-  late BitmapDescriptor sourceIcon;
-  late BitmapDescriptor destinationIcon;
-  late BitmapDescriptor currentLocationIcon;
+  Rx<BitmapDescriptor> destinationIcon = Rx(BitmapDescriptor.defaultMarker);
+  Rx<BitmapDescriptor> currentLocationIcon = Rx(BitmapDescriptor.defaultMarker);
 
   final Rx<List<LatLng>> polylineCoordinates = Rx([]);
 
@@ -33,16 +32,14 @@ class DeliveryController extends GetxController {
     initVars();
     getPolyPoints();
     getCurrentLocation();
+    setCustomMarkerIcon();
   }
 
   void initVars() {
     //Google maps variables initializing
     mapController = Completer();
     sourceLocation = const LatLng(-0.005273248425477859, 34.59785159831812);
-    destination = const LatLng(-0.017822991209217858, 34.6032983890644);
-    sourceIcon = BitmapDescriptor.defaultMarker;
-    destinationIcon = BitmapDescriptor.defaultMarker;
-    currentLocationIcon = BitmapDescriptor.defaultMarker;
+    destination = const LatLng(-0.057822991209217858, 34.6032983890644);
   }
 
   ///Decodes encoded google polyline string into list of geo-coordinates suitable for showing route/polyline on maps.
@@ -59,6 +56,7 @@ class DeliveryController extends GetxController {
           LatLng(point.latitude, point.longitude),
         );
       }
+      polylineCoordinates.refresh();
     }
   }
 
@@ -70,51 +68,33 @@ class DeliveryController extends GetxController {
     // Update current location with the values
     // Animate the camera to the new location
     // Get polypoints from the new location
-    Location location = Location();
     currentLocation.value = LocationData.fromMap({
       'latitude': sourceLocation.latitude,
       'longitude': sourceLocation.longitude,
     });
-    location.getLocation().then((value) => currentLocation.value = value);
-    currentLocation.refresh();
-    print('In -> ${currentLocation.value}');
     GoogleMapController googleMapController = await mapController.future;
-    location.onLocationChanged.listen((value) {
-      currentLocation.value = value;
-      googleMapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            zoom: 13.5,
-            target: LatLng(
-              value.latitude!,
-              value.longitude!,
-            ),
+    // location.onLocationChanged.listen((value) {
+    // currentLocation.value = value;
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          zoom: 13.5,
+          target: LatLng(
+            currentLocation.value!.latitude!,
+            currentLocation.value!.longitude!,
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 
-  void setCustomMarkerIcon() {
+  void setCustomMarkerIcon() async {
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/current.png")
+            ImageConfiguration.empty, 'assets/destination.png',
+            package: 'delivery')
         .then(
       (icon) {
-        sourceIcon = icon;
-      },
-    );
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/destination.png")
-        .then(
-      (icon) {
-        destinationIcon = icon;
-      },
-    );
-    BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/location_green.png")
-        .then(
-      (icon) {
-        currentLocationIcon = icon;
+        destinationIcon.value = icon;
       },
     );
   }

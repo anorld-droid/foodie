@@ -275,6 +275,7 @@ class Themes {
         primaryContainer: Colors.transparent,
         secondaryContainer: Color.fromARGB(71, 5, 52, 49),
         error: Colors.red,
+        tertiary: Colors.black,
         onError: Colors.white,
         onBackground: Colors.white,
         surface: Color(0xFF272a32),
