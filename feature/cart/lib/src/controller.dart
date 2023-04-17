@@ -1,4 +1,3 @@
-import 'package:cart/src/utils/strings.dart';
 import 'package:cart/src/widgets/dialog_layout.dart';
 import 'package:cart/src/widgets/payment.dart';
 import 'package:common/common.dart';
@@ -9,9 +8,10 @@ import 'package:model/model.dart';
 import 'package:domain/domain.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
-class Controller extends GetxController {
+class CartController extends GetxController {
   final Rx<List<CartItem>> items;
-  Controller({required this.items}) : super();
+  CartController({required this.items}) : super();
+
   late final TextEditingController nameController;
   late final TextEditingController phoneController;
   late final TextEditingController buildingController;
@@ -22,14 +22,7 @@ class Controller extends GetxController {
   late final CartItemsUseCase _cartItemsUseCase;
   late final PaymentOptionsUseCase _paymentOptionsUseCase;
   late final SendMessageUseCase _sendMessageUseCase;
-  late final GetDestinationsUseCase _getDestinationsUseCase;
   late final SubscriptionUseCase _subscriptionUseCase;
-
-  final Rx<Destinations> destinations =
-      Rx(const Destinations(destinations: {}));
-  final Rx<String> county = Rx('Kisumu');
-  final Rx<String> town = Rx('Market');
-  final Rx<String> area = Rx('School Hostels');
 
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
   Rx<bool> inputValidated = false.obs;
@@ -49,12 +42,19 @@ class Controller extends GetxController {
 
   final Rx<String> selectedOption = 'M-pesa'.obs;
 
+  final Rx<List<ShippingModel>> orders = Rx([]);
+
   @override
   void onInit() async {
     super.onInit();
     initialize();
-
     await loadData();
+  }
+
+  @override
+  void onReady() async {
+    super.onReady();
+    await getOrders();
   }
 
   void initialize() {
@@ -62,10 +62,9 @@ class Controller extends GetxController {
     _userModelUseCase = UserModelUseCase();
     _shippingUseCase = ShippingUseCase();
     _cartItemsUseCase = CartItemsUseCase();
-    _paymentOptionsUseCase = PaymentOptionsUseCase();
     _sendMessageUseCase = SendMessageUseCase();
-    _getDestinationsUseCase = GetDestinationsUseCase();
     _subscriptionUseCase = SubscriptionUseCase();
+    _paymentOptionsUseCase = PaymentOptionsUseCase();
 
     nameController = TextEditingController();
     phoneController = TextEditingController();
@@ -74,24 +73,22 @@ class Controller extends GetxController {
     itemLength.value = items.value.length;
   }
 
+  Future<void> getOrders() async {
+    var snap = await _shippingUseCase.get(_authenticateUser.getUserId()!);
+    snap.listen((event) {
+      orders.value.clear();
+      for (var doc in event.docs) {
+        orders.value.add(doc.data());
+      }
+    });
+  }
+
   Future<void> loadData() async {
-    loading.value = true;
-    //Get shipping infomation, days and time supported
     await _subscriptionUseCase.get().then(
           (value) => value.listen((event) {
             subscription.value = event.data();
           }),
         );
-
-    //Retrive autone's delivery destinations
-    var snap = await _getDestinationsUseCase.get();
-    snap.listen((event) {
-      destinations.value = event.data() ??
-          const Destinations(
-            destinations: {},
-          );
-    });
-
     //Retrive user delivery destination
     var user =
         await _userModelUseCase.getShippingInfo(_authenticateUser.getUserId()!);
@@ -117,31 +114,12 @@ class Controller extends GetxController {
       shippingAddress.value = 'No shipping destination, yet!';
     } else {
       shippingAddress.value =
-          '${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber}, ${_shippingInfo.value?.destination?.town}, ${_shippingInfo.value?.destination?.building}.';
+          '${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber}, ${_shippingInfo.value?.location}';
       phoneController.text = _shippingInfo.value?.phoneNumber?.substring(
             4,
           ) ??
           '';
     }
-  }
-
-  List<String> getTowns() {
-    return destinations.value.destinations[county.value]
-            ?.map((e) => e.keys.first)
-            .toList() ??
-        [];
-  }
-
-  List<String> getAreas(String town) {
-    return (destinations.value.destinations.isNotEmpty && town.isNotEmpty)
-        ? destinations.value.destinations[county.value]?.firstWhere(
-              (element) => element.containsKey(town),
-              orElse: () {
-                return {};
-              },
-            )[town] ??
-            []
-        : [];
   }
 
   void _calculateSubTotal() {
@@ -188,8 +166,8 @@ class Controller extends GetxController {
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');
     } else {
-      bottomSheet();
-      // await _transact();
+      // bottomSheet();
+      await _transact();
       // sendMessage();
     }
   }
@@ -220,15 +198,15 @@ class Controller extends GetxController {
               element.data()['stkCallback'] as Map<String, dynamic>);
           if (data.responseCode == 0) {
             ShippingModel shippingModel = ShippingModel(
-              uid: _authenticateUser.getUserId()!,
-              items: items.value,
-              orderNo: reqID,
-              status: ShippingStatus.none.name,
-            );
+                user: _shippingInfo.value!,
+                items: items.value,
+                order: 'reqID',
+                status: 'Received');
             await _shippingUseCase.upload(
               userId: _authenticateUser.getUserId()!,
               shippingModel: shippingModel,
             );
+
             items.value.clear();
             itemLength.value = items.value.length;
             items.refresh();
@@ -280,27 +258,17 @@ class Controller extends GetxController {
   Future<void> saveShippingInfo() async {
     String name = nameController.text;
     String? mobileNumber = phoneNumber.phoneNumber;
-    String countyValue = county.value;
-    String townValue = town.value;
-    String areaValue = area.value;
     String building = buildingController.text;
 
     if (validateInput(
       name,
       mobileNumber,
-      countyValue,
-      townValue,
-      areaValue,
       building,
     )) {
       ShippingInfo shippingInfo = ShippingInfo(
         name: name,
         phoneNumber: mobileNumber,
-        destination: DestinationModel(
-            county: countyValue,
-            town: townValue,
-            area: areaValue,
-            building: building),
+        location: '$building.',
       );
       await _userModelUseCase.updateShippingInfo(
         userId: _authenticateUser.getUserId()!,
@@ -311,15 +279,11 @@ class Controller extends GetxController {
     }
   }
 
-  bool validateInput(String name, String? phoneNumber, String county,
-      String town, String area, String building) {
+  bool validateInput(String name, String? phoneNumber, String building) {
     if (name.isNotEmpty &&
         phoneNumber != null &&
-        county.isNotEmpty &&
-        town.isNotEmpty &&
         inputValidated.value &&
-        building.isNotEmpty &&
-        area.isNotEmpty) {
+        building.isNotEmpty) {
       return true;
     } else {
       shortToast('Please, fill all the details');
@@ -328,13 +292,22 @@ class Controller extends GetxController {
   }
 
   void bottomSheet() async {
-    bool? closed = await Get.bottomSheet<bool?>(const Payment(),
-        backgroundColor: Get.theme.colorScheme.background,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))),
-        clipBehavior: Clip.hardEdge,
-        elevation: 4,
-        barrierColor: Get.theme.colorScheme.primaryContainer,
-        isScrollControlled: false);
+    await Get.bottomSheet<bool?>(
+      const Payment(),
+      backgroundColor: Get.theme.colorScheme.background,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))),
+      clipBehavior: Clip.hardEdge,
+      elevation: 4,
+      barrierColor: Get.theme.colorScheme.primaryContainer,
+      isScrollControlled: false,
+    );
+  }
+
+  void navigateToDelivery(ShippingModel order) {
+    Get.toNamed<void>(
+      Routes.delivery,
+      arguments: order,
+    );
   }
 }

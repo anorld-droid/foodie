@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
-class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
+class CartAppBar extends GetView<CartController>
+    implements PreferredSizeWidget {
   const CartAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.find<Controller>();
     return AppBar(
       elevation: 2,
       leadingWidth: 56.0,
@@ -63,7 +63,8 @@ class CartAppBar extends GetView<Controller> implements PreferredSizeWidget {
       backgroundColor: Get.theme.colorScheme.primaryContainer,
       actions: [
         InkWell(
-          onTap: controller.shippingDialog,
+          onTap: () =>
+              controller.navigateToDelivery(controller.orders.value.first),
           borderRadius: BorderRadius.circular(30.0),
           child: Container(
             height: 40,

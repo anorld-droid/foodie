@@ -4,7 +4,7 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Payment extends GetView<Controller> {
+class Payment extends GetView<CartController> {
   const Payment({super.key});
 
   @override

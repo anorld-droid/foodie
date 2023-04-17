@@ -50,7 +50,7 @@ class UserModelUseCase {
     await _cloudNetWorkDataSource.updateField<ShippingInfo>(
       collection: Constants.users,
       doc: userId,
-      data: shippingInfo.toFirestore(),
+      data: shippingInfo.toJson(),
     );
   }
 

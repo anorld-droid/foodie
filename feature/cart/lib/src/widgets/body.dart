@@ -5,7 +5,7 @@ import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CartBody extends GetView<Controller> {
+class CartBody extends GetView<CartController> {
   const CartBody({super.key});
 
   @override
@@ -167,12 +167,7 @@ class CartBody extends GetView<Controller> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    Strings.total,
-                    style: Get.textTheme.bodyLarge?.copyWith(
-                      color: Get.theme.colorScheme.onBackground,
-                    ),
-                  ),
+                  Text(Strings.total, style: Get.textTheme.bodyLarge),
                   const SizedBox(
                     width: 8.0,
                   ),
@@ -207,11 +202,15 @@ class CartBody extends GetView<Controller> {
             ),
             const Divider(),
             Padding(
-              padding:
-                  const EdgeInsets.only(left: 24.0, bottom: 16.0, right: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              padding: const EdgeInsets.only(
+                  left: 24.0, bottom: 16.0, right: 8.0, top: 12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(Strings.destination, style: Get.textTheme.bodyLarge),
+                  const SizedBox(
+                    height: 6.0,
+                  ),
                   Obx(
                     () => Text(
                       controller.shippingAddress.value,

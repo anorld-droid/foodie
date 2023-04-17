@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
-class DeliveryDetails extends GetView<Controller> {
+class DeliveryDetails extends GetView<DeliveryController> {
+  final ShippingModel shippingModel;
   const DeliveryDetails({
     super.key,
+    required this.shippingModel,
   });
 
   @override
@@ -22,10 +24,12 @@ class DeliveryDetails extends GetView<Controller> {
       ),
       child: Column(
         children: [
-          _deliveryTime('', ''),
+          Obx(() =>
+              _deliveryTime(controller.time.value, controller.status.value)),
           const Divider(),
-          _iconInfo(''),
+          Obx(() => _iconInfo(controller.status.value)),
           const Divider(),
+          shippingModel.courier != null ? _courierInfo() : const SizedBox(),
         ],
       ),
     );
@@ -37,7 +41,7 @@ class DeliveryDetails extends GetView<Controller> {
       child: Column(
         children: [
           Text(
-            'Estimated delivery time is $timeEstimate',
+            'Estimated delivery time is ${shippingModel.timeEstimate}',
             style: Get.textTheme.bodyLarge,
           ),
           const SizedBox(
@@ -60,7 +64,7 @@ class DeliveryDetails extends GetView<Controller> {
         children: [
           Icon(
             Icons.receipt_long,
-            color: status == 'Recieved'
+            color: status == 'Received'
                 ? Get.theme.colorScheme.primary
                 : Get.theme.colorScheme.onBackground,
           ),
@@ -110,14 +114,14 @@ class DeliveryDetails extends GetView<Controller> {
     );
   }
 
-  Widget _courierInfo(String url, String name) {
+  Widget _courierInfo() {
     return SizedBox(
       width: Get.width,
       child: Row(
         children: [
           CircleAvatar(
             radius: 64,
-            foregroundImage: NetworkImage(url),
+            foregroundImage: NetworkImage(shippingModel.courier!.photoUrl),
           ),
           const SizedBox(
             width: 12.0,
@@ -126,7 +130,7 @@ class DeliveryDetails extends GetView<Controller> {
             child: Column(
               children: [
                 Text(
-                  name,
+                  shippingModel.courier!.name,
                   style: Get.textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
@@ -142,6 +146,7 @@ class DeliveryDetails extends GetView<Controller> {
             ),
           ),
           InkWell(
+            onTap: () => controller.call(shippingModel.courier!.phoneNumber),
             child: Container(
               padding: const EdgeInsets.all(12.0),
               decoration: BoxDecoration(

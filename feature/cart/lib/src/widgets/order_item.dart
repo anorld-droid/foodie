@@ -6,12 +6,11 @@ import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 08.02.2023.
 
-class OrderItems extends GetView<Controller> {
+class OrderItems extends GetView<CartController> {
   const OrderItems({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.find<Controller>();
     return Obx(() => SizedBox(
           height: controller.itemLength.value == 0
               ? Get.height * 0.05

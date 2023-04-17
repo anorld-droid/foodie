@@ -17,4 +17,7 @@ class Strings {
   static String shippingTo = 'Shipping to:';
   static String pay = 'Pay  ';
   static String hintText = 'Enter mobile number';
+
+  //body widget
+  static String destination = 'Destination';
 }

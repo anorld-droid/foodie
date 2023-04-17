@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:delivery/src/strings.dart';
-import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
@@ -10,9 +8,12 @@ import 'package:location/location.dart';
 import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
-class Controller extends GetxController {
+class DeliveryController extends GetxController {
+  final ShippingModel model;
+  DeliveryController({required this.model});
+
   // Google map coordinate variables declaration
-  late final Completer<GoogleMapController> mapController;
+  late Completer<GoogleMapController> mapController;
   Rx<LocationData?> currentLocation = Rx(null);
   late final LatLng sourceLocation;
   late final LatLng destination;
@@ -22,12 +23,17 @@ class Controller extends GetxController {
   late BitmapDescriptor currentLocationIcon;
 
   final Rx<List<LatLng>> polylineCoordinates = Rx([]);
-  late GoogleMapController googleMapController;
 
-  //Shipping information
-  late final ShippingUseCase _shippingUseCase;
-  late final AuthenticateUser _authenticateUser;
-  final Rx<List<ShippingModel>> shippingModel = Rx([]);
+  final Rx<String> status = Rx('');
+  final Rx<String> time = Rx(''); //TODO: Update from stream firestore
+
+  @override
+  void onInit() {
+    super.onInit();
+    initVars();
+    getPolyPoints();
+    getCurrentLocation();
+  }
 
   void initVars() {
     //Google maps variables initializing
@@ -37,22 +43,6 @@ class Controller extends GetxController {
     sourceIcon = BitmapDescriptor.defaultMarker;
     destinationIcon = BitmapDescriptor.defaultMarker;
     currentLocationIcon = BitmapDescriptor.defaultMarker;
-  }
-
-  void initUsecase() {
-    _shippingUseCase = ShippingUseCase();
-    _authenticateUser = AuthenticateUser();
-  }
-
-  Future<void> loadData() async {
-    var snap = await _shippingUseCase.get(_authenticateUser.getUserId()!);
-    snap.listen((event) {
-      shippingModel.value.clear();
-      for (var doc in event.docs) {
-        shippingModel.value.add(doc.data());
-      }
-      shippingModel.refresh();
-    });
   }
 
   ///Decodes encoded google polyline string into list of geo-coordinates suitable for showing route/polyline on maps.
@@ -74,24 +64,35 @@ class Controller extends GetxController {
 
   /// Streams courier current location from firebase.
   void getCurrentLocation() async {
-    googleMapController = await mapController.future;
     //Pseudo-code:
     // Get the stream from firestore
     // Listen to changes
     // Update current location with the values
     // Animate the camera to the new location
     // Get polypoints from the new location
-    // googleMapController.animateCamera(
-    //   CameraUpdate.newCameraPosition(
-    //     CameraPosition(
-    //       zoom: 13.5,
-    //       target: LatLng(
-    //         latitude,
-    //         longitude,
-    //       ),
-    //     ),
-    //   ),
-    // );
+    Location location = Location();
+    currentLocation.value = LocationData.fromMap({
+      'latitude': sourceLocation.latitude,
+      'longitude': sourceLocation.longitude,
+    });
+    location.getLocation().then((value) => currentLocation.value = value);
+    currentLocation.refresh();
+    print('In -> ${currentLocation.value}');
+    GoogleMapController googleMapController = await mapController.future;
+    location.onLocationChanged.listen((value) {
+      currentLocation.value = value;
+      googleMapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            zoom: 13.5,
+            target: LatLng(
+              value.latitude!,
+              value.longitude!,
+            ),
+          ),
+        ),
+      );
+    });
   }
 
   void setCustomMarkerIcon() {
@@ -117,4 +118,19 @@ class Controller extends GetxController {
       },
     );
   }
+
+  String statusTag(String status, String orderNo) {
+    switch (status) {
+      case 'Received':
+        return 'Order $orderNo has been received.';
+      case 'Ready':
+        return 'Your order has been processed and is ready for shipping';
+      case 'Shippping':
+        return 'Your order is already on its way to you.';
+      default:
+        return 'Order $orderNo delivered';
+    }
+  }
+
+  void call(String number) {}
 }

@@ -6,12 +6,11 @@ import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
-class DialogLayout extends GetView<Controller> {
+class DialogLayout extends GetView<CartController> {
   const DialogLayout({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.find<Controller>();
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -123,8 +122,7 @@ class DialogLayout extends GetView<Controller> {
                                   ),
                                 );
                               }),
-                          items: controller.destinations.value.destinations.keys
-                              .toList(),
+                          items: [],
                           dropdownDecoratorProps: DropDownDecoratorProps(
                             baseStyle: Get.textTheme.bodyLarge,
                             dropdownSearchDecoration: InputDecoration(
@@ -140,9 +138,7 @@ class DialogLayout extends GetView<Controller> {
                           ),
                           dropdownButtonProps: DropdownButtonProps(
                               color: Get.theme.primaryColorDark),
-                          onChanged: (value) {
-                            controller.county.value = value ?? '';
-                          },
+                          onChanged: (value) {},
                         ),
                       ),
                     ),
@@ -170,7 +166,7 @@ class DialogLayout extends GetView<Controller> {
                                     ),
                                   );
                                 }),
-                            items: controller.getTowns(),
+                            items: [],
                             dropdownDecoratorProps: DropDownDecoratorProps(
                               baseStyle: Get.textTheme.bodyLarge,
                               dropdownSearchDecoration: InputDecoration(
@@ -184,9 +180,7 @@ class DialogLayout extends GetView<Controller> {
                             dropdownButtonProps: DropdownButtonProps(
                               color: Get.theme.primaryColorDark,
                             ),
-                            onChanged: (value) {
-                              controller.town.value = value ?? '';
-                            },
+                            onChanged: (value) {},
                           ),
                         ),
                       ),
@@ -215,7 +209,7 @@ class DialogLayout extends GetView<Controller> {
                                     ),
                                   );
                                 }),
-                            items: controller.getAreas(controller.town.value),
+                            items: [],
                             dropdownDecoratorProps: DropDownDecoratorProps(
                               baseStyle: Get.textTheme.bodyLarge,
                               dropdownSearchDecoration: InputDecoration(
@@ -229,9 +223,7 @@ class DialogLayout extends GetView<Controller> {
                             dropdownButtonProps: DropdownButtonProps(
                               color: Get.theme.primaryColorDark,
                             ),
-                            onChanged: (value) {
-                              controller.area.value = value ?? '';
-                            },
+                            onChanged: (value) {},
                           ),
                         ),
                       ),
@@ -245,7 +237,7 @@ class DialogLayout extends GetView<Controller> {
                         height: 48,
                         hintText: 'Kilimanjaro/1st Floor/Room 110',
                         labelText: 'Building/Floor/Room',
-                        backgroundColor: Get.theme.backgroundColor,
+                        backgroundColor: Get.theme.colorScheme.background,
                       ),
                     ),
                     const SizedBox(

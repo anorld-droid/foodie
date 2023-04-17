@@ -1,5 +1,4 @@
-import 'package:model/model.dart';
-
+import 'package:model/src/shipping_info.dart';
 import 'constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -25,7 +24,7 @@ class User {
         Constants.uid: uid,
         Constants.username: username,
         Constants.photoUrl: photoUrl,
-        Constants.shippingInfo: shippingInfo?.toFirestore(),
+        Constants.shippingInfo: shippingInfo?.toJson(),
         Constants.account: account,
         Constants.favoriteStore: favoriteStore
       };
@@ -40,9 +39,8 @@ class User {
         photoUrl: snapshot?[Constants.photoUrl] as String?,
         username: snapshot?[Constants.username] as String,
         shippingInfo: snapshot?[Constants.shippingInfo] != null
-            ? ShippingInfo.fromFirestore(
+            ? ShippingInfo.fromJson(
                 snapshot?[Constants.shippingInfo] as Map<String, dynamic>,
-                options,
               )
             : null,
         account: snapshot?[Constants.account] as String,
@@ -58,9 +56,8 @@ class User {
       photoUrl: json[Constants.photoUrl] as String,
       username: json[Constants.username] as String,
       shippingInfo: json[Constants.shippingInfo] != null
-          ? ShippingInfo.fromFirestore(
+          ? ShippingInfo.fromJson(
               json[Constants.shippingInfo] as Map<String, dynamic>,
-              options,
             )
           : null,
       account: json[Constants.account] as String,

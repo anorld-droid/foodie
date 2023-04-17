@@ -20,7 +20,7 @@ class Constants {
   static String floorNo = 'floorNumber';
   static String roomNo = 'roomNumber';
   static String area = 'area';
-  static String orderNo = 'orderNumber';
+  static String order = 'orderNumber';
   static String items = 'items';
   static String status = 'status';
   static String store = 'store';
@@ -36,6 +36,13 @@ class Constants {
   //Shipping Strings
   static String courier = 'courier';
   static String timeEstimate = 'timeEstimate';
+  static String user = 'user';
+  static String location = 'location';
+  //Courier model strings
+  static String lat = 'lat';
+  static String long = 'long';
+  //Delivery model strings
+  static String courierUid = 'courierUid';
 
   // Mpesa Payments
   static String merchantRequestID = 'MerchantRequestID';

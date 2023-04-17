@@ -5,17 +5,19 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
-class DeliveryMap extends GetView<Controller> {
+class DeliveryMap extends GetView<DeliveryController> {
   const DeliveryMap({super.key});
 
   @override
   Widget build(BuildContext context) {
+    print(controller.currentLocation.value);
     return Scaffold(
       body: Obx(
         () => controller.currentLocation.value == null
             ? Center(
                 child: GradientCircularProgressIndicator(
-                  radius: 40,
+                  radius: 20,
+                  strokeWidth: 5.0,
                   gradientColors: [
                     Get.theme.colorScheme.primary,
                     Get.theme.colorScheme.primary.withAlpha(100)

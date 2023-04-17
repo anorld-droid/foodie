@@ -2,6 +2,7 @@ import 'package:agrich/agrich.dart';
 import 'package:cart/cart.dart';
 import 'package:common/common.dart';
 import 'package:cuisine_detail/cuisine_detail.dart';
+import 'package:delivery/delivery.dart';
 import 'package:di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -66,6 +67,11 @@ class TriceApp extends GetView<TriceAppController> {
             cartItems: Get.arguments as Rx<List<CartItem>>,
           ),
         ),
+        GetPage(
+            name: Routes.delivery,
+            page: () => Delivery(
+                  shippingModel: Get.arguments as ShippingModel,
+                ))
       ],
     );
   }

@@ -35,6 +35,8 @@ dependencies:
     path: feature/log_in
   sign_up:
     path: feature/sign_up
+  delivery:
+    path: feature/delivery
 
 dev_dependencies:
   flutter_test:

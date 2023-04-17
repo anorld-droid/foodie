@@ -1,11 +1,9 @@
-import 'package:agrich/src/widgets/dialog_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
@@ -29,33 +27,15 @@ class CuisineController extends GetxController
   late final CartItemsUseCase _cartItemsUseCase;
   late final CuisineModelUseCase _cuisineModelUseCase;
   late final CuisineItemUseCase _cuisineItemUseCase;
-  late final UserModelUseCase _userModelUseCase;
-  late final PaymentOptionsUseCase _paymentOptionsUseCase;
-  late final GetDestinationsUseCase _getDestinationsUseCase;
-  late final SendMessageUseCase _sendMessageUseCase;
-  PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
-
-  final Rx<String> accountType = ''.obs;
-
-  final Rx<int> qty = 1.obs;
+  late final ShippingUseCase _shippingUseCase;
 
   late Rx<TabController> tabController;
 
   final Rx<double> sellingPrice = 0.0.obs;
 
-  Rx<bool> inputValidated = false.obs;
-
-  final Rx<Subscription?> subscription = Rx(null);
-  final Rx<String> shippingAddress = Rx('');
-  final Rx<bool> freeShipping = Rx(true);
-
-  final Rx<Destinations> destinations =
-      Rx(const Destinations(destinations: {}));
-  final Rx<String> county = Rx('');
-  final Rx<String> town = Rx('');
-  final Rx<String> area = Rx('');
-
   final Rx<int> itemLength = 0.obs;
+
+  final Rx<List<ShippingModel>> orders = Rx([]);
 
   @override
   void onInit() async {
@@ -82,10 +62,7 @@ class CuisineController extends GetxController
     _cartItemsUseCase = CartItemsUseCase();
     _cuisineModelUseCase = CuisineModelUseCase();
     _cuisineItemUseCase = CuisineItemUseCase();
-    _userModelUseCase = UserModelUseCase();
-    _paymentOptionsUseCase = PaymentOptionsUseCase();
-    _getDestinationsUseCase = GetDestinationsUseCase();
-    _sendMessageUseCase = SendMessageUseCase();
+    _shippingUseCase = ShippingUseCase();
 
     nameController = TextEditingController();
     searchController = TextEditingController();
@@ -104,91 +81,27 @@ class CuisineController extends GetxController
 
     if (_authenticateUser.isUserSignedIn()) {
       getCartItems();
-      var user = await _userModelUseCase.get(_authenticateUser.getUserId()!);
-      accountType.value = user!.account == 'Gold'
-          ? '6000'
-          : user.account == 'Platinum'
-              ? '3000'
-              : '0';
+      getOrders();
     }
     //Retrive autone's delivery destinations
-    var snapshot = await _getDestinationsUseCase.get();
-    snapshot.listen((event) {
-      destinations.value = event.data() ??
-          const Destinations(
-            destinations: {},
-          );
-    });
+
     itemLength.value = items.value.length;
+  }
+
+  Future<void> getOrders() async {
+    var snap = await _shippingUseCase.get(_authenticateUser.getUserId()!);
+    snap.listen((event) {
+      orders.value.clear();
+      for (var doc in event.docs) {
+        ShippingModel model = doc.data();
+        model.id = doc.id;
+        orders.value.add(model);
+      }
+    });
   }
 
   Stream<QuerySnapshot<CuisineItem>> getCuisineItems(String header) {
     return _cuisineItemUseCase.get(header);
-  }
-
-  List<String> getTowns() {
-    return destinations.value.destinations[county.value]
-            ?.map((e) => e.keys.first)
-            .toList() ??
-        [];
-  }
-
-  List<String> getAreas() {
-    return destinations.value.destinations[county.value]?.firstWhere(
-            (element) => element.containsKey(town.value),
-            orElse: (() => {}))[town.value] ??
-        [];
-  }
-
-  Future<void> upgradeAccount(String amount, String type) async {
-    await showDialog<Widget>(
-        context: Get.context!,
-        barrierDismissible: false,
-        barrierLabel:
-            MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.colorScheme.background.withOpacity(.87),
-        builder: (BuildContext buildContext) {
-          return DialogLayout(amount: amount, type: type);
-        });
-  }
-
-  Future<void> pay(String amount, String type) async {
-    if (_authenticateUser.isUserSignedIn()) {
-      if (phoneNumber.phoneNumber != null && inputValidated.value) {
-        final reqID = await _paymentOptionsUseCase.withMPesa(
-            _authenticateUser.getUserId()!,
-            amount,
-            phoneNumber.phoneNumber!,
-            'account upgrade');
-        if (reqID != null) {
-          Get.back<void>();
-          final snap = await _paymentOptionsUseCase
-              .getPaymentStatus<MpesaResultPayment>(reqId: reqID);
-          snap.listen((event) async {
-            var snapshot =
-                event.docs.firstWhereOrNull((element) => element.id == reqID);
-            if (snapshot != null) {
-              var data = MpesaResultPayment.fromJson(
-                  snapshot.data()['stkCallback'] as Map<String, dynamic>);
-              if (data.responseCode == 0) {
-                await _userModelUseCase.updateAccountType(
-                    userId: _authenticateUser.getUserId()!, accountType: type);
-                await Future<void>.delayed(const Duration(seconds: 2));
-                shortToast('Upgrade successful');
-              } else {
-                longToast(data.responseDescription);
-              }
-            }
-          });
-        } else {
-          longToast('Payment operation failed.');
-        }
-      } else {
-        longToast('Enter your phone number.');
-      }
-    } else {
-      showAuthDialog();
-    }
   }
 
   Future<void> showAuthDialog() async {
@@ -197,17 +110,10 @@ class CuisineController extends GetxController
         barrierDismissible: false,
         barrierLabel:
             MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.backgroundColor,
+        barrierColor: Get.theme.colorScheme.background,
         builder: (BuildContext buildContext) {
           return const AuthDialog();
         });
-  }
-
-  void sendMessage() {
-    String text =
-        'You\'ve unlocked a life of ease and convenience with autone. Welcome autonister!';
-    MessageBird sms = MessageBird(to: phoneNumber.phoneNumber!, text: text);
-    _sendMessageUseCase.invoke(messageBird: sms);
   }
 
   void resetSearch() {
@@ -248,20 +154,11 @@ class CuisineController extends GetxController
     );
   }
 
-  bool validateInput(String name, String? phoneNumber, String county,
-      String town, String area, String building) {
-    if (name.isNotEmpty &&
-        phoneNumber != null &&
-        county.isNotEmpty &&
-        town.isNotEmpty &&
-        inputValidated.value &&
-        building.isNotEmpty &&
-        area.isNotEmpty) {
-      return true;
-    } else {
-      shortToast('Please, fill all the details');
-      return false;
-    }
+  void navigateToDelivery(ShippingModel order) {
+    Get.toNamed<void>(
+      Routes.delivery,
+      arguments: order,
+    );
   }
 
   void addToCart(CuisineItem cuisineItem, String store) {
@@ -285,6 +182,7 @@ class CuisineController extends GetxController
       case 'Repeat last order':
         break;
       default:
+        navigateToDelivery(orders.value.first);
     }
   }
 }

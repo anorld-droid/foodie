@@ -1,9 +1,10 @@
+import 'package:delivery/src/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:delivery/src/strings.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
-class TopBar extends StatelessWidget implements PreferredSizeWidget {
+class TopBar extends GetView<DeliveryController> implements PreferredSizeWidget {
   const TopBar({super.key});
 
   @override

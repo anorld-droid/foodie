@@ -1,31 +1,34 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:model/model.dart';
 import 'package:model/src/constants.dart';
+import 'package:model/src/courier.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
-
 class ShippingModel {
-  final String uid;
-  final String orderNo;
+  String? id;
+  final ShippingInfo user;
+  final String order;
   final List<CartItem> items;
   final String status;
-  final User? courier;
-  final String timeEstimate;
+  final Courier? courier;
+  final String? timeEstimate;
 
   ShippingModel({
-    required this.uid,
+    required this.user,
     required this.items,
-    required this.orderNo,
+    required this.order,
     required this.status,
     this.courier,
-    required this.timeEstimate,
+    this.timeEstimate,
+    this.id,
   });
   Map<String, dynamic> toFirestore() => {
-        Constants.uid: uid,
-        Constants.orderNo: orderNo,
+        Constants.id: id,
+        Constants.user: user.toJson(),
+        Constants.order: order,
         Constants.items: items.map((e) => e.toFirestore()).toList(),
-        Constants.status: status,
         Constants.courier: courier,
+        Constants.status: status,
         Constants.timeEstimate: timeEstimate,
       };
 
@@ -36,56 +39,24 @@ class ShippingModel {
     var snapshot = snap.data();
     List<dynamic> items = snapshot?[Constants.items] as List<dynamic>;
     var courier = snapshot?[Constants.courier];
+    var user = snapshot?[Constants.user][Constants.shippingInfo];
+
     return ShippingModel(
-        uid: snapshot?[Constants.uid] as String,
-        items: items.map((e) {
-          e as Map<String, dynamic>;
-          return CartItem.fromJson(e);
-        }).toList(),
-        orderNo: snapshot?[Constants.orderNo] as String,
-        status: snapshot?[Constants.status] as String,
-        courier: courier != null
-            ? User.fromJson(
-                courier as Map<String, dynamic>,
-                options,
-              )
-            : null,
-        timeEstimate: snapshot?[Constants.timeEstimate] as String);
-  }
-}
-
-class ShippingInfo {
-  final String? name;
-  final String? phoneNumber;
-  final DestinationModel? destination;
-
-  ShippingInfo({
-    required this.name,
-    required this.phoneNumber,
-    required this.destination,
-  });
-
-  Map<String, dynamic> toFirestore() => {
-        Constants.shippingInfo: {
-          Constants.name: name,
-          Constants.phoneNumber: phoneNumber,
-          Constants.destination: destination?.toFirestore()
-        }
-      };
-
-  factory ShippingInfo.fromFirestore(
-    Map<String, dynamic>? snapshot,
-    SnapshotOptions? options,
-  ) {
-    DestinationModel? destinationModel =
-        snapshot?[Constants.destination] != null
-            ? DestinationModel.fromFirestore(
-                snapshot?[Constants.destination] as Map<String, dynamic>, null)
-            : null;
-    return ShippingInfo(
-      name: snapshot?[Constants.name] as String?,
-      phoneNumber: snapshot?[Constants.phoneNumber] as String?,
-      destination: destinationModel,
+      id: snapshot?[Constants.id] as String?,
+      user: ShippingInfo.fromJson(user as Map<String, dynamic>),
+      items: items.map((e) {
+        e as Map<String, dynamic>;
+        return CartItem.fromJson(e);
+      }).toList(),
+      order: snapshot?[Constants.order] as String,
+      status: snapshot?[Constants.status] as String,
+      courier: courier != null
+          ? Courier.fromJson(
+              courier as Map<String, dynamic>,
+              options,
+            )
+          : null,
+      timeEstimate: snapshot?[Constants.timeEstimate] as String?,
     );
   }
 }
