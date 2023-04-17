@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:delivery/src/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -36,6 +37,12 @@ class DeliveryController extends GetxController {
   }
 
   void initVars() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      // Status bar color
+      statusBarColor: Get.theme.colorScheme.primaryContainer,
+      // Status bar brightness (optional)
+      statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+    ));
     //Google maps variables initializing
     mapController = Completer();
     sourceLocation = const LatLng(-0.005273248425477859, 34.59785159831812);

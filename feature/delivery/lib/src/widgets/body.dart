@@ -12,7 +12,10 @@ class Body extends GetView<DeliveryController> {
   Widget build(BuildContext context) {
     Get.find<DeliveryController>();
     return Stack(
-      children: const [TopBar(), DeliveryMap()],
+      children: const [
+        DeliveryMap(),
+        TopBar(),
+      ],
     );
   }
 }
