@@ -17,4 +17,6 @@ class Constants {
   static String subscription = 'subscription';
   //Restaurant item use case
   static String restaurants = 'restaurants';
+  //Delivery Strings
+  static String deliveries = 'deliveries';
 }

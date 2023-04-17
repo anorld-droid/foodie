@@ -34,7 +34,19 @@ class DeliveryDetails extends GetView<DeliveryController> {
             Divider(
               color: Colors.white70.withAlpha(130),
             ),
-            shippingModel.courier != null ? _courierInfo() : const SizedBox(),
+            Obx(
+              () => controller.courier.value != null
+                  ? _courierInfo()
+                  : Padding(
+                      padding: EdgeInsets.only(top: Get.height * 0.04),
+                      child: Center(
+                          child: Text(
+                        'Pairing...',
+                        style: Get.textTheme.bodyLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      )),
+                    ),
+            ),
           ],
         ),
       ),
@@ -130,19 +142,21 @@ class DeliveryDetails extends GetView<DeliveryController> {
   }
 
   Widget _courierInfo() {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
       width: Get.width,
       child: Row(
         children: [
           CircleAvatar(
-            radius: 64,
+            radius: 32,
             foregroundImage: NetworkImage(shippingModel.courier!.photoUrl),
           ),
           const SizedBox(
-            width: 12.0,
+            width: 16.0,
           ),
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   shippingModel.courier!.name,
@@ -163,7 +177,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
           InkWell(
             onTap: () => controller.call(shippingModel.courier!.phoneNumber),
             child: Container(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 color: Get.theme.colorScheme.onBackground,
                 borderRadius: BorderRadius.circular(30),

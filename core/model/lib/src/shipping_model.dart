@@ -27,7 +27,7 @@ class ShippingModel {
         Constants.user: user.toJson(),
         Constants.order: order,
         Constants.items: items.map((e) => e.toFirestore()).toList(),
-        Constants.courier: courier,
+        Constants.courier: courier?.toJson(),
         Constants.status: status,
         Constants.timeEstimate: timeEstimate,
       };

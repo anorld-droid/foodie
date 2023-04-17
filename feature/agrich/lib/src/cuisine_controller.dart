@@ -83,8 +83,6 @@ class CuisineController extends GetxController
       getCartItems();
       getOrders();
     }
-    //Retrive autone's delivery destinations
-
     itemLength.value = items.value.length;
   }
 

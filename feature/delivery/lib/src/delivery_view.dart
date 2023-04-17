@@ -6,15 +6,15 @@ import 'package:get/get.dart';
 import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
-class Delivery extends GetView<DeliveryController> {
+class DeliveryView extends GetView<DeliveryController> {
   final ShippingModel shippingModel;
-  const Delivery({super.key, required this.shippingModel});
+  const DeliveryView({super.key, required this.shippingModel});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => DeliveryController(model: shippingModel), fenix: true);
+    Get.put(DeliveryController(model: shippingModel));
     return Scaffold(
-      backgroundColor: Colors.white.withAlpha(230),
+      backgroundColor: Get.theme.colorScheme.onBackground.withAlpha(230),
       body: const Body(),
       bottomNavigationBar: DeliveryDetails(
         shippingModel: shippingModel,

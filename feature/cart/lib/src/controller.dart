@@ -1,6 +1,7 @@
 import 'package:cart/src/widgets/dialog_layout.dart';
 import 'package:cart/src/widgets/payment.dart';
 import 'package:common/common.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -78,7 +79,9 @@ class CartController extends GetxController {
     snap.listen((event) {
       orders.value.clear();
       for (var doc in event.docs) {
-        orders.value.add(doc.data());
+        ShippingModel model = doc.data();
+        model.id = doc.id;
+        orders.value.add(model);
       }
     });
   }
@@ -307,7 +310,7 @@ class CartController extends GetxController {
   void navigateToDelivery(ShippingModel order) {
     Get.toNamed<void>(
       Routes.delivery,
-      arguments: order,
+      arguments: orders.value.first,
     );
   }
 }

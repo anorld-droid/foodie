@@ -26,7 +26,7 @@ class Courier {
     SnapshotOptions? options,
   ) {
     return Courier(
-      uid: snapshot?[Constants.name] as String,
+      uid: snapshot?[Constants.uid] as String,
       name: snapshot?[Constants.name] as String,
       phoneNumber: snapshot?[Constants.phoneNumber] as String,
       photoUrl: snapshot?[Constants.photoUrl] as String,

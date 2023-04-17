@@ -14,3 +14,4 @@ export 'get_destinations_use_case.dart';
 export 'subscription_use_case.dart';
 export 'cuisine_item_use_case.dart';
 export 'restaurant_item_use_case.dart';
+export 'delivery_item_use_case.dart';

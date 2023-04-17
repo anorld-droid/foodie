@@ -16,6 +16,7 @@ class DeliveryController extends GetxController {
 
   late final ShippingUseCase _shippingUseCase;
   late final AuthenticateUser _authenticateUser;
+  late final DeliveryUseCase _deliveryUseCase;
 
   // Google map coordinate variables declaration
   late Completer<GoogleMapController> mapController;
@@ -28,16 +29,16 @@ class DeliveryController extends GetxController {
 
   final Rx<List<LatLng>> polylineCoordinates = Rx([]);
 
-  final Rx<String> status = Rx('');
-  final Rx<String> time = Rx(''); //TODO: Update from stream firestore
+  late Rx<String> status;
+  final Rx<String> time = Rx('');
+
+  final Rx<Courier?> courier = Rx(null);
 
   @override
   void onInit() async {
     super.onInit();
     initVars();
     await loadData();
-    getPolyPoints();
-    getCurrentLocation();
     setCustomMarkerIcon();
   }
 
@@ -51,31 +52,52 @@ class DeliveryController extends GetxController {
 
     _shippingUseCase = ShippingUseCase();
     _authenticateUser = AuthenticateUser();
+    _deliveryUseCase = DeliveryUseCase();
 
     //Google maps variables initializing
     mapController = Completer();
-    sourceLocation = const LatLng(-0.005273248425477859, 34.59785159831812);
     destination = const LatLng(-0.057822991209217858, 34.6032983890644);
+
+    status = Rx(model.status);
   }
 
   Future<void> loadData() async {
     var snap = await _shippingUseCase.getDocs(
         _authenticateUser.getUserId()!, model.id!);
-    snap.listen((event) {
+    snap.listen((event) async {
       time.value = event.data()!.timeEstimate ?? '';
       status.value = event.data()!.status;
+      courier.value = event.data()!.courier;
+      print('ID --> ${courier.value!.uid}');
+
+      await courierLocation();
     });
   }
 
+  Future<void> courierLocation() async {
+    if (courier.value != null) {
+      var courierSnap = await _deliveryUseCase.get(courier.value!.uid);
+      courierSnap.listen((event) {
+        Delivery? delivery = event.data();
+        if (delivery != null) {
+          // print(delivery.lat);
+          getPolyPoints(delivery.lat, delivery.long);
+          getCurrentLocation(delivery.lat, delivery.long);
+        }
+      });
+    }
+  }
+
   ///Decodes encoded google polyline string into list of geo-coordinates suitable for showing route/polyline on maps.
-  void getPolyPoints() async {
+  void getPolyPoints(double lat, double long) async {
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       Strings.mapsKey,
-      PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+      PointLatLng(lat, long),
       PointLatLng(destination.latitude, destination.longitude),
     );
     if (result.points.isNotEmpty) {
+      polylineCoordinates.value.clear();
       for (var point in result.points) {
         polylineCoordinates.value.add(
           LatLng(point.latitude, point.longitude),
@@ -86,7 +108,7 @@ class DeliveryController extends GetxController {
   }
 
   /// Streams courier current location from firebase.
-  void getCurrentLocation() async {
+  void getCurrentLocation(double lat, double long) async {
     //Pseudo-code:
     // Get the stream from firestore
     // Listen to changes
@@ -94,19 +116,17 @@ class DeliveryController extends GetxController {
     // Animate the camera to the new location
     // Get polypoints from the new location
     currentLocation.value = LocationData.fromMap({
-      'latitude': sourceLocation.latitude,
-      'longitude': sourceLocation.longitude,
+      'latitude': lat,
+      'longitude': long,
     });
     GoogleMapController googleMapController = await mapController.future;
-    // location.onLocationChanged.listen((value) {
-    // currentLocation.value = value;
     googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           zoom: 12.5,
           target: LatLng(
-            currentLocation.value!.latitude!,
-            currentLocation.value!.longitude!,
+            lat,
+            long,
           ),
         ),
       ),
@@ -127,11 +147,11 @@ class DeliveryController extends GetxController {
   String statusTag(String status) {
     switch (status) {
       case 'Received':
-        return 'Order ${model.id!.substring(0, 4)}... has been received.';
+        return 'Order ${model.id!.substring(0, 4)}... has been received';
       case 'Ready':
         return 'Your order has been processed and is ready for shipping';
       case 'Shipping':
-        return 'Your order is already on its way to you.';
+        return 'Your order is already on its way to you';
       default:
         return 'Order  ${model.id!.substring(0, 4)}... delivered';
     }
