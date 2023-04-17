@@ -175,7 +175,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
             ),
           ),
           InkWell(
-            onTap: () => controller.call(shippingModel.courier!.phoneNumber),
+            onTap: controller.call,
             child: Container(
               padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
