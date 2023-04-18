@@ -15,17 +15,21 @@ class CuisineItem {
   final String detail;
   final String photoUrl;
   final Map<String, List<String>> favorites;
+  final int limit;
 
-  CuisineItem(this.id,
-      {required this.name,
-      required this.store,
-      required this.stockTag,
-      required this.basicPrice,
-      required this.sellingPrice,
-      required this.quantity,
-      required this.detail,
-      required this.photoUrl,
-      required this.favorites});
+  CuisineItem(
+    this.id, {
+    required this.name,
+    required this.store,
+    required this.stockTag,
+    required this.basicPrice,
+    required this.sellingPrice,
+    required this.quantity,
+    required this.detail,
+    required this.photoUrl,
+    required this.favorites,
+    required this.limit,
+  });
 
   CartItem asCartItem(String selectedStore) {
     return CartItem(
@@ -37,6 +41,7 @@ class CuisineItem {
       basicPrice: basicPrice[selectedStore]!,
       sellingPrice: Rx(sellingPrice.value[selectedStore]!),
       quantity: quantity,
+      limit: limit,
     );
   }
 
@@ -50,6 +55,7 @@ class CuisineItem {
         Constants.detail: detail,
         Constants.photoUrl: photoUrl,
         Constants.favorites: favorites,
+        Constants.limit: limit,
       };
 
   factory CuisineItem.fromFirestore(
@@ -84,6 +90,7 @@ class CuisineItem {
               .toList(),
         );
       }),
+      limit: snap?[Constants.limit] as int,
     );
   }
 }

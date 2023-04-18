@@ -85,8 +85,13 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   }
 
   void incrementQty(double basicPrice) {
-    qty.value++;
-    sellingPrice.value = basicPrice * qty.value;
+    String msg = 'You\'ve reached the quantity purchase limit.';
+    if (qty.value < item.limit) {
+      qty.value++;
+      sellingPrice.value = basicPrice * qty.value;
+    } else {
+      shortToast(msg);
+    }
   }
 
   void decrementQty(double basicPrice) {

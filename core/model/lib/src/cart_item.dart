@@ -12,16 +12,19 @@ class CartItem {
   final double basicPrice;
   final Rx<double> sellingPrice;
   final Rx<int> quantity;
+  final int limit;
 
-  CartItem(
-      {required this.id,
-      required this.photoUrl,
-      required this.name,
-      required this.store,
-      required this.stockTag,
-      required this.basicPrice,
-      required this.sellingPrice,
-      required this.quantity});
+  CartItem({
+    required this.id,
+    required this.photoUrl,
+    required this.name,
+    required this.store,
+    required this.stockTag,
+    required this.basicPrice,
+    required this.sellingPrice,
+    required this.quantity,
+    required this.limit,
+  });
 
   Map<String, dynamic> toFirestore() => {
         Constants.id: id,
@@ -32,6 +35,7 @@ class CartItem {
         Constants.basicPrice: basicPrice,
         Constants.sellingPrice: sellingPrice.value,
         Constants.quantity: quantity.value,
+        Constants.limit: limit,
       };
 
   factory CartItem.fromFirestore(
@@ -40,14 +44,16 @@ class CartItem {
   ) {
     var snapshot = snap.data();
     return CartItem(
-        id: snapshot?[Constants.id] as String?,
-        photoUrl: snapshot?[Constants.photoUrl] as String,
-        name: snapshot?[Constants.name] as String,
-        store: snapshot?[Constants.store] as String,
-        stockTag: snapshot?[Constants.stockTag] as int,
-        basicPrice: snapshot?[Constants.basicPrice] as double,
-        sellingPrice: Rx(snapshot?[Constants.sellingPrice] as double),
-        quantity: Rx(snapshot?[Constants.quantity] as int));
+      id: snapshot?[Constants.id] as String?,
+      photoUrl: snapshot?[Constants.photoUrl] as String,
+      name: snapshot?[Constants.name] as String,
+      store: snapshot?[Constants.store] as String,
+      stockTag: snapshot?[Constants.stockTag] as int,
+      basicPrice: snapshot?[Constants.basicPrice] as double,
+      sellingPrice: Rx(snapshot?[Constants.sellingPrice] as double),
+      quantity: Rx(snapshot?[Constants.quantity] as int),
+      limit: snapshot?[Constants.limit] as int,
+    );
   }
   factory CartItem.fromJson(
     Map<String, dynamic> json,
@@ -61,6 +67,7 @@ class CartItem {
       basicPrice: json[Constants.basicPrice] as double,
       sellingPrice: Rx(json[Constants.sellingPrice] as double),
       quantity: Rx(json[Constants.quantity] as int),
+      limit: json[Constants.limit] as int,
     );
   }
 }

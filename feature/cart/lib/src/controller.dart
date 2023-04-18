@@ -246,9 +246,14 @@ class CartController extends GetxController {
   }
 
   void incrementQty(CartItem cartItem) {
+    String msg = 'You\'ve reached the quantity purchase limit.';
     var qty = ++cartItem.quantity.value;
-    cartItem.sellingPrice.value = cartItem.basicPrice * qty;
-    calculateTotal();
+    if (qty < cartItem.limit) {
+      cartItem.sellingPrice.value = cartItem.basicPrice * qty;
+      calculateTotal();
+    } else {
+      shortToast(msg);
+    }
   }
 
   void decrementQty(CartItem cartItem) {

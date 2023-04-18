@@ -67,4 +67,6 @@ class Constants {
   //Restaurant
   static String locationName = 'locationName';
   static String locationCoordinate = 'locationCoordinate';
+  //Cart items strings
+  static String limit = 'limit';
 }
