@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:model/model.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:intl/intl.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
 class DeliveryController extends GetxController {
@@ -23,7 +23,7 @@ class DeliveryController extends GetxController {
   // Google map coordinate variables declaration
   late Completer<GoogleMapController> mapController;
   Rx<LocationData?> currentLocation = Rx(null);
-  late final LatLng sourceLocation;
+  // late final LatLng sourceLocation;
   late final LatLng destination;
   //Google maps marker icons
   Rx<BitmapDescriptor> destinationIcon = Rx(BitmapDescriptor.defaultMarker);
@@ -82,7 +82,11 @@ class DeliveryController extends GetxController {
       courierSnap.listen((event) {
         Delivery? delivery = event.data();
         if (delivery != null) {
-          // print(delivery.lat);
+          var latLong = LatLng(delivery.lat, delivery.long);
+          calculateDeliveryTime(
+            sourceLocation: destination,
+            deliveryAddress: latLong,
+          );
           getPolyPoints(delivery.lat, delivery.long);
           getCurrentLocation(delivery.lat, delivery.long);
         }
@@ -168,5 +172,47 @@ class DeliveryController extends GetxController {
     } else {
       throw 'Could not launch $number';
     }
+  }
+
+// This function calculates the estimated delivery time based on the distance
+// between the courier and the delivery address.
+  Future<void> calculateDeliveryTime({
+    required LatLng sourceLocation,
+    required LatLng deliveryAddress,
+  }) async {
+    const preparationTime =
+        20; // Time in minutes it takes the restaurant to prepare the food
+    const deliveryPersonnelAvailability =
+        3; // Number of available delivery personnel
+    final historicalData =
+        <double>[]; // List of previous delivery times to the same location
+    final currentDateTime = DateTime.now(); // Current date and time
+    // Calculate the distance between the two locations using the Google Maps Distance Matrix API
+    final distanceMatrix = await DistanceMatrix().distanceWithLocation(
+      startLatitude: sourceLocation.latitude,
+      startLongitude: sourceLocation.longitude,
+      endLatitude: deliveryAddress.latitude,
+      endLongitude: deliveryAddress.longitude,
+    );
+    print(distanceMatrix);
+    final travelTime =
+        distanceMatrix.toInt() ~/ 60; // Calculate travel time in minutes
+    final deliveryTime =
+        currentDateTime.add(Duration(minutes: preparationTime + travelTime));
+    final estimatedDeliveryTime = deliveryTime.add(Duration(
+        minutes: historicalData.isEmpty
+            ? 0
+            : historicalData.reduce((a, b) => a + b) ~/
+                historicalData
+                    .length)); // Calculate average historical delivery time
+    const remainingDeliveryPersonnel = deliveryPersonnelAvailability -
+        1; // Subtract the delivery personnel currently assigned to the order
+    final adjustedDeliveryTime = estimatedDeliveryTime.add(const Duration(
+        minutes: remainingDeliveryPersonnel *
+            10)); // Add 10 minutes for each remaining delivery personnel
+    final formatter = DateFormat('h:mm a');
+    final formattedDeliveryTime = formatter.format(adjustedDeliveryTime);
+    // Display the estimated delivery time
+    print('Estimated delivery time: ${formattedDeliveryTime.toString()}');
   }
 }

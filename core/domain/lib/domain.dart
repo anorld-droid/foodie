@@ -4,4 +4,5 @@ library domain;
 export 'src/theme/theme_helper.dart';
 export 'src/theme/onboarding_helper.dart';
 export 'src/use_cases/use_case.dart';
+export 'src/use_cases/map_service_use_case.dart';
 export 'src/constants.dart';
