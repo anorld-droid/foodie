@@ -67,28 +67,29 @@ class DeliveryController extends GetxController {
     var snap = await _shippingUseCase.getDocs(
         _authenticateUser.getUserId()!, model.id!);
     snap.listen((event) async {
-      time.value = event.data()!.timeEstimate ?? '';
       status.value = event.data()!.status;
       courier.value = event.data()!.courier;
-      print('ID --> ${courier.value!.uid}');
-
-      await courierLocation();
+      await courierLocation(event.data()!.status == 'Delivered');
     });
   }
 
-  Future<void> courierLocation() async {
+  Future<void> courierLocation(bool status) async {
     if (courier.value != null) {
       var courierSnap = await _deliveryUseCase.get(courier.value!.uid);
-      courierSnap.listen((event) {
+      courierSnap.listen((event) async {
         Delivery? delivery = event.data();
         if (delivery != null) {
           var latLong = LatLng(delivery.lat, delivery.long);
-          calculateDeliveryTime(
+          final dist = await calculateDeliveryTime(
             sourceLocation: destination,
             deliveryAddress: latLong,
+            histoData: delivery.historicalData,
+            preparationTime: delivery.preparationTime,
+            speed: delivery.speed,
           );
           getPolyPoints(delivery.lat, delivery.long);
           getCurrentLocation(delivery.lat, delivery.long);
+          updateHistoricalData(delivery: delivery, distance: dist);
         }
       });
     }
@@ -176,43 +177,55 @@ class DeliveryController extends GetxController {
 
 // This function calculates the estimated delivery time based on the distance
 // between the courier and the delivery address.
-  Future<void> calculateDeliveryTime({
+  Future<double> calculateDeliveryTime({
     required LatLng sourceLocation,
     required LatLng deliveryAddress,
+    required double speed,
+    required int preparationTime,
+    required Map<double, List<double>> histoData,
   }) async {
-    const preparationTime =
-        20; // Time in minutes it takes the restaurant to prepare the food
-    const deliveryPersonnelAvailability =
-        3; // Number of available delivery personnel
-    final historicalData =
-        <double>[]; // List of previous delivery times to the same location
+    // preparationTime -->  Time in minutes it takes the restaurant to prepare the food
+    // historicalData --> List of previous delivery times to the same location
     final currentDateTime = DateTime.now(); // Current date and time
     // Calculate the distance between the two locations using the Google Maps Distance Matrix API
+
     final distanceMatrix = await DistanceMatrix().distanceWithLocation(
       startLatitude: sourceLocation.latitude,
       startLongitude: sourceLocation.longitude,
       endLatitude: deliveryAddress.latitude,
       endLongitude: deliveryAddress.longitude,
     );
-    print(distanceMatrix);
-    final travelTime =
-        distanceMatrix.toInt() ~/ 60; // Calculate travel time in minutes
-    final deliveryTime =
-        currentDateTime.add(Duration(minutes: preparationTime + travelTime));
-    final estimatedDeliveryTime = deliveryTime.add(Duration(
-        minutes: historicalData.isEmpty
-            ? 0
-            : historicalData.reduce((a, b) => a + b) ~/
-                historicalData
-                    .length)); // Calculate average historical delivery time
-    const remainingDeliveryPersonnel = deliveryPersonnelAvailability -
-        1; // Subtract the delivery personnel currently assigned to the order
-    final adjustedDeliveryTime = estimatedDeliveryTime.add(const Duration(
-        minutes: remainingDeliveryPersonnel *
-            10)); // Add 10 minutes for each remaining delivery personnel
+    final List<double> historicalData = histoData[distanceMatrix] ?? [];
+    // Calculate travel time in minutes
+    final travelTime = distanceMatrix.toInt() / speed;
+    print(travelTime);
+    final deliveryTime = currentDateTime
+        .add(Duration(minutes: preparationTime + travelTime.toInt()));
+    final estimatedDeliveryTime = deliveryTime.add(
+      Duration(
+          minutes: historicalData.isEmpty
+              ? 0
+              : historicalData.reduce((a, b) => a + b) ~/
+                  historicalData.length),
+    ); // Calculate average historical delivery time
     final formatter = DateFormat('h:mm a');
-    final formattedDeliveryTime = formatter.format(adjustedDeliveryTime);
+    final formattedDeliveryTime = formatter.format(estimatedDeliveryTime);
     // Display the estimated delivery time
-    print('Estimated delivery time: ${formattedDeliveryTime.toString()}');
+    time.value = formattedDeliveryTime.toString();
+    return distanceMatrix;
+  }
+
+  Future<void> updateHistoricalData(
+      {required Delivery delivery, required double distance}) async {
+    final hist = delivery.historicalData;
+    final value = hist[distance] ?? [];
+    DateTime now = DateTime.now();
+    double duration = now.difference(model.timeStamp).inMilliseconds / 1000.0;
+    value.add((duration));
+    hist[distance] = value;
+    if (status.value == 'Delivered') {
+      _deliveryUseCase.updateHistoricalData(
+          courierId: courier.value!.uid, historicalData: hist);
+    }
   }
 }

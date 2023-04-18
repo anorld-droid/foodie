@@ -19,4 +19,5 @@ class Constants {
   static String restaurants = 'restaurants';
   //Delivery Strings
   static String deliveries = 'deliveries';
+  static String historicalData = 'historicalData';
 }

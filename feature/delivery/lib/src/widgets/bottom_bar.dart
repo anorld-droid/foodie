@@ -59,7 +59,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
       child: Column(
         children: [
           Text(
-            'Estimated delivery time is ${shippingModel.timeEstimate}',
+            'Estimated delivery time is $timeEstimate',
             style:
                 Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
           ),

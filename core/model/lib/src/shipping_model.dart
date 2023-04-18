@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:model/model.dart';
 import 'package:model/src/constants.dart';
-import 'package:model/src/courier.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 class ShippingModel {
@@ -11,7 +10,7 @@ class ShippingModel {
   final List<CartItem> items;
   final String status;
   final Courier? courier;
-  final String? timeEstimate;
+  final DateTime timeStamp;
 
   ShippingModel({
     required this.user,
@@ -19,7 +18,7 @@ class ShippingModel {
     required this.order,
     required this.status,
     this.courier,
-    this.timeEstimate,
+    required this.timeStamp,
     this.id,
   });
   Map<String, dynamic> toFirestore() => {
@@ -29,7 +28,7 @@ class ShippingModel {
         Constants.items: items.map((e) => e.toFirestore()).toList(),
         Constants.courier: courier?.toJson(),
         Constants.status: status,
-        Constants.timeEstimate: timeEstimate,
+        Constants.timeStamp: Timestamp.fromDate(timeStamp),
       };
 
   factory ShippingModel.fromFirestore(
@@ -40,7 +39,7 @@ class ShippingModel {
     List<dynamic> items = snapshot?[Constants.items] as List<dynamic>;
     var courier = snapshot?[Constants.courier];
     var user = snapshot?[Constants.user][Constants.shippingInfo];
-
+    Timestamp stamp = snapshot?[Constants.timeStamp] as Timestamp;
     return ShippingModel(
       id: snapshot?[Constants.id] as String?,
       user: ShippingInfo.fromJson(user as Map<String, dynamic>),
@@ -56,7 +55,7 @@ class ShippingModel {
               options,
             )
           : null,
-      timeEstimate: snapshot?[Constants.timeEstimate] as String?,
+      timeStamp: stamp.toDate(),
     );
   }
 }

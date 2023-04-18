@@ -9,4 +9,3 @@ export 'src/firebase/messaging.dart';
 export 'src/firebase/fcloud_functions.dart';
 export 'src/custom/search.dart';
 export 'src/custom/stk_push.dart';
-export 'src/custom/map_services.dart';

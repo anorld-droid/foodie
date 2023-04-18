@@ -35,7 +35,7 @@ class Constants {
   static String favoriteStore = 'favoriteStore';
   //Shipping Strings
   static String courier = 'courier';
-  static String timeEstimate = 'timeEstimate';
+  static String timeStamp = 'timeStamp';
   static String user = 'user';
   static String location = 'location';
   //Courier model strings
@@ -43,6 +43,9 @@ class Constants {
   static String long = 'long';
   //Delivery model strings
   static String courierUid = 'courierUid';
+  static String prepTime = 'prepTime';
+  static String speed = 'speed';
+  static String historicalData = 'historicalData';
 
   // Mpesa Payments
   static String merchantRequestID = 'MerchantRequestID';

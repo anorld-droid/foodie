@@ -75,18 +75,14 @@ class CuisineItem {
       photoUrl: snap?[Constants.photoUrl] as String,
       favorites: favorites.map((key, value) {
         value as List<dynamic>;
-        value
-            .map(
-              (e) => e as String,
-            )
-            .toList();
         return MapEntry(
-            key,
-            value
-                .map(
-                  (e) => e as String,
-                )
-                .toList());
+          key,
+          value
+              .map(
+                (e) => e as String,
+              )
+              .toList(),
+        );
       }),
     );
   }

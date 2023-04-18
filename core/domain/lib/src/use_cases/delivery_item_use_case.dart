@@ -16,4 +16,17 @@ class DeliveryUseCase {
         fromFirestore: Delivery.fromFirestore,
         toFirestore: (Delivery delivery, _) => delivery.toFirestore());
   }
+
+  /// Add the time taken for delivery
+  /// NOTE: docPath should be user id
+  Future<void> updateHistoricalData({
+    required String courierId,
+    required Map<double, List<double>> historicalData,
+  }) async {
+    await _cloudNetWorkDataSource.updateField<String>(
+      collection: Constants.deliveries,
+      doc: courierId,
+      data: {Constants.historicalData: historicalData},
+    );
+  }
 }

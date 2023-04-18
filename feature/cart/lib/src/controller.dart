@@ -204,7 +204,8 @@ class CartController extends GetxController {
                 user: _shippingInfo.value!,
                 items: items.value,
                 order: 'reqID',
-                status: 'Received');
+                status: 'Received',
+                timeStamp: DateTime.now());
             await _shippingUseCase.upload(
               userId: _authenticateUser.getUserId()!,
               shippingModel: shippingModel,
