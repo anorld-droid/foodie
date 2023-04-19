@@ -4,7 +4,7 @@ import 'package:model/src/constants.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 class Delivery {
   final double lat;
-  final double long;
+  final double lng;
   final Map<double, List<double>> historicalData;
   final int preparationTime;
   final double speed;
@@ -14,11 +14,10 @@ class Delivery {
       required this.preparationTime,
       required this.speed,
       required this.lat,
-      required this.long});
+      required this.lng});
 
   Map<String, dynamic> toFirestore() => {
-        Constants.lat: lat,
-        Constants.long: long,
+        Constants.location: GeoPoint(lat, lng),
         Constants.historicalData: historicalData,
         Constants.prepTime: preparationTime,
         Constants.speed: speed,
@@ -29,19 +28,19 @@ class Delivery {
     SnapshotOptions? options,
   ) {
     var snapshot = snap.data();
-    var histData = snapshot?[Constants.historicalData] as Map<double, dynamic>;
+    var histData = snapshot?[Constants.historicalData] as Map<String, dynamic>;
+    GeoPoint geoPoint = snapshot?[Constants.geoPosition] as GeoPoint;
     return Delivery(
-      lat: snapshot?[Constants.lat] as double,
-      long: snapshot?[Constants.long] as double,
+      lat: geoPoint.latitude,
+      lng: geoPoint.longitude,
       historicalData: histData.map((key, value) {
         value as List<dynamic>;
         return MapEntry(
-          key,
-          value
-              .map(
-                (e) => e as double,
-              )
-              .toList(),
+          double.parse(key),
+          value.map((e) {
+            e as String;
+            return double.parse(e);
+          }).toList(),
         );
       }),
       preparationTime: snapshot?[Constants.prepTime] as int,

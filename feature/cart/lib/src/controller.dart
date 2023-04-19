@@ -247,8 +247,8 @@ class CartController extends GetxController {
 
   void incrementQty(CartItem cartItem) {
     String msg = 'You\'ve reached the quantity purchase limit.';
-    var qty = ++cartItem.quantity.value;
-    if (qty < cartItem.limit) {
+    if (cartItem.quantity.value < cartItem.limit) {
+      var qty = ++cartItem.quantity.value;
       cartItem.sellingPrice.value = cartItem.basicPrice * qty;
       calculateTotal();
     } else {
@@ -275,10 +275,11 @@ class CartController extends GetxController {
       building,
     )) {
       ShippingInfo shippingInfo = ShippingInfo(
-        name: name,
-        phoneNumber: mobileNumber,
-        location: '$building.',
-      );
+          name: name,
+          phoneNumber: mobileNumber,
+          location: '$building.',
+          lat: -0.057822991209217858,
+          lng: 34.6032983890644);
       await _userModelUseCase.updateShippingInfo(
         userId: _authenticateUser.getUserId()!,
         shippingInfo: shippingInfo,
@@ -313,10 +314,10 @@ class CartController extends GetxController {
     );
   }
 
-  void navigateToDelivery(ShippingModel order) {
+  void navigateToDelivery() {
     Get.toNamed<void>(
       Routes.delivery,
-      arguments: orders.value.first,
+      arguments: orders.value,
     );
   }
 }

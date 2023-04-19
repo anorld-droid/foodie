@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:common/common.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ class CuisineController extends GetxController
   final Rx<int> cartItemsLength = 0.obs;
   final Rx<bool> editing = false.obs;
   Rx<int> selectedChip = 10.obs;
+  final RxBool showDeliveries = false.obs;
 
   late final AuthenticateUser _authenticateUser;
   late final CartItemsUseCase _cartItemsUseCase;
@@ -152,10 +154,10 @@ class CuisineController extends GetxController
     );
   }
 
-  void navigateToDelivery(ShippingModel order) {
+  void navigateToDelivery() {
     Get.toNamed<void>(
       Routes.delivery,
-      arguments: order,
+      arguments: orders.value,
     );
   }
 
@@ -177,10 +179,15 @@ class CuisineController extends GetxController
   void favorites() {}
   void quickOptions(String option) {
     switch (option) {
+      case 'Track delivery':
+        navigateToDelivery();
+        break;
       case 'Repeat last order':
         break;
       default:
-        navigateToDelivery(orders.value.last);
+        if (kDebugMode) {
+          print(option);
+        }
     }
   }
 }

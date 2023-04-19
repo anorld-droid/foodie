@@ -23,42 +23,43 @@ class DeliveryMap extends GetView<DeliveryController> {
                   ],
                 ),
               )
-            : Obx(
-                () => GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(controller.currentLocation.value!.latitude!,
-                        controller.currentLocation.value!.longitude!),
-                    zoom: 12.5,
-                  ),
-                  mapToolbarEnabled: false,
-                  markers: {
-                    Marker(
-                      markerId: const MarkerId('currentLocation'),
-                      icon: controller.currentLocationIcon.value,
-                      position: LatLng(
-                        controller.currentLocation.value!.latitude!,
-                        controller.currentLocation.value!.longitude!,
-                      ),
-                      infoWindow: const InfoWindow(title: 'Courier Location'),
-                    ),
-                    Marker(
-                        markerId: const MarkerId('destination'),
-                        icon: controller.destinationIcon.value,
-                        position: controller.destination,
-                        infoWindow: const InfoWindow(title: 'Destination')),
-                  },
-                  onMapCreated: (mapController) {
-                    controller.mapController.complete(mapController);
-                  },
-                  polylines: {
-                    Polyline(
-                        polylineId: const PolylineId('route'),
-                        points: controller.polylineCoordinates.value,
-                        width: 4,
-                        startCap: Cap.roundCap,
-                        endCap: Cap.roundCap),
-                  },
+            : GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(controller.currentLocation.value!.latitude!,
+                      controller.currentLocation.value!.longitude!),
+                  zoom: 12.5,
                 ),
+                mapToolbarEnabled: false,
+                markers: {
+                  Marker(
+                    markerId: const MarkerId('currentLocation'),
+                    icon: controller.currentLocationIcon.value,
+                    position: LatLng(
+                      controller.currentLocation.value!.latitude!,
+                      controller.currentLocation.value!.longitude!,
+                    ),
+                    infoWindow: const InfoWindow(title: 'Courier Location'),
+                  ),
+                  Marker(
+                      markerId: const MarkerId('destination'),
+                      icon: controller.destinationIcon.value,
+                      position: controller.destination,
+                      infoWindow: const InfoWindow(title: 'Destination')),
+                },
+                onMapCreated: (mapController) {
+                  controller.mapController.complete(mapController);
+                  controller.setMapBounds(
+                      controller.currentLocation.value!.latitude!,
+                      controller.currentLocation.value!.longitude!);
+                },
+                polylines: {
+                  Polyline(
+                      polylineId: const PolylineId('route'),
+                      points: controller.polylineCoordinates.value,
+                      width: 4,
+                      startCap: Cap.roundCap,
+                      endCap: Cap.roundCap),
+                },
               ),
       ),
     );

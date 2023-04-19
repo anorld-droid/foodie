@@ -63,8 +63,7 @@ class CartAppBar extends GetView<CartController>
       backgroundColor: Get.theme.colorScheme.primaryContainer,
       actions: [
         InkWell(
-          onTap: () =>
-              controller.navigateToDelivery(controller.orders.value.first),
+          onTap: controller.navigateToDelivery,
           borderRadius: BorderRadius.circular(30.0),
           child: Container(
             height: 40,

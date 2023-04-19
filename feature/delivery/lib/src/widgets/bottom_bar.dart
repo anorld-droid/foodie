@@ -23,19 +23,21 @@ class DeliveryDetails extends GetView<DeliveryController> {
         ),
       ),
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Obx(() => _deliveryTime(controller.time.value,
-                controller.statusTag(controller.status.value))),
-            Divider(
-              color: Colors.white70.withAlpha(130),
-            ),
-            Obx(() => _iconInfo(controller.status.value)),
-            Divider(
-              color: Colors.white70.withAlpha(130),
-            ),
-            Obx(
-              () => controller.courier.value != null
+        child: Obx(
+          () => Column(
+            children: [
+              _deliveryTime(
+                controller.time.value,
+                controller.statusTag(controller.status.value),
+              ),
+              Divider(
+                color: Colors.white70.withAlpha(130),
+              ),
+              _iconInfo(controller.status.value),
+              Divider(
+                color: Colors.white70.withAlpha(130),
+              ),
+              controller.courier.value != null
                   ? _courierInfo()
                   : Padding(
                       padding: EdgeInsets.only(top: Get.height * 0.04),
@@ -46,8 +48,8 @@ class DeliveryDetails extends GetView<DeliveryController> {
                             ?.copyWith(fontWeight: FontWeight.bold),
                       )),
                     ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

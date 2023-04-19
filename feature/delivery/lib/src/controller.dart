@@ -13,8 +13,9 @@ import 'package:intl/intl.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
 class DeliveryController extends GetxController {
-  final ShippingModel model;
-  DeliveryController({required this.model});
+  final List<ShippingModel> models;
+  final Rx<ShippingModel> model;
+  DeliveryController({required this.models}) : model = Rx(models.first);
 
   late final ShippingUseCase _shippingUseCase;
   late final AuthenticateUser _authenticateUser;
@@ -58,15 +59,17 @@ class DeliveryController extends GetxController {
 
     //Google maps variables initializing
     mapController = Completer();
-    destination = const LatLng(-0.057822991209217858, 34.6032983890644);
-
-    status = Rx(model.status);
+    status = Rx(model.value.status);
   }
 
   Future<void> loadData() async {
     var snap = await _shippingUseCase.getDocs(
-        _authenticateUser.getUserId()!, model.id!);
+        _authenticateUser.getUserId()!, model.value.id!);
     snap.listen((event) async {
+      destination = LatLng(
+        event.data()!.user.lat,
+        event.data()!.user.lng,
+      );
       status.value = event.data()!.status;
       courier.value = event.data()!.courier;
       await courierLocation(event.data()!.status == 'Delivered');
@@ -79,7 +82,7 @@ class DeliveryController extends GetxController {
       courierSnap.listen((event) async {
         Delivery? delivery = event.data();
         if (delivery != null) {
-          var latLong = LatLng(delivery.lat, delivery.long);
+          var latLong = LatLng(delivery.lat, delivery.lng);
           final dist = await calculateDeliveryTime(
             sourceLocation: destination,
             deliveryAddress: latLong,
@@ -87,8 +90,8 @@ class DeliveryController extends GetxController {
             preparationTime: delivery.preparationTime,
             speed: delivery.speed,
           );
-          getPolyPoints(delivery.lat, delivery.long);
-          getCurrentLocation(delivery.lat, delivery.long);
+          getPolyPoints(delivery.lat, delivery.lng);
+          getCurrentLocation(delivery.lat, delivery.lng);
           updateHistoricalData(delivery: delivery, distance: dist);
         }
       });
@@ -115,7 +118,7 @@ class DeliveryController extends GetxController {
   }
 
   /// Streams courier current location from firebase.
-  void getCurrentLocation(double lat, double long) async {
+  void getCurrentLocation(double lat, double lng) async {
     //Pseudo-code:
     // Get the stream from firestore
     // Listen to changes
@@ -124,20 +127,33 @@ class DeliveryController extends GetxController {
     // Get polypoints from the new location
     currentLocation.value = LocationData.fromMap({
       'latitude': lat,
-      'longitude': long,
+      'longitude': lng,
     });
-    GoogleMapController googleMapController = await mapController.future;
-    googleMapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          zoom: 12.5,
-          target: LatLng(
-            lat,
-            long,
-          ),
-        ),
-      ),
+    setMapBounds(lat, lng);
+  }
+
+  void setMapBounds(double lat, double lng) async {
+    LatLng startPoint = LatLng(lat, lng);
+    LatLng endPoint = destination;
+    double southLat = startPoint.latitude < endPoint.latitude
+        ? startPoint.latitude
+        : endPoint.latitude;
+    double westLng = startPoint.longitude < endPoint.longitude
+        ? startPoint.longitude
+        : endPoint.longitude;
+    double northLat = startPoint.latitude > endPoint.latitude
+        ? startPoint.latitude
+        : endPoint.latitude;
+    double eastLng = startPoint.longitude > endPoint.longitude
+        ? startPoint.longitude
+        : endPoint.longitude;
+    LatLngBounds bounds = LatLngBounds(
+      southwest: LatLng(southLat, westLng),
+      northeast: LatLng(northLat, eastLng),
     );
+    GoogleMapController googleMapController = await mapController.future;
+    googleMapController
+        .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50.0));
   }
 
   void setCustomMarkerIcon() async {
@@ -154,13 +170,13 @@ class DeliveryController extends GetxController {
   String statusTag(String status) {
     switch (status) {
       case 'Received':
-        return 'Order ${model.id!.substring(0, 4)}... has been received';
+        return 'Order ${model.value.id!.substring(0, 4)}... has been received';
       case 'Ready':
         return 'Your order has been processed and is ready for shipping';
       case 'Shipping':
         return 'Your order is already on its way to you';
       default:
-        return 'Order  ${model.id!.substring(0, 4)}... delivered';
+        return 'Order  ${model.value.id!.substring(0, 4)}... delivered';
     }
   }
 
@@ -220,7 +236,8 @@ class DeliveryController extends GetxController {
     final hist = delivery.historicalData;
     final value = hist[distance] ?? [];
     DateTime now = DateTime.now();
-    double duration = now.difference(model.timeStamp).inMilliseconds / 1000.0;
+    double duration =
+        now.difference(model.value.timeStamp).inMilliseconds / 1000.0;
     value.add((duration));
     hist[distance] = value;
     if (status.value == 'Delivered') {

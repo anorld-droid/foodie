@@ -70,7 +70,7 @@ class TriceApp extends GetView<TriceAppController> {
         GetPage(
             name: Routes.delivery,
             page: () => DeliveryView(
-                  shippingModel: Get.arguments as ShippingModel,
+                  models: Get.arguments as List<ShippingModel>,
                 ))
       ],
     );

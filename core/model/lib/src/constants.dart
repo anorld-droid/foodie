@@ -38,9 +38,10 @@ class Constants {
   static String timeStamp = 'timeStamp';
   static String user = 'user';
   static String location = 'location';
+  static String geoPosition = 'geoPosition';
   //Courier model strings
   static String lat = 'lat';
-  static String long = 'long';
+  static String lng = 'lng';
   //Delivery model strings
   static String courierUid = 'courierUid';
   static String prepTime = 'prepTime';

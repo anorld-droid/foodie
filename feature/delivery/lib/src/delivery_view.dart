@@ -7,17 +7,19 @@ import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
 class DeliveryView extends GetView<DeliveryController> {
-  final ShippingModel shippingModel;
-  const DeliveryView({super.key, required this.shippingModel});
+  final List<ShippingModel> models;
+  const DeliveryView({super.key, required this.models});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(DeliveryController(model: shippingModel));
+    Get.put(DeliveryController(models: models));
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.onBackground.withAlpha(230),
       body: const Body(),
-      bottomNavigationBar: DeliveryDetails(
-        shippingModel: shippingModel,
+      bottomNavigationBar: Obx(
+        () => DeliveryDetails(
+          shippingModel: controller.model.value,
+        ),
       ),
     );
   }

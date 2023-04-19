@@ -3,6 +3,7 @@ import 'package:agrich/src/strings.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
 class CuisineTopBar extends GetView<CuisineController> {
@@ -120,18 +121,17 @@ class CuisineTopBar extends GetView<CuisineController> {
                             borderRadius: BorderRadius.circular(30.0)),
                         child: PopupMenuButton<String>(
                           onSelected: controller.quickOptions,
-                          padding: const EdgeInsets.all(0.0),
                           position: PopupMenuPosition.under,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
                           color: Get.theme.colorScheme.background,
-                          itemBuilder: (BuildContext context) {
-                            return Strings.quickItems.map((String choice) {
-                              return PopupMenuItem<String>(
+                          itemBuilder: (_) {
+                            return Strings.quickItems.map((choice) {
+                              return PopupMenuItem(
                                 value: choice,
                                 child: Text(
                                   choice,
-                                  style: Get.textTheme.bodySmall,
+                                  style: Get.textTheme.bodyLarge,
                                 ),
                               );
                             }).toList();
