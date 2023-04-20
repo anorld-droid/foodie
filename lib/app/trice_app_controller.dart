@@ -7,7 +7,9 @@ import 'package:overlay_support/overlay_support.dart';
 class TriceAppController extends GetxController {
   Rx<ThemeMode> themeMode = ThemeMode.system.obs;
   late final SendMessageUseCase _messageUseCase;
+  late final AuthenticateUser _authenticateUser;
   late final Rx<String> store;
+  late ThemeHelper themeHelper;
 
   @override
   void onInit() async {
@@ -17,22 +19,31 @@ class TriceAppController extends GetxController {
 
   @override
   void onReady() {
+    _authenticateUser = AuthenticateUser();
+    themeHelper = Get.find();
+    initTheme();
+    if (_authenticateUser.isUserSignedIn()) {
+      _messageUseCase.pushNotification(({body, dataBody, dataTitle, title}) {
+        if (title != null &&
+            body != null &&
+            dataTitle != null &&
+            dataBody != null) {
+          showSimpleNotification(
+            Text(
+              title,
+              style: Get.textTheme.bodyLarge,
+            ),
+            subtitle: Text(body, style: Get.textTheme.bodySmall),
+            background: Get.theme.colorScheme.background,
+            duration: const Duration(seconds: 2),
+          );
+        }
+      });
+    }
     super.onReady();
-    _messageUseCase.pushNotification(({body, dataBody, dataTitle, title}) {
-      if (title != null &&
-          body != null &&
-          dataTitle != null &&
-          dataBody != null) {
-        showSimpleNotification(
-          Text(
-            title,
-            style: Get.textTheme.bodyLarge,
-          ),
-          subtitle: Text(body, style: Get.textTheme.bodySmall),
-          background: Get.theme.colorScheme.background,
-          duration: const Duration(seconds: 2),
-        );
-      }
-    });
+  }
+
+  void initTheme() async {
+    themeMode.value = await themeHelper.getThemeData();
   }
 }

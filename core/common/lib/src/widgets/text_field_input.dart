@@ -133,7 +133,7 @@ class CustomTextField extends StatelessWidget {
           style:
               textStyle ?? Get.textTheme.bodyLarge?.copyWith(color: textColor),
           keyboardType: textInputType,
-          cursorColor: Get.theme.colorScheme.background,
+          cursorColor: Get.theme.colorScheme.onBackground,
           onChanged: onChanged,
           onSubmitted: onSubmitted,
           scrollPadding: const EdgeInsets.all(40),
@@ -152,7 +152,7 @@ class CustomTextField extends StatelessWidget {
               onTap: onIconTap,
               child: Icon(
                 icon,
-                color: Get.theme.colorScheme.background,
+                color: Get.theme.colorScheme.onBackground,
               ),
             ),
           ),

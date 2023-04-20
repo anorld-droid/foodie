@@ -38,8 +38,9 @@ class TriceApp extends GetView<TriceAppController> {
       },
       initialBinding: TriceBinding(),
       debugShowCheckedModeBanner: false,
+      theme: Themes.light,
       darkTheme: Themes.dark,
-      themeMode: ThemeMode.dark,
+      themeMode: controller.themeMode.value,
       initialRoute: Routes.cuisine,
       getPages: [
         GetPage(

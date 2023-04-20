@@ -27,6 +27,7 @@ class CartItemsUseCase {
     Get.bottomSheet<Widget>(
       authDialog,
       isScrollControlled: true,
+      elevation: 8.0,
       barrierColor: Get.theme.colorScheme.primaryContainer,
       backgroundColor: Get.theme.colorScheme.background,
       shape: RoundedRectangleBorder(

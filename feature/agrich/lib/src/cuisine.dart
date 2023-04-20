@@ -24,8 +24,8 @@ class Cuisine extends GetView<CuisineController> {
               end: Alignment.topCenter,
               colors: [
                 Get.theme.colorScheme.background,
-                const Color.fromARGB(181, 5, 52, 49),
-                const Color.fromARGB(71, 5, 52, 49),
+                Get.theme.colorScheme.background,
+                Get.theme.colorScheme.background,
               ],
               stops: const [
                 0.5,
@@ -41,7 +41,7 @@ class Cuisine extends GetView<CuisineController> {
                 padding: const EdgeInsets.all(8.0),
                 child: TabBar(
                   labelColor: Get.theme.colorScheme.onBackground,
-                  indicatorColor: Get.theme.colorScheme.onBackground,
+                  indicatorColor: Get.theme.colorScheme.primary,
                   unselectedLabelColor: Get.theme.colorScheme.onBackground,
                   indicatorSize: TabBarIndicatorSize.label,
                   indicatorPadding:

@@ -61,7 +61,7 @@ class CuisineTopBar extends GetView<CuisineController> {
                                 children: [
                                   Icon(
                                     Icons.shopping_cart_outlined,
-                                    color: Get.theme.colorScheme.onBackground,
+                                    color: Get.theme.colorScheme.onPrimary,
                                     size: 20,
                                   ),
                                   const SizedBox(
@@ -72,6 +72,7 @@ class CuisineTopBar extends GetView<CuisineController> {
                                       '${controller.cartItemsLength.value}',
                                       style: Get.textTheme.bodySmall?.copyWith(
                                         fontWeight: FontWeight.w300,
+                                        color: Get.theme.colorScheme.onPrimary,
                                       ),
                                     ),
                                   ),
@@ -104,23 +105,23 @@ class CuisineTopBar extends GetView<CuisineController> {
                           height: 80,
                           textStyle: Get.textTheme.bodySmall?.copyWith(
                             fontWeight: FontWeight.w800,
-                            color: Get.theme.colorScheme.background,
+                            color: Get.theme.colorScheme.onBackground,
                           ),
                           focusNode: controller.focusNode,
                           textEditingController: controller.searchController,
                           textInputType: TextInputType.text,
                           hintText: Strings.searchHintText,
                           borderRadius: 12,
-                          textColor: Get.theme.colorScheme.background,
+                          textColor: Get.theme.colorScheme.onBackground,
                           maxLength: 16,
-                          backgroundColor: Get.theme.colorScheme.onBackground,
+                          backgroundColor: Get.theme.colorScheme.surface,
                         ),
                       ),
                       Container(
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                            color: Get.theme.colorScheme.onBackground,
+                            color: Get.theme.colorScheme.surface,
                             borderRadius: BorderRadius.circular(30.0)),
                         child: PopupMenuButton<String>(
                           onSelected: controller.quickOptions,
@@ -164,7 +165,7 @@ class CuisineTopBar extends GetView<CuisineController> {
                           },
                           child: Icon(
                             Icons.unfold_more_double_outlined,
-                            color: Get.theme.colorScheme.background,
+                            color: Get.theme.colorScheme.onBackground,
                           ),
                         ),
                       ),

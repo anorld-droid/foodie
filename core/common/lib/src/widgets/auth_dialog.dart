@@ -48,12 +48,11 @@ class AuthDialog extends GetView<CommonController> {
                   ),
                   shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
                   child: TabBar(
-                    labelColor: Get.theme.colorScheme.background,
-                    indicatorColor: Get.theme.colorScheme.background,
-                    unselectedLabelColor: Get.theme.primaryColorDark,
+                    indicatorColor: Get.theme.colorScheme.surface,
+                    unselectedLabelColor: Get.theme.colorScheme.onPrimary,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      color: Get.theme.primaryColorDark,
+                      color: Get.theme.colorScheme.onPrimary,
                     ),
                     controller: controller.tabController,
                     tabs: const [
@@ -78,6 +77,7 @@ class AuthDialog extends GetView<CommonController> {
     return SizedBox(
       height: Get.height * 0.25,
       child: Card(
+        elevation: 0,
         color: Get.theme.colorScheme.background,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
@@ -110,11 +110,11 @@ class AuthDialog extends GetView<CommonController> {
                     top: 24.0, bottom: 16.0, left: 14.0, right: 14.0),
                 child: TextFieldInput(
                   borderRadius: 8,
-                  backgroundColor: Get.theme.colorScheme.onBackground,
+                  backgroundColor: Get.theme.colorScheme.surface,
                   hintText: CommonStrings.email,
                   textInputType: TextInputType.emailAddress,
                   textEditingController: controller.emailController,
-                  textColor: Get.theme.colorScheme.background,
+                  textColor: Get.theme.colorScheme.onBackground,
                 ),
               ),
               Padding(
@@ -122,12 +122,12 @@ class AuthDialog extends GetView<CommonController> {
                     const EdgeInsets.only(top: 24.0, left: 14.0, right: 14.0),
                 child: TextFieldInput(
                   borderRadius: 8,
-                  backgroundColor: Get.theme.colorScheme.onBackground,
+                  backgroundColor: Get.theme.colorScheme.surface,
                   hintText: CommonStrings.password,
                   isPass: true,
                   textInputType: TextInputType.visiblePassword,
                   textEditingController: controller.passwordController,
-                  textColor: Get.theme.colorScheme.background,
+                  textColor: Get.theme.colorScheme.onBackground,
                 ),
               ),
               if (!isLogIn)
@@ -170,9 +170,9 @@ class AuthDialog extends GetView<CommonController> {
                         color: Get.theme.colorScheme.primaryContainer,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Get.theme.primaryColorDark,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(30))),
+                              color: Get.theme.colorScheme.primary,
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(12.0))),
                           child: Center(
                             child: Text(
                               isLogIn
@@ -193,21 +193,23 @@ class AuthDialog extends GetView<CommonController> {
               Widget widget;
               controller.searching.value
                   ? widget = Center(
-                      child: Card(
-                        margin: const EdgeInsets.all(16.0),
+                      child: Material(
+                        color: Get.theme.colorScheme.primaryContainer,
+                        surfaceTintColor:
+                            Get.theme.colorScheme.primaryContainer,
                         child: Container(
+                          color: Get.theme.colorScheme.primaryContainer,
                           padding: const EdgeInsets.all(4.0),
                           child: RotationTransition(
                             turns: Tween(begin: 0.0, end: 1.0)
                                 .animate(controller.animationController),
                             child: GradientCircularProgressIndicator(
-                              radius: 16,
-                              gradientColors:
-                                  ThemeService(isDarkMode: Get.isDarkMode)
-                                      .strokeColors
-                                      .reversed
-                                      .toList(),
-                              strokeWidth: 3.0,
+                              radius: 20,
+                              gradientColors: [
+                                Get.theme.colorScheme.primary.withAlpha(170),
+                                Get.theme.colorScheme.primary,
+                              ],
+                              strokeWidth: 5.0,
                             ),
                           ),
                         ),
