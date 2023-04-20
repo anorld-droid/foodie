@@ -19,20 +19,20 @@ class CartItemsUseCase {
       return 'Added to cart';
     } else {
       showAuthDialog(Get.context!, authDialog);
-      return 'Try again';
+      return 'Sign in to continue.';
     }
   }
 
   Future<void> showAuthDialog(BuildContext context, Widget authDialog) async {
-    showDialog<Widget>(
-        context: context,
-        barrierDismissible: false,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: Get.theme.colorScheme.primaryContainer,
-        builder: (BuildContext buildContext) {
-          return authDialog;
-        });
+    Get.bottomSheet<Widget>(
+      authDialog,
+      isScrollControlled: true,
+      barrierColor: Get.theme.colorScheme.primaryContainer,
+      backgroundColor: Get.theme.colorScheme.background,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    );
   }
 
   /// Append the file to the specified path

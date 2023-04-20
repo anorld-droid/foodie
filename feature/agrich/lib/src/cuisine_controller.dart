@@ -137,7 +137,9 @@ class CuisineController extends GetxController
   }
 
   Future<void> search(String value) async {
-    searchItems.value = await _cuisineModelUseCase.search(value);
+    if (value.isNotEmpty) {
+      searchItems.value = await _cuisineModelUseCase.search(value);
+    }
   }
 
   void navigateToDetails(CuisineItem cuisineItem, String header) {

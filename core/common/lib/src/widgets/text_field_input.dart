@@ -86,6 +86,7 @@ class TextFieldInput extends StatelessWidget {
 class CustomTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final Color backgroundColor;
+  final Color textColor;
   final bool isPass;
   final TextStyle? textStyle;
   final TextInputType textInputType;
@@ -116,6 +117,7 @@ class CustomTextField extends StatelessWidget {
       this.onSubmitted,
       this.focusNode,
       required this.backgroundColor,
+      required this.textColor,
       this.borderRadius = 0,
       this.height,
       this.maxLength})
@@ -128,7 +130,8 @@ class CustomTextField extends StatelessWidget {
       child: Center(
         child: TextField(
           focusNode: focusNode,
-          style: textStyle ?? Get.textTheme.bodyLarge,
+          style:
+              textStyle ?? Get.textTheme.bodyLarge?.copyWith(color: textColor),
           keyboardType: textInputType,
           cursorColor: Get.theme.colorScheme.background,
           onChanged: onChanged,
@@ -137,7 +140,6 @@ class CustomTextField extends StatelessWidget {
           controller: textEditingController,
           decoration: InputDecoration(
             labelText: labelText,
-            labelStyle: Get.textTheme.displayMedium,
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 borderSide: BorderSide.none),
@@ -145,8 +147,7 @@ class CustomTextField extends StatelessWidget {
             focusColor: backgroundColor,
             filled: true,
             hintText: hintText,
-            hintStyle: Get.textTheme.bodySmall
-                ?.copyWith(color: Get.theme.colorScheme.background),
+            hintStyle: Get.textTheme.bodySmall?.copyWith(color: textColor),
             prefixIcon: InkWell(
               onTap: onIconTap,
               child: Icon(

@@ -11,110 +11,129 @@ class AuthDialog extends GetView<CommonController> {
   @override
   Widget build(BuildContext context) {
     Get.find<CommonController>();
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: Get.height * 0.06),
-          child: SizedBox(
-            width: Get.width * 0.9,
-            child: Card(
-              color: Get.theme.backgroundColor,
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
-              child: TabBar(
-                labelColor: Get.theme.backgroundColor,
-                indicatorColor: Get.theme.backgroundColor,
-                unselectedLabelColor: Get.theme.primaryColorDark,
-                indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Get.theme.primaryColorDark,
+    return SizedBox(
+      height: Get.height * 0.75,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: Get.height * 0.1),
+              child: SizedBox(
+                height: Get.height * 0.48,
+                width: Get.width * 0.8,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Get.theme.colorScheme.background,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: TabBarView(
+                    controller: controller.tabController,
+                    children: [
+                      _tabViewLayout(true),
+                      _tabViewLayout(false),
+                    ],
+                  ),
                 ),
-                controller: controller.tabController,
-                tabs: const [
-                  Tab(
-                    text: 'Log in',
-                  ),
-                  Tab(
-                    text: 'Create Account',
-                  ),
-                ],
               ),
             ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: Get.height * 0.1),
-          child: SizedBox(
-            height: Get.height * 0.48,
-            width: Get.width * 0.8,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Get.theme.backgroundColor,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Get.theme.primaryColorDark.withOpacity(.35),
-                    spreadRadius: 1.0,
-                    blurRadius: 3.0,
-                    blurStyle: BlurStyle.inner,
-                  )
-                ],
-              ),
-              child: TabBarView(
-                controller: controller.tabController,
-                children: [
-                  _tabViewLayout(true),
-                  _tabViewLayout(false),
-                ],
+            Padding(
+              padding: EdgeInsets.only(top: Get.height * 0.06),
+              child: SizedBox(
+                width: Get.width * 0.8,
+                child: Card(
+                  color: Get.theme.colorScheme.secondary,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
+                  child: TabBar(
+                    labelColor: Get.theme.colorScheme.background,
+                    indicatorColor: Get.theme.colorScheme.background,
+                    unselectedLabelColor: Get.theme.primaryColorDark,
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Get.theme.primaryColorDark,
+                    ),
+                    controller: controller.tabController,
+                    tabs: const [
+                      Tab(
+                        text: 'Log in',
+                      ),
+                      Tab(
+                        text: 'Create Account',
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
   Widget _tabViewLayout(bool isLogIn) {
     return SizedBox(
       height: Get.height * 0.25,
-      width: Get.width - 24,
       child: Card(
-        color: Get.theme.backgroundColor,
-        elevation: 0,
+        color: Get.theme.colorScheme.background,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              TextFieldInput(
-                borderRadius: 8,
-                backgroundColor: Get.theme.backgroundColor,
-                hintText: CommonStrings.email,
-                icon: Icons.email_outlined,
-                textInputType: TextInputType.emailAddress,
-                textEditingController: controller.emailController,
-                textStyle: Get.textTheme.bodyLarge,
-                textColor: Get.theme.colorScheme.onBackground,
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                isLogIn ? CommonStrings.loginSal : CommonStrings.logoutSal,
+                style: Get.textTheme.headlineLarge,
+                textAlign: TextAlign.start,
               ),
-              TextFieldInput(
-                borderRadius: 8,
-                backgroundColor: Get.theme.backgroundColor,
-                hintText: CommonStrings.password,
-                icon: Icons.password_outlined,
-                isPass: true,
-                textInputType: TextInputType.visiblePassword,
-                textEditingController: controller.passwordController,
-                textStyle: Get.textTheme.bodyLarge,
-                textColor: Get.theme.colorScheme.onBackground,
+              if (isLogIn)
+                Text(
+                  CommonStrings.welcome,
+                  style: Get.textTheme.headlineSmall
+                      ?.copyWith(fontWeight: FontWeight.w100),
+                  textAlign: TextAlign.start,
+                ),
+              if (isLogIn)
+                Text(
+                  CommonStrings.greetings,
+                  style: Get.textTheme.headlineSmall
+                      ?.copyWith(fontWeight: FontWeight.w100),
+                  textAlign: TextAlign.start,
+                ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 24.0, bottom: 16.0, left: 14.0, right: 14.0),
+                child: TextFieldInput(
+                  borderRadius: 8,
+                  backgroundColor: Get.theme.colorScheme.onBackground,
+                  hintText: CommonStrings.email,
+                  textInputType: TextInputType.emailAddress,
+                  textEditingController: controller.emailController,
+                  textColor: Get.theme.colorScheme.background,
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 24.0, left: 14.0, right: 14.0),
+                child: TextFieldInput(
+                  borderRadius: 8,
+                  backgroundColor: Get.theme.colorScheme.onBackground,
+                  hintText: CommonStrings.password,
+                  isPass: true,
+                  textInputType: TextInputType.visiblePassword,
+                  textEditingController: controller.passwordController,
+                  textColor: Get.theme.colorScheme.background,
+                ),
               ),
               if (!isLogIn)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding:
+                      const EdgeInsets.only(top: 32, left: 16.0, right: 16.0),
                   child: RichText(
                     text: TextSpan(children: [
                       TextSpan(
@@ -139,26 +158,35 @@ class AuthDialog extends GetView<CommonController> {
                     ]),
                   ),
                 ),
-              InkWell(
-                onTap: isLogIn ? controller.sigIn : controller.createAccount,
-                child: Container(
-                    height: Get.height / 22,
-                    width: Get.width / 4,
-                    color: Colors.transparent,
+              Padding(
+                padding: const EdgeInsets.only(top: 48.0),
+                child: Center(
+                  child: InkWell(
+                    onTap:
+                        isLogIn ? controller.sigIn : controller.createAccount,
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: Get.theme.primaryColorDark,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(30))),
-                      child: Center(
-                        child: Text(
-                          isLogIn ? CommonStrings.logIn : CommonStrings.signup,
-                          textAlign: TextAlign.center,
-                          style: Get.textTheme.bodySmall?.copyWith(
-                              color: Get.theme.backgroundColor, height: 0),
-                        ),
-                      ),
-                    )),
+                        height: 40,
+                        width: 120,
+                        color: Get.theme.colorScheme.primaryContainer,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Get.theme.primaryColorDark,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(30))),
+                          child: Center(
+                            child: Text(
+                              isLogIn
+                                  ? CommonStrings.logIn
+                                  : CommonStrings.signup,
+                              textAlign: TextAlign.center,
+                              style: Get.textTheme.bodySmall?.copyWith(
+                                color: Get.theme.colorScheme.background,
+                              ),
+                            ),
+                          ),
+                        )),
+                  ),
+                ),
               )
             ]),
             Obx(() {

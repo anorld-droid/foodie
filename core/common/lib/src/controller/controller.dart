@@ -43,8 +43,10 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
 
     tabController = TabController(length: 2, vsync: this);
 
-    User? user = await _userModelUseCase.get(_authenticateUser.getUserId()!);
-    store.value = user!.favoriteStore;
+    if (_authenticateUser.isUserSignedIn()) {
+      User? user = await _userModelUseCase.get(_authenticateUser.getUserId()!);
+      store.value = user!.favoriteStore;
+    }
   }
 
   Future<void> sigIn() async {

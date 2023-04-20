@@ -93,4 +93,37 @@ class CuisineItem {
       limit: snap?[Constants.limit] as int,
     );
   }
+  factory CuisineItem.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    var favorites = json[Constants.favorites] as Map<String, dynamic>;
+    var stockTag = json[Constants.stockTag] as Map<String, dynamic>;
+    var basicPrice = json[Constants.basicPrice] as Map<String, dynamic>;
+    var sellingPrice = json[Constants.sellingPrice] as Map<String, dynamic>;
+    return CuisineItem(
+      json[Constants.id] as String,
+      name: json[Constants.name] as String,
+      store: json[Constants.store] as String,
+      stockTag: stockTag.map((key, value) => MapEntry(key, value as int)),
+      basicPrice:
+          basicPrice.map((key, value) => MapEntry(key, value as double)),
+      sellingPrice:
+          Rx(sellingPrice.map((key, value) => MapEntry(key, value as double))),
+      quantity: Rx(json[Constants.quantity] as int),
+      detail: json[Constants.detail] as String,
+      photoUrl: json[Constants.photoUrl] as String,
+      favorites: favorites.map((key, value) {
+        value as List<dynamic>;
+        return MapEntry(
+          key,
+          value
+              .map(
+                (e) => e as String,
+              )
+              .toList(),
+        );
+      }),
+      limit: json[Constants.limit] as int,
+    );
+  }
 }

@@ -102,13 +102,16 @@ class CuisineTopBar extends GetView<CuisineController> {
                           },
                           icon: Icons.search,
                           height: 80,
-                          textStyle: Get.textTheme.bodySmall
-                              ?.copyWith(fontWeight: FontWeight.w800),
+                          textStyle: Get.textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: Get.theme.colorScheme.background,
+                          ),
                           focusNode: controller.focusNode,
                           textEditingController: controller.searchController,
                           textInputType: TextInputType.text,
                           hintText: Strings.searchHintText,
                           borderRadius: 12,
+                          textColor: Get.theme.colorScheme.background,
                           maxLength: 16,
                           backgroundColor: Get.theme.colorScheme.onBackground,
                         ),

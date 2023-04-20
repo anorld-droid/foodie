@@ -216,13 +216,13 @@ class Themes {
           letterSpacing: 0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      headlineMedium: GoogleFonts.montserratAlternates(
+      headlineMedium: GoogleFonts.roboto(
           fontSize: 28,
           color: Colors.white,
           letterSpacing: 0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w500),
-      headlineSmall: GoogleFonts.montserratAlternates(
+      headlineSmall: GoogleFonts.montserrat(
           fontSize: 24,
           color: Colors.white,
           letterSpacing: 0,
