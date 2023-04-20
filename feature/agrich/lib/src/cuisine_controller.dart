@@ -155,7 +155,7 @@ class CuisineController extends GetxController
   }
 
   void navigateToDelivery(ShippingModel order) {
-    Get.toNamed<void>(
+    Get.offAndToNamed<void>(
       Routes.delivery,
       arguments: order,
     );

@@ -247,4 +247,14 @@ class DeliveryController extends GetxController {
           courierId: courier.value!.uid, historicalData: hist);
     }
   }
+
+  void back() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      // Status bar color
+      statusBarColor: Get.theme.colorScheme.primaryContainer,
+      // Status bar brightness (optional)
+      statusBarIconBrightness: Get.theme.brightness, // For Android (dark icons)
+    ));
+    Get.back<void>();
+  }
 }

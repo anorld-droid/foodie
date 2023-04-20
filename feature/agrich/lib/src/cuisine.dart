@@ -13,7 +13,7 @@ class Cuisine extends GetView<CuisineController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => CuisineController(), fenix: true);
+    Get.put(CuisineController());
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(

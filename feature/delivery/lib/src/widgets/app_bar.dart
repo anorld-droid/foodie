@@ -17,7 +17,7 @@ class TopBar extends GetView<DeliveryController>
           margin: const EdgeInsets.only(top: 40),
           color: Get.theme.colorScheme.primaryContainer,
           child: InkWell(
-            onTap: Get.back<void>,
+            onTap: controller.back,
             borderRadius: BorderRadius.circular(12.0),
             child: Container(
               margin: const EdgeInsets.all(8),
