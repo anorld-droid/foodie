@@ -314,10 +314,10 @@ class CartController extends GetxController {
     );
   }
 
-  void navigateToDelivery() {
+  void navigateToDelivery(ShippingModel order) {
     Get.toNamed<void>(
       Routes.delivery,
-      arguments: orders.value,
+      arguments: order,
     );
   }
 }

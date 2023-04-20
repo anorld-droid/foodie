@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:common/common.dart';
+import 'package:delivery/delivery.dart';
 import 'package:delivery/src/strings.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,8 @@ import 'package:intl/intl.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
 class DeliveryController extends GetxController {
-  final List<ShippingModel> models;
-  final Rx<ShippingModel> model;
-  DeliveryController({required this.models}) : model = Rx(models.first);
+  final ShippingModel model;
+  DeliveryController({required this.model});
 
   late final ShippingUseCase _shippingUseCase;
   late final AuthenticateUser _authenticateUser;
@@ -59,12 +60,12 @@ class DeliveryController extends GetxController {
 
     //Google maps variables initializing
     mapController = Completer();
-    status = Rx(model.value.status);
+    status = Rx(model.status);
   }
 
   Future<void> loadData() async {
     var snap = await _shippingUseCase.getDocs(
-        _authenticateUser.getUserId()!, model.value.id!);
+        _authenticateUser.getUserId()!, model.id!);
     snap.listen((event) async {
       destination = LatLng(
         event.data()!.user.lat,
@@ -167,16 +168,16 @@ class DeliveryController extends GetxController {
     );
   }
 
-  String statusTag(String status) {
+  String statusTag(String status, String id) {
     switch (status) {
       case 'Received':
-        return 'Order ${model.value.id!.substring(0, 4)}... has been received';
+        return 'Order ${id.substring(0, 4)}... has been received';
       case 'Ready':
         return 'Your order has been processed and is ready for shipping';
       case 'Shipping':
         return 'Your order is already on its way to you';
       default:
-        return 'Order  ${model.value.id!.substring(0, 4)}... delivered';
+        return 'Order  ${id.substring(0, 4)}... delivered';
     }
   }
 
@@ -231,13 +232,14 @@ class DeliveryController extends GetxController {
     return distanceMatrix;
   }
 
-  Future<void> updateHistoricalData(
-      {required Delivery delivery, required double distance}) async {
+  Future<void> updateHistoricalData({
+    required Delivery delivery,
+    required double distance,
+  }) async {
     final hist = delivery.historicalData;
     final value = hist[distance] ?? [];
     DateTime now = DateTime.now();
-    double duration =
-        now.difference(model.value.timeStamp).inMilliseconds / 1000.0;
+    double duration = now.difference(model.timeStamp).inMilliseconds / 1000.0;
     value.add((duration));
     hist[distance] = value;
     if (status.value == 'Delivered') {

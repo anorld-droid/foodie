@@ -2,6 +2,7 @@ import 'package:cart/src/controller.dart';
 import 'package:cart/src/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 23.01.2023.
 class CartAppBar extends GetView<CartController>
@@ -63,29 +64,47 @@ class CartAppBar extends GetView<CartController>
       backgroundColor: Get.theme.colorScheme.primaryContainer,
       actions: [
         InkWell(
-          onTap: controller.navigateToDelivery,
+          onTap: () =>
+              controller.navigateToDelivery(controller.orders.value.first),
           borderRadius: BorderRadius.circular(30.0),
           child: Container(
-            height: 40,
-            width: 40,
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0),
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  Get.theme.colorScheme.background,
-                  const Color.fromARGB(181, 5, 52, 49),
-                  const Color.fromARGB(71, 5, 52, 49),
-                ],
+              height: 40,
+              width: 40,
+              margin: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30.0),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Get.theme.colorScheme.background,
+                    const Color.fromARGB(181, 5, 52, 49),
+                    const Color.fromARGB(71, 5, 52, 49),
+                  ],
+                ),
               ),
-            ),
-            child: Icon(
-              Icons.mode_of_travel_outlined,
-              color: Get.theme.colorScheme.onBackground,
-            ),
-          ),
+              child: PopupMenuButton<ShippingModel>(
+                onSelected: controller.navigateToDelivery,
+                position: PopupMenuPosition.under,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0)),
+                color: Get.theme.colorScheme.background,
+                itemBuilder: (_) {
+                  return controller.orders.value.map((choice) {
+                    return PopupMenuItem(
+                      value: choice,
+                      child: Text(
+                        choice.id!,
+                        style: Get.textTheme.bodyLarge,
+                      ),
+                    );
+                  }).toList();
+                },
+                child: Icon(
+                  Icons.mode_of_travel_outlined,
+                  color: Get.theme.colorScheme.onBackground,
+                ),
+              )),
         ),
       ],
     );

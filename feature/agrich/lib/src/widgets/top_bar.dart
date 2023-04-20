@@ -129,10 +129,33 @@ class CuisineTopBar extends GetView<CuisineController> {
                             return Strings.quickItems.map((choice) {
                               return PopupMenuItem(
                                 value: choice,
-                                child: Text(
-                                  choice,
-                                  style: Get.textTheme.bodyLarge,
-                                ),
+                                child: choice == 'Track delivery'
+                                    ? ExpansionTile(
+                                        title: Text(
+                                          choice,
+                                          style: Get.textTheme.bodyLarge,
+                                        ),
+                                        expandedAlignment: Alignment.topLeft,
+                                        children: controller.orders.value
+                                            .map((order) {
+                                          return InkWell(
+                                            onTap: () => controller
+                                                .navigateToDelivery(order),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                '${order.id}',
+                                                style: Get.textTheme.bodyLarge,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      )
+                                    : Text(
+                                        choice,
+                                        style: Get.textTheme.bodyLarge,
+                                      ),
                               );
                             }).toList();
                           },

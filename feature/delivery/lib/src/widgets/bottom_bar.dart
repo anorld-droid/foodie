@@ -6,10 +6,8 @@ import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
 class DeliveryDetails extends GetView<DeliveryController> {
-  final ShippingModel shippingModel;
   const DeliveryDetails({
     super.key,
-    required this.shippingModel,
   });
 
   @override
@@ -23,21 +21,26 @@ class DeliveryDetails extends GetView<DeliveryController> {
         ),
       ),
       child: SingleChildScrollView(
-        child: Obx(
-          () => Column(
-            children: [
-              _deliveryTime(
+        child: Column(
+          children: [
+            Obx(
+              () => _deliveryTime(
                 controller.time.value,
-                controller.statusTag(controller.status.value),
+                controller.statusTag(
+                    controller.status.value, controller.model.id!),
               ),
-              Divider(
-                color: Colors.white70.withAlpha(130),
-              ),
-              _iconInfo(controller.status.value),
-              Divider(
-                color: Colors.white70.withAlpha(130),
-              ),
-              controller.courier.value != null
+            ),
+            Divider(
+              color: Colors.white70.withAlpha(130),
+            ),
+            Obx(
+              () => _iconInfo(controller.status.value),
+            ),
+            Divider(
+              color: Colors.white70.withAlpha(130),
+            ),
+            Obx(
+              () => controller.courier.value != null
                   ? _courierInfo()
                   : Padding(
                       padding: EdgeInsets.only(top: Get.height * 0.04),
@@ -48,8 +51,8 @@ class DeliveryDetails extends GetView<DeliveryController> {
                             ?.copyWith(fontWeight: FontWeight.bold),
                       )),
                     ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
@@ -72,6 +75,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
             '$status!',
             style:
                 Get.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w300),
+            textAlign: TextAlign.center,
           )
         ],
       ),
@@ -151,7 +155,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
         children: [
           CircleAvatar(
             radius: 32,
-            foregroundImage: NetworkImage(shippingModel.courier!.photoUrl),
+            foregroundImage: NetworkImage(controller.model.courier!.photoUrl),
           ),
           const SizedBox(
             width: 16.0,
@@ -161,7 +165,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  shippingModel.courier!.name,
+                  controller.model.courier!.name,
                   style: Get.textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),

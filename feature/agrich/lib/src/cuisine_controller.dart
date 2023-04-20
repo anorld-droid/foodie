@@ -154,10 +154,10 @@ class CuisineController extends GetxController
     );
   }
 
-  void navigateToDelivery() {
+  void navigateToDelivery(ShippingModel order) {
     Get.toNamed<void>(
       Routes.delivery,
-      arguments: orders.value,
+      arguments: order,
     );
   }
 
@@ -179,9 +179,6 @@ class CuisineController extends GetxController
   void favorites() {}
   void quickOptions(String option) {
     switch (option) {
-      case 'Track delivery':
-        navigateToDelivery();
-        break;
       case 'Repeat last order':
         break;
       default:
