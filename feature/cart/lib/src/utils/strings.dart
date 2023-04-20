@@ -25,4 +25,5 @@ class Strings {
       'NOTE: We will be using your current location coordinates for delivery.';
   static String save = 'Save';
   static String buildingHint = 'Kilimanjaro,Room 110.';
+  static String phoneNumber = 'Phone number';
 }

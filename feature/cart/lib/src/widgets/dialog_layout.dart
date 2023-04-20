@@ -57,9 +57,12 @@ class DialogLayout extends GetView<CartController> {
                         ignoreBlank: false,
                         autoValidateMode: AutovalidateMode.onUserInteraction,
                         initialValue: controller.phoneNumber,
-                        cursorColor: Colors.black,
+                        cursorColor: Get.theme.colorScheme.background,
                         inputDecoration: InputDecoration(
-                          hintText: 'Phone number',
+                          hintText: Strings.phoneNumber,
+                          hintStyle: Get.textTheme.displayMedium?.copyWith(
+                            color: Get.theme.colorScheme.background,
+                          ),
                           focusColor: Get.theme.colorScheme.background,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
