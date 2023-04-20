@@ -99,6 +99,7 @@ class AuthDialog extends GetView<CommonController> {
                 textInputType: TextInputType.emailAddress,
                 textEditingController: controller.emailController,
                 textStyle: Get.textTheme.bodyLarge,
+                textColor: Get.theme.colorScheme.onBackground,
               ),
               TextFieldInput(
                 borderRadius: 8,
@@ -109,6 +110,7 @@ class AuthDialog extends GetView<CommonController> {
                 textInputType: TextInputType.visiblePassword,
                 textEditingController: controller.passwordController,
                 textStyle: Get.textTheme.bodyLarge,
+                textColor: Get.theme.colorScheme.onBackground,
               ),
               if (!isLogIn)
                 Padding(

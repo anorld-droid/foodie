@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 16.01.2023.
 class TextFieldInput extends StatelessWidget {
   final TextEditingController textEditingController;
   final Color backgroundColor;
   final bool isPass;
+  final Color textColor;
+
   final TextStyle? textStyle;
   final TextInputType textInputType;
   final String hintText;
@@ -36,6 +37,7 @@ class TextFieldInput extends StatelessWidget {
       this.onSubmitted,
       this.focusNode,
       required this.backgroundColor,
+      required this.textColor,
       this.borderRadius = 0,
       this.height,
       this.maxLength})
@@ -43,37 +45,35 @@ class TextFieldInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-      ),
-      child: SizedBox(
-        height: height,
-        child: Center(
-          child: TextField(
-            focusNode: focusNode,
-            style: textStyle ?? Get.textTheme.bodyLarge,
-            keyboardType: textInputType,
-            cursorColor: Get.theme.primaryColorDark,
-            onChanged: onChanged,
-            onSubmitted: onSubmitted,
-            controller: textEditingController,
-            decoration: InputDecoration(
-              labelText: labelText,
-              labelStyle: Get.textTheme.displayMedium,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
+    return SizedBox(
+      height: height,
+      child: Center(
+        child: TextField(
+          focusNode: focusNode,
+          style: textStyle ??
+              Get.textTheme.bodyLarge?.copyWith(
+                color: textColor,
               ),
-              fillColor: backgroundColor,
-              focusColor: backgroundColor,
-              filled: true,
-              hintText: hintText,
-              suffixIcon: InkWell(
-                onTap: onIconTap,
-                child: Icon(
-                  icon,
-                  color: Get.theme.primaryColorDark.withOpacity(0.87),
-                ),
+          keyboardType: textInputType,
+          cursorColor: textColor,
+          onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          controller: textEditingController,
+          decoration: InputDecoration(
+            labelText: labelText,
+            hintStyle: Get.textTheme.displayMedium?.copyWith(color: textColor),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(borderRadius),
+                borderSide: BorderSide.none),
+            fillColor: backgroundColor,
+            focusColor: backgroundColor,
+            filled: true,
+            hintText: hintText,
+            suffixIcon: InkWell(
+              onTap: onIconTap,
+              child: Icon(
+                icon,
+                color: Get.theme.primaryColorDark.withOpacity(0.87),
               ),
             ),
           ),
@@ -138,9 +138,6 @@ class CustomTextField extends StatelessWidget {
           decoration: InputDecoration(
             labelText: labelText,
             labelStyle: Get.textTheme.displayMedium,
-            contentPadding: const EdgeInsets.only(
-              left: 32,
-            ),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 borderSide: BorderSide.none),

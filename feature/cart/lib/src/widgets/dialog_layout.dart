@@ -1,6 +1,6 @@
 import 'package:cart/src/controller.dart';
+import 'package:cart/src/utils/strings.dart';
 import 'package:common/common.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -11,267 +11,146 @@ class DialogLayout extends GetView<CartController> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Center(
-            child: SizedBox(
-              height: Get.height * 0.7,
-              width: Get.width - 24,
-              child: Card(
-                color: Get.theme.backgroundColor,
-                surfaceTintColor: Get.theme.backgroundColor,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0, left: 16.0),
-                      child: CustomTextField(
-                        textEditingController: controller.nameController,
-                        textInputType: TextInputType.name,
-                        borderRadius: 8,
-                        height: 48,
-                        hintText: 'Full Name (Legal)',
-                        labelText: 'Full Name',
-                        backgroundColor: Get.theme.backgroundColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8),
-                      child: Card(
-                        elevation: 0,
-                        color: Get.theme.backgroundColor,
-                        child: Container(
-                          margin: const EdgeInsets.all(8.0),
-                          width: Get.width * 0.65,
-                          child: InternationalPhoneNumberInput(
-                            countries: const ['KE'],
-                            maxLength: 13,
-                            onInputChanged: (PhoneNumber number) {
-                              controller.phoneNumber = number;
-                            },
-                            onInputValidated: (bool value) {
-                              controller.inputValidated.value = value;
-                            },
-                            ignoreBlank: false,
-                            autoValidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            initialValue: controller.phoneNumber,
-                            cursorColor: Colors.black,
-                            inputDecoration: InputDecoration(
-                              hintText: 'Phone number',
-                              focusColor: Get.theme.backgroundColor,
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: .0,
-                                  color: Get.theme.backgroundColor,
-                                ),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: .0,
-                                  color: Get.theme.backgroundColor,
-                                ),
-                              ),
-                              border: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: .0,
-                                  color: Get.theme.backgroundColor,
-                                ),
-                              ),
-                            ),
-                            textFieldController: controller.phoneController,
-                            selectorTextStyle: Get.theme.textTheme.bodyMedium
-                                ?.copyWith(
-                                    letterSpacing: 1.0,
-                                    height: 2,
-                                    fontWeight: FontWeight.w300),
-                            textStyle: Get.theme.textTheme.bodyMedium?.copyWith(
-                                letterSpacing: 1.0,
-                                height: 2,
-                                fontWeight: FontWeight.w300),
-                            formatInput: true,
-                            keyboardType: const TextInputType.numberWithOptions(
-                                signed: true, decimal: true),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: SizedBox(
-                        width: Get.width * 0.74,
-                        child: DropdownSearch<String>(
-                          popupProps: PopupProps.menu(
-                              menuProps: const MenuProps(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
-                                  ),
-                                ),
-                              ),
-                              showSelectedItems: true,
-                              itemBuilder: (context, item, isSelected) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    item,
-                                    style: Get.textTheme.bodyLarge,
-                                  ),
-                                );
-                              }),
-                          items: [],
-                          dropdownDecoratorProps: DropDownDecoratorProps(
-                            baseStyle: Get.textTheme.bodyLarge,
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: 'County',
-                              hintText: 'County',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide.none),
-                              fillColor: Get.theme.backgroundColor,
-                              focusColor: Get.theme.backgroundColor,
-                              filled: true,
-                            ),
-                          ),
-                          dropdownButtonProps: DropdownButtonProps(
-                              color: Get.theme.primaryColorDark),
-                          onChanged: (value) {},
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: SizedBox(
-                        width: Get.width * 0.74,
-                        child: Obx(
-                          () => DropdownSearch<String>(
-                            popupProps: PopupProps.menu(
-                                menuProps: const MenuProps(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                                showSelectedItems: true,
-                                itemBuilder: (context, item, isSelected) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      item,
-                                      style: Get.textTheme.bodyLarge,
-                                    ),
-                                  );
-                                }),
-                            items: [],
-                            dropdownDecoratorProps: DropDownDecoratorProps(
-                              baseStyle: Get.textTheme.bodyLarge,
-                              dropdownSearchDecoration: InputDecoration(
-                                labelText: 'Town',
-                                hintText: 'Town',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none),
-                              ),
-                            ),
-                            dropdownButtonProps: DropdownButtonProps(
-                              color: Get.theme.primaryColorDark,
-                            ),
-                            onChanged: (value) {},
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: SizedBox(
-                        width: Get.width * 0.74,
-                        child: Obx(
-                          () => DropdownSearch<String>(
-                            popupProps: PopupProps.menu(
-                                menuProps: const MenuProps(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                                showSelectedItems: true,
-                                itemBuilder: (context, item, isSelected) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      item,
-                                      style: Get.textTheme.bodyLarge,
-                                    ),
-                                  );
-                                }),
-                            items: [],
-                            dropdownDecoratorProps: DropDownDecoratorProps(
-                              baseStyle: Get.textTheme.bodyLarge,
-                              dropdownSearchDecoration: InputDecoration(
-                                labelText: 'Area',
-                                hintText: 'Area',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide.none),
-                              ),
-                            ),
-                            dropdownButtonProps: DropdownButtonProps(
-                              color: Get.theme.primaryColorDark,
-                            ),
-                            onChanged: (value) {},
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0, left: 16.0),
-                      child: CustomTextField(
-                        textEditingController: controller.buildingController,
-                        textInputType: TextInputType.name,
-                        borderRadius: 8,
-                        height: 48,
-                        hintText: 'Kilimanjaro/1st Floor/Room 110',
-                        labelText: 'Building/Floor/Room',
-                        backgroundColor: Get.theme.colorScheme.background,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await controller.saveShippingInfo();
-                      },
-                      child: Container(
-                          height: Get.height / 22,
-                          width: Get.width / 4,
-                          color: Colors.transparent,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Get.theme.primaryColorDark,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(30))),
-                            child: Center(
-                              child: Text(
-                                'Save',
-                                textAlign: TextAlign.center,
-                                style: Get.textTheme.bodyLarge?.copyWith(
-                                    color: Get.theme.backgroundColor),
-                              ),
-                            ),
-                          )),
-                    )
-                  ],
+    return Center(
+      child: Container(
+        color: Get.theme.colorScheme.primaryContainer,
+        height: Get.height * 0.40,
+        width: Get.width - 6,
+        child: Material(
+          color: Get.theme.colorScheme.background,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 10.0),
+                  child: TextFieldInput(
+                    textEditingController: controller.nameController,
+                    textInputType: TextInputType.name,
+                    borderRadius: 8,
+                    height: 48,
+                    hintText: 'Full Name (Legal)',
+                    backgroundColor: Get.theme.colorScheme.onBackground,
+                    textColor: Get.theme.colorScheme.background,
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 8.0),
+                  child: Card(
+                    color: Get.theme.colorScheme.onBackground,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: InternationalPhoneNumberInput(
+                        countries: const ['KE'],
+                        maxLength: 13,
+                        onInputChanged: (PhoneNumber number) {
+                          controller.phoneNumber = number;
+                        },
+                        onInputValidated: (bool value) {
+                          controller.inputValidated.value = value;
+                        },
+                        ignoreBlank: false,
+                        autoValidateMode: AutovalidateMode.onUserInteraction,
+                        initialValue: controller.phoneNumber,
+                        cursorColor: Colors.black,
+                        inputDecoration: InputDecoration(
+                          hintText: 'Phone number',
+                          focusColor: Get.theme.colorScheme.background,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              width: .0,
+                              color: Get.theme.colorScheme.background,
+                            ),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              width: .0,
+                              color: Get.theme.colorScheme.background,
+                            ),
+                          ),
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              width: .0,
+                              color: Get.theme.colorScheme.background,
+                            ),
+                          ),
+                        ),
+                        textFieldController: controller.phoneController,
+                        selectorTextStyle:
+                            Get.theme.textTheme.bodyMedium?.copyWith(
+                          color: Get.theme.colorScheme.background,
+                        ),
+                        textStyle: Get.theme.textTheme.bodyMedium?.copyWith(
+                          color: Get.theme.colorScheme.background,
+                        ),
+                        formatInput: true,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            signed: true, decimal: true),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 10.0),
+                  child: TextFieldInput(
+                    textEditingController: controller.buildingController,
+                    textInputType: TextInputType.name,
+                    borderRadius: 8,
+                    height: 48,
+                    hintText: Strings.buildingHint,
+                    backgroundColor: Get.theme.colorScheme.onBackground,
+                    textColor: Get.theme.colorScheme.background,
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Center(
+                  child: Text(
+                    Strings.locNotification,
+                    style: Get.textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () async {
+                    await controller.saveShippingInfo();
+                  },
+                  child: Container(
+                      height: 48,
+                      width: 120,
+                      color: Get.theme.colorScheme.primaryContainer,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Get.theme.primaryColorDark,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12))),
+                        child: Center(
+                          child: Text(
+                            Strings.save,
+                            textAlign: TextAlign.center,
+                            style: Get.textTheme.bodyLarge?.copyWith(
+                                color: Get.theme.colorScheme.background),
+                          ),
+                        ),
+                      )),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

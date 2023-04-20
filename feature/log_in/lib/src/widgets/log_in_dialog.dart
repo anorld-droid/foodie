@@ -32,6 +32,7 @@ class LogInDialog extends GetView<LogInController> {
                       textEditingController: controller.emailController,
                       textStyle: Get.textTheme.bodyLarge
                           ?.copyWith(color: Colors.black),
+                      textColor: Get.theme.colorScheme.onBackground,
                     ),
                     TextFieldInput(
                       backgroundColor: Colors.white,
@@ -42,6 +43,7 @@ class LogInDialog extends GetView<LogInController> {
                       textEditingController: controller.passwordController,
                       textStyle: Get.textTheme.bodyLarge
                           ?.copyWith(color: Colors.black),
+                      textColor: Get.theme.colorScheme.onBackground,
                     ),
                     InkWell(
                       onTap: controller.sigIn,

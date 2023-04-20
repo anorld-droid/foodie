@@ -1,10 +1,10 @@
 import 'package:cart/src/widgets/dialog_layout.dart';
 import 'package:cart/src/widgets/payment.dart';
 import 'package:common/common.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:location/location.dart';
 import 'package:model/model.dart';
 import 'package:domain/domain.dart';
 
@@ -118,10 +118,6 @@ class CartController extends GetxController {
     } else {
       shippingAddress.value =
           '${_shippingInfo.value?.name}, ${_shippingInfo.value?.phoneNumber}, ${_shippingInfo.value?.location}';
-      phoneController.text = _shippingInfo.value?.phoneNumber?.substring(
-            4,
-          ) ??
-          '';
     }
   }
 
@@ -143,18 +139,6 @@ class CartController extends GetxController {
     total.refresh();
   }
 
-  Future<void> shippingDialog() async {
-    await showDialog<Widget>(
-        context: Get.context!,
-        barrierDismissible: false,
-        barrierLabel:
-            MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.colorScheme.background,
-        builder: (BuildContext buildContext) {
-          return const DialogLayout();
-        });
-  }
-
   void checkout() async {
     double shipAmount = subscription.value?.minShipAmount.toDouble() ?? 150.00;
 
@@ -169,9 +153,9 @@ class CartController extends GetxController {
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');
     } else {
-      // bottomSheet();
+      bottomSheet();
       await _transact();
-      // sendMessage();
+      sendMessage();
     }
   }
 
@@ -268,24 +252,29 @@ class CartController extends GetxController {
     String name = nameController.text;
     String? mobileNumber = phoneNumber.phoneNumber;
     String building = buildingController.text;
+    LocationData location = await Location().getLocation();
 
     if (validateInput(
       name,
       mobileNumber,
       building,
     )) {
-      ShippingInfo shippingInfo = ShippingInfo(
-          name: name,
-          phoneNumber: mobileNumber,
-          location: '$building.',
-          lat: -0.057822991209217858,
-          lng: 34.6032983890644);
-      await _userModelUseCase.updateShippingInfo(
-        userId: _authenticateUser.getUserId()!,
-        shippingInfo: shippingInfo,
-      );
-      shortToast('Shipping info saved.');
-      Get.back<void>();
+      if (location.latitude != null && location.longitude != null) {
+        ShippingInfo shippingInfo = ShippingInfo(
+            name: name,
+            phoneNumber: mobileNumber,
+            location: '$building.',
+            lat: location.latitude!,
+            lng: location.longitude!);
+        await _userModelUseCase.updateShippingInfo(
+          userId: _authenticateUser.getUserId()!,
+          shippingInfo: shippingInfo,
+        );
+        shortToast('Shipping info saved.');
+        Get.back<void>();
+      } else {
+        shortToast('Turn on your location to proceed.');
+      }
     }
   }
 
@@ -312,6 +301,17 @@ class CartController extends GetxController {
       barrierColor: Get.theme.colorScheme.primaryContainer,
       isScrollControlled: false,
     );
+  }
+
+  Future<void> shippingDialog() async {
+    await showDialog<Widget>(
+        context: Get.context!,
+        barrierLabel:
+            MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
+        barrierColor: Get.theme.colorScheme.onBackground.withAlpha(180),
+        builder: (BuildContext buildContext) {
+          return const DialogLayout();
+        });
   }
 
   void navigateToDelivery(ShippingModel order) {

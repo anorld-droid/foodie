@@ -129,6 +129,7 @@ class SignUp extends GetView<SignUpController> {
                                     controller.emailController,
                                 textStyle: Get.textTheme.bodyLarge
                                     ?.copyWith(color: Colors.black),
+                                textColor: Get.theme.colorScheme.onBackground,
                               ),
                               TextFieldInput(
                                 backgroundColor: Colors.white,
@@ -141,6 +142,7 @@ class SignUp extends GetView<SignUpController> {
                                 textStyle: Get.textTheme.bodyLarge?.copyWith(
                                   color: Colors.black,
                                 ),
+                                textColor: Get.theme.colorScheme.onBackground,
                               ),
                               Column(
                                 mainAxisAlignment:

@@ -20,4 +20,9 @@ class Strings {
 
   //body widget
   static String destination = 'Destination';
+  //Shipping dialog
+  static String locNotification =
+      'NOTE: We will be using your current location coordinates for delivery.';
+  static String save = 'Save';
+  static String buildingHint = 'Kilimanjaro,Room 110.';
 }
