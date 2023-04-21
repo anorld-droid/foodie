@@ -2,6 +2,7 @@ import 'package:cart/src/widgets/dialog_layout.dart';
 import 'package:cart/src/widgets/payment.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:location/location.dart';
@@ -44,6 +45,9 @@ class CartController extends GetxController {
   final Rx<String> selectedOption = 'M-pesa'.obs;
 
   final Rx<List<ShippingModel>> orders = Rx([]);
+  //Get the theme mode state of the app
+  var brightness = SchedulerBinding.instance.window.platformBrightness;
+  late bool isDarkMode;
 
   @override
   void onInit() async {
@@ -72,6 +76,7 @@ class CartController extends GetxController {
     buildingController = TextEditingController();
 
     itemLength.value = items.value.length;
+    isDarkMode = brightness == Brightness.dark;
   }
 
   Future<void> getOrders() async {
@@ -294,8 +299,6 @@ class CartController extends GetxController {
     await Get.bottomSheet<bool?>(
       const Payment(),
       backgroundColor: Get.theme.colorScheme.background,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(12.0))),
       clipBehavior: Clip.hardEdge,
       elevation: 4,
       barrierColor: Get.theme.colorScheme.primaryContainer,

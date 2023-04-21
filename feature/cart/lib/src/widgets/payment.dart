@@ -12,19 +12,10 @@ class Payment extends GetView<CartController> {
     return Container(
       height: Get.height * 0.37,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color.fromARGB(255, 5, 52, 49),
-            const Color.fromARGB(181, 5, 52, 49),
-            const Color.fromARGB(71, 5, 52, 49),
-            Get.theme.colorScheme.background
-          ],
-        ),
+        color: Get.theme.colorScheme.background,
         border: Border.all(
-          width: 1.0,
-          color: Get.theme.colorScheme.background.withOpacity(0.05),
+          width: .5,
+          color: Get.theme.colorScheme.background.withOpacity(0.2),
         ),
       ),
       child: SingleChildScrollView(
@@ -32,7 +23,7 @@ class Payment extends GetView<CartController> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Get.theme.colorScheme.onSecondary,
+                color: Get.theme.colorScheme.surface,
                 borderRadius: BorderRadius.circular(12.0),
               ),
               margin:
@@ -134,7 +125,7 @@ class Payment extends GetView<CartController> {
                 margin: const EdgeInsets.symmetric(vertical: 16.0),
                 decoration: BoxDecoration(
                   color: Get.theme.colorScheme.primary,
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: Center(
                   child: Obx(
@@ -158,7 +149,7 @@ class Payment extends GetView<CartController> {
                               text: controller.total.value.toStringAsFixed(2),
                               style: Get.textTheme.bodySmall?.copyWith(
                                 fontWeight: FontWeight.bold,
-                                // color: Get.theme.colorScheme.background,
+                                color: Get.theme.colorScheme.onBackground,
                               ),
                             ),
                           ],

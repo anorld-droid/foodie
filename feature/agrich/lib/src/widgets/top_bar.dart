@@ -128,7 +128,8 @@ class CuisineTopBar extends GetView<CuisineController> {
                           position: PopupMenuPosition.under,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
-                          color: Get.theme.colorScheme.background,
+                          color: Get.theme.colorScheme.surface,
+                          elevation: 0.0,
                           itemBuilder: (_) {
                             return Strings.quickItems.map((choice) {
                               return PopupMenuItem(

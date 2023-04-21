@@ -1,6 +1,8 @@
 import 'package:cart/src/controller.dart';
 import 'package:cart/src/utils/strings.dart';
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 
@@ -12,37 +14,31 @@ class CartAppBar extends GetView<CartController>
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      elevation: 2,
+      elevation: 0,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        // Status bar color
+        statusBarColor: Get.theme.colorScheme.primaryContainer,
+        // Status bar brightness (optional)
+        statusBarIconBrightness:
+            Get.theme.colorScheme.brightness, // For Android (dark icons)
+      ),
       leadingWidth: 56.0,
       centerTitle: true,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            colors: [
-              Get.theme.colorScheme.background,
-              const Color.fromARGB(71, 5, 52, 49),
-            ],
-          ),
-        ),
+        color: Get.theme.colorScheme.background,
       ),
       leading: InkWell(
         onTap: Get.back<void>,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(12.0),
         child: Container(
           margin: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(12.0),
             gradient: LinearGradient(
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
-              colors: [
-                Get.theme.colorScheme.background,
-                const Color.fromARGB(255, 5, 52, 49),
-                const Color.fromARGB(181, 5, 52, 49),
-                const Color.fromARGB(71, 5, 52, 49),
-              ],
+              colors:
+                  ThemeService(isDarkMode: controller.isDarkMode).appBarColors,
             ),
           ),
           child: Padding(
@@ -72,23 +68,21 @@ class CartAppBar extends GetView<CartController>
               width: 40,
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(12.0),
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [
-                    Get.theme.colorScheme.background,
-                    const Color.fromARGB(181, 5, 52, 49),
-                    const Color.fromARGB(71, 5, 52, 49),
-                  ],
+                  colors: ThemeService(isDarkMode: controller.isDarkMode)
+                      .appBarColors,
                 ),
               ),
               child: PopupMenuButton<ShippingModel>(
                 onSelected: controller.navigateToDelivery,
+                elevation: 0.0,
                 position: PopupMenuPosition.under,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0)),
-                color: Get.theme.colorScheme.background,
+                color: Get.theme.colorScheme.surface,
                 itemBuilder: (_) {
                   return controller.orders.value.map((choice) {
                     return PopupMenuItem(

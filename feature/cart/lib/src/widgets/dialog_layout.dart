@@ -32,15 +32,16 @@ class DialogLayout extends GetView<CartController> {
                     borderRadius: 8,
                     height: 48,
                     hintText: 'Full Name (Legal)',
-                    backgroundColor: Get.theme.colorScheme.onBackground,
-                    textColor: Get.theme.colorScheme.background,
+                    backgroundColor: Get.theme.colorScheme.surface,
+                    textColor: Get.theme.colorScheme.onBackground,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 8.0),
                   child: Card(
-                    color: Get.theme.colorScheme.onBackground,
+                    elevation: 0,
+                    color: Get.theme.colorScheme.surface,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
                     child: Container(
@@ -57,13 +58,13 @@ class DialogLayout extends GetView<CartController> {
                         ignoreBlank: false,
                         autoValidateMode: AutovalidateMode.onUserInteraction,
                         initialValue: controller.phoneNumber,
-                        cursorColor: Get.theme.colorScheme.background,
+                        cursorColor: Get.theme.colorScheme.onBackground,
                         inputDecoration: InputDecoration(
                           hintText: Strings.phoneNumber,
                           hintStyle: Get.textTheme.displayMedium?.copyWith(
-                            color: Get.theme.colorScheme.background,
+                            color: Get.theme.colorScheme.onBackground,
                           ),
-                          focusColor: Get.theme.colorScheme.background,
+                          focusColor: Get.theme.colorScheme.onBackground,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               width: .0,
@@ -86,10 +87,10 @@ class DialogLayout extends GetView<CartController> {
                         textFieldController: controller.phoneController,
                         selectorTextStyle:
                             Get.theme.textTheme.bodyMedium?.copyWith(
-                          color: Get.theme.colorScheme.background,
+                          color: Get.theme.colorScheme.onBackground,
                         ),
                         textStyle: Get.theme.textTheme.bodyMedium?.copyWith(
-                          color: Get.theme.colorScheme.background,
+                          color: Get.theme.colorScheme.onBackground,
                         ),
                         formatInput: true,
                         keyboardType: const TextInputType.numberWithOptions(
@@ -107,8 +108,8 @@ class DialogLayout extends GetView<CartController> {
                     borderRadius: 8,
                     height: 48,
                     hintText: Strings.buildingHint,
-                    backgroundColor: Get.theme.colorScheme.onBackground,
-                    textColor: Get.theme.colorScheme.background,
+                    backgroundColor: Get.theme.colorScheme.surface,
+                    textColor: Get.theme.colorScheme.onBackground,
                   ),
                 ),
                 const SizedBox(
@@ -129,23 +130,21 @@ class DialogLayout extends GetView<CartController> {
                     await controller.saveShippingInfo();
                   },
                   child: Container(
-                      height: 48,
-                      width: 120,
-                      color: Get.theme.colorScheme.primaryContainer,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Get.theme.primaryColorDark,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12))),
-                        child: Center(
-                          child: Text(
-                            Strings.save,
-                            textAlign: TextAlign.center,
-                            style: Get.textTheme.bodyLarge?.copyWith(
-                                color: Get.theme.colorScheme.background),
-                          ),
-                        ),
-                      )),
+                    height: 48,
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: Get.theme.colorScheme.primary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12))),
+                    child: Center(
+                      child: Text(
+                        Strings.save,
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.bodyLarge
+                            ?.copyWith(color: Get.theme.colorScheme.onPrimary),
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,

@@ -39,13 +39,13 @@ class Cart extends GetView<CartController> {
                     decoration: BoxDecoration(
                       borderRadius:
                           const BorderRadius.all(Radius.circular(12.0)),
-                      color: Get.theme.colorScheme.onSecondary,
+                      color: Get.theme.colorScheme.onBackground,
                     ),
                     child: Text(
                       'Checkout',
                       style: Get.textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Get.theme.colorScheme.onBackground,
+                        color: Get.theme.colorScheme.background,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -55,17 +55,17 @@ class Cart extends GetView<CartController> {
             ),
             InkWell(
               onTap: controller.shippingDialog,
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(12.0),
               child: Container(
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: Get.theme.colorScheme.onSecondary,
+                  borderRadius: BorderRadius.circular(12.0),
+                  color: Get.theme.colorScheme.onBackground,
                 ),
                 child: Icon(
                   Icons.edit_location_alt_outlined,
-                  color: Get.theme.colorScheme.onBackground,
+                  color: Get.theme.colorScheme.surface,
                 ),
               ),
             ),

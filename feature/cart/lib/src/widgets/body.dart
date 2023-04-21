@@ -13,18 +13,7 @@ class CartBody extends GetView<CartController> {
     return Container(
       height: Get.height,
       width: Get.width,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.bottomCenter,
-          end: Alignment.topCenter,
-          colors: [
-            Get.theme.colorScheme.background,
-            const Color.fromARGB(181, 5, 52, 49),
-            const Color.fromARGB(71, 5, 52, 49),
-          ],
-          stops: const [0.3, 0.8, 1.0],
-        ),
-      ),
+      decoration: BoxDecoration(color: Get.theme.colorScheme.background),
       child: SingleChildScrollView(
         child: Column(
           children: [
