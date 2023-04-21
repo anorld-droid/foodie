@@ -1,6 +1,8 @@
+import 'package:common/common.dart';
 import 'package:cuisine_detail/src/controller.dart';
 import 'package:cuisine_detail/src/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class DetailTopBar extends GetView<Controller> implements PreferredSizeWidget {
@@ -10,37 +12,31 @@ class DetailTopBar extends GetView<Controller> implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     Get.find<Controller>();
     return AppBar(
-      elevation: 2,
+      elevation: 0,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        // Status bar color
+        statusBarColor: Get.theme.colorScheme.primaryContainer,
+        // Status bar brightness (optional)
+        statusBarIconBrightness:
+            Get.theme.colorScheme.brightness, // For Android (dark icons)
+      ),
       leadingWidth: 56.0,
       centerTitle: true,
       flexibleSpace: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            colors: [
-              Get.theme.colorScheme.background,
-              const Color.fromARGB(71, 5, 52, 49),
-            ],
-          ),
-        ),
+        color: Get.theme.colorScheme.background,
       ),
       leading: InkWell(
         onTap: Get.back,
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(12.0),
         child: Container(
           margin: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(12.0),
             gradient: LinearGradient(
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
-              colors: [
-                Get.theme.colorScheme.background,
-                const Color.fromARGB(255, 5, 52, 49),
-                const Color.fromARGB(181, 5, 52, 49),
-                const Color.fromARGB(71, 5, 52, 49),
-              ],
+              colors:
+                  ThemeService(isDarkMode: controller.isDarkMode).appBarColors,
             ),
           ),
           child: Padding(
@@ -58,25 +54,22 @@ class DetailTopBar extends GetView<Controller> implements PreferredSizeWidget {
         PopupMenuButton<String>(
           onSelected: controller.moreOptions,
           padding: const EdgeInsets.all(0.0),
-          elevation: 4.0,
+          position: PopupMenuPosition.under,
+          elevation: 0.0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-          color: Get.theme.colorScheme.primaryContainer,
+          color: Get.theme.colorScheme.surface,
           child: Container(
             height: 40,
             width: 40,
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(12.0),
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                colors: [
-                  Get.theme.colorScheme.background,
-                  const Color.fromARGB(181, 5, 52, 49),
-                  const Color.fromARGB(71, 5, 52, 49),
-                ],
-                stops: const [0.5, 0.8, 1.0],
+                colors: ThemeService(isDarkMode: controller.isDarkMode)
+                    .appBarColors,
               ),
             ),
             child: Icon(

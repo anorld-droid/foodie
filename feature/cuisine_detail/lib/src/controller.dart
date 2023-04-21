@@ -2,6 +2,8 @@ import 'package:common/common.dart';
 import 'package:cuisine_detail/src/widgets/restaurant_search_layout.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 
@@ -33,12 +35,16 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   final RxBool showTopArrow = false.obs;
   final RxBool showBottomArrow = true.obs;
 
+  //Get the theme mode state of the app
+  var brightness = SchedulerBinding.instance.window.platformBrightness;
+  late bool isDarkMode;
+
   @override
   void onInit() {
-    super.onInit();
     initialize();
     setListeners();
     isFavorite(item);
+    super.onInit();
   }
 
   @override
@@ -82,6 +88,8 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
 
     // Restaurants variables
     scrollController = ScrollController();
+
+    isDarkMode = brightness == Brightness.dark;
   }
 
   void incrementQty(double basicPrice) {
@@ -121,8 +129,8 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   void termsCondition() {}
 
   Future<void> addToFavorite(CuisineItem cuisineItem, String header) async {
-    favorite.toggle();
     if (_authenticateUser.isUserSignedIn()) {
+      favorite.toggle();
       var favorites = cuisineItem.favorites;
       var values = favorites[store.value] ?? [];
 
@@ -157,7 +165,7 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
         context: context,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: Get.theme.colorScheme.primaryContainer,
+        barrierColor: Get.theme.colorScheme.background,
         builder: (BuildContext buildContext) {
           return authDialog;
         });

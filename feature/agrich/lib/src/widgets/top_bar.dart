@@ -122,7 +122,7 @@ class CuisineTopBar extends GetView<CuisineController> {
                         height: 50,
                         decoration: BoxDecoration(
                             color: Get.theme.colorScheme.surface,
-                            borderRadius: BorderRadius.circular(30.0)),
+                            borderRadius: BorderRadius.circular(12.0)),
                         child: PopupMenuButton<String>(
                           onSelected: controller.quickOptions,
                           position: PopupMenuPosition.under,

@@ -41,15 +41,19 @@ class AuthDialog extends GetView<CommonController> {
               child: SizedBox(
                 width: Get.width * 0.8,
                 child: Card(
-                  color: Get.theme.colorScheme.secondary,
+                  color: Get.theme.colorScheme.surface,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
                   child: TabBar(
-                    indicatorColor: Get.theme.colorScheme.surface,
+                    indicatorColor: Get.theme.colorScheme.onBackground,
                     unselectedLabelColor: Get.theme.colorScheme.onPrimary,
+                    unselectedLabelStyle: Get.textTheme.bodySmall,
+                    labelColor: Get.theme.colorScheme.tertiary,
+                    labelStyle: Get.textTheme.bodySmall,
+                    dividerColor: Get.theme.colorScheme.surface,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: Get.theme.colorScheme.onPrimary,

@@ -21,9 +21,9 @@ class Restaurants extends GetView<Controller> {
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
           margin: const EdgeInsets.all(6.0),
           decoration: BoxDecoration(
-              color: Get.theme.colorScheme.onSecondary,
+              color: Get.theme.colorScheme.surface,
               border: controller.store.value == name
-                  ? Border.all(color: Get.theme.colorScheme.primary)
+                  ? Border.all(color: Get.theme.colorScheme.primary, width: .5)
                   : const Border(),
               borderRadius: BorderRadius.circular(12.0)),
           child: Column(

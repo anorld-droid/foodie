@@ -7,9 +7,7 @@ import 'package:di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:log_in/log_in.dart';
 import 'package:model/model.dart';
-import 'package:sign_up/sign_up.dart';
 import 'package:trice/app/trice_app_controller.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 11.01.2023.
@@ -43,14 +41,6 @@ class TriceApp extends GetView<TriceAppController> {
       themeMode: controller.themeMode.value,
       initialRoute: Routes.cuisine,
       getPages: [
-        GetPage(
-          name: Routes.root,
-          page: () => const LogIn(),
-        ),
-        GetPage(
-          name: Routes.signUp,
-          page: () => const SignUp(),
-        ),
         GetPage(
           name: Routes.cuisine,
           page: () => const Cuisine(),

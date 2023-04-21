@@ -2,6 +2,7 @@ import 'package:common/common.dart';
 import 'package:cuisine_detail/src/controller.dart';
 import 'package:cuisine_detail/src/widgets/body.dart';
 import 'package:cuisine_detail/src/widgets/bottom_nav.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:model/model.dart';
@@ -16,7 +17,7 @@ class CuisineDetail extends GetView<Controller> {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => Controller(item: cuisineItem));
+    Get.put(Controller(item: cuisineItem));
     controller.sellingPrice.value =
         cuisineItem.sellingPrice.value[controller.store.value]!;
     return Scaffold(

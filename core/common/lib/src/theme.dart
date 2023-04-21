@@ -47,16 +47,19 @@ class ThemeService {
               Color.fromARGB(0, 230, 230, 230),
             ]);
 
-  List<Color> get strokeColors => isDarkMode
-      ? const [
-          Color.fromARGB(255, 255, 255, 255),
-          Color.fromARGB(90, 255, 255, 255),
-          Color.fromARGB(181, 0, 0, 0),
-        ]
-      : const [
-          Color.fromARGB(181, 0, 0, 0),
-          Color.fromARGB(121, 67, 67, 67),
-          Color.fromARGB(255, 255, 255, 255),
+  List<Color> get radiantColors => isDarkMode
+      ? const [Color.fromARGB(181, 5, 52, 49), Color.fromARGB(71, 5, 52, 49)]
+      : [
+          Colors.grey.shade300,
+          Colors.grey.shade100,
+        ];
+
+  List<Color> get mainGradientColors => isDarkMode
+      ? const [Colors.black, Color.fromARGB(200, 5, 52, 49), Colors.black]
+      : [
+          Colors.grey.shade300,
+          Colors.grey.shade100,
+          Colors.grey.shade100,
         ];
 
   LinearGradient get floatingABIconGradient => isDarkMode
@@ -75,21 +78,14 @@ class ThemeService {
               Color.fromARGB(255, 0, 0, 0),
             ]);
 
-  LinearGradient get newsPostIcons => isDarkMode
-      ? const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-              Color.fromARGB(150, 255, 255, 255),
-              Color.fromARGB(150, 255, 255, 255),
-            ])
-      : const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-              Color.fromARGB(150, 0, 0, 0),
-              Color.fromARGB(150, 0, 0, 0),
-            ]);
+  List<Color> get appBarColors => isDarkMode
+      ? const [
+          Colors.black,
+          Color.fromARGB(255, 5, 52, 49),
+          Color.fromARGB(181, 5, 52, 49),
+          Color.fromARGB(71, 5, 52, 49),
+        ]
+      : const [Colors.white, Colors.white];
 
   LinearGradient get floatingABGradient => isDarkMode
       ? const LinearGradient(
@@ -130,7 +126,7 @@ class Themes {
           letterSpacing: .0,
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400),
-      headlineLarge: GoogleFonts.montserratAlternates(
+      headlineLarge: GoogleFonts.roboto(
           fontSize: 32,
           color: Colors.black,
           letterSpacing: .0,
@@ -188,7 +184,7 @@ class Themes {
     colorScheme: ColorScheme(
         background: Colors.grey.shade100,
         brightness: Brightness.dark,
-        primary: Color(0xFF00BF63),
+        primary: const Color(0xFF00BF63),
         onPrimary: Colors.white,
         secondary: Color(0xFF393939),
         onSecondary: Colors.white10,

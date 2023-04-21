@@ -17,12 +17,7 @@ class BottomNav extends GetView<Controller> {
       decoration: BoxDecoration(color: Get.theme.colorScheme.background),
       child: Container(
         height: 56,
-        decoration: const BoxDecoration(
-          gradient: RadialGradient(colors: [
-            Color.fromARGB(181, 5, 52, 49),
-            Color.fromARGB(71, 5, 52, 49)
-          ], center: Alignment(0.5, 0)),
-        ),
+        color: Get.theme.colorScheme.background,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           InkWell(
             onTap: () => controller.addToCart(cuisineItem),
@@ -31,7 +26,7 @@ class BottomNav extends GetView<Controller> {
               width: Get.width * 0.75,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
-                  color: Get.theme.colorScheme.onSecondary),
+                  color: Get.theme.colorScheme.onBackground),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -40,7 +35,8 @@ class BottomNav extends GetView<Controller> {
                   ),
                   Text(
                     Strings.addToCart,
-                    style: Get.textTheme.bodyLarge,
+                    style: Get.textTheme.bodyLarge
+                        ?.copyWith(color: Get.theme.colorScheme.background),
                   ),
                 ],
               ),
@@ -48,22 +44,22 @@ class BottomNav extends GetView<Controller> {
           ),
           InkWell(
             onTap: () => controller.addToFavorite(cuisineItem, header),
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(8.0),
             child: Container(
-              height: 40,
-              width: 40,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.0),
-                color: Get.theme.colorScheme.onSecondary,
+                borderRadius: BorderRadius.circular(8.0),
+                color: Get.theme.colorScheme.onBackground,
               ),
+              padding: const EdgeInsets.all(8.0),
               child: Obx(
                 () => Icon(
-                    controller.favorite.isTrue
-                        ? Icons.favorite
-                        : Icons.favorite_border_outlined,
-                    color: controller.favorite.isTrue
-                        ? Get.theme.colorScheme.primary
-                        : Get.theme.colorScheme.onBackground),
+                  controller.favorite.isTrue
+                      ? Icons.favorite
+                      : Icons.favorite_border_outlined,
+                  color: controller.favorite.isTrue
+                      ? Get.theme.colorScheme.primary
+                      : Get.theme.colorScheme.background,
+                ),
               ),
             ),
           ),

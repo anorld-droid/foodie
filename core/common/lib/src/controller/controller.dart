@@ -65,6 +65,9 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
     }
     searching.value = false;
     animationController.reset();
+    if (_authenticateUser.isUserSignedIn()) {
+      Get.back<void>();
+    }
   }
 
   Future<void> createAccount() async {
@@ -86,6 +89,9 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
     }
     searching.value = false;
     animationController.reset();
+    if (_authenticateUser.isUserSignedIn()) {
+      Get.back<void>();
+    }
   }
 
   Future<void> _uploadUserInfo(String username) async {

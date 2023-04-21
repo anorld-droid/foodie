@@ -15,16 +15,17 @@ class DetailBody extends GetView<Controller> {
   @override
   Widget build(BuildContext context) {
     Get.find<Controller>();
+
     return Container(
       decoration: BoxDecoration(color: Get.theme.colorScheme.background),
       child: Container(
         height: Get.height,
         padding: const EdgeInsets.only(left: 8.0),
-        decoration: const BoxDecoration(
-          gradient: RadialGradient(colors: [
-            Color.fromARGB(181, 5, 52, 49),
-            Color.fromARGB(71, 5, 52, 49)
-          ], center: Alignment(0.5, 0)),
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+              colors:
+                  ThemeService(isDarkMode: controller.isDarkMode).radiantColors,
+              center: const Alignment(0.5, 0)),
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -86,8 +87,8 @@ class DetailBody extends GetView<Controller> {
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    color: Get.theme.colorScheme.onSecondary,
+                                    borderRadius: BorderRadius.circular(6.0),
+                                    color: Get.theme.colorScheme.surface,
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -282,7 +283,7 @@ class DetailBody extends GetView<Controller> {
                       width: 90,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0),
-                          color: Get.theme.colorScheme.onSecondary),
+                          color: Get.theme.colorScheme.onBackground),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -290,25 +291,17 @@ class DetailBody extends GetView<Controller> {
                             onTap: () => controller.incrementQty(cuisineItem
                                 .basicPrice[controller.store.value]!),
                             child: Container(
-                              padding: const EdgeInsets.all(4.0),
+                              padding: const EdgeInsets.all(5.0),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: Get.theme.colorScheme.secondary),
+                                    width: .5,
+                                    color: Get.theme.colorScheme.onBackground),
                                 borderRadius: BorderRadius.circular(30.0),
-                                gradient: LinearGradient(
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                  colors: [
-                                    Get.theme.colorScheme.background,
-                                    const Color.fromARGB(181, 5, 52, 49),
-                                    const Color.fromARGB(71, 5, 52, 49),
-                                  ],
-                                  stops: const [0.5, 0.8, 1.0],
-                                ),
+                                color: Get.theme.colorScheme.surface,
                               ),
                               child: Icon(
                                 Icons.add,
-                                color: Get.theme.primaryColorDark,
+                                color: Get.theme.colorScheme.onBackground,
                               ),
                             ),
                           ),
@@ -319,7 +312,7 @@ class DetailBody extends GetView<Controller> {
                                   .basicPrice[controller.store.value]!),
                               child: Icon(
                                 Icons.remove,
-                                color: Get.theme.colorScheme.onBackground,
+                                color: Get.theme.colorScheme.background,
                                 size: 28,
                               ),
                             ),

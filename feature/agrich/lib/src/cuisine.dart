@@ -18,21 +18,7 @@ class Cuisine extends GetView<CuisineController> {
       resizeToAvoidBottomInset: false,
       body: Container(
         height: Get.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors: [
-                Get.theme.colorScheme.background,
-                Get.theme.colorScheme.background,
-                Get.theme.colorScheme.background,
-              ],
-              stops: const [
-                0.5,
-                0.8,
-                1.0
-              ]),
-        ),
+        decoration: BoxDecoration(color: Get.theme.colorScheme.background),
         child: Obx(
           () => Column(
             children: [

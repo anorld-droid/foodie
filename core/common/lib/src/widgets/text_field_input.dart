@@ -57,6 +57,7 @@ class TextFieldInput extends StatelessWidget {
           keyboardType: textInputType,
           cursorColor: textColor,
           onChanged: onChanged,
+          obscureText: isPass,
           onSubmitted: onSubmitted,
           controller: textEditingController,
           decoration: InputDecoration(
