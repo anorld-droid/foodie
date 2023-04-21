@@ -11,16 +11,29 @@ class DeliveryMap extends GetView<DeliveryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Get.theme.colorScheme.onSurface,
       body: Obx(
         () => controller.currentLocation.value == null
             ? Center(
-                child: GradientCircularProgressIndicator(
-                  radius: 20,
-                  strokeWidth: 5.0,
-                  gradientColors: [
-                    Get.theme.colorScheme.primary,
-                    Get.theme.colorScheme.primary.withAlpha(100)
-                  ],
+                child: Material(
+                  color: Get.theme.colorScheme.primaryContainer,
+                  surfaceTintColor: Get.theme.colorScheme.primaryContainer,
+                  child: Container(
+                    color: Get.theme.colorScheme.primaryContainer,
+                    padding: const EdgeInsets.all(4.0),
+                    child: RotationTransition(
+                      turns: Tween(begin: 0.0, end: 1.0)
+                          .animate(controller.animationController),
+                      child: GradientCircularProgressIndicator(
+                        radius: 20,
+                        gradientColors: [
+                          Get.theme.colorScheme.primary.withAlpha(100),
+                          Get.theme.colorScheme.primary,
+                        ],
+                        strokeWidth: 5.0,
+                      ),
+                    ),
+                  ),
                 ),
               )
             : GoogleMap(

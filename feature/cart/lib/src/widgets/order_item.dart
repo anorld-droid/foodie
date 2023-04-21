@@ -167,6 +167,7 @@ class OrderItems extends GetView<CartController> {
                                         onTap: () =>
                                             controller.incrementQty(item),
                                         child: Container(
+                                          padding: const EdgeInsets.all(2.0),
                                           decoration: BoxDecoration(
                                               border: Border.all(
                                                   color: Get.theme.colorScheme

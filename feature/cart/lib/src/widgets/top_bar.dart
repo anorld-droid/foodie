@@ -82,7 +82,7 @@ class CartAppBar extends GetView<CartController>
                 position: PopupMenuPosition.under,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12.0)),
-                color: Get.theme.colorScheme.surface,
+                color: Get.theme.colorScheme.secondary,
                 itemBuilder: (_) {
                   return controller.orders.value.map((choice) {
                     return PopupMenuItem(

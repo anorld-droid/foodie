@@ -14,7 +14,7 @@ class DeliveryView extends GetView<DeliveryController> {
   Widget build(BuildContext context) {
     Get.put(DeliveryController(model: model));
     return Scaffold(
-      backgroundColor: Get.theme.colorScheme.onBackground.withAlpha(230),
+      backgroundColor: Get.theme.colorScheme.onSurface,
       body: const Body(),
       bottomNavigationBar: const DeliveryDetails(),
     );

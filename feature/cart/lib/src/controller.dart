@@ -154,11 +154,11 @@ class CartController extends GetxController {
       shortToast(
           'We start shipping for amounts above ${CommonStrings.currency}${shipAmount.toStringAsFixed(0)}');
     } else if (_shippingInfo.value?.name == null) {
-      shippingDialog();
+      updateShipping();
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');
     } else {
-      bottomSheet();
+      bottomSheet(const Payment());
       await _transact();
       sendMessage();
     }
@@ -295,9 +295,9 @@ class CartController extends GetxController {
     }
   }
 
-  void bottomSheet() async {
+  void bottomSheet(Widget widget) async {
     await Get.bottomSheet<bool?>(
-      const Payment(),
+      widget,
       backgroundColor: Get.theme.colorScheme.background,
       clipBehavior: Clip.hardEdge,
       elevation: 4,
@@ -306,15 +306,8 @@ class CartController extends GetxController {
     );
   }
 
-  Future<void> shippingDialog() async {
-    await showDialog<Widget>(
-        context: Get.context!,
-        barrierLabel:
-            MaterialLocalizations.of(Get.context!).modalBarrierDismissLabel,
-        barrierColor: Get.theme.colorScheme.onBackground.withAlpha(180),
-        builder: (BuildContext buildContext) {
-          return const DialogLayout();
-        });
+  Future<void> updateShipping() async {
+    bottomSheet(const DialogLayout());
   }
 
   void navigateToDelivery(ShippingModel order) {

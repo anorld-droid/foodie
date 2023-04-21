@@ -25,19 +25,24 @@ class TopBar extends GetView<DeliveryController>
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
-                color: Get.theme.colorScheme.background,
+                color: Get.theme.colorScheme.tertiary,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     Icons.arrow_back,
-                    color: Get.theme.colorScheme.onBackground,
+                    color: Get.theme.colorScheme.onPrimary,
                   ),
                   const SizedBox(
                     width: 4.0,
                   ),
-                  Text(Strings.back, style: Get.textTheme.bodySmall)
+                  Text(
+                    Strings.back,
+                    style: Get.textTheme.bodySmall?.copyWith(
+                      color: Get.theme.colorScheme.onPrimary,
+                    ),
+                  )
                 ],
               ),
             ),

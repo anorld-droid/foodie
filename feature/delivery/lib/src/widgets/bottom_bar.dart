@@ -2,7 +2,6 @@ import 'package:delivery/src/controller.dart';
 import 'package:delivery/src/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
 class DeliveryDetails extends GetView<DeliveryController> {
@@ -15,7 +14,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
     return Container(
       height: Get.height * 0.3,
       decoration: BoxDecoration(
-        color: Get.theme.colorScheme.background,
+        color: Get.theme.colorScheme.secondary,
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(16.0),
         ),
@@ -31,13 +30,13 @@ class DeliveryDetails extends GetView<DeliveryController> {
               ),
             ),
             Divider(
-              color: Colors.white70.withAlpha(130),
+              color: Get.theme.colorScheme.surface,
             ),
             Obx(
               () => _iconInfo(controller.status.value),
             ),
             Divider(
-              color: Colors.white70.withAlpha(130),
+              color: Get.theme.colorScheme.surface,
             ),
             Obx(
               () => controller.courier.value != null
@@ -99,28 +98,28 @@ class DeliveryDetails extends GetView<DeliveryController> {
             Icons.receipt_long,
             color: state >= 1
                 ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onBackground.withAlpha(180),
+                : Get.theme.colorScheme.onBackground.withAlpha(220),
           ),
           _separator(state >= 2),
           Icon(
             Icons.room_service,
             color: state >= 2
                 ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onBackground.withAlpha(180),
+                : Get.theme.colorScheme.onBackground.withAlpha(220),
           ),
           _separator(state >= 3),
           Icon(
             Icons.directions_bike,
             color: state >= 3
                 ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onBackground.withAlpha(180),
+                : Get.theme.colorScheme.onBackground.withAlpha(220),
           ),
           _separator(state >= 4),
           Icon(
             Icons.check_circle,
             color: state >= 4
                 ? Get.theme.colorScheme.primary
-                : Get.theme.colorScheme.onBackground.withAlpha(180),
+                : Get.theme.colorScheme.onBackground.withAlpha(220),
           ),
         ],
       ),
@@ -139,7 +138,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
             decoration: BoxDecoration(
                 color: status
                     ? Get.theme.colorScheme.primary
-                    : Get.theme.colorScheme.onBackground.withAlpha(180),
+                    : Get.theme.colorScheme.onBackground.withAlpha(200),
                 borderRadius: BorderRadius.circular(30.0)),
           ),
         ),

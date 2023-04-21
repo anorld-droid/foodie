@@ -14,7 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
-class DeliveryController extends GetxController {
+class DeliveryController extends GetxController
+    with GetTickerProviderStateMixin {
   final ShippingModel model;
   DeliveryController({required this.model});
 
@@ -38,12 +39,18 @@ class DeliveryController extends GetxController {
 
   final Rx<Courier?> courier = Rx(null);
 
+  //Progressbar controller
+  late AnimationController animationController;
+
   @override
   void onInit() async {
-    super.onInit();
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+
     initVars();
     await loadData();
     setCustomMarkerIcon();
+    super.onInit();
   }
 
   void initVars() {
@@ -64,6 +71,7 @@ class DeliveryController extends GetxController {
   }
 
   Future<void> loadData() async {
+    animationController.repeat();
     var snap = await _shippingUseCase.getDocs(
         _authenticateUser.getUserId()!, model.id!);
     snap.listen((event) async {
@@ -155,6 +163,7 @@ class DeliveryController extends GetxController {
     GoogleMapController googleMapController = await mapController.future;
     googleMapController
         .animateCamera(CameraUpdate.newLatLngBounds(bounds, 50.0));
+    animationController.reset();
   }
 
   void setCustomMarkerIcon() async {

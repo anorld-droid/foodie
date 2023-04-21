@@ -22,24 +22,23 @@ class TriceAppController extends GetxController {
     _authenticateUser = AuthenticateUser();
     themeHelper = Get.find();
     initTheme();
-    if (_authenticateUser.isUserSignedIn()) {
-      _messageUseCase.pushNotification(({body, dataBody, dataTitle, title}) {
-        if (title != null &&
-            body != null &&
-            dataTitle != null &&
-            dataBody != null) {
-          showSimpleNotification(
-            Text(
-              title,
-              style: Get.textTheme.bodyLarge,
-            ),
-            subtitle: Text(body, style: Get.textTheme.bodySmall),
-            background: Get.theme.colorScheme.background,
-            duration: const Duration(seconds: 2),
-          );
-        }
-      });
-    }
+    _messageUseCase.pushNotification(({body, dataBody, dataTitle, title}) {
+      if (title != null &&
+          body != null &&
+          dataTitle != null &&
+          dataBody != null) {
+        showSimpleNotification(
+          Text(
+            title,
+            style: Get.textTheme.bodyLarge,
+          ),
+          subtitle: Text(body, style: Get.textTheme.bodySmall),
+          background: Get.theme.colorScheme.background,
+          duration: const Duration(seconds: 2),
+        );
+      }
+    });
+
     super.onReady();
   }
 

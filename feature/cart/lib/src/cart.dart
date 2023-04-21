@@ -54,7 +54,7 @@ class Cart extends GetView<CartController> {
               ),
             ),
             InkWell(
-              onTap: controller.shippingDialog,
+              onTap: controller.updateShipping,
               borderRadius: BorderRadius.circular(12.0),
               child: Container(
                 height: 40,
