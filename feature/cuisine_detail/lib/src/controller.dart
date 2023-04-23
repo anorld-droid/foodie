@@ -3,7 +3,6 @@ import 'package:cuisine_detail/src/widgets/restaurant_search_layout.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 
@@ -161,14 +160,16 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> customDialog(BuildContext context, Widget authDialog) async {
-    showDialog<Widget>(
-        context: context,
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: Get.theme.colorScheme.background,
-        builder: (BuildContext buildContext) {
-          return authDialog;
-        });
+    Get.bottomSheet<Widget>(
+      authDialog,
+      isScrollControlled: true,
+      elevation: 8.0,
+      barrierColor: Get.theme.colorScheme.primaryContainer,
+      backgroundColor: Get.theme.colorScheme.background,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    );
   }
 
   void changeStore(String name) {

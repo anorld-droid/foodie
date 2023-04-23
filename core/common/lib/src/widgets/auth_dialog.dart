@@ -41,7 +41,7 @@ class AuthDialog extends GetView<CommonController> {
               child: SizedBox(
                 width: Get.width * 0.8,
                 child: Card(
-                  color: Get.theme.colorScheme.surface,
+                  color: Get.theme.colorScheme.tertiary,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),

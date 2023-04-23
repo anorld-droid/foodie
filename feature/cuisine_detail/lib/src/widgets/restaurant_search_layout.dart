@@ -37,55 +37,53 @@ class SearchLayoutState extends State<SearchLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: Get.width * 0.85,
-        height: Get.height * 0.45,
-        decoration: BoxDecoration(
-            color: Get.theme.colorScheme.background,
-            borderRadius: BorderRadius.circular(12.0)),
-        child: Material(
-            color: Get.theme.colorScheme.primaryContainer,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(
-                        top: 8.0, left: 16.0, right: 16.0),
-                    child: TextField(
-                      style: Get.textTheme.bodySmall?.copyWith(),
-                      focusNode: _focusNode,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.search,
+    return Container(
+      width: Get.width * 0.85,
+      height: Get.height * 0.45,
+      decoration: BoxDecoration(
+          color: Get.theme.colorScheme.background,
+          borderRadius: BorderRadius.circular(12.0)),
+      child: Material(
+          color: Get.theme.colorScheme.primaryContainer,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                  padding:
+                      const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+                  child: TextField(
+                    style: Get.textTheme.bodySmall?.copyWith(),
+                    focusNode: _focusNode,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: _focusNode.hasFocus
+                            ? Get.theme.colorScheme.primary
+                            : Get.theme.colorScheme.onBackground,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.close,
                           color: _focusNode.hasFocus
                               ? Get.theme.colorScheme.primary
                               : Get.theme.colorScheme.onBackground,
                         ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            color: _focusNode.hasFocus
-                                ? Get.theme.colorScheme.primary
-                                : Get.theme.colorScheme.onBackground,
-                          ),
-                          onPressed: () {
-                            controller.clear();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                        ),
-                        hintText: "Search...",
+                        onPressed: () {
+                          controller.clear();
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
                       ),
-                      controller: controller,
-                    )),
-                Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: _buildListView()),
-                )
-              ],
-            )),
-      ),
+                      hintText: "Search...",
+                    ),
+                    controller: controller,
+                  )),
+              Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: _buildListView()),
+              )
+            ],
+          )),
     );
   }
 
