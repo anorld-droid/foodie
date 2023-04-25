@@ -29,7 +29,7 @@ class ThemeService {
 
 class Themes {
   static final light = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Colors.grey.shade100,
     brightness: Brightness.dark,
     primaryColorDark: Colors.black,
     textTheme: TextTheme(
@@ -112,7 +112,7 @@ class Themes {
   );
 
   static final dark = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: const Color.fromARGB(5, 0, 0, 0),
+    scaffoldBackgroundColor: Colors.black,
     brightness: Brightness.light,
     primaryColorDark: const Color.fromARGB(255, 250, 250, 250),
     textTheme: TextTheme(

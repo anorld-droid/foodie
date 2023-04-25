@@ -4,4 +4,5 @@ class Routes {
   static String cuisineDetail = '/feature/cuisine_deatil';
   static String cart = '/feature/cart';
   static String delivery = '/feature/delivery';
+  static String wallet = '/feature/wallet';
 }

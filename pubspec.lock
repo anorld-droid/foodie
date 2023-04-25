@@ -930,6 +930,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.7.6"
+  wallet:
+    dependency: "direct main"
+    description:
+      path: "feature/wallet"
+      relative: true
+    source: path
+    version: "0.0.1"
   win32:
     dependency: transitive
     description:

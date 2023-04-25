@@ -189,6 +189,9 @@ class CuisineController extends GetxController
     switch (option) {
       case 'Repeat last order':
         break;
+      case 'My Wallet':
+        Get.toNamed<void>(Routes.wallet);
+        break;
       default:
         if (kDebugMode) {
           print(option);

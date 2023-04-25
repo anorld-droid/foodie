@@ -33,6 +33,8 @@ dependencies:
     path: feature/cuisine_detail
   delivery:
     path: feature/delivery
+  wallet:
+    path: feature/wallet
 
 dev_dependencies:
   flutter_test:

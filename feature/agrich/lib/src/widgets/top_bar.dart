@@ -3,7 +3,6 @@ import 'package:agrich/src/strings.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
 class CuisineTopBar extends GetView<CuisineController> {
