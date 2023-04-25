@@ -8,4 +8,6 @@ class Strings {
   static String topUp = 'Top Up';
   static String currentBalance = 'BALANCE';
   static String creditLimit = 'CREDIT';
+  static String subscribe = 'SUBSCRIBE';
+  static String transactions = 'Transactions';
 }

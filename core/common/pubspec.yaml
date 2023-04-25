@@ -12,10 +12,9 @@ dependencies:
     sdk: flutter
   get: ^4.6.5
   google_fonts: ^3.0.1
-  slider_button: ^2.0.0
-  image_picker: ^0.8.6
   flutter_svg: ^1.1.6
   fluttertoast: ^8.1.2
+  intl: ^0.17.0
 
   domain:
     path: ../domain

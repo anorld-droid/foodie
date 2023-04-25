@@ -7,13 +7,40 @@ import 'package:wallet/src/controller.dart';
 import 'package:wallet/src/strings.dart';
 import 'package:wallet/src/widgets/membership_cards.dart';
 
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
+
 class Body extends GetView<WalletController> {
   const Body({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [const Executive(), _expenses()],
+      children: [
+        const Executive(),
+        _expenses(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: Get.width,
+            height: 40.0,
+            decoration: BoxDecoration(
+              color: Get.theme.colorScheme.primary,
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(
+                width: .0,
+                color: Get.theme.colorScheme.onBackground.withOpacity(0.2),
+              ),
+            ),
+            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+            child: Center(
+              child: Text(Strings.subscribe,
+                  style: Get.textTheme.bodyLarge?.copyWith(
+                    color: Get.theme.colorScheme.onPrimary,
+                  )),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

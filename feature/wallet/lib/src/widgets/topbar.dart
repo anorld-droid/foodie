@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:wallet/src/controller.dart';
 import 'package:wallet/src/strings.dart';
 
+/// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
+
 class TopBar extends GetView<WalletController> implements PreferredSizeWidget {
   const TopBar({super.key});
 

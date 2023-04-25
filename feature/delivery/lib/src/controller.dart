@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:common/common.dart';
-import 'package:delivery/delivery.dart';
 import 'package:delivery/src/strings.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:model/model.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:intl/intl.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
 class DeliveryController extends GetxController
@@ -234,8 +232,8 @@ class DeliveryController extends GetxController
               : historicalData.reduce((a, b) => a + b) ~/
                   historicalData.length),
     ); // Calculate average historical delivery time
-    final formatter = DateFormat('h:mm a');
-    final formattedDeliveryTime = formatter.format(estimatedDeliveryTime);
+
+    final formattedDeliveryTime = timeFormatter.format(estimatedDeliveryTime);
     // Display the estimated delivery time
     time.value = formattedDeliveryTime.toString();
     return distanceMatrix;
