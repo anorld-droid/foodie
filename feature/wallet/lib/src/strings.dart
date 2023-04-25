@@ -2,4 +2,10 @@
 class Strings {
   static String back = 'Back';
   static String appBarTitle = 'My Wallet';
+  static String executive = 'Executive';
+  static String validThru = 'Valid Thru';
+  static String memberSince = 'Member Since';
+  static String topUp = 'Top Up';
+  static String currentBalance = 'BALANCE';
+  static String creditLimit = 'CREDIT';
 }

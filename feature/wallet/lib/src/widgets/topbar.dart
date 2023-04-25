@@ -44,6 +44,26 @@ class TopBar extends GetView<WalletController> implements PreferredSizeWidget {
           ),
         ),
       ),
+      actions: [
+        InkWell(
+          onTap: () => controller.hideContent.toggle(),
+          borderRadius: BorderRadius.circular(12.0),
+          child: Container(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Obx(
+                () => Icon(
+                  controller.hideContent.value
+                      ? Icons.visibility
+                      : Icons.visibility_off,
+                  color: Get.theme.colorScheme.onBackground,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

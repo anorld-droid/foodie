@@ -5,7 +5,7 @@ class CommonStrings {
   static String appDev = 'Patrice Mulindi';
   static String underDevelopmentTitle = 'This is currently work in progress.';
   static String underDevelopmentDesc = 'Grab a beverage and check back later!';
-  static String currency = 'Ksh ';
+  static String currency = 'Ksh';
   //Auth dialog
   static String logIn = 'Log in';
   static String email = 'Enter your email';

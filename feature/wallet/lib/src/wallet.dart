@@ -10,6 +10,7 @@ class Wallet extends GetView<WalletController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(WalletController());
     return const Scaffold(
       appBar: TopBar(),
       body: Body(),
