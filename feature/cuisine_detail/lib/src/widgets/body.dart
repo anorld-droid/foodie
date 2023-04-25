@@ -268,8 +268,7 @@ class DetailBody extends GetView<Controller> {
                                   )),
                             ),
                             TextSpan(
-                              text: controller.sellingPrice.value
-                                  .toStringAsFixed(2),
+                              text: value.format(controller.sellingPrice.value),
                               style: Get.textTheme.headlineMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),

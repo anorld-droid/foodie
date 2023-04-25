@@ -142,8 +142,8 @@ class OrderItems extends GetView<CartController> {
                                               )),
                                         ),
                                         TextSpan(
-                                          text: item.sellingPrice.value
-                                              .toStringAsFixed(2),
+                                          text: value
+                                              .format(item.sellingPrice.value),
                                           style:
                                               Get.textTheme.bodyLarge?.copyWith(
                                             fontWeight: FontWeight.bold,

@@ -92,7 +92,7 @@ class CartBody extends GetView<CartController> {
                                 )),
                           ),
                           TextSpan(
-                            text: controller.subTotal.value.toStringAsFixed(2),
+                            text: value.format(controller.subTotal.value),
                             style: Get.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.w100,
                                 color: Get.theme.colorScheme.onBackground
@@ -135,8 +135,7 @@ class CartBody extends GetView<CartController> {
                                 )),
                           ),
                           TextSpan(
-                            text:
-                                controller.shippingFee.value.toStringAsFixed(2),
+                            text: value.format(controller.shippingFee.value),
                             style: Get.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.w100,
                                 color: Get.theme.colorScheme.onBackground
@@ -177,7 +176,7 @@ class CartBody extends GetView<CartController> {
                                 )),
                           ),
                           TextSpan(
-                            text: controller.total.value.toStringAsFixed(2),
+                            text: value.format(controller.total.value),
                             style: Get.textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: Get.theme.colorScheme.onBackground),

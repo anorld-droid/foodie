@@ -146,7 +146,7 @@ class Payment extends GetView<CartController> {
                                   )),
                             ),
                             TextSpan(
-                              text: controller.total.value.toStringAsFixed(2),
+                              text: value.format(controller.total.value),
                               style: Get.textTheme.bodySmall?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: Get.theme.colorScheme.onBackground,
