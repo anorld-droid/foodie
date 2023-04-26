@@ -1,5 +1,6 @@
 import 'package:common/common.dart';
 import 'package:domain/domain.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 
@@ -15,17 +16,21 @@ class WalletController extends GetxController {
   late final SubscriptionUseCase _subscription;
 
   final Rx<Wallet?> wallet = Rx(null);
-  final Rx<Subscription?> benefits = Rx(null);
+  final Rx<Subscription?> subscription = Rx(null);
   final RxString userID = ''.obs;
   final RxString timeStamp = ''.obs;
-  final RxString username = ''.obs;
+  final Rx<User?> user = Rx(null);
 
   @override
   void onInit() {
+    init();
+    super.onInit();
+  }
+
+  void init() {
     _user = UserModelUseCase();
     _auth = AuthenticateUser();
     _subscription = SubscriptionUseCase();
-    super.onInit();
   }
 
   Future<void> loadData() async {
@@ -33,12 +38,11 @@ class WalletController extends GetxController {
       userID.value = formartUserID(_auth.getUserId()!);
       wallet.value = await _user.getWalletInfo(_auth.getUserId()!);
       timeStamp.value = yearMonthFormatter.format(_auth.creationTime()!);
-      var userSnap = await _user.get(_auth.getUserId()!);
-      username.value = userSnap!.username;
+      user.value = await _user.get(_auth.getUserId()!);
     }
     var snap = await _subscription.get();
     snap.listen((event) {
-      benefits.value = event.data();
+      subscription.value = event.data();
     });
   }
 
@@ -50,5 +54,31 @@ class WalletController extends GetxController {
     return finalString;
   }
 
-  void pay() {}
+  Future<void> checkout(double amount) async {
+    await bottomSheet(Payment(
+      amount: amount,
+      onPaymentSuccesful: () async {
+        DateTime now = DateTime.now().add(const Duration(days: 30));
+        Wallet jsonWallet = Wallet(
+          balance: amount,
+          borrowed: wallet.value!.borrowed,
+          creditLimit: wallet.value!.creditLimit,
+          validThru: now,
+        );
+        _user.updateWalletInfo(userId: _auth.getUserId()!, wallet: jsonWallet);
+        shortToast('Subscription successful');
+      },
+    ));
+  }
+
+  Future<void> bottomSheet(Widget widget) async {
+    await Get.bottomSheet<bool?>(
+      widget,
+      backgroundColor: Get.theme.colorScheme.background,
+      clipBehavior: Clip.hardEdge,
+      elevation: 4,
+      barrierColor: Get.theme.colorScheme.primaryContainer,
+      isScrollControlled: false,
+    );
+  }
 }

@@ -176,7 +176,8 @@ class Executive extends GetView<WalletController> {
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Obx(
                                       () => Text(
-                                        controller.username.value.toUpperCase(),
+                                        controller.user.value!.username
+                                            .toUpperCase(),
                                         style:
                                             Get.textTheme.bodyMedium?.copyWith(
                                           color:

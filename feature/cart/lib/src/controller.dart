@@ -1,5 +1,4 @@
 import 'package:cart/src/widgets/dialog_layout.dart';
-import 'package:cart/src/widgets/payment.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -158,9 +157,28 @@ class CartController extends GetxController {
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');
     } else {
-      bottomSheet(const Payment());
-      await _transact();
-      sendMessage();
+      bottomSheet(Payment(
+        amount: total.value,
+        onPaymentSuccesful: () async {
+          ShippingModel shippingModel = ShippingModel(
+              user: _shippingInfo.value!,
+              items: items.value,
+              order: 'reqID',
+              status: 'Received',
+              timeStamp: DateTime.now());
+          await _shippingUseCase.upload(
+            userId: _authenticateUser.getUserId()!,
+            shippingModel: shippingModel,
+          );
+
+          items.value.clear();
+          itemLength.value = items.value.length;
+          items.refresh();
+          calculateTotal();
+          await Future<void>.delayed(const Duration(seconds: 2));
+          shortToast('Checkout successful');
+        },
+      ));
     }
   }
 
@@ -170,57 +188,6 @@ class CartController extends GetxController {
         break;
       default:
     }
-  }
-
-  Future<void> _transact() async {
-    final reqID = await _paymentOptionsUseCase.withMPesa(
-      _authenticateUser.getUserId()!,
-      total.value.toStringAsFixed(0),
-      _shippingInfo.value!.phoneNumber!,
-      'food items',
-    );
-    if (reqID != null) {
-      final snap = await _paymentOptionsUseCase
-          .getPaymentStatus<MpesaResultPayment>(reqId: reqID);
-      snap.listen((event) async {
-        var element =
-            event.docs.firstWhereOrNull((element) => element.id == reqID);
-        if (element != null) {
-          var data = MpesaResultPayment.fromJson(
-              element.data()['stkCallback'] as Map<String, dynamic>);
-          if (data.responseCode == 0) {
-            ShippingModel shippingModel = ShippingModel(
-                user: _shippingInfo.value!,
-                items: items.value,
-                order: 'reqID',
-                status: 'Received',
-                timeStamp: DateTime.now());
-            await _shippingUseCase.upload(
-              userId: _authenticateUser.getUserId()!,
-              shippingModel: shippingModel,
-            );
-
-            items.value.clear();
-            itemLength.value = items.value.length;
-            items.refresh();
-            calculateTotal();
-            await Future<void>.delayed(const Duration(seconds: 2));
-            shortToast('Checkout successful');
-          } else {
-            longToast(data.responseDescription);
-          }
-        }
-      });
-    } else {
-      longToast('Payment operation failed.');
-    }
-  }
-
-  void sendMessage() {
-    String text = 'Your order has been received and is being processed.';
-    MessageBird sms =
-        MessageBird(to: _shippingInfo.value!.phoneNumber!, text: text);
-    _sendMessageUseCase.invoke(messageBird: sms);
   }
 
   void deleteItem(CartItem item) {

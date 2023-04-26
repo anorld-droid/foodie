@@ -49,7 +49,10 @@ class Subscriptions extends GetView<WalletController> {
                       ),
                       !controller.learnMore.value
                           ? InkWell(
-                              onTap: () {},
+                              onTap: () async {
+                                await controller.checkout(controller
+                                    .subscription.value!.executivePrice);
+                              },
                               child: Container(
                                 alignment: Alignment.center,
                                 width: Get.width * 0.35,
@@ -78,7 +81,8 @@ class Subscriptions extends GetView<WalletController> {
                 ? Column(
                     children: [
                       BenefitDetails(
-                          benefits: controller.benefits.value!.executiveBenefits,
+                          benefits:
+                              controller.subscription.value!.executiveBenefits,
                           showDetails: controller.executiveBenefitDetails),
                       InkWell(
                         onTap: controller.executiveBenefitDetails.toggle,
@@ -100,8 +104,19 @@ class Subscriptions extends GetView<WalletController> {
                           ],
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Text(
+                          '${controller.subscription.value!.executivePrice}/Month',
+                          style: Get.textTheme.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
                       InkWell(
-                        onTap: controller.pay,
+                        onTap: () async {
+                          await controller.checkout(
+                              controller.subscription.value!.executivePrice);
+                        },
                         child: Container(
                           alignment: Alignment.center,
                           width: Get.width * 0.55,
@@ -157,7 +172,10 @@ class Subscriptions extends GetView<WalletController> {
                       ),
                       !controller.learnMore.value
                           ? InkWell(
-                              onTap: controller.pay,
+                              onTap: () async {
+                                await controller.checkout(
+                                    controller.subscription.value!.elitePrice);
+                              },
                               child: Container(
                                 alignment: Alignment.center,
                                 width: Get.width * 0.35,
@@ -186,8 +204,9 @@ class Subscriptions extends GetView<WalletController> {
                 ? Column(
                     children: [
                       BenefitDetails(
-                          benefits: controller.benefits.value!.eliteBenefits,
-                          showDetails: controller.eliteBenefitDetails),
+                        benefits: controller.subscription.value!.eliteBenefits,
+                        showDetails: controller.eliteBenefitDetails,
+                      ),
                       InkWell(
                         onTap: controller.eliteBenefitDetails.toggle,
                         child: Row(
@@ -208,8 +227,19 @@ class Subscriptions extends GetView<WalletController> {
                           ],
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Text(
+                          '${controller.subscription.value!.elitePrice}/Month',
+                          style: Get.textTheme.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          await controller.checkout(
+                              controller.subscription.value!.elitePrice);
+                        },
                         child: Container(
                           alignment: Alignment.center,
                           width: Get.width * 0.55,
