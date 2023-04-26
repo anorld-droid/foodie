@@ -12,32 +12,72 @@ class UserModelUseCase {
   /// NOTE: doc should be user id
   Future<void> upload(String doc, User user) async {
     await _cloudNetWorkDataSource.uploadOrReplaceDoc<User>(
-        collection: Constants.users,
-        doc: doc,
-        file: user,
-        fromFirestore: User.fromFirestore,
-        toFirestore: (User user, _) => user.toFirestore());
+      collection: Constants.users,
+      doc: doc,
+      file: user,
+      fromFirestore: User.fromFirestore,
+      toFirestore: (User user, _) => user.toFirestore(),
+    );
   }
 
   /// Get the file to the specified path
   /// NOTE: doc should be user id
   Future<User?> get(String doc) async {
     final snap = await _cloudNetWorkDataSource.getDoc<User>(
-        collection: Constants.users,
-        doc: doc,
-        fromFirestore: User.fromFirestore,
-        toFirestore: (User user, _) => user.toFirestore());
+      collection: Constants.users,
+      doc: doc,
+      fromFirestore: User.fromFirestore,
+      toFirestore: (User user, _) => user.toFirestore(),
+    );
     return snap.data();
+  }
+
+  /// Upload the file to the specified path
+  /// NOTE: doc should be user id
+  Future<void> uploadWalletInfo(String doc, Wallet wallet) async {
+    await _cloudNetWorkDataSource.uploadOrReplaceDoc<Wallet>(
+      collection: Constants.wallet,
+      doc: doc,
+      file: wallet,
+      fromFirestore: Wallet.fromFirestore,
+      toFirestore: (Wallet wallet, _) => wallet.toFirestore(),
+    );
+  }
+
+  /// Get the file to the specified path
+  /// NOTE: doc should be user id
+  Future<Wallet?> getWalletInfo(String doc) async {
+    final snap = await _cloudNetWorkDataSource.getDoc<Wallet>(
+      collection: Constants.wallet,
+      doc: doc,
+      fromFirestore: Wallet.fromFirestore,
+      toFirestore: (Wallet wallet, _) => wallet.toFirestore(),
+    );
+    return snap.data();
+  }
+
+  /// update the file to the specified path
+  /// NOTE: docPath should be user id
+  Future<void> updateWalletInfo({
+    required String userId,
+    required Wallet wallet,
+  }) async {
+    await _cloudNetWorkDataSource.updateField<ShippingInfo>(
+      collection: Constants.users,
+      doc: userId,
+      data: wallet.toFirestore(),
+    );
   }
 
   /// Get the file to the specified path
   /// NOTE: doc should be user id
   Future<Stream<DocumentSnapshot<User>>> getShippingInfo(String doc) async {
     final snap = await _cloudNetWorkDataSource.getDocStream<User>(
-        collection: Constants.users,
-        doc: doc,
-        fromFirestore: User.fromFirestore,
-        toFirestore: (User user, _) => user.toFirestore());
+      collection: Constants.users,
+      doc: doc,
+      fromFirestore: User.fromFirestore,
+      toFirestore: (User user, _) => user.toFirestore(),
+    );
     return snap;
   }
 

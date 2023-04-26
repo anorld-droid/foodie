@@ -16,3 +16,4 @@ export 'src/push_notification.dart';
 export 'src/restaurant.dart';
 export 'src/courier.dart';
 export 'src/delivery.dart';
+export 'src/wallet.dart';

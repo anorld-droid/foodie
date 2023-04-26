@@ -20,4 +20,6 @@ class Constants {
   //Delivery Strings
   static String deliveries = 'deliveries';
   static String historicalData = 'historicalData';
+  //Wallet
+  static String wallet = 'wallet';
 }

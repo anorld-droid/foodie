@@ -19,6 +19,7 @@ class Strings {
         'Up to KSH. 3,000 on total amount you spend on foodie purchases',
     'Foodie Services Discounts':
         'Additional benefits and discounts on many foodie services and goods',
+    '75% less shipping fee': 'Pay KSH.5 shipping fee per kilometer',
     'Shop Online and in-stores':
         'Shop all foodie stores and online through our mobile application',
     'Includes 2 Membership Cards': 'For you and for someone in your household',
@@ -36,6 +37,7 @@ class Strings {
         'Up to KSH. 1,000 on total amount you spend on foodie.',
     'Shop Online and in-stores':
         'Shop all foodie stores and online through our mobile application',
+    'KSH. 25 shipping fee': 'Pay KSH. 25 for the first 10 kilometerms',
     '100% Satisfaction Guarantee':
         'We will cancel and refund your membership at any time if you are dissatisfied',
   };
