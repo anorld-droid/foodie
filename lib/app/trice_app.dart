@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
 import 'package:trice/app/trice_app_controller.dart';
-import 'package:wallet/wallet.dart';
+import 'package:wallet/wallet.dart' as feature;
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 11.01.2023.
 class TriceApp extends GetView<TriceAppController> {
@@ -65,7 +65,7 @@ class TriceApp extends GetView<TriceAppController> {
             model: Get.arguments as ShippingModel,
           ),
         ),
-        GetPage(name: Routes.wallet, page: () => const Wallet())
+        GetPage(name: Routes.wallet, page: () => const feature.Wallet())
       ],
     );
   }

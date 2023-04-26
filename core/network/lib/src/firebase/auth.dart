@@ -65,7 +65,7 @@ class UserAuth {
     return _auth.currentUser?.photoURL;
   }
 
-  bool? userExists(String phoneNumber) {
-    return true;
+  DateTime? creationTime() {
+    return _auth.currentUser?.metadata.creationTime;
   }
 }

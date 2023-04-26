@@ -78,7 +78,7 @@ class Subscriptions extends GetView<WalletController> {
                 ? Column(
                     children: [
                       BenefitDetails(
-                          benefits: Strings.executiveBenefits,
+                          benefits: controller.benefits.value!.executiveBenefits,
                           showDetails: controller.executiveBenefitDetails),
                       InkWell(
                         onTap: controller.executiveBenefitDetails.toggle,
@@ -101,7 +101,7 @@ class Subscriptions extends GetView<WalletController> {
                         ),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: controller.pay,
                         child: Container(
                           alignment: Alignment.center,
                           width: Get.width * 0.55,
@@ -157,7 +157,7 @@ class Subscriptions extends GetView<WalletController> {
                       ),
                       !controller.learnMore.value
                           ? InkWell(
-                              onTap: () {},
+                              onTap: controller.pay,
                               child: Container(
                                 alignment: Alignment.center,
                                 width: Get.width * 0.35,
@@ -186,7 +186,7 @@ class Subscriptions extends GetView<WalletController> {
                 ? Column(
                     children: [
                       BenefitDetails(
-                          benefits: Strings.eliteBenefits,
+                          benefits: controller.benefits.value!.eliteBenefits,
                           showDetails: controller.eliteBenefitDetails),
                       InkWell(
                         onTap: controller.eliteBenefitDetails.toggle,

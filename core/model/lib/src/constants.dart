@@ -77,4 +77,6 @@ class Constants {
   static String eliteBenefits = 'eliteBenefits';
   static String validThru = 'validThru';
   static String creditLimit = 'creditLimit';
+  static String elitePrice = 'elitePrice';
+  static String executivePrice = 'executivePrice';
 }

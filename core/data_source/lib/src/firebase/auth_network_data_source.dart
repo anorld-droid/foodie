@@ -39,4 +39,8 @@ class AuthNetworkDataSource {
   String? getUserPhotoUrl() {
     return _userAuth.getUserPhotoUrl();
   }
+
+  DateTime? creationTime() {
+    return _userAuth.creationTime();
+  }
 }

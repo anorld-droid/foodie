@@ -80,8 +80,14 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
           emailAddress: authInputs['email']!,
           password: authInputs['password']!);
       if (message == 'Account created successfully') {
+        Wallet wallet = Wallet(
+            balance: 0,
+            borrowed: 0.0,
+            creditLimit: 0.0,
+            validThru: DateTime.now());
         await _uploadUserInfo(_authenticateUser.getUserName() ?? 'Anonymous');
-        await _onboardingStatus.update(true);
+        await _userModelUseCase.uploadWalletInfo(
+            _authenticateUser.getUserId()!, wallet);
       }
     }
     if (message.isNotEmpty) {

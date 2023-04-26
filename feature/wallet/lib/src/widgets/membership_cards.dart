@@ -83,7 +83,8 @@ class Executive extends GetView<WalletController> {
                                                   color: Get.theme.colorScheme
                                                       .onPrimary)),
                                       TextSpan(
-                                        text: '3,200',
+                                        text: value.format(
+                                            controller.wallet.value?.balance),
                                         style: Get.textTheme.bodySmall
                                             ?.copyWith(
                                                 color: Get.theme.colorScheme
@@ -96,13 +97,15 @@ class Executive extends GetView<WalletController> {
                             ),
                           ],
                         ),
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              '0NrQ y2Xn **** m706 P6P2',
-                              style: Get.textTheme.labelSmall?.copyWith(
-                                  color: Get.theme.colorScheme.onPrimary),
-                              textAlign: TextAlign.justify,
+                        Obx(
+                          () => Expanded(
+                            child: Center(
+                              child: Text(
+                                controller.userID.value,
+                                style: Get.textTheme.labelSmall?.copyWith(
+                                    color: Get.theme.colorScheme.onPrimary),
+                                textAlign: TextAlign.justify,
+                              ),
                             ),
                           ),
                         ),
@@ -129,12 +132,16 @@ class Executive extends GetView<WalletController> {
                                                         .onPrimary
                                                         .withAlpha(200)),
                                           ),
-                                          Text(
-                                            '10/25',
-                                            style: Get.textTheme.bodyMedium
-                                                ?.copyWith(
-                                                    color: Get.theme.colorScheme
-                                                        .onPrimary),
+                                          Obx(
+                                            () => Text(
+                                              controller.timeStamp.value,
+                                              style: Get.textTheme.bodyMedium
+                                                  ?.copyWith(
+                                                      color: Get
+                                                          .theme
+                                                          .colorScheme
+                                                          .onPrimary),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -148,12 +155,18 @@ class Executive extends GetView<WalletController> {
                                                         .onPrimary
                                                         .withAlpha(200)),
                                           ),
-                                          Text(
-                                            '10/25',
-                                            style: Get.textTheme.bodyMedium
-                                                ?.copyWith(
-                                                    color: Get.theme.colorScheme
-                                                        .onPrimary),
+                                          Obx(
+                                            () => Text(
+                                              yearMonthFormatter.format(
+                                                  controller
+                                                      .wallet.value!.validThru),
+                                              style: Get.textTheme.bodyMedium
+                                                  ?.copyWith(
+                                                      color: Get
+                                                          .theme
+                                                          .colorScheme
+                                                          .onPrimary),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -161,12 +174,16 @@ class Executive extends GetView<WalletController> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(
-                                      'Patrice Mulindi'.toUpperCase(),
-                                      style: Get.textTheme.bodyMedium?.copyWith(
-                                        color: Get.theme.colorScheme.onPrimary,
+                                    child: Obx(
+                                      () => Text(
+                                        controller.username.value.toUpperCase(),
+                                        style:
+                                            Get.textTheme.bodyMedium?.copyWith(
+                                          color:
+                                              Get.theme.colorScheme.onPrimary,
+                                        ),
+                                        textAlign: TextAlign.start,
                                       ),
-                                      textAlign: TextAlign.start,
                                     ),
                                   ),
                                 ],
@@ -175,7 +192,7 @@ class Executive extends GetView<WalletController> {
                             Padding(
                               padding: const EdgeInsets.only(right: 0.0),
                               child: Text(
-                                'foodie',
+                                CommonStrings.appName,
                                 style: Get.textTheme.headlineLarge?.copyWith(
                                     color: Get.theme.colorScheme.primary,
                                     fontWeight: FontWeight.w100),

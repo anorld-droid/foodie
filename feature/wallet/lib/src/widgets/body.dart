@@ -9,7 +9,6 @@ import 'package:wallet/src/widgets/membership_cards.dart';
 import 'package:wallet/src/widgets/subscription.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
-
 class Body extends GetView<WalletController> {
   const Body({super.key});
 
@@ -81,7 +80,7 @@ class Body extends GetView<WalletController> {
                           style: Get.textTheme.bodyLarge,
                         ),
                         TextSpan(
-                          text: '3,200',
+                          text: value.format(controller.wallet.value?.borrowed),
                           style: Get.textTheme.bodyLarge,
                         ),
                       ],
@@ -131,7 +130,8 @@ class Body extends GetView<WalletController> {
                             text: '${CommonStrings.currency.toUpperCase()}. ',
                             style: Get.textTheme.bodyLarge),
                         TextSpan(
-                          text: '3,200',
+                          text: value
+                              .format(controller.wallet.value?.creditLimit),
                           style: Get.textTheme.bodyLarge,
                         ),
                       ],

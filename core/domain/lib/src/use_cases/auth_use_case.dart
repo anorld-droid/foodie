@@ -41,4 +41,8 @@ class AuthenticateUser {
   String? getUserProfilePic() {
     return _authNetworkDataSource.getUserPhotoUrl();
   }
+
+  DateTime? creationTime() {
+    return _authNetworkDataSource.creationTime();
+  }
 }
