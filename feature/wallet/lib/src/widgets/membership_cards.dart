@@ -1,9 +1,13 @@
+import 'dart:ui';
+
+import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wallet/src/controller.dart';
 import 'package:wallet/src/strings.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
-class Executive extends StatelessWidget {
+class Executive extends GetView<WalletController> {
   const Executive({super.key});
 
   @override
@@ -13,8 +17,10 @@ class Executive extends StatelessWidget {
         width: Get.width,
         height: 215.0,
         child: Card(
-          elevation: 5.0,
+          elevation: 6.0,
           color: Get.theme.colorScheme.tertiary,
+          shadowColor: Get.theme.colorScheme.onBackground.withAlpha(170),
+          semanticContainer: false,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
           child: Container(
@@ -52,10 +58,43 @@ class Executive extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          Strings.executive,
-                          style: Get.textTheme.labelSmall?.copyWith(
-                              color: Get.theme.colorScheme.onPrimary),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              Strings.executive,
+                              style: Get.textTheme.labelSmall?.copyWith(
+                                  color: Get.theme.colorScheme.onPrimary),
+                            ),
+                            Obx(
+                              () => ImageFiltered(
+                                imageFilter: controller.hideContent.value
+                                    ? ImageFilter.blur(sigmaX: 5, sigmaY: 5)
+                                    : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: '',
+                                    children: [
+                                      TextSpan(
+                                          text:
+                                              '${CommonStrings.currency.toUpperCase()}. ',
+                                          style: Get.textTheme.bodySmall
+                                              ?.copyWith(
+                                                  color: Get.theme.colorScheme
+                                                      .onPrimary)),
+                                      TextSpan(
+                                        text: '3,200',
+                                        style: Get.textTheme.bodySmall
+                                            ?.copyWith(
+                                                color: Get.theme.colorScheme
+                                                    .onPrimary),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Expanded(
                           child: Center(

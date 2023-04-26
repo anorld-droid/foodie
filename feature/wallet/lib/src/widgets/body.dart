@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:wallet/src/controller.dart';
 import 'package:wallet/src/strings.dart';
 import 'package:wallet/src/widgets/membership_cards.dart';
+import 'package:wallet/src/widgets/subscription.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
 
@@ -14,33 +15,41 @@ class Body extends GetView<WalletController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Executive(),
-        _expenses(),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: Get.width,
-            height: 40.0,
-            decoration: BoxDecoration(
-              color: Get.theme.colorScheme.primary,
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(
-                width: .0,
-                color: Get.theme.colorScheme.onBackground.withOpacity(0.2),
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Executive(),
+          _expenses(),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 24,
+              left: 24,
+              right: 24,
             ),
-            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-            child: Center(
-              child: Text(Strings.subscribe,
-                  style: Get.textTheme.bodyLarge?.copyWith(
-                    color: Get.theme.colorScheme.onPrimary,
-                  )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  Strings.subscribe,
+                  style: Get.textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                InkWell(
+                  onTap: controller.learnMore.toggle,
+                  child: Text(
+                    Strings.learnMore,
+                    style: Get.textTheme.bodySmall?.copyWith(
+                        color: Get.theme.colorScheme.primary,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-      ],
+          const Subscriptions()
+        ],
+      ),
     );
   }
 
@@ -55,7 +64,8 @@ class Body extends GetView<WalletController> {
               Text(
                 Strings.currentBalance,
                 style: Get.textTheme.bodySmall?.copyWith(
-                    color: Get.theme.colorScheme.onBackground.withAlpha(200)),
+                    color: Get.theme.colorScheme.onBackground.withAlpha(200),
+                    fontSize: 10),
               ),
               Obx(
                 () => ImageFiltered(
@@ -68,16 +78,11 @@ class Body extends GetView<WalletController> {
                       children: [
                         TextSpan(
                           text: '${CommonStrings.currency.toUpperCase()}. ',
-                          style: Get.textTheme.labelSmall?.copyWith(
-                              // fontWeight: FontWeight.bold,
-                              // textBaseline: TextBaseline.alphabetic,
-                              ),
+                          style: Get.textTheme.bodyLarge,
                         ),
                         TextSpan(
                           text: '3,200',
-                          style: Get.textTheme.labelSmall?.copyWith(
-                              // fontWeight: FontWeight.bold,
-                              ),
+                          style: Get.textTheme.bodyLarge,
                         ),
                       ],
                     ),
@@ -86,13 +91,11 @@ class Body extends GetView<WalletController> {
               ),
             ],
           ),
-          Card(
-            elevation: 2.5,
-            color: Get.theme.colorScheme.onBackground,
-            shadowColor: Get.theme.colorScheme.primaryContainer,
+          InkWell(
+            onTap: () {},
             child: Container(
               decoration: BoxDecoration(
-                color: Get.theme.colorScheme.onBackground,
+                color: Get.theme.colorScheme.primary,
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(
                   width: .0,
@@ -103,7 +106,7 @@ class Body extends GetView<WalletController> {
                   const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
               child: Text(Strings.topUp,
                   style: Get.textTheme.bodySmall?.copyWith(
-                    color: Get.theme.colorScheme.background.withAlpha(200),
+                    color: Get.theme.colorScheme.onPrimary,
                   )),
             ),
           ),
@@ -112,7 +115,8 @@ class Body extends GetView<WalletController> {
               Text(
                 Strings.creditLimit,
                 style: Get.textTheme.bodySmall?.copyWith(
-                    color: Get.theme.colorScheme.onBackground.withAlpha(200)),
+                    color: Get.theme.colorScheme.onBackground.withAlpha(200),
+                    fontSize: 10),
               ),
               Obx(
                 () => ImageFiltered(
@@ -124,25 +128,11 @@ class Body extends GetView<WalletController> {
                       text: '',
                       children: [
                         TextSpan(
-                          text: '${CommonStrings.currency.toUpperCase()}. ',
-                          style: Get.textTheme.labelSmall?.copyWith(shadows:
-                                  // controller.hideContent.value
-                                  //     ?
-                                  [
-                            Shadow(
-                                blurRadius: 100,
-                                offset: const Offset(
-                                  2,
-                                  1,
-                                ),
-                                color: Get.theme.colorScheme.onBackground)
-                          ]
-                              // : []
-                              ),
-                        ),
+                            text: '${CommonStrings.currency.toUpperCase()}. ',
+                            style: Get.textTheme.bodyLarge),
                         TextSpan(
                           text: '3,200',
-                          style: Get.textTheme.labelSmall?.copyWith(),
+                          style: Get.textTheme.bodyLarge,
                         ),
                       ],
                     ),
