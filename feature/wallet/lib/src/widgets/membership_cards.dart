@@ -7,18 +7,21 @@ import 'package:wallet/src/controller.dart';
 import 'package:wallet/src/strings.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
-class Executive extends GetView<WalletController> {
-  const Executive({super.key});
+class MembershipCard extends GetView<WalletController> {
+  const MembershipCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        width: Get.width,
-        height: 215.0,
-        child: Card(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      width: Get.width,
+      height: 215.0,
+      child: Obx(
+        () => Card(
           elevation: 6.0,
-          color: Get.theme.colorScheme.tertiary,
+          color: controller.user.value!.account == Strings.executive
+              ? Get.theme.colorScheme.tertiary
+              : Get.theme.colorScheme.onPrimary,
           shadowColor: Get.theme.colorScheme.onBackground.withAlpha(170),
           semanticContainer: false,
           shape:
@@ -26,32 +29,40 @@ class Executive extends GetView<WalletController> {
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
-                color: Get.theme.colorScheme.tertiary),
+                color: controller.user.value!.account == Strings.executive
+                    ? Get.theme.colorScheme.tertiary
+                    : Get.theme.colorScheme.onPrimary),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
-                gradient: RadialGradient(
-                    center: Alignment.topRight,
-                    tileMode: TileMode.decal,
-                    colors: [
-                      Colors.grey.shade900,
-                      Colors.grey.shade900,
-                    ],
-                    radius: 0.7),
+                gradient: controller.user.value!.account == Strings.executive
+                    ? RadialGradient(
+                        center: Alignment.topRight,
+                        tileMode: TileMode.decal,
+                        colors: [
+                          Colors.grey.shade900,
+                          Colors.grey.shade900,
+                        ],
+                        radius: 0.7,
+                      )
+                    : null,
               ),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.0),
-                  gradient: RadialGradient(
-                      center: const Alignment(-0.3, 1),
-                      tileMode: TileMode.decal,
-                      colors: [
-                        Colors.grey.shade900,
-                        Colors.grey.shade900,
-                      ],
-                      radius: 0.7,
-                      focal: const Alignment(-0.6, 1),
-                      focalRadius: 1),
+                  gradient: controller.user.value!.account == Strings.executive
+                      ? RadialGradient(
+                          center: const Alignment(-0.3, 1),
+                          tileMode: TileMode.decal,
+                          colors: [
+                            Colors.grey.shade900,
+                            Colors.grey.shade900,
+                          ],
+                          radius: 0.7,
+                          focal: const Alignment(-0.6, 1),
+                          focalRadius: 1,
+                        )
+                      : null,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -62,9 +73,12 @@ class Executive extends GetView<WalletController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              Strings.executive,
+                              controller.user.value!.account,
                               style: Get.textTheme.labelSmall?.copyWith(
-                                  color: Get.theme.colorScheme.onPrimary),
+                                  color: controller.user.value!.account ==
+                                          Strings.executive
+                                      ? Get.theme.colorScheme.onPrimary
+                                      : Get.theme.colorScheme.tertiary),
                             ),
                             Obx(
                               () => ImageFiltered(
@@ -76,19 +90,28 @@ class Executive extends GetView<WalletController> {
                                     text: '',
                                     children: [
                                       TextSpan(
-                                          text:
-                                              '${CommonStrings.currency.toUpperCase()}. ',
-                                          style: Get.textTheme.bodySmall
-                                              ?.copyWith(
-                                                  color: Get.theme.colorScheme
-                                                      .onPrimary)),
+                                        text:
+                                            '${CommonStrings.currency.toUpperCase()}. ',
+                                        style:
+                                            Get.textTheme.bodySmall?.copyWith(
+                                          color: controller
+                                                      .user.value!.account ==
+                                                  Strings.executive
+                                              ? Get.theme.colorScheme.onPrimary
+                                              : Get.theme.colorScheme.tertiary,
+                                        ),
+                                      ),
                                       TextSpan(
-                                        text: value.format(
+                                        text: valueWithDecinal.format(
                                             controller.wallet.value?.balance),
-                                        style: Get.textTheme.bodySmall
-                                            ?.copyWith(
-                                                color: Get.theme.colorScheme
-                                                    .onPrimary),
+                                        style:
+                                            Get.textTheme.bodySmall?.copyWith(
+                                          color: controller
+                                                      .user.value!.account ==
+                                                  Strings.executive
+                                              ? Get.theme.colorScheme.onPrimary
+                                              : Get.theme.colorScheme.tertiary,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -102,8 +125,12 @@ class Executive extends GetView<WalletController> {
                             child: Center(
                               child: Text(
                                 controller.userID.value,
-                                style: Get.textTheme.labelSmall?.copyWith(
-                                    color: Get.theme.colorScheme.onPrimary),
+                                style: Get.textTheme.bodyMedium?.copyWith(
+                                  color: controller.user.value!.account ==
+                                          Strings.executive
+                                      ? Get.theme.colorScheme.onPrimary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
                                 textAlign: TextAlign.justify,
                               ),
                             ),
@@ -128,19 +155,35 @@ class Executive extends GetView<WalletController> {
                                             Strings.memberSince,
                                             style: Get.textTheme.bodySmall
                                                 ?.copyWith(
-                                                    color: Get.theme.colorScheme
-                                                        .onPrimary
-                                                        .withAlpha(200)),
+                                              color: controller.user.value!
+                                                          .account ==
+                                                      Strings.executive
+                                                  ? Get.theme.colorScheme
+                                                      .onPrimary
+                                                      .withAlpha(200)
+                                                  : Get.theme.colorScheme
+                                                      .tertiary
+                                                      .withAlpha(200),
+                                            ),
                                           ),
                                           Obx(
                                             () => Text(
                                               controller.timeStamp.value,
-                                              style: Get.textTheme.bodyMedium
+                                              style: Get.textTheme.bodySmall
                                                   ?.copyWith(
-                                                      color: Get
-                                                          .theme
-                                                          .colorScheme
-                                                          .onPrimary),
+                                                      color: controller
+                                                                  .user
+                                                                  .value!
+                                                                  .account ==
+                                                              Strings.executive
+                                                          ? Get
+                                                              .theme
+                                                              .colorScheme
+                                                              .onPrimary
+                                                          : Get
+                                                              .theme
+                                                              .colorScheme
+                                                              .tertiary),
                                             ),
                                           ),
                                         ],
@@ -151,21 +194,38 @@ class Executive extends GetView<WalletController> {
                                             Strings.validThru,
                                             style: Get.textTheme.bodySmall
                                                 ?.copyWith(
-                                                    color: Get.theme.colorScheme
-                                                        .onPrimary
-                                                        .withAlpha(200)),
+                                                    color: controller
+                                                                .user
+                                                                .value!
+                                                                .account ==
+                                                            Strings.executive
+                                                        ? Get.theme.colorScheme
+                                                            .onPrimary
+                                                            .withAlpha(200)
+                                                        : Get.theme.colorScheme
+                                                            .tertiary
+                                                            .withAlpha(200)),
                                           ),
                                           Obx(
                                             () => Text(
                                               yearMonthFormatter.format(
                                                   controller
                                                       .wallet.value!.validThru),
-                                              style: Get.textTheme.bodyMedium
+                                              style: Get.textTheme.bodySmall
                                                   ?.copyWith(
-                                                      color: Get
-                                                          .theme
-                                                          .colorScheme
-                                                          .onPrimary),
+                                                      color: controller
+                                                                  .user
+                                                                  .value!
+                                                                  .account ==
+                                                              Strings.executive
+                                                          ? Get
+                                                              .theme
+                                                              .colorScheme
+                                                              .onPrimary
+                                                          : Get
+                                                              .theme
+                                                              .colorScheme
+                                                              .tertiary),
                                             ),
                                           ),
                                         ],
@@ -175,16 +235,25 @@ class Executive extends GetView<WalletController> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Obx(
-                                      () => Text(
-                                        controller.user.value!.username
-                                            .toUpperCase(),
-                                        style:
-                                            Get.textTheme.bodyMedium?.copyWith(
-                                          color:
-                                              Get.theme.colorScheme.onPrimary,
-                                        ),
-                                        textAlign: TextAlign.start,
-                                      ),
+                                      () => controller.user.value!.shippingInfo
+                                                  ?.name !=
+                                              null
+                                          ? Text(
+                                              controller.user.value!
+                                                  .shippingInfo!.name!,
+                                              style: Get.textTheme.bodyMedium
+                                                  ?.copyWith(
+                                                color: controller.user.value!
+                                                            .account ==
+                                                        Strings.executive
+                                                    ? Get.theme.colorScheme
+                                                        .onPrimary
+                                                    : Get.theme.colorScheme
+                                                        .tertiary,
+                                              ),
+                                              textAlign: TextAlign.start,
+                                            )
+                                          : const SizedBox(),
                                     ),
                                   ),
                                 ],
@@ -206,6 +275,8 @@ class Executive extends GetView<WalletController> {
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

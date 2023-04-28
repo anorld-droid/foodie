@@ -14,42 +14,71 @@ class Body extends GetView<WalletController> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Executive(),
-          _expenses(),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 24,
-              left: 24,
-              right: 24,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  Strings.subscribe,
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                InkWell(
-                  onTap: controller.learnMore.toggle,
-                  child: Text(
-                    Strings.learnMore,
-                    style: Get.textTheme.bodySmall?.copyWith(
-                        color: Get.theme.colorScheme.primary,
-                        fontWeight: FontWeight.bold),
+    return Obx(() {
+      Widget widget;
+      controller.searching.value
+          ? widget = Center(
+              child: Material(
+                color: Get.theme.colorScheme.primaryContainer,
+                surfaceTintColor: Get.theme.colorScheme.primaryContainer,
+                child: Container(
+                  color: Get.theme.colorScheme.primaryContainer,
+                  padding: const EdgeInsets.all(4.0),
+                  child: RotationTransition(
+                    turns: Tween(begin: 0.0, end: 1.0)
+                        .animate(controller.animationController),
+                    child: GradientCircularProgressIndicator(
+                      radius: 20,
+                      gradientColors: [
+                        Get.theme.colorScheme.primary.withAlpha(170),
+                        Get.theme.colorScheme.primary,
+                      ],
+                      strokeWidth: 5.0,
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          const Subscriptions()
-        ],
-      ),
-    );
+              ),
+            )
+          : widget = SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  controller.user.value!.account != Strings.free
+                      ? const MembershipCard()
+                      : const SizedBox(),
+                  _expenses(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 24,
+                      left: 24,
+                      right: 24,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          Strings.subscribe,
+                          style: Get.textTheme.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        InkWell(
+                          onTap: controller.learnMore.toggle,
+                          child: Text(
+                            Strings.learnMore,
+                            style: Get.textTheme.bodySmall?.copyWith(
+                                color: Get.theme.colorScheme.primary,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Subscriptions()
+                ],
+              ),
+            );
+      return widget;
+    });
   }
 
   Widget _expenses() {
@@ -80,7 +109,8 @@ class Body extends GetView<WalletController> {
                           style: Get.textTheme.bodyLarge,
                         ),
                         TextSpan(
-                          text: value.format(controller.wallet.value?.borrowed),
+                          text: valueWithDecinal
+                              .format(controller.wallet.value?.borrowed),
                           style: Get.textTheme.bodyLarge,
                         ),
                       ],
@@ -91,7 +121,7 @@ class Body extends GetView<WalletController> {
             ],
           ),
           InkWell(
-            onTap: () {},
+            onTap: controller.topUp,
             child: Container(
               decoration: BoxDecoration(
                 color: Get.theme.colorScheme.primary,
@@ -130,7 +160,7 @@ class Body extends GetView<WalletController> {
                             text: '${CommonStrings.currency.toUpperCase()}. ',
                             style: Get.textTheme.bodyLarge),
                         TextSpan(
-                          text: value
+                          text: valueWithoutDecimal
                               .format(controller.wallet.value?.creditLimit),
                           style: Get.textTheme.bodyLarge,
                         ),

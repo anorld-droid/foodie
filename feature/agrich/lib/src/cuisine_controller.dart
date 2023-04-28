@@ -40,10 +40,6 @@ class CuisineController extends GetxController
 
   final Rx<List<ShippingModel>> orders = Rx([]);
 
-  //Get the theme mode state of the app
-  var brightness = SchedulerBinding.instance.window.platformBrightness;
-  late bool isDarkMode;
-
   @override
   void onInit() async {
     super.onInit();
@@ -78,7 +74,6 @@ class CuisineController extends GetxController
 
     focusNode = FocusNode();
     tabController = Rx(TabController(length: 0, vsync: this));
-    isDarkMode = brightness == Brightness.dark;
   }
 
   Future<void> loadData() async {

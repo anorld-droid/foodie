@@ -50,8 +50,10 @@ class Subscriptions extends GetView<WalletController> {
                       !controller.learnMore.value
                           ? InkWell(
                               onTap: () async {
-                                await controller.checkout(controller
-                                    .subscription.value!.executivePrice);
+                                await controller.subscribe(
+                                  controller.subscription.value!.executivePrice,
+                                  Strings.executive,
+                                );
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -114,8 +116,10 @@ class Subscriptions extends GetView<WalletController> {
                       ),
                       InkWell(
                         onTap: () async {
-                          await controller.checkout(
-                              controller.subscription.value!.executivePrice);
+                          await controller.subscribe(
+                            controller.subscription.value!.executivePrice,
+                            Strings.executive,
+                          );
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -173,8 +177,10 @@ class Subscriptions extends GetView<WalletController> {
                       !controller.learnMore.value
                           ? InkWell(
                               onTap: () async {
-                                await controller.checkout(
-                                    controller.subscription.value!.elitePrice);
+                                await controller.subscribe(
+                                  controller.subscription.value!.elitePrice,
+                                  Strings.elite,
+                                );
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -237,8 +243,10 @@ class Subscriptions extends GetView<WalletController> {
                       ),
                       InkWell(
                         onTap: () async {
-                          await controller.checkout(
-                              controller.subscription.value!.elitePrice);
+                          await controller.subscribe(
+                            controller.subscription.value!.elitePrice,
+                            Strings.elite,
+                          );
                         },
                         child: Container(
                           alignment: Alignment.center,

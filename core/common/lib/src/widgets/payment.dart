@@ -6,8 +6,11 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 class Payment extends GetView<CommonController> {
   final double amount;
   final Function() onPaymentSuccesful;
-  const Payment(
-      {super.key, required this.amount, required this.onPaymentSuccesful});
+  const Payment({
+    super.key,
+    required this.amount,
+    required this.onPaymentSuccesful,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +54,11 @@ class Payment extends GetView<CommonController> {
                         child: Obx(
                           () => DropdownButton<String>(
                             value: controller.selectedOption.value,
+                            iconDisabledColor:
+                                Get.theme.colorScheme.onBackground,
+                            iconEnabledColor:
+                                Get.theme.colorScheme.onBackground,
+                            focusColor: Get.theme.colorScheme.onBackground,
                             items: <String>[
                               CommonStrings.mpesa,
                               CommonStrings.airtelMoney,
@@ -93,29 +101,32 @@ class Payment extends GetView<CommonController> {
                 child: Center(
                   child: RichText(
                     text: TextSpan(
-                        text: CommonStrings.pay,
-                        children: [
-                          WidgetSpan(
-                            child: Transform.translate(
-                                offset: const Offset(-2, -8),
-                                child: Text(
-                                  CommonStrings.currency.toLowerCase(),
-                                  style: Get.textTheme.bodySmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    textBaseline: TextBaseline.alphabetic,
-                                    // color: Get.theme.colorScheme.background,
-                                  ),
-                                )),
+                      text: CommonStrings.pay,
+                      children: [
+                        WidgetSpan(
+                          child: Transform.translate(
+                              offset: const Offset(-2, -8),
+                              child: Text(
+                                CommonStrings.currency.toLowerCase(),
+                                style: Get.textTheme.bodySmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  color: Get.theme.colorScheme.onPrimary,
+                                ),
+                              )),
+                        ),
+                        TextSpan(
+                          text: amount.ceil().toStringAsFixed(0),
+                          style: Get.textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Get.theme.colorScheme.onPrimary,
                           ),
-                          TextSpan(
-                            text: amount.ceil().toStringAsFixed(0),
-                            style: Get.textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Get.theme.colorScheme.onBackground,
-                            ),
-                          ),
-                        ],
-                        style: Get.textTheme.bodyLarge),
+                        ),
+                      ],
+                      style: Get.textTheme.bodyLarge?.copyWith(
+                        color: Get.theme.colorScheme.onPrimary,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -128,10 +139,10 @@ class Payment extends GetView<CommonController> {
 
   Widget _paymentTextField() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
       child: Card(
         elevation: 0,
-        color: Get.theme.colorScheme.surface,
+        color: Get.theme.colorScheme.onBackground,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -151,9 +162,9 @@ class Payment extends GetView<CommonController> {
             inputDecoration: InputDecoration(
               hintText: CommonStrings.phoneNumber,
               hintStyle: Get.textTheme.displayMedium?.copyWith(
-                color: Get.theme.colorScheme.onBackground,
+                color: Get.theme.colorScheme.secondary,
               ),
-              focusColor: Get.theme.colorScheme.onBackground,
+              focusColor: Get.theme.colorScheme.secondary,
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                   width: .0,
@@ -175,10 +186,10 @@ class Payment extends GetView<CommonController> {
             ),
             textFieldController: controller.phoneController,
             selectorTextStyle: Get.theme.textTheme.bodyMedium?.copyWith(
-              color: Get.theme.colorScheme.onBackground,
+              color: Get.theme.colorScheme.secondary,
             ),
             textStyle: Get.theme.textTheme.bodyMedium?.copyWith(
-              color: Get.theme.colorScheme.onBackground,
+              color: Get.theme.colorScheme.secondary,
             ),
             formatInput: true,
             keyboardType: const TextInputType.numberWithOptions(
@@ -187,30 +198,5 @@ class Payment extends GetView<CommonController> {
         ),
       ),
     );
-
-    // return SizedBox(
-    //   height: 45,
-    //   width: Get.width * 0.56,
-    //   child: Center(
-    //     child: TextField(
-    //       style: Get.textTheme.bodySmall
-    //           ?.copyWith(color: Get.theme.colorScheme.background, height: 1.5),
-    //       keyboardType: TextInputType.phone,
-    //       cursorColor: Get.theme.colorScheme.background,
-    //       controller: controller.phoneController,
-    //       decoration: InputDecoration(
-    //         border: OutlineInputBorder(
-    //             borderRadius: BorderRadius.circular(12),
-    //             borderSide: BorderSide.none),
-    //         fillColor: Get.theme.colorScheme.onBackground,
-    //         focusColor: Get.theme.colorScheme.onBackground,
-    //         filled: true,
-    //         hintText: Strings.hintText,
-    //         hintStyle: Get.textTheme.bodySmall
-    //             ?.copyWith(color: Get.theme.colorScheme.background),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

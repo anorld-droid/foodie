@@ -142,7 +142,7 @@ class OrderItems extends GetView<CartController> {
                                               )),
                                         ),
                                         TextSpan(
-                                          text: value
+                                          text: valueWithDecinal
                                               .format(item.sellingPrice.value),
                                           style:
                                               Get.textTheme.bodyLarge?.copyWith(

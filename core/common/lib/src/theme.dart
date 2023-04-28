@@ -25,6 +25,12 @@ class ThemeService {
           Color.fromARGB(71, 5, 52, 49),
         ]
       : const [Colors.white, Colors.white];
+  List<Color> get topUpColors => isDarkMode
+      ? [
+          Colors.black,
+          Colors.grey,
+        ]
+      : const [Colors.grey, Colors.white];
 }
 
 class Themes {

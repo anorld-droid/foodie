@@ -121,7 +121,7 @@ class FoodieListItem extends GetView<CuisineController> {
             left: 10,
             child: Obx(
               () => Text(
-                '${CommonStrings.currency} ${value.format(cuisineItem.sellingPrice.value[controller.getStore(cuisineItem, mainController.store.value)])}',
+                '${CommonStrings.currency} ${valueWithDecinal.format(cuisineItem.sellingPrice.value[controller.getStore(cuisineItem, mainController.store.value)])}',
                 style: Get.textTheme.bodySmall
                     ?.copyWith(fontWeight: FontWeight.w700),
               ),

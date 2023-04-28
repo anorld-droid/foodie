@@ -6,8 +6,8 @@ class Subscription {
   final String shippingInfo;
   final bool shippingStatus;
   final int minShipAmount;
-  final double executivePrice;
-  final double elitePrice;
+  final int executivePrice;
+  final int elitePrice;
   final Map<String, String> executiveBenefits;
   final Map<String, String> eliteBenefits;
 
@@ -47,8 +47,8 @@ class Subscription {
           executiveBenefits.map((key, value) => MapEntry(key, value as String)),
       eliteBenefits:
           eliteBenefits.map((key, value) => MapEntry(key, value as String)),
-      executivePrice: snapshot?[Constants.executivePrice] as double,
-      elitePrice: snapshot?[Constants.elitePrice] as double,
+      executivePrice: snapshot?[Constants.executivePrice] as int,
+      elitePrice: snapshot?[Constants.elitePrice] as int,
     );
   }
 }

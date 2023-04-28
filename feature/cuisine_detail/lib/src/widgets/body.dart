@@ -268,7 +268,8 @@ class DetailBody extends GetView<Controller> {
                                   )),
                             ),
                             TextSpan(
-                              text: value.format(controller.sellingPrice.value),
+                              text: valueWithDecinal
+                                  .format(controller.sellingPrice.value),
                               style: Get.textTheme.headlineMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),

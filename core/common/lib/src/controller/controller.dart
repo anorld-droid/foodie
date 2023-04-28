@@ -168,6 +168,7 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
               element.data()['stkCallback'] as Map<String, dynamic>);
           if (data.responseCode == 0) {
             onPaymentSuccesful();
+            Get.back<void>();
           } else {
             longToast(data.responseDescription);
           }
