@@ -35,6 +35,8 @@ dependencies:
     path: feature/delivery
   wallet:
     path: feature/wallet
+  instore:
+    path: feature/instore
 
 dev_dependencies:
   flutter_test:

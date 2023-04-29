@@ -210,6 +210,8 @@ class CuisineController extends GetxController
   }
 
   void scan() {
-    //TODO add functionality;
+    Get.toNamed<void>(
+      Routes.instore,
+    );
   }
 }

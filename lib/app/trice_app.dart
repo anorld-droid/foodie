@@ -7,6 +7,7 @@ import 'package:di/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:instore/instore.dart';
 import 'package:model/model.dart';
 import 'package:trice/app/trice_app_controller.dart';
 import 'package:wallet/wallet.dart' as feature;
@@ -65,7 +66,8 @@ class TriceApp extends GetView<TriceAppController> {
             model: Get.arguments as ShippingModel,
           ),
         ),
-        GetPage(name: Routes.wallet, page: () => const feature.Wallet())
+        GetPage(name: Routes.wallet, page: () => const feature.Wallet()),
+        GetPage(name: Routes.instore, page: () => const QRScanner())
       ],
     );
   }
