@@ -7,6 +7,7 @@ import 'package:wallet/src/controller.dart';
 import 'package:wallet/src/strings.dart';
 import 'package:wallet/src/widgets/membership_cards.dart';
 import 'package:wallet/src/widgets/subscription.dart';
+import 'package:wallet/src/widgets/subscription_message.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
 class Body extends GetView<WalletController> {
@@ -45,7 +46,9 @@ class Body extends GetView<WalletController> {
                 children: [
                   controller.user.value!.account != Strings.free
                       ? const MembershipCard()
-                      : const SizedBox(),
+                      : controller.isSubscriptionExpired.value
+                          ? const SubscriptionMessage()
+                          : const SizedBox(),
                   _expenses(),
                   Padding(
                     padding: const EdgeInsets.only(

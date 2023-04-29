@@ -146,6 +146,10 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
       case 'M-pesa':
         await mpesaPay(amount, onPaymentSuccesful);
         break;
+      case 'Airtel Money':
+        break;
+      case 'Wallet':
+        break;
       default:
     }
   }

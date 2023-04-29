@@ -79,4 +79,6 @@ class Constants {
   static String creditLimit = 'creditLimit';
   static String elitePrice = 'elitePrice';
   static String executivePrice = 'executivePrice';
+  //Subscription
+  static String contact = 'contact';
 }

@@ -34,6 +34,8 @@ class WalletController extends GetxController with GetTickerProviderStateMixin {
   var brightness = SchedulerBinding.instance.window.platformBrightness;
   late bool isDarkMode;
 
+  Rx<bool> isSubscriptionExpired = false.obs;
+
   @override
   void onInit() async {
     init();
@@ -52,9 +54,11 @@ class WalletController extends GetxController with GetTickerProviderStateMixin {
 
   Future<void> loadData() async {
     animationController.repeat();
+    final now = DateTime.now();
     if (_auth.isUserSignedIn()) {
       userID.value = formartUserID(_auth.getUserId()!);
       wallet.value = await _user.getWalletInfo(_auth.getUserId()!);
+      isSubscriptionExpired.value = wallet.value!.validThru.isBefore(now);
       timeStamp.value = yearMonthFormatter.format(_auth.creationTime()!);
       user.value = await _user.get(_auth.getUserId()!);
     }

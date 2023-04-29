@@ -6,10 +6,12 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 class Payment extends GetView<CommonController> {
   final double amount;
   final Function() onPaymentSuccesful;
+  final List<String> options;
   const Payment({
     super.key,
     required this.amount,
     required this.onPaymentSuccesful,
+    this.options = const ['M-pesa', 'Airtel Money'],
   });
 
   @override
@@ -59,10 +61,7 @@ class Payment extends GetView<CommonController> {
                             iconEnabledColor:
                                 Get.theme.colorScheme.onBackground,
                             focusColor: Get.theme.colorScheme.onBackground,
-                            items: <String>[
-                              CommonStrings.mpesa,
-                              CommonStrings.airtelMoney,
-                            ].map((String value) {
+                            items: options.map((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(

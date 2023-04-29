@@ -159,6 +159,7 @@ class CartController extends GetxController {
     } else {
       bottomSheet(Payment(
         amount: total.value,
+        options: const ['M-pesa', 'Airtel Money', 'Wallet'],
         onPaymentSuccesful: () async {
           ShippingModel shippingModel = ShippingModel(
               user: _shippingInfo.value!,

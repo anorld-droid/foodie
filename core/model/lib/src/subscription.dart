@@ -10,16 +10,17 @@ class Subscription {
   final int elitePrice;
   final Map<String, String> executiveBenefits;
   final Map<String, String> eliteBenefits;
+  final String contact;
 
-  Subscription({
-    required this.shippingInfo,
-    required this.shippingStatus,
-    required this.minShipAmount,
-    required this.executiveBenefits,
-    required this.eliteBenefits,
-    required this.executivePrice,
-    required this.elitePrice,
-  });
+  Subscription(
+      {required this.shippingInfo,
+      required this.shippingStatus,
+      required this.minShipAmount,
+      required this.executiveBenefits,
+      required this.eliteBenefits,
+      required this.executivePrice,
+      required this.elitePrice,
+      required this.contact});
   Map<String, dynamic> toFirestore() => {
         Constants.shippingInfo: shippingInfo,
         Constants.shippingStatus: shippingStatus,
@@ -28,6 +29,7 @@ class Subscription {
         Constants.eliteBenefits: eliteBenefits,
         Constants.executivePrice: executivePrice,
         Constants.elitePrice: elitePrice,
+        Constants.contact: contact,
       };
 
   factory Subscription.fromFirestore(
@@ -49,6 +51,7 @@ class Subscription {
           eliteBenefits.map((key, value) => MapEntry(key, value as String)),
       executivePrice: snapshot?[Constants.executivePrice] as int,
       elitePrice: snapshot?[Constants.elitePrice] as int,
+      contact: snapshot?[Constants.contact] as String,
     );
   }
 }
