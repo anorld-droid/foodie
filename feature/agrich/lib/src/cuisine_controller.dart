@@ -3,7 +3,6 @@ import 'package:common/common.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
@@ -40,6 +39,9 @@ class CuisineController extends GetxController
 
   final Rx<List<ShippingModel>> orders = Rx([]);
 
+  late AnimationController animationController;
+  RxBool searching = false.obs;
+
   @override
   void onInit() async {
     super.onInit();
@@ -74,9 +76,15 @@ class CuisineController extends GetxController
 
     focusNode = FocusNode();
     tabController = Rx(TabController(length: 0, vsync: this));
+
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
   }
 
   Future<void> loadData() async {
+    searching.value = true;
+    animationController.repeat();
+
     var snap = await _cuisineModelUseCase.getHeaders();
     items.value = snap;
     tabController = Rx(TabController(length: items.value.length, vsync: this));
@@ -87,6 +95,9 @@ class CuisineController extends GetxController
       getOrders();
     }
     itemLength.value = items.value.length;
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    searching.value = false;
+    animationController.reset();
   }
 
   Future<void> getOrders() async {
@@ -102,7 +113,12 @@ class CuisineController extends GetxController
   }
 
   Stream<QuerySnapshot<CuisineItem>> getCuisineItems(String header) {
-    return _cuisineItemUseCase.get(header);
+    searching.value = true;
+    animationController.repeat();
+    var items = _cuisineItemUseCase.get(header);
+    searching.value = false;
+    animationController.reset();
+    return items;
   }
 
   Future<void> showAuthDialog() async {
@@ -117,11 +133,11 @@ class CuisineController extends GetxController
         });
   }
 
-  void resetSearch() {
-    selectedChip.value = 10;
-    searchController.clear();
-    focusNode.unfocus();
-  }
+  // void resetSearch() {
+  //   selectedChip.value = 10;
+  //   searchController.clear();
+  //   focusNode.unfocus();
+  // }
 
   void getCartItems() async {
     var snap = await _cartItemsUseCase.get(_authenticateUser.getUserId()!);
@@ -179,7 +195,6 @@ class CuisineController extends GetxController
         : cItem.basicPrice.keys.first;
   }
 
-  void favorites() {}
   void quickOptions(String option) {
     switch (option) {
       case 'Repeat last order':
@@ -192,5 +207,9 @@ class CuisineController extends GetxController
           print(option);
         }
     }
+  }
+
+  void scan() {
+    //TODO add functionality;
   }
 }

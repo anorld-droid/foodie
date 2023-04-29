@@ -7,11 +7,13 @@ class Payment extends GetView<CommonController> {
   final double amount;
   final Function() onPaymentSuccesful;
   final List<String> options;
+  final String? shipping;
   const Payment({
     super.key,
     required this.amount,
     required this.onPaymentSuccesful,
     this.options = const ['M-pesa', 'Airtel Money'],
+    this.shipping,
   });
 
   @override
@@ -84,6 +86,15 @@ class Payment extends GetView<CommonController> {
                     height: 12.0,
                   ),
                   _paymentTextField(),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                  shipping != null
+                      ? Text(
+                          shipping!,
+                          style: Get.textTheme.bodyLarge,
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),

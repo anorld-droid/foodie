@@ -160,6 +160,7 @@ class CartController extends GetxController {
       bottomSheet(Payment(
         amount: total.value,
         options: const ['M-pesa', 'Airtel Money', 'Wallet'],
+        shipping: shippingAddress.value,
         onPaymentSuccesful: () async {
           ShippingModel shippingModel = ShippingModel(
               user: _shippingInfo.value!,
