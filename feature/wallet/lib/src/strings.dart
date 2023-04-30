@@ -1,6 +1,5 @@
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
 class Strings {
-  final String date;
   static String free = 'Free';
   static String back = 'Back';
   static String appBarTitle = 'My Wallet';
@@ -32,14 +31,15 @@ class Strings {
 
   //Subscription message
   static String subject = 'Your foodie subscription has expired';
-  static String message = '''
-Thank you for choosing foodie as your preferred food store.
+  static String subtitle =
+      'Thank you for choosing foodie as your preferred food store.\n\n';
+  static String message =
+      'If you would like to renew your subscription, please choose one of the subscriptions options below or contact our customer support team at ';
+  static String contact = ':contact ';
+  static String messageEnd = '''
+for further assistance.
   
-If you would like to renew your subscription, please choose one of the subscriptions options below or contact our customer support team at :contact for further assistance.
-    
 Best regards,
 foodie team.
   ''';
-
-  Strings(this.date);
 }

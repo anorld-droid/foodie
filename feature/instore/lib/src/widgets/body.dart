@@ -12,10 +12,10 @@ class Body extends GetView<QRController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height * 0.85,
+      height: Get.height * 0.87,
       decoration: BoxDecoration(
           color: Get.theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(12.0)),
+          borderRadius: BorderRadius.circular(16.0)),
       child: Column(
         children: <Widget>[
           Container(

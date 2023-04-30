@@ -16,6 +16,7 @@ dependencies:
   fluttertoast: ^8.1.2
   intl: ^0.17.0
   intl_phone_number_input: ^0.7.2
+  url_launcher: ^6.1.10
 
   domain:
     path: ../domain

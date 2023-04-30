@@ -17,12 +17,12 @@ class CartController extends GetxController {
   late final TextEditingController phoneController;
   late final TextEditingController buildingController;
 
+  late final CommonController commonController;
+
   late final AuthenticateUser _authenticateUser;
   late final UserModelUseCase _userModelUseCase;
   late final ShippingUseCase _shippingUseCase;
   late final CartItemsUseCase _cartItemsUseCase;
-  late final PaymentOptionsUseCase _paymentOptionsUseCase;
-  late final SendMessageUseCase _sendMessageUseCase;
   late final SubscriptionUseCase _subscriptionUseCase;
 
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
@@ -45,8 +45,6 @@ class CartController extends GetxController {
 
   final Rx<List<ShippingModel>> orders = Rx([]);
   //Get the theme mode state of the app
-  var brightness = SchedulerBinding.instance.window.platformBrightness;
-  late bool isDarkMode;
 
   @override
   void onInit() async {
@@ -66,16 +64,15 @@ class CartController extends GetxController {
     _userModelUseCase = UserModelUseCase();
     _shippingUseCase = ShippingUseCase();
     _cartItemsUseCase = CartItemsUseCase();
-    _sendMessageUseCase = SendMessageUseCase();
     _subscriptionUseCase = SubscriptionUseCase();
-    _paymentOptionsUseCase = PaymentOptionsUseCase();
 
     nameController = TextEditingController();
     phoneController = TextEditingController();
     buildingController = TextEditingController();
 
+    commonController = Get.find<CommonController>();
+
     itemLength.value = items.value.length;
-    isDarkMode = brightness == Brightness.dark;
   }
 
   Future<void> getOrders() async {
@@ -91,6 +88,11 @@ class CartController extends GetxController {
   }
 
   Future<void> loadData() async {
+    commonController.purchaseType.listen((value) {
+      calculateTotal();
+      calculateShippingFee();
+    });
+
     await _subscriptionUseCase.get().then(
           (value) => value.listen((event) {
             subscription.value = event.data();
@@ -131,7 +133,7 @@ class CartController extends GetxController {
       sum += item.sellingPrice.value;
     }
     subTotal.value = sum;
-    shippingFee.value = freeShipping.value ? 0 : sum * 0.2;
+    calculateShippingFee();
 
     subTotal.refresh();
     shippingFee.refresh();
@@ -141,6 +143,13 @@ class CartController extends GetxController {
     _calculateSubTotal();
     total.value = subTotal.value + shippingFee.value;
     total.refresh();
+  }
+
+  void calculateShippingFee() {
+    shippingFee.value =
+        freeShipping.value || commonController.purchaseType.value == 'In-store'
+            ? 0
+            : subTotal.value * 0.2;
   }
 
   void checkout() async {
@@ -157,38 +166,33 @@ class CartController extends GetxController {
     } else if (items.value.isEmpty) {
       longToast('Add items to cart to proceed.');
     } else {
-      bottomSheet(Payment(
-        amount: total.value,
-        options: const ['M-pesa', 'Airtel Money', 'Wallet'],
-        shipping: shippingAddress.value,
-        onPaymentSuccesful: () async {
-          ShippingModel shippingModel = ShippingModel(
-              user: _shippingInfo.value!,
-              items: items.value,
-              order: 'reqID',
-              status: 'Received',
-              timeStamp: DateTime.now());
-          await _shippingUseCase.upload(
-            userId: _authenticateUser.getUserId()!,
-            shippingModel: shippingModel,
-          );
+      bottomSheet(Obx(() => Payment(
+            amount: total.value,
+            options: const ['M-pesa', 'Airtel Money', 'Wallet'],
+            shipping: shippingAddress.value,
+            onPaymentSuccesful: () async {
+              ShippingModel shippingModel = ShippingModel(
+                  user: _shippingInfo.value!,
+                  items: items.value,
+                  order: 'reqID',
+                  status: 'Received',
+                  timeStamp: DateTime.now());
+              await _shippingUseCase.upload(
+                userId: _authenticateUser.getUserId()!,
+                doc: commonController.purchaseType.value == 'Delivery'
+                    ? 'orders'
+                    : 'history',
+                shippingModel: shippingModel,
+              );
 
-          items.value.clear();
-          itemLength.value = items.value.length;
-          items.refresh();
-          calculateTotal();
-          await Future<void>.delayed(const Duration(seconds: 2));
-          shortToast('Checkout successful');
-        },
-      ));
-    }
-  }
-
-  void pay() {
-    switch (selectedOption.value) {
-      case 'Airtel Money':
-        break;
-      default:
+              items.value.clear();
+              itemLength.value = items.value.length;
+              items.refresh();
+              calculateTotal();
+              await Future<void>.delayed(const Duration(seconds: 2));
+              shortToast('Checkout successful');
+            },
+          )));
     }
   }
 

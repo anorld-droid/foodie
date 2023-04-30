@@ -12,11 +12,12 @@ class ShippingUseCase {
   /// NOTE: doc should be user id
   Future<void> upload({
     required String userId,
+    required String doc,
     required ShippingModel shippingModel,
   }) async {
     await _cloudNetWorkDataSource.appendDoc<ShippingModel>(
         collectionName: Constants.cuisine,
-        docPath: Constants.orders,
+        docPath: doc,
         collectionPath: userId,
         file: shippingModel,
         fromFirestore: ShippingModel.fromFirestore,

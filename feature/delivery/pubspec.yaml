@@ -15,7 +15,6 @@ dependencies:
   google_maps_flutter: ^2.2.5
   location: ^4.4.0
   get: ^4.6.5
-  url_launcher: ^6.1.10
 
   model:
     path: ../../core/model

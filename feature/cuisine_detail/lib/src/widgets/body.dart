@@ -138,9 +138,10 @@ class DetailBody extends GetView<Controller> {
                                         : const SizedBox(),
                                   ),
                                 ),
-                                SingleChildScrollView(
-                                  child: SizedBox(
-                                    height: Get.height * 0.27,
+                                SizedBox(
+                                  height: Get.height * 0.28,
+                                  child: SingleChildScrollView(
+                                    controller: controller.scrollController,
                                     child: Column(
                                       children: List.generate(
                                         cuisineItem.basicPrice.keys.length,

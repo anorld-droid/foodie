@@ -1,3 +1,4 @@
+import 'package:common/common.dart';
 import 'package:delivery/src/controller.dart';
 import 'package:delivery/src/strings.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
 
   @override
   Widget build(BuildContext context) {
+    CommonController commonController = Get.find<CommonController>();
     return Container(
       height: Get.height * 0.3,
       decoration: BoxDecoration(
@@ -40,7 +42,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
             ),
             Obx(
               () => controller.courier.value != null
-                  ? _courierInfo()
+                  ? _courierInfo(commonController)
                   : Padding(
                       padding: EdgeInsets.only(top: Get.height * 0.04),
                       child: Center(
@@ -146,7 +148,7 @@ class DeliveryDetails extends GetView<DeliveryController> {
     );
   }
 
-  Widget _courierInfo() {
+  Widget _courierInfo(CommonController commonController) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
       width: Get.width,
@@ -180,7 +182,8 @@ class DeliveryDetails extends GetView<DeliveryController> {
             ),
           ),
           InkWell(
-            onTap: controller.call,
+            onTap: () => commonController
+                .call(controller.courier.value?.phoneNumber ?? ''),
             child: Container(
               padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(

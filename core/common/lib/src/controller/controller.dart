@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:model/model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CommonController extends GetxController with GetTickerProviderStateMixin {
   late final TabController tabController;
@@ -22,6 +23,8 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
   var searching = false.obs;
 
   final Rx<String> selectedOption = 'M-pesa'.obs;
+
+  final RxString purchaseType = 'In-store'.obs;
 
   final Rx<User?> user = Rx(null);
   PhoneNumber phoneNumber = PhoneNumber(isoCode: 'KE');
@@ -154,6 +157,10 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
+  void updateType(String type) {
+    purchaseType.value = type;
+  }
+
   Future<void> mpesaPay(double amount, Function() onPaymentSuccesful) async {
     final reqID = await _payment.withMPesa(
       _auth.getUserId()!,
@@ -180,6 +187,17 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
       });
     } else {
       longToast('Payment operation failed.');
+    }
+  }
+
+  void call(String mobileNumber) async {
+    final number = 'tel:$mobileNumber';
+    Uri uri = Uri.parse(number);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $number';
     }
   }
 }

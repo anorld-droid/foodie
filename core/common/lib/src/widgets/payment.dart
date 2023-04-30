@@ -1,4 +1,5 @@
 import 'package:common/common.dart';
+import 'package:common/src/widgets/chip.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
@@ -19,7 +20,7 @@ class Payment extends GetView<CommonController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height * 0.37,
+      height: Get.height * 0.44,
       decoration: BoxDecoration(
         color: Get.theme.colorScheme.background,
         border: Border.all(
@@ -90,9 +91,22 @@ class Payment extends GetView<CommonController> {
                     height: 12.0,
                   ),
                   shipping != null
-                      ? Text(
-                          shipping!,
-                          style: Get.textTheme.bodyLarge,
+                      ? Column(
+                          children: [
+                            Text(
+                              shipping!,
+                              style: Get.textTheme.bodyLarge,
+                            ),
+                            const SizedBox(
+                              height: 12.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: ['In-store', 'Delivery']
+                                  .map((name) => FoodieChip(name))
+                                  .toList(),
+                            ),
+                          ],
                         )
                       : const SizedBox(),
                 ],
@@ -106,7 +120,7 @@ class Payment extends GetView<CommonController> {
                 margin: const EdgeInsets.symmetric(vertical: 16.0),
                 decoration: BoxDecoration(
                   color: Get.theme.colorScheme.primary,
-                  borderRadius: BorderRadius.circular(12.0),
+                  borderRadius: BorderRadius.circular(6.0),
                 ),
                 child: Center(
                   child: RichText(

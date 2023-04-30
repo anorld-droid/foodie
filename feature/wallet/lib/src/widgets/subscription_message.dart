@@ -1,4 +1,6 @@
 import 'package:common/common.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/widgets.dart';
@@ -13,6 +15,7 @@ class SubscriptionMessage extends GetView<WalletController> {
 
   @override
   Widget build(BuildContext context) {
+    CommonController commonController = Get.find<CommonController>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -27,13 +30,29 @@ class SubscriptionMessage extends GetView<WalletController> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              Strings.message.replaceAll(
-                  ':contact', controller.subscription.value!.contact),
-              style: Get.textTheme.bodyLarge,
-            ),
-          )
+              padding: const EdgeInsets.all(8.0),
+              child: RichText(
+                text: TextSpan(
+                    text: Strings.subtitle,
+                    children: [
+                      TextSpan(
+                          text: Strings.message,
+                          style: Get.textTheme.bodyLarge),
+                      TextSpan(
+                        text: Strings.contact.replaceAll(
+                            ':contact', controller.subscription.value!.contact),
+                        style: Get.textTheme.bodyLarge
+                            ?.copyWith(color: Colors.blue),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => commonController
+                              .call(controller.subscription.value!.contact),
+                      ),
+                      TextSpan(
+                          text: Strings.messageEnd,
+                          style: Get.textTheme.bodyLarge),
+                    ],
+                    style: Get.textTheme.bodyLarge),
+              ))
         ],
       ),
     );

@@ -127,7 +127,11 @@ class CartBody extends GetView<CartController> {
                             child: Transform.translate(
                                 offset: const Offset(-2, -8),
                                 child: Text(
-                                  CommonStrings.currency.toLowerCase(),
+                                  controller.commonController.purchaseType
+                                              .value ==
+                                          'Delivery'
+                                      ? CommonStrings.currency.toLowerCase()
+                                      : '',
                                   style: Get.textTheme.bodySmall?.copyWith(
                                       fontWeight: FontWeight.w100,
                                       textBaseline: TextBaseline.alphabetic,
@@ -136,8 +140,12 @@ class CartBody extends GetView<CartController> {
                                 )),
                           ),
                           TextSpan(
-                            text: valueWithDecinal
-                                .format(controller.shippingFee.value),
+                            text: controller
+                                        .commonController.purchaseType.value ==
+                                    'Delivery'
+                                ? valueWithDecinal
+                                    .format(controller.shippingFee.value)
+                                : 'N/A',
                             style: Get.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.w100,
                                 color: Get.theme.colorScheme.onBackground

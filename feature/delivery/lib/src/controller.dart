@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:model/model.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 13.04.2023.
 class DeliveryController extends GetxController
@@ -185,17 +184,6 @@ class DeliveryController extends GetxController
         return 'Your order is already on its way to you';
       default:
         return 'Order  ${id.substring(0, 4)}... delivered';
-    }
-  }
-
-  void call() async {
-    final number = 'tel:${courier.value?.phoneNumber}';
-    Uri uri = Uri.parse(number);
-
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $number';
     }
   }
 

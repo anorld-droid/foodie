@@ -179,6 +179,7 @@ class Controller extends GetxController with GetTickerProviderStateMixin {
     } else {
       shortToast('Selected store doesn\'t offer the chosen food.');
     }
+    isFavorite(item);
   }
 
   Future<void> moreOptions(String option) async {

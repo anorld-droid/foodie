@@ -33,14 +33,8 @@ class CartAppBar extends GetView<CartController>
         child: Container(
           margin: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            gradient: LinearGradient(
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors:
-                  ThemeService(isDarkMode: controller.isDarkMode).appBarColors,
-            ),
-          ),
+              borderRadius: BorderRadius.circular(12.0),
+              color: Get.theme.colorScheme.surface),
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Icon(
@@ -68,14 +62,8 @@ class CartAppBar extends GetView<CartController>
               width: 40,
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: ThemeService(isDarkMode: controller.isDarkMode)
-                      .appBarColors,
-                ),
-              ),
+                  borderRadius: BorderRadius.circular(12.0),
+                  color: Get.theme.colorScheme.surface),
               child: PopupMenuButton<ShippingModel>(
                 onSelected: controller.navigateToDelivery,
                 elevation: 0.0,

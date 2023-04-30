@@ -222,7 +222,7 @@ class CuisineController extends GetxController
       barrierColor: Get.theme.colorScheme.primaryContainer,
       backgroundColor: Get.theme.colorScheme.surface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
       ),
     );
   }

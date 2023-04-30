@@ -31,14 +31,8 @@ class DetailTopBar extends GetView<Controller> implements PreferredSizeWidget {
         child: Container(
           margin: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            gradient: LinearGradient(
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors:
-                  ThemeService(isDarkMode: controller.isDarkMode).appBarColors,
-            ),
-          ),
+              borderRadius: BorderRadius.circular(12.0),
+              color: Get.theme.colorScheme.surface),
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Icon(
@@ -64,14 +58,8 @@ class DetailTopBar extends GetView<Controller> implements PreferredSizeWidget {
             width: 40,
             margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: ThemeService(isDarkMode: controller.isDarkMode)
-                    .appBarColors,
-              ),
-            ),
+                borderRadius: BorderRadius.circular(12.0),
+                color: Get.theme.colorScheme.surface),
             child: Icon(
               Icons.more_vert,
               color: Get.theme.colorScheme.onBackground,
