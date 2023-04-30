@@ -32,4 +32,13 @@ class CuisineItemUseCase {
         childDoc: childDoc,
         data: data);
   }
+
+  /// Get the file to the specified path
+  Future<DocumentSnapshot<CuisineItem>> getInstoreItem(String itemId) {
+    return _cloudNetWorkDataSource.getDoc(
+        collection: Constants.instore,
+        doc: itemId,
+        fromFirestore: CuisineItem.fromFirestore,
+        toFirestore: (CuisineItem cuisineItem, _) => cuisineItem.toFirestore());
+  }
 }

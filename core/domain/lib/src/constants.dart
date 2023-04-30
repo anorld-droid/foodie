@@ -22,4 +22,6 @@ class Constants {
   static String historicalData = 'historicalData';
   //Wallet
   static String wallet = 'wallet';
+  //Cuisine items
+  static String instore = 'instore';
 }

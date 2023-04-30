@@ -14,7 +14,7 @@ class Cuisine extends GetView<CuisineController> {
       resizeToAvoidBottomInset: false,
       body: const Body(),
       floatingActionButton: FloatingActionButton(
-        onPressed: controller.scan,
+        onPressed: () async => await controller.scan(),
         backgroundColor: Get.theme.colorScheme.surface,
         child: Icon(
           Icons.qr_code_scanner_sharp,

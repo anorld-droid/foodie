@@ -67,7 +67,6 @@ class TriceApp extends GetView<TriceAppController> {
           ),
         ),
         GetPage(name: Routes.wallet, page: () => const feature.Wallet()),
-        GetPage(name: Routes.instore, page: () => const QRScanner())
       ],
     );
   }

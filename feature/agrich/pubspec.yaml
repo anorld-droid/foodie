@@ -20,6 +20,8 @@ dependencies:
     path: ../../core/model
   domain:
     path: ../../core/domain
+  instore:
+    path: ../../feature/instore
 
 dev_dependencies:
   flutter_test:

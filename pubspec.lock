@@ -417,7 +417,7 @@ packages:
     source: hosted
     version: "4.0.2"
   instore:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "feature/instore"
       relative: true

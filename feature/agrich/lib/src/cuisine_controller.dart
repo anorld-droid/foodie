@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:instore/instore.dart';
 import 'package:model/model.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 19.01.2023.
@@ -209,9 +210,20 @@ class CuisineController extends GetxController
     }
   }
 
-  void scan() {
-    Get.toNamed<void>(
-      Routes.instore,
+  Future<void> scan() async {
+    await foodieDialog(Get.context!, const QRScanner());
+  }
+
+  Future<void> foodieDialog(BuildContext context, Widget authDialog) async {
+    Get.bottomSheet<Widget>(
+      authDialog,
+      isScrollControlled: true,
+      elevation: 8.0,
+      barrierColor: Get.theme.colorScheme.primaryContainer,
+      backgroundColor: Get.theme.colorScheme.surface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
     );
   }
 }
