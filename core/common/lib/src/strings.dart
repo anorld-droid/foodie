@@ -15,6 +15,8 @@ class CommonStrings {
   static String logoutSal = 'Let\'s sign you up.';
   static String welcome = 'Welcome back.';
   static String greetings = 'You\'ve been missed!';
+  static String termsCondition = 'https://www.autone.biz/terms-conditions';
+  static String privacyPolicy = 'https://www.autone.biz/privacy-policy';
   //static payment
   static String paymentMethod = 'Payment method';
   static String mpesa = 'M-pesa';

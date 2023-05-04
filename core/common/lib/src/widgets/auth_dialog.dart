@@ -147,7 +147,9 @@ class AuthDialog extends GetView<CommonController> {
                         text: 'Terms of Service',
                         style: Get.textTheme.bodySmall
                             ?.copyWith(color: Colors.blue),
-                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () =>
+                              controller.openWeb(CommonStrings.termsCondition),
                       ),
                       TextSpan(
                         text: ' and that you have read our ',
@@ -157,7 +159,9 @@ class AuthDialog extends GetView<CommonController> {
                           text: 'Privacy Policy',
                           style: Get.textTheme.bodySmall
                               ?.copyWith(color: Colors.blue),
-                          recognizer: TapGestureRecognizer()..onTap = () {}),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => controller
+                                .openWeb(CommonStrings.privacyPolicy)),
                     ]),
                   ),
                 ),

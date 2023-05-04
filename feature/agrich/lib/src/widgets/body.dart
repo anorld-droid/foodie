@@ -32,6 +32,7 @@ class Body extends GetView<CuisineController> {
                           indicatorColor: Get.theme.colorScheme.primary,
                           unselectedLabelColor:
                               Get.theme.colorScheme.onBackground,
+                          isScrollable: true,
                           indicatorSize: TabBarIndicatorSize.label,
                           indicatorPadding:
                               const EdgeInsets.symmetric(horizontal: 8.0),

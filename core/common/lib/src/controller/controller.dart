@@ -200,4 +200,17 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
       throw 'Could not launch $number';
     }
   }
+
+  void openWeb(String url) async {
+    Uri uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(
+        uri,
+        mode: LaunchMode.inAppWebView,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

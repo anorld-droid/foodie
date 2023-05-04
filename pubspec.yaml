@@ -44,7 +44,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  assets:
-    - assets/icons/todo.svg
-    - assets/icons/comments.svg

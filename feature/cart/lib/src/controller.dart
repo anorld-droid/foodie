@@ -1,7 +1,6 @@
 import 'package:cart/src/widgets/dialog_layout.dart';
 import 'package:common/common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:location/location.dart';
