@@ -7,7 +7,6 @@ import 'package:overlay_support/overlay_support.dart';
 class TriceAppController extends GetxController {
   Rx<ThemeMode> themeMode = ThemeMode.system.obs;
   late final SendMessageUseCase _messageUseCase;
-  late final AuthenticateUser _authenticateUser;
   late final Rx<String> store;
   late ThemeHelper themeHelper;
 
@@ -19,7 +18,6 @@ class TriceAppController extends GetxController {
 
   @override
   void onReady() {
-    _authenticateUser = AuthenticateUser();
     themeHelper = Get.find();
     initTheme();
     _messageUseCase.pushNotification(({body, dataBody, dataTitle, title}) {

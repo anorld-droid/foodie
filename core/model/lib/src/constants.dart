@@ -70,6 +70,7 @@ class Constants {
   static String locationCoordinate = 'locationCoordinate';
   //Cart items strings
   static String limit = 'limit';
+
   //Wallet
   static String balance = 'balance';
   static String borrowed = 'borrowed';

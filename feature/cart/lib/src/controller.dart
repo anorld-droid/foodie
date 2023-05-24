@@ -43,7 +43,6 @@ class CartController extends GetxController {
   final Rx<String> selectedOption = 'M-pesa'.obs;
 
   final Rx<List<ShippingModel>> orders = Rx([]);
-  //Get the theme mode state of the app
 
   @override
   void onInit() async {

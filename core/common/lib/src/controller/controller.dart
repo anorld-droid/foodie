@@ -31,13 +31,6 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
   Rx<bool> inputValidated = false.obs;
 
   @override
-  void onReady() {
-    super.onReady();
-    animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-  }
-
-  @override
   void onInit() async {
     await init();
     await loadData();
@@ -59,6 +52,9 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
       User? user = await _user.get(_auth.getUserId()!);
       store.value = user!.favoriteStore;
     }
+
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
   }
 
   Future<void> loadData() async {

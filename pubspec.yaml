@@ -13,7 +13,6 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
-  flutter_svg: ^1.1.6
   overlay_support: ^2.1.0
 
   # Modules

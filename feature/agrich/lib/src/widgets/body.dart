@@ -81,7 +81,6 @@ class Body extends GetView<CuisineController> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               _progressbar();
             }
-
             return snapshot.data != null
                 ? GridView.builder(
                     gridDelegate:
