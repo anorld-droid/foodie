@@ -9,15 +9,18 @@ class STKPush {
     utf8.encode('${Constants.consumerKeySaf}:${Constants.consumerSecretSaf}'),
   )}';
 
-  Future<AccessCredentials> getAccessCode() async {
+  Future<AccessCredentials?> getAccessCode() async {
     final response = await http.get(
         Uri.parse(
           'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
         ),
         headers: {'authorization': basicAuth});
-    final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-
-    return AccessCredentials.fromJson(jsonResponse);
+    try {
+      final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      return AccessCredentials.fromJson(jsonResponse);
+    } catch (error) {
+      return null;
+    }
   }
 
   Future<String?> invoke(
@@ -35,7 +38,7 @@ class STKPush {
         Uri.parse(
             'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'),
         headers: {
-          'Authorization': 'Bearer ${accessCredentials.accessToken}',
+          'Authorization': 'Bearer ${accessCredentials?.accessToken}',
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
