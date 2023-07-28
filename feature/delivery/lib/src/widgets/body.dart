@@ -11,8 +11,8 @@ class Body extends GetView<DeliveryController> {
   @override
   Widget build(BuildContext context) {
     Get.find<DeliveryController>();
-    return Stack(
-      children: const [
+    return const Stack(
+      children: [
         DeliveryMap(),
         TopBar(),
       ],

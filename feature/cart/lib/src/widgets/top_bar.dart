@@ -1,6 +1,5 @@
 import 'package:cart/src/controller.dart';
 import 'package:cart/src/utils/strings.dart';
-import 'package:common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

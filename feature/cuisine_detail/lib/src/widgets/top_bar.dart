@@ -1,4 +1,3 @@
-import 'package:common/common.dart';
 import 'package:cuisine_detail/src/controller.dart';
 import 'package:cuisine_detail/src/strings.dart';
 import 'package:flutter/material.dart';

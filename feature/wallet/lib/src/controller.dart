@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:model/model.dart';
-import 'package:wallet/src/strings.dart';
 import 'package:wallet/src/widgets/top_up.dart';
 
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 25.04.2023.
