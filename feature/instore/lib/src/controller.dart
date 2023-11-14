@@ -12,11 +12,8 @@ class QRController extends GetxController {
   Rx<QRViewController?> qrviewController = Rx(null);
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  late final AuthenticateUser _authenticateUser;
   late final CartItemsUseCase _cartItemsUseCase;
-  late final CuisineModelUseCase _cuisineModelUseCase;
   late final CuisineItemUseCase _cuisineItemUseCase;
-  late final ShippingUseCase _shippingUseCase;
 
   final RxBool isTorchOn = false.obs;
   final RxBool addedToCart = true.obs;
@@ -29,11 +26,8 @@ class QRController extends GetxController {
   }
 
   void init() {
-    _authenticateUser = Get.find();
     _cartItemsUseCase = CartItemsUseCase();
-    _cuisineModelUseCase = CuisineModelUseCase();
     _cuisineItemUseCase = CuisineItemUseCase();
-    _shippingUseCase = ShippingUseCase();
   }
 
   void onQRViewCreated(QRViewController controller) async {

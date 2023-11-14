@@ -1,8 +1,6 @@
 name: trice
 description:
-  This platform brings all the  organizations  Safaricom, Airtel … and news agencies
-  NTV, Citizen, KTN … into one place. Here these organizations can write information about their
-  products and you can get news from your favorite television station.
+  An e-commerce platform for a foodstore.
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -39,7 +37,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.1
+  mockito: ^5.4.2
+  build_runner: ^2.4.6
+  very_good_analysis: ^5.1.0
 
 flutter:
   uses-material-design: true
