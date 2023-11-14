@@ -50,7 +50,7 @@ class Body extends GetView<CuisineController> {
                         ),
                       ),
                       SizedBox(
-                        height: Get.height * 0.695,
+                        height: Get.height * 0.629,
                         width: Get.width,
                         child: TabBarView(
                           controller: controller.tabController.value,
@@ -71,7 +71,7 @@ class Body extends GetView<CuisineController> {
 
   Widget _bodyLayout(String header) {
     return Container(
-      height: Get.height * 0.695,
+      height: Get.height * 0.629,
       width: Get.width,
       margin: const EdgeInsets.only(left: 16.0),
       child: StreamBuilder<QuerySnapshot<CuisineItem>>(
@@ -103,7 +103,7 @@ class Body extends GetView<CuisineController> {
 
   Widget _progressbar() => Center(
         child: Container(
-          height: Get.height * 0.695,
+          height: Get.height * 0.629,
           alignment: Alignment.center,
           color: Get.theme.colorScheme.primaryContainer,
           padding: const EdgeInsets.all(4.0),
