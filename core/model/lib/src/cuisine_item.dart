@@ -60,16 +60,15 @@ class CuisineItem {
 
   factory CuisineItem.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>>? snapshot,
-    Map<String, dynamic>? json,
     SnapshotOptions? options,
   ) {
-    var snap = json ?? snapshot!.data();
+    var snap = snapshot!.data();
     var favorites = snap?[Constants.favorites] as Map<String, dynamic>;
     var stockTag = snap?[Constants.stockTag] as Map<String, dynamic>;
     var basicPrice = snap?[Constants.basicPrice] as Map<String, dynamic>;
     var sellingPrice = snap?[Constants.sellingPrice] as Map<String, dynamic>;
     return CuisineItem(
-      snapshot?.id,
+      snapshot.id,
       name: snap?[Constants.name] as String,
       store: snap?[Constants.store] as String,
       stockTag: stockTag.map((key, value) => MapEntry(key, value as int)),

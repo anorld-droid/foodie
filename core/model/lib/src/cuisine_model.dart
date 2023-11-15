@@ -14,11 +14,10 @@ class CuisineModel {
       };
 
   factory CuisineModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>>? snap,
-    Map<String, dynamic>? json,
+    DocumentSnapshot<Map<String, dynamic>> snap,
     SnapshotOptions? options,
   ) {
-    var snapshot = json ?? snap?.data();
+    var snapshot = snap.data();
     return CuisineModel(
       header: snapshot?[Constants.header] as String,
     );

@@ -25,10 +25,9 @@ class Delivery {
 
   factory Delivery.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>>? snap,
-    Map<String, dynamic>? json,
     SnapshotOptions? options,
   ) {
-    var snapshot = json ?? snap?.data();
+    var snapshot = snap?.data();
     var histData = snapshot?[Constants.historicalData] as Map<String, dynamic>;
     GeoPoint geoPoint = snapshot?[Constants.geoPosition] as GeoPoint;
     return Delivery(

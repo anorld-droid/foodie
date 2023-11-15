@@ -40,10 +40,9 @@ class CartItem {
 
   factory CartItem.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>>? snap,
-    Map<String, dynamic>? json,
     SnapshotOptions? options,
   ) {
-    var snapshot = json ?? snap?.data();
+    var snapshot = snap?.data();
     return CartItem(
       id: snapshot?[Constants.id] as String?,
       photoUrl: snapshot?[Constants.photoUrl] as String,

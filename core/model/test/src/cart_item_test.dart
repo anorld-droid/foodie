@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -9,9 +11,26 @@ import 'cart_item_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<CartItem>()])
 void main() {
   //Set Up
+  final instance = FakeFirebaseFirestore();
   late CartItem item;
+  late DocumentSnapshot<Map<String, dynamic>> snapshot;
 
-  setUp(() {
+  setUpAll(() async {
+    await instance.collection('cart').doc('testCartItem').set({
+      Constants.id: 'id',
+      Constants.name: 'name',
+      Constants.photoUrl: 'photoUrl',
+      Constants.store: 'store',
+      Constants.stockTag: 5,
+      Constants.basicPrice: 23.89,
+      Constants.sellingPrice: 56.0,
+      Constants.quantity: 4,
+      Constants.limit: 2,
+    });
+    snapshot = await instance.collection('cart').doc('testCartItem').get();
+  });
+
+  setUp(() async {
     item = MockCartItem();
   });
 
@@ -38,39 +57,17 @@ void main() {
         () async {
       //Arrange: You can't arrange with when since we are using different instances!
       final kCartItemFromFirestore = CartItem.fromFirestore(
-        null,
-        {
-          Constants.id: 'id',
-          Constants.name: 'name',
-          Constants.photoUrl: 'photoUrl',
-          Constants.store: 'store',
-          Constants.stockTag: 5,
-          Constants.basicPrice: 23.89,
-          Constants.sellingPrice: 56.0,
-          Constants.quantity: 4,
-          Constants.limit: 2,
-        },
+        snapshot,
         null,
       );
 
-      //Act
+      // //Act
       final actual = CartItem.fromFirestore(
-        null,
-        {
-          Constants.id: 'id',
-          Constants.name: 'name',
-          Constants.photoUrl: 'photoUrl',
-          Constants.store: 'store',
-          Constants.stockTag: 5,
-          Constants.basicPrice: 23.89,
-          Constants.sellingPrice: 56.0,
-          Constants.quantity: 4,
-          Constants.limit: 2,
-        },
+        snapshot,
         null,
       );
 
-      //Assert
+      // //Assert
       expect(actual.name, equals(kCartItemFromFirestore.name));
     });
 

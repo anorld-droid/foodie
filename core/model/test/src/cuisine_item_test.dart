@@ -1,20 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:model/model.dart';
 import 'package:model/src/constants.dart';
-import 'package:model/src/cuisine_item.dart';
 
 import 'cuisine_item_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<CuisineItem>()])
 void main() {
   //Set Up
+  final instance = FakeFirebaseFirestore();
+  late DocumentSnapshot<Map<String, dynamic>> snapshot;
   late CuisineItem item;
-
-  setUp(() {
-    item = MockCuisineItem();
-  });
 
   final kMap = {
     Constants.id: 'id',
@@ -29,6 +28,16 @@ void main() {
     Constants.detail: 'detail',
     Constants.favorites: <String, List<String>>{},
   };
+
+  setUpAll(() async {
+    await instance.collection('cuisine').doc('testCuisineItem').set(kMap);
+    snapshot =
+        await instance.collection('cuisine').doc('testCuisineItem').get();
+  });
+
+  setUp(() {
+    item = MockCuisineItem();
+  });
 
   group('dataTransformation', () {
     test(
@@ -66,15 +75,13 @@ void main() {
         () async {
       //Arrange: You can't arrange with when since we are using different instances!
       final kCuisineItemFromFirestore = CuisineItem.fromFirestore(
-        null,
-        kMap,
+        snapshot,
         null,
       );
 
       //Act
       final actual = CuisineItem.fromFirestore(
-        null,
-        kMap,
+        snapshot,
         null,
       );
 

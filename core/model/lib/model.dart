@@ -7,6 +7,7 @@ export 'src/cuisine_item.dart';
 export 'src/cuisine_model.dart';
 export 'src/cart_item.dart';
 export 'src/destination_model.dart';
+export 'src/destinations.dart';
 export 'src/shipping_model.dart';
 export 'src/shipping_info.dart';
 export 'src/m_pesa_payments.dart';

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -6,36 +8,42 @@ import 'package:model/src/cuisine_model.dart';
 
 @GenerateNiceMocks([MockSpec<CuisineModel>()])
 void main() {
-  late CuisineModel courier;
+  final instance = FakeFirebaseFirestore();
+  late DocumentSnapshot<Map<String, dynamic>> snapshot;
+  late CuisineModel cuisineModel;
+
+  final kMap = {
+    Constants.header: 'header',
+  };
 
   //set up
-  setUp(() {
-    courier = MockCuisineModel();
+  setUpAll(() async {
+    await instance.collection('cuisineModel').doc('testCuisineModel').set(kMap);
+    snapshot =
+        await instance.collection('cuisineModel').doc('testCuisineModel').get();
   });
-  const kJSON = {'key': 'value'};
+
+  setUp(() {
+    cuisineModel = MockCuisineModel();
+  });
 
   group('dataTransformations', () {
     test('should return json with the right data', () {
       //Arrange
-      when(courier.toFirestore()).thenAnswer((_) => kJSON);
+      when(cuisineModel.toFirestore()).thenAnswer((_) => kMap);
 
       //Act
-      final actual = courier.toFirestore();
+      final actual = cuisineModel.toFirestore();
 
       //Assert
-      expect(actual, equals(kJSON));
-      verify(courier.toFirestore()).called(1);
-      verifyNoMoreInteractions(courier);
+      expect(actual, equals(kMap));
+      verify(cuisineModel.toFirestore()).called(1);
+      verifyNoMoreInteractions(cuisineModel);
     });
 
     test('should return [CuisineModel] with the right data', () {
-      //Arrange
-      final kMap = {
-        Constants.header: 'header',
-      };
-
       //Act
-      final actual = CuisineModel.fromFirestore(null, kMap, null);
+      final actual = CuisineModel.fromFirestore(snapshot, null);
 
       //Assert
       expect(actual, isA<CuisineModel>());
