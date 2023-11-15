@@ -7,30 +7,33 @@ import 'package:model/src/constants.dart';
 import 'package:model/src/shipping_info.dart';
 import 'package:model/src/user.dart';
 
+import 'user_test.mocks.dart';
+
 @GenerateNiceMocks([MockSpec<User>()])
 void main() {
-  final kMap = {
+  final kMap = <String, dynamic>{
     Constants.uid: 'uid',
     Constants.username: 'username',
     Constants.photoUrl: 'photoUrl',
-    Constants.shippingInfo: ShippingInfo(
-            lat: 54.2323,
-            name: anyNamed('name'),
-            phoneNumber: anyNamed('phoneNumber'),
-            location: anyNamed('location'),
-            lng: 12.3434)
-        .toJson(),
     Constants.account: 'account',
     Constants.favoriteStore: 'favoriteStore',
   };
+  final mShippingInfo = ShippingInfo(
+          lat: 54.2323,
+          name: 'name',
+          phoneNumber: 'phoneNumber',
+          location: 'location',
+          lng: 12.3434)
+      .toJson();
+  kMap.addAll(mShippingInfo);
   //Set Up
   final instance = FakeFirebaseFirestore();
   late User item;
   late DocumentSnapshot<Map<String, dynamic>> snapshot;
 
   setUpAll(() async {
-    await instance.collection('cart').doc('testUser').set(kMap);
-    snapshot = await instance.collection('cart').doc('testUser').get();
+    await instance.collection('user').doc('testUser').set(kMap);
+    snapshot = await instance.collection('user').doc('testUser').get();
   });
 
   setUp(() async {
@@ -81,13 +84,13 @@ void main() {
         null,
       );
 
-      //Act
+      // //Act
       final actual = User.fromJson(
         kMap,
         null,
       );
 
-      //Assert
+      // //Assert
       expect(actual, isA<User>());
       expect(actual.username, equals(kUserFromJson.username));
     });

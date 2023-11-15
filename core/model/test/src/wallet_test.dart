@@ -6,6 +6,8 @@ import 'package:mockito/mockito.dart';
 import 'package:model/model.dart';
 import 'package:model/src/constants.dart';
 
+import 'wallet_test.mocks.dart';
+
 @GenerateNiceMocks([MockSpec<Wallet>()])
 void main() {
   final kMap = {

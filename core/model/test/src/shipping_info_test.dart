@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:model/src/constants.dart';
 import 'package:model/src/shipping_info.dart';
+
+import 'shipping_info_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<ShippingInfo>()])
 void main() {
@@ -15,8 +18,9 @@ void main() {
 
   final kMap = {
     Constants.name: 'name',
-    Constants.locationName: 'locationName',
-    Constants.locationCoordinate: 'locationCoordinate'
+    Constants.phoneNumber: 'phoneNumber',
+    Constants.location: 'location',
+    Constants.geoPosition: const GeoPoint(12.565434, 1.232323)
   };
   final kShippingInfo = ShippingInfo.fromJson(kMap);
 

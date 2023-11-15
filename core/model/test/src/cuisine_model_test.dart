@@ -6,6 +6,8 @@ import 'package:mockito/mockito.dart';
 import 'package:model/src/constants.dart';
 import 'package:model/src/cuisine_model.dart';
 
+import 'cuisine_model_test.mocks.dart';
+
 @GenerateNiceMocks([MockSpec<CuisineModel>()])
 void main() {
   final instance = FakeFirebaseFirestore();

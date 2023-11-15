@@ -6,11 +6,15 @@ import 'package:mockito/mockito.dart';
 import 'package:model/src/constants.dart';
 import 'package:model/src/delivery.dart';
 
+import 'delivery_test.mocks.dart';
+
 @GenerateNiceMocks([MockSpec<Delivery>()])
 void main() {
   final kMap = {
     Constants.geoPosition: const GeoPoint(12.34343, 1.878374),
-    Constants.historicalData: <double, List<double>>{},
+    Constants.historicalData: {
+      1234.78: [12.87, 132.21]
+    },
     Constants.prepTime: 12,
     Constants.speed: 23.65,
   };
@@ -44,7 +48,6 @@ void main() {
 
     test('should return [Delivery] with the right data', () {
       //Arrange
-
       //Act
       final actual = Delivery.fromFirestore(snapshot, null);
 

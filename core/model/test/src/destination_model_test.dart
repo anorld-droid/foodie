@@ -6,6 +6,8 @@ import 'package:mockito/mockito.dart';
 import 'package:model/model.dart';
 import 'package:model/src/constants.dart';
 
+import 'destination_model_test.mocks.dart';
+
 @GenerateNiceMocks([MockSpec<DestinationModel>()])
 void main() {
   final kMap = {
@@ -55,10 +57,6 @@ void main() {
         'should take [Map] then, return [DestinationModel] with the right data',
         () {
       //Arrange
-      final kMap = {
-        Constants.header: 'header',
-      };
-
       //Act
       final actual = DestinationModel.fromFirestore(kMap, null);
 
@@ -69,9 +67,6 @@ void main() {
     test('should acceept [DocumantSnapshot] then, return [DestinationModel]',
         () {
       //Arrange
-      final kMap = {
-        Constants.header: 'header',
-      };
 
       //Act
       final actual =

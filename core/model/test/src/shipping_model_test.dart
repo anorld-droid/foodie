@@ -6,15 +6,17 @@ import 'package:mockito/mockito.dart';
 import 'package:model/model.dart';
 import 'package:model/src/constants.dart';
 
+import 'shipping_model_test.mocks.dart';
+
 @GenerateNiceMocks([MockSpec<ShippingModel>()])
 void main() {
   final kMap = {
     Constants.id: 'id',
     Constants.user: ShippingInfo(
             lat: 54.2323,
-            name: anyNamed('name'),
-            phoneNumber: anyNamed('phoneNumber'),
-            location: anyNamed('location'),
+            name: 'name',
+            phoneNumber: 'phoneNumber',
+            location: 'location',
             lng: 12.3434)
         .toJson(),
     Constants.order: 'order',

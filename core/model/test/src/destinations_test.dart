@@ -3,11 +3,22 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:model/src/constants.dart';
 import 'package:model/src/destinations.dart';
+
+import 'destinations_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<Destinations>()])
 void main() {
-  final kMap = {'Kisumu': <String>[]};
+  final kMap = {
+    Constants.destination: {
+      'Kisumu': [
+        {
+          'Migosi': ['Nyawita', 'Maseno']
+        }
+      ],
+    }
+  };
 
   late Destinations destination;
   final instance = FakeFirebaseFirestore();

@@ -6,6 +6,8 @@ import 'package:mockito/mockito.dart';
 import 'package:model/src/constants.dart';
 import 'package:model/src/restaurant.dart';
 
+import 'restaurant_test.mocks.dart';
+
 @GenerateNiceMocks([MockSpec<Restaurant>()])
 void main() {
   final kMap = {

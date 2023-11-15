@@ -3,18 +3,17 @@ import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:model/src/cart_item.dart';
 import 'package:model/src/constants.dart';
 import 'package:model/src/m_pesa_payments.dart';
 
-import 'cart_item_test.mocks.dart';
+import 'm_pesa_payments_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<MpesaResultPayment>()])
 void main() {
   final kMap = {
     Constants.merchantRequestID: 'merchantRequestID',
     Constants.checkoutRequestID: 'checkoutRequestID',
-    Constants.resultCode: 200,
+    Constants.responseCode: 200,
     Constants.responseDescription: 'responseDescription',
     Constants.customerMessage: 'customerMessage',
   };

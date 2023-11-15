@@ -28,7 +28,7 @@ class Delivery {
     SnapshotOptions? options,
   ) {
     var snapshot = snap?.data();
-    var histData = snapshot?[Constants.historicalData] as Map<String, dynamic>;
+    var histData = snapshot?[Constants.historicalData] as Map<double, dynamic>;
     GeoPoint geoPoint = snapshot?[Constants.geoPosition] as GeoPoint;
     return Delivery(
       lat: geoPoint.latitude,
@@ -36,10 +36,10 @@ class Delivery {
       historicalData: histData.map((key, value) {
         value as List<dynamic>;
         return MapEntry(
-          double.parse(key),
+          key,
           value.map((e) {
-            e as String;
-            return double.parse(e);
+            String nValue = '$e';
+            return double.parse(nValue);
           }).toList(),
         );
       }),

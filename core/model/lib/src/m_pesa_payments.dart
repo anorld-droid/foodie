@@ -20,7 +20,7 @@ class MpesaResultPayment {
   Map<String, dynamic> toFirestore() => {
         Constants.merchantRequestID: merchantRequestID,
         Constants.checkoutRequestID: checkoutRequestID,
-        Constants.resultCode: responseCode,
+        Constants.responseCode: responseCode,
         Constants.responseDescription: responseDescription,
         Constants.customerMessage: customerMessage,
       };
@@ -45,7 +45,7 @@ class MpesaResultPayment {
     return MpesaResultPayment(
       merchantRequestID: json[Constants.merchantRequestID] as String,
       checkoutRequestID: json[Constants.checkoutRequestID] as String,
-      responseCode: json[Constants.resultCode] as int,
+      responseCode: json[Constants.responseCode] as int,
       responseDescription: json[Constants.resultDesc] as String,
       customerMessage: json[Constants.customerMessage] as String?,
     );

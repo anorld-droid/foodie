@@ -6,6 +6,8 @@ import 'package:mockito/mockito.dart';
 import 'package:model/src/constants.dart';
 import 'package:model/src/messagebird_model.dart';
 
+import 'messagebird_model_test.mocks.dart';
+
 @GenerateNiceMocks([MockSpec<MessageBird>()])
 void main() {
   final kMap = {
