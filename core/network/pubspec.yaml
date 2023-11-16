@@ -25,5 +25,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.4.6
   mockito: ^5.4.2
+  fake_cloud_firestore: ^2.4.3
 
 flutter:
