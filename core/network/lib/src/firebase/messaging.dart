@@ -1,6 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-
+ 
 class Messaging {
   Future<void> _firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
