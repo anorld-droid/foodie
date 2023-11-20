@@ -12,66 +12,64 @@ class AuthDialog extends GetView<CommonController> {
     Get.find<CommonController>();
     return SizedBox(
       height: Get.height * 0.75,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: Get.height * 0.1),
-              child: SizedBox(
-                height: Get.height * 0.48,
-                width: Get.width * 0.8,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Get.theme.colorScheme.background,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: TabBarView(
-                    controller: controller.tabController,
-                    children: [
-                      _tabViewLayout(true),
-                      _tabViewLayout(false),
-                    ],
-                  ),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: Get.height * 0.1),
+            child: SizedBox(
+              height: Get.height * 0.48,
+              width: Get.width * 0.8,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.background,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: TabBarView(
+                  controller: controller.tabController,
+                  children: [
+                    _tabViewLayout(true),
+                    _tabViewLayout(false),
+                  ],
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: Get.height * 0.06),
-              child: SizedBox(
-                width: Get.width * 0.8,
-                child: Card(
-                  color: Get.theme.colorScheme.tertiary,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: Get.height * 0.06),
+            child: SizedBox(
+              width: Get.width * 0.8,
+              child: Card(
+                color: Get.theme.colorScheme.tertiary,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
+                child: TabBar(
+                  indicatorColor: Get.theme.colorScheme.onBackground,
+                  unselectedLabelColor: Get.theme.colorScheme.onPrimary,
+                  unselectedLabelStyle: Get.textTheme.bodySmall,
+                  labelColor: Get.theme.colorScheme.tertiary,
+                  labelStyle: Get.textTheme.bodySmall,
+                  dividerColor: Get.theme.colorScheme.surface,
+                  indicator: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
+                    color: Get.theme.colorScheme.onPrimary,
                   ),
-                  shadowColor: Get.theme.primaryColorDark.withOpacity(.35),
-                  child: TabBar(
-                    indicatorColor: Get.theme.colorScheme.onBackground,
-                    unselectedLabelColor: Get.theme.colorScheme.onPrimary,
-                    unselectedLabelStyle: Get.textTheme.bodySmall,
-                    labelColor: Get.theme.colorScheme.tertiary,
-                    labelStyle: Get.textTheme.bodySmall,
-                    dividerColor: Get.theme.colorScheme.surface,
-                    indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: Get.theme.colorScheme.onPrimary,
+                  controller: controller.tabController,
+                  tabs: const [
+                    Tab(
+                      text: 'Log in',
                     ),
-                    controller: controller.tabController,
-                    tabs: const [
-                      Tab(
-                        text: 'Log in',
-                      ),
-                      Tab(
-                        text: 'Create Account',
-                      ),
-                    ],
-                  ),
+                    Tab(
+                      text: 'Create Account',
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -88,114 +86,122 @@ class AuthDialog extends GetView<CommonController> {
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                isLogIn ? CommonStrings.loginSal : CommonStrings.logoutSal,
-                style: Get.textTheme.headlineLarge,
-                textAlign: TextAlign.start,
-              ),
-              if (isLogIn)
-                Text(
-                  CommonStrings.welcome,
-                  style: Get.textTheme.headlineSmall
-                      ?.copyWith(fontWeight: FontWeight.w100),
-                  textAlign: TextAlign.start,
-                ),
-              if (isLogIn)
-                Text(
-                  CommonStrings.greetings,
-                  style: Get.textTheme.headlineSmall
-                      ?.copyWith(fontWeight: FontWeight.w100),
-                  textAlign: TextAlign.start,
-                ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 24.0, bottom: 16.0, left: 14.0, right: 14.0),
-                child: TextFieldInput(
-                  borderRadius: 8,
-                  backgroundColor: Get.theme.colorScheme.surface,
-                  hintText: CommonStrings.email,
-                  textInputType: TextInputType.emailAddress,
-                  textEditingController: controller.emailController,
-                  textColor: Get.theme.colorScheme.onBackground,
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: 24.0, left: 14.0, right: 14.0),
-                child: TextFieldInput(
-                  borderRadius: 8,
-                  backgroundColor: Get.theme.colorScheme.surface,
-                  hintText: CommonStrings.password,
-                  isPass: true,
-                  textInputType: TextInputType.visiblePassword,
-                  textEditingController: controller.passwordController,
-                  textColor: Get.theme.colorScheme.onBackground,
-                ),
-              ),
-              if (!isLogIn)
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 32, left: 16.0, right: 16.0),
-                  child: RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text: 'By continuing, you agree to our ',
-                        style: Get.textTheme.bodyLarge,
+            SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isLogIn
+                          ? CommonStrings.loginSal
+                          : CommonStrings.logoutSal,
+                      style: Get.textTheme.headlineLarge,
+                      textAlign: TextAlign.start,
+                    ),
+                    if (isLogIn)
+                      Text(
+                        CommonStrings.welcome,
+                        style: Get.textTheme.headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.w100),
+                        textAlign: TextAlign.start,
                       ),
-                      TextSpan(
-                        text: 'Terms of Service',
-                        style: Get.textTheme.bodySmall
-                            ?.copyWith(color: Colors.blue),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () =>
-                              controller.openWeb(CommonStrings.termsCondition),
+                    if (isLogIn)
+                      Text(
+                        CommonStrings.greetings,
+                        style: Get.textTheme.headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.w100),
+                        textAlign: TextAlign.start,
                       ),
-                      TextSpan(
-                        text: ' and that you have read our ',
-                        style: Get.textTheme.bodyLarge,
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 24.0, bottom: 16.0, left: 14.0, right: 14.0),
+                      child: TextFieldInput(
+                        borderRadius: 8,
+                        backgroundColor: Get.theme.colorScheme.surface,
+                        hintText: CommonStrings.email,
+                        textInputType: TextInputType.emailAddress,
+                        textEditingController: controller.emailController,
+                        textColor: Get.theme.colorScheme.onBackground,
                       ),
-                      TextSpan(
-                          text: 'Privacy Policy',
-                          style: Get.textTheme.bodySmall
-                              ?.copyWith(color: Colors.blue),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => controller
-                                .openWeb(CommonStrings.privacyPolicy)),
-                    ]),
-                  ),
-                ),
-              Padding(
-                padding: const EdgeInsets.only(top: 48.0),
-                child: Center(
-                  child: InkWell(
-                    onTap:
-                        isLogIn ? controller.sigIn : controller.createAccount,
-                    child: Container(
-                        height: 40,
-                        width: 120,
-                        color: Get.theme.colorScheme.primaryContainer,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Get.theme.colorScheme.primary,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(12.0))),
-                          child: Center(
-                            child: Text(
-                              isLogIn
-                                  ? CommonStrings.logIn
-                                  : CommonStrings.signup,
-                              textAlign: TextAlign.center,
-                              style: Get.textTheme.bodySmall?.copyWith(
-                                color: Get.theme.colorScheme.background,
-                              ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 24.0, left: 14.0, right: 14.0),
+                      child: TextFieldInput(
+                        borderRadius: 8,
+                        backgroundColor: Get.theme.colorScheme.surface,
+                        hintText: CommonStrings.password,
+                        isPass: true,
+                        textInputType: TextInputType.visiblePassword,
+                        textEditingController: controller.passwordController,
+                        textColor: Get.theme.colorScheme.onBackground,
+                      ),
+                    ),
+                    if (!isLogIn)
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 32, left: 16.0, right: 16.0),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: 'By continuing, you agree to our ',
+                              style: Get.textTheme.bodyLarge,
                             ),
-                          ),
-                        )),
-                  ),
-                ),
-              )
-            ]),
+                            TextSpan(
+                              text: 'Terms of Service',
+                              style: Get.textTheme.bodySmall
+                                  ?.copyWith(color: Colors.blue),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => controller
+                                    .openWeb(CommonStrings.termsCondition),
+                            ),
+                            TextSpan(
+                              text: ' and that you have read our ',
+                              style: Get.textTheme.bodyLarge,
+                            ),
+                            TextSpan(
+                                text: 'Privacy Policy',
+                                style: Get.textTheme.bodySmall
+                                    ?.copyWith(color: Colors.blue),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => controller
+                                      .openWeb(CommonStrings.privacyPolicy)),
+                          ]),
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 48.0),
+                      child: Center(
+                        child: InkWell(
+                          onTap: isLogIn
+                              ? controller.sigIn
+                              : controller.createAccount,
+                          child: Container(
+                              height: 40,
+                              width: 120,
+                              color: Get.theme.colorScheme.primaryContainer,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Get.theme.colorScheme.primary,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(12.0))),
+                                child: Center(
+                                  child: Text(
+                                    key: const Key('AuthButtonText'),
+                                    isLogIn
+                                        ? CommonStrings.logIn
+                                        : CommonStrings.signup,
+                                    textAlign: TextAlign.center,
+                                    style: Get.textTheme.bodySmall?.copyWith(
+                                      color: Get.theme.colorScheme.background,
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ),
+                      ),
+                    )
+                  ]),
+            ),
             Obx(() {
               Widget widget;
               controller.searching.value

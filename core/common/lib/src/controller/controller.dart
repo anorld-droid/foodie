@@ -10,8 +10,8 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
   late final TabController tabController;
 
   late final AuthenticateUser _auth;
-  late final UserModelUseCase _user;
-  late final PaymentOptionsUseCase _payment;
+  final UserModelUseCase _user = UserModelUseCase();
+  final PaymentOptionsUseCase _payment = PaymentOptionsUseCase();
 
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
@@ -20,7 +20,7 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController animationController;
   final Rx<String> store = Rx('');
 
-  var searching = false.obs;
+  Rx<bool> searching = Rx(false);
 
   final Rx<String> selectedOption = 'M-pesa'.obs;
 
@@ -38,9 +38,11 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> init() async {
-    _auth = Get.find();
-    _user = UserModelUseCase();
-    _payment = PaymentOptionsUseCase();
+    try {
+      _auth = Get.find();
+    } catch (e) {
+      _auth = Get.put(AuthenticateUser());
+    }
 
     emailController = TextEditingController();
     passwordController = TextEditingController();
@@ -61,13 +63,13 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
     user.value = await _user.get(_auth.getUserId()!);
   }
 
-  Future<void> sigIn() async {
+  Future<bool> sigIn() async {
     searching.value = true;
     animationController.repeat();
-    String message = '';
+    String message = 'AUTH: ';
     final authInputs = await validInputs();
     if (authInputs.isNotEmpty) {
-      message = await _auth.signInWithEmailPassword(
+      message += await _auth.signInWithEmailPassword(
           emailAddress: authInputs['email']!,
           password: authInputs['password']!);
       shortToast(message);
@@ -79,7 +81,9 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
     animationController.reset();
     if (_auth.isUserSignedIn()) {
       Get.back<void>();
+      return true;
     }
+    return false;
   }
 
   Future<void> createAccount() async {

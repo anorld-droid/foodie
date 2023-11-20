@@ -4,7 +4,14 @@ import 'package:get/get.dart';
 /// Created by Patrice Mulindi email(mulindipatrice00@gmail.com) on 12.01.2023.
 
 class AuthenticateUser {
-  final AuthNetworkDataSource _authNetworkDataSource = Get.find();
+  late final AuthNetworkDataSource _authNetworkDataSource;
+  AuthenticateUser() {
+    try {
+      _authNetworkDataSource = Get.find();
+    } catch (e) {
+      _authNetworkDataSource = Get.put(AuthNetworkDataSource());
+    }
+  }
 
   Future<String> createAccount(
       {required String emailAddress, required String password}) async {
