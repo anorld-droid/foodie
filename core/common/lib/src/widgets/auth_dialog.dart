@@ -172,8 +172,9 @@ class AuthDialog extends GetView<CommonController> {
                       padding: const EdgeInsets.only(top: 48.0),
                       child: Center(
                         child: InkWell(
+                          key: Key('AuthButton $isLogIn'),
                           onTap: isLogIn
-                              ? controller.sigIn
+                              ? controller.signIn
                               : controller.createAccount,
                           child: Container(
                               height: 40,
@@ -186,7 +187,6 @@ class AuthDialog extends GetView<CommonController> {
                                         Radius.circular(12.0))),
                                 child: Center(
                                   child: Text(
-                                    key: const Key('AuthButtonText'),
                                     isLogIn
                                         ? CommonStrings.logIn
                                         : CommonStrings.signup,

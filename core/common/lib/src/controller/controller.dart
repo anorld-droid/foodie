@@ -63,7 +63,7 @@ class CommonController extends GetxController with GetTickerProviderStateMixin {
     user.value = await _user.get(_auth.getUserId()!);
   }
 
-  Future<bool> sigIn() async {
+  Future<bool> signIn() async {
     searching.value = true;
     animationController.repeat();
     String message = 'AUTH: ';
