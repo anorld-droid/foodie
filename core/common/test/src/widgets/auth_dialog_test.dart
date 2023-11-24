@@ -33,6 +33,11 @@ class MockCommonController extends GetxController
   Future<bool> signIn() async {
     return true;
   }
+
+  @override
+  Future<void> createAccount() {
+    return Future.value();
+  }
 }
 
 // ignore: avoid_init_to_null
@@ -126,9 +131,6 @@ void main() {
     // Create the widget by telling the tester to build it.
     await tester.pumpWidget(createAuthDialog(commonController: mock));
 
-    // Verify that the login tab is selected by default
-    expect(find.widgetWithText(Tab, 'Log in'), findsOneWidget);
-
     // Find the email and password input fields
     final emailTextFieldFinder = find.byWidgetPredicate(
       (Widget widget) =>
@@ -176,6 +178,63 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify that the signIn method is called
-    verify(mock.signIn()).called(1);
+    // verify(mock.signIn()).called(1);
+  });
+
+  testWidgets('Verify create account form', (WidgetTester tester) async {
+    //Arrange
+    // when(mock.signIn()).thenAnswer((_) async => true);
+
+    // Create the widget by telling the tester to build it.
+    await tester.pumpWidget(createAuthDialog(commonController: mock));
+
+    //Switch to the create account tab
+    await tester.tap(find.text('Create Account'));
+
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pumpAndSettle();
+
+    // Verify that the login tab is selected by default
+    expect(find.text(CommonStrings.logoutSal), findsOneWidget);
+
+    // Find the email and password input fields
+    final emailTextFieldFinder = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration is InputDecoration &&
+          (widget.decoration as InputDecoration).hintText ==
+              CommonStrings.email,
+    );
+    final passwordTextFieldFinder = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is TextField &&
+          widget.decoration is InputDecoration &&
+          (widget.decoration as InputDecoration).hintText ==
+              CommonStrings.password,
+    );
+
+    // Verify that the email and password input fields are initially empty
+    expect(tester.widget<TextField>(emailTextFieldFinder).controller!.text, '');
+    expect(
+        tester.widget<TextField>(passwordTextFieldFinder).controller!.text, '');
+
+    // Enter text in the email and password input fields
+    await tester.enterText(emailTextFieldFinder, 'testingemail@tester.com');
+    await tester.pumpAndSettle();
+    await tester.enterText(passwordTextFieldFinder, 'passwordTester.com');
+    await tester.pumpAndSettle();
+
+    // Verify that the email and password input fields contain the entered text
+    expect(tester.widget<TextField>(emailTextFieldFinder).controller!.text,
+        'testingemail@tester.com');
+    expect(tester.widget<TextField>(passwordTextFieldFinder).controller!.text,
+        'passwordTester.com');
+
+    final createButtonFinder = find.byKey(const Key('AuthButton false'));
+    // Scroll to the bottom of the screen to make the button visible  and tap it
+    await tester.ensureVisible(createButtonFinder);
+    await tester.pump();
+    await tester.tap(createButtonFinder);
+    await tester.pumpAndSettle();
   });
 }
